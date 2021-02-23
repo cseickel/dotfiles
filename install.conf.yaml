@@ -1,0 +1,19 @@
+- clean: ['~']
+- defaults:
+    link:
+        relink: true
+        force: true
+
+- link:
+    ~/.gitconfig: gitconfig
+    ~/.tmux.conf: tmux.conf
+    ~/.config/nvim/init.vim: config/nvim/init.vim
+    ~/.config/nvim/core-config.vim: config/nvim/core-config.vim
+    ~/.config/nvim/core-mappings.vim: config/nvim/core-mappings.vim
+    ~/.config/nvim/plugin-install.vim: config/nvim/plugin-install.vim
+    ~/.config/nvim/plugin-config.vim: config/nvim/plugin-config.vim
+    ~/.config/nvim/plugin-mappings.vim: config/nvim/plugin-mappings.vim
+    ~/.config/nvim/custom-menus.vim: config/nvim/custom-menus.vim
+    ~/.config/nvim/colors:
+        glob: true
+        path: config/nvim/colors/*
