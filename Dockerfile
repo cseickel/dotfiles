@@ -38,31 +38,26 @@ COPY --from=builder /usr/local/bin/ctags /usr/local/bin
 COPY ./rds-ca-2019-root.crt /usr/local/share/ca-certificates/rds-ca-2019-root.crt
 
 RUN apk update && apk --no-cache add \
-		# used to update certificates
 	icu-libs \
 	curl wget \
 	shadow sudo su-exec \
-	python3 py3-virtualenv nodejs \
+	python3 py3-virtualenv nodejs git npm \
 	fzf	zsh zsh-autosuggestions zsh-syntax-highlighting bind-tools \
-	# install build packages
-	&& apk --no-cache add --virtual build-dependencies \
-	python3-dev \
-	gcc \
-	musl-dev \
-	git \
+	alpine-sdk python3-dev \
 	# create user
 	&& addgroup "${GNAME}" \
 	&& adduser -D -G "${GNAME}" -g "" -s "${SHELL}" "${UNAME}" \
         && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+	&& update-ca-certificates
 	# install neovim python3 provider
-	&& sudo -u neovim python3 -m venv "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}" \
-	&& "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}/bin/pip" install pynvim \
-	&& sudo update-ca-certificates \
+
+RUN sudo -u neovim python3 -m venv "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}" \
+	&& "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}/bin/pip" --disable-pip-version-check install pynvim \
 	&& /bin/sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
 	&& echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc \
 	&& echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 
-RUN /bin/sh -c curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz \
+RUN curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz \
 	&& tar -xzf nvim-linux64.tar.gz \
 	&& mv nvim-linux64/share/* /usr/local/share/ \
 	&& mv nvim-linux64/bin/* /usr/local/bin/ \

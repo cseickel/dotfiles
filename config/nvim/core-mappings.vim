@@ -68,7 +68,7 @@ nnoremap <silent> <leader>6 :6wincmd w <cr>
 nnoremap <silent> <leader>7 :7wincmd w <cr>
 nnoremap <silent> <leader>8 :8wincmd w <cr>
 nnoremap <silent> <leader>9 :9wincmd w <cr>
-nnoremap <silent> <leader>0 :0wincmd w <cr>
+nnoremap <silent> <leader><leader> :wincmd w <cr>
 
 " window movement
 nnoremap <silent> <C-h>     <C-w>H
