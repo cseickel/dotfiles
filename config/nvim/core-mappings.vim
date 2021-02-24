@@ -54,10 +54,10 @@ nnoremap <silent> <leader>. :tcd %:p:h<CR>
 
 
 " Window navigation
-nnoremap <Left> <c-w>h
-nnoremap <Down> <c-w>j
-nnoremap <Up> <c-w>k
-nnoremap <Right> <c-w>l
+"nnoremap <Left>  <c-w>h
+"nnoremap <Down>  <c-w>j
+"nnoremap <Up>    <c-w>k
+"nnoremap <Right> <c-w>l
 
 nnoremap <silent> <leader>1 :1wincmd w <cr>
 nnoremap <silent> <leader>2 :2wincmd w <cr>
