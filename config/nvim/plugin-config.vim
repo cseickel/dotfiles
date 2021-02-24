@@ -191,3 +191,5 @@ let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'OneHalfDark'
 "Togle Terminal
 let g:auto_start_insert = 0
 let g:preserve_alternate_buffer=0
+
+let g:db_ui_use_nerd_fonts = 1
