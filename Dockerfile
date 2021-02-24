@@ -37,29 +37,13 @@ COPY --from=builder /usr/local/bin/ctags /usr/local/bin
 
 COPY ./rds-ca-2019-root.crt /usr/local/share/ca-certificates/rds-ca-2019-root.crt
 
-RUN \
-	# install packages
-	apk --no-cache add \
+RUN apk update && apk --no-cache add \
 		# used to update certificates
-	icu-libs
-		# needed by neovim :CheckHealth to fetch info
-	curl \
-		# needed to change uid and gid on running container
-	shadow \
-		# needed to install apk packages as neovim user on the container
-	sudo \
-		# needed to switch user
-        su-exec \
-		# needed for neovim python3 support
-	python3 \
-		# needed for pipsi
-	py3-virtualenv \
-		# text editor
-        neovim \
-        neovim-doc \
-	fzf \
-	bash \
-		# needed by fzf because the default shell does not support fzf
+	icu-libs \
+	curl wget \
+	shadow sudo su-exec \
+	python3 py3-virtualenv nodejs \
+	fzf	zsh zsh-autosuggestions zsh-syntax-highlighting bind-tools \
 	# install build packages
 	&& apk --no-cache add --virtual build-dependencies \
 	python3-dev \
@@ -73,9 +57,19 @@ RUN \
 	# install neovim python3 provider
 	&& sudo -u neovim python3 -m venv "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}" \
 	&& "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}/bin/pip" install pynvim \
-	&& sudo update-ca-certificates
+	&& sudo update-ca-certificates \
+	&& /bin/sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
+	&& echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc \
+	&& echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc
 
-RUN /bin/sh -c curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz&& tar -xzf nvim-linux64.tar.gz && mv nvim-linux64/share/* /usr/local/share/ && mv nvim-linux64/bin/* /usr/local/bin/ && mv nvim-linux64/lib/* /usr/local/lib/ && rm -rf nvim-linux64*
+RUN /bin/sh -c curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz \
+	&& tar -xzf nvim-linux64.tar.gz \
+	&& mv nvim-linux64/share/* /usr/local/share/ \
+	&& mv nvim-linux64/bin/* /usr/local/bin/ \
+	&& mv nvim-linux64/lib/* /usr/local/lib/ \
+	&& rm -rf nvim-linux64*
+
+RUN npm install -g @angular/cli aws-cdk neovim ng wip
 
 COPY entrypoint.sh /usr/local/bin/
 
