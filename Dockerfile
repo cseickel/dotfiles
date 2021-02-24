@@ -30,21 +30,18 @@ ENV \
 	NVIM_PCK="/home/neovim/.local/share/nvim/site/pack" \
 	ENV_DIR="/home/neovim/.local/share/vendorvenv" \
 	NVIM_PROVIDER_PYLIB="python3_neovim_provider" \
-	PATH="/home/neovim/.local/bin:${PATH}"
+	PATH="/home/neovim/.local/bin:${PATH}" \
+	DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 COPY --from=builder /usr/local/bin/ctags /usr/local/bin
 
-WORKDIR /app
-RUN apk add icu-libs
-ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 COPY ./rds-ca-2019-root.crt /usr/local/share/ca-certificates/rds-ca-2019-root.crt
-RUN update-ca-certificates
-
-RUN /bin/sh -c curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz&& tar -xzf nvim-linux64.tar.gz && mv nvim-linux64/share/* /usr/local/share/ && mv nvim-linux64/bin/* /usr/local/bin/ && mv nvim-linux64/lib/* /usr/local/lib/ && rm -rf nvim-linux64*
 
 RUN \
 	# install packages
 	apk --no-cache add \
+		# used to update certificates
+	icu-libs
 		# needed by neovim :CheckHealth to fetch info
 	curl \
 		# needed to change uid and gid on running container
@@ -75,7 +72,10 @@ RUN \
         && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
 	# install neovim python3 provider
 	&& sudo -u neovim python3 -m venv "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}" \
-	&& "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}/bin/pip" install pynvim
+	&& "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}/bin/pip" install pynvim \
+	&& sudo update-ca-certificates
+
+RUN /bin/sh -c curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz&& tar -xzf nvim-linux64.tar.gz && mv nvim-linux64/share/* /usr/local/share/ && mv nvim-linux64/bin/* /usr/local/bin/ && mv nvim-linux64/lib/* /usr/local/lib/ && rm -rf nvim-linux64*
 
 COPY entrypoint.sh /usr/local/bin/
 
