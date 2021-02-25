@@ -23,7 +23,8 @@ RUN cd /home/$UNAME \
 	&& makepkg -si --noprogressbar --noconfirm
 
 RUN yay -S --noprogressbar --noconfirm \
-	   neovim-nightly-bin neovim-plug oh-my-zsh-git spaceship-prompt \
+	   neovim-nightly-bin neovim-plug \
+	   oh-my-zsh-git spaceship-prompt fzf-git bat-cat-git \
 	   aspnet-runtime-3.1 dotnet-sdk-3.1 \
 	&& sudo pip --disable-pip-version-check install pynvim \
 	&& sudo npm install -g @angular/cli aws-cdk neovim ng wip \
@@ -34,4 +35,4 @@ RUN mkdir -p ~/.config/nvim/colors \
 	&& git --global config pull.ff only \
 	&& git clone https://github.com/cseickel/dotfiles.git .dotfiles \
 	&& /bin/sh /home/$UNAME/.dotfiles/install \
-	&& nvim +PlugInstall +qa
+	&& nvim +PlugInstall +
