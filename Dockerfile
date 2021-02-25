@@ -5,41 +5,42 @@ WORKDIR /mnt/build/ctags
 ENV \
     UID="1000" \
     GID="1000" \
-    UNAME="neovim" \
-    GNAME="neovim" \
+    UNAME="arch" \
+    GNAME="arch" \
     SHELL="/bin/zsh" \
     WORKSPACE="/mnt/workspace" \
-	NVIM_CONFIG="/home/neovim/.config/nvim" \
-	NVIM_PCK="/home/neovim/.local/share/nvim/site/pack" \
-	ENV_DIR="/home/neovim/.local/share/vendorvenv" \
+	NVIM_CONFIG="/home/arch/.config/nvim" \
+	NVIM_PCK="/home/arch/.local/share/nvim/site/pack" \
+	ENV_DIR="/home/arch/.local/share/vendorvenv" \
 	NVIM_PROVIDER_PYLIB="python3_neovim_provider" \
-	PATH="/home/neovim/.local/bin:${PATH}" \
+	PATH="/home/arch/.local/bin:${PATH}" \
 	DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
-RUN groupadd "${GNAME}" \
-	&& useradd -D -G "${GNAME}" -g "${GNAME}" -s "${SHELL}" "${UNAME}" \
-    && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-	&& cd /home/neovim
+COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
 
-RUN sudo pacman -Syu \
-	&& sudo pacman -S git \
+RUN pacman -Syu --noprogressbar --noconfirm \
+	&& pacman -S --noprogressbar --noconfirm \
+	   git zsh ca-certificates-utils \
+	&& update-ca-trust \
+	&& useradd -m -s "${SHELL}" "${UNAME}" \
+    && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER arch
+
+RUN cd /home/arch \
 	&& git clone https://aur.archlinux.org/yay.git \
 	&& cd yay \
-	&& makepkg -si
-
-COPY ./rds-ca-2019-root.crt /usr/local/share/ca-certificates/rds-ca-2019-root.crt
-
-RUN update-ca-certificates \
-	&& sudo -u neovim python3 -m venv "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}" \
+	&& makepkg -si --noprogressbar --noconfirm \
+	&& python3 -m venv "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}" \
 	&& "${ENV_DIR}/${NVIM_PROVIDER_PYLIB}/bin/pip" --disable-pip-version-check install pynvim \
 	&& /bin/sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
 	&& echo "source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ~/.zshrc \
 	&& echo "source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" >> ~/.zshrc \
 	&& curl -fLo nvim-linux64.tar.gz https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz \
 	&& tar -xzf nvim-linux64.tar.gz \
-	&& mv nvim-linux64/share/* /usr/local/share/ \
-	&& mv nvim-linux64/bin/* /usr/local/bin/ \
-	&& mv nvim-linux64/lib/* /usr/local/lib/ \
+	&& sudo mv nvim-linux64/share/* /usr/local/share/ \
+	&& sudo mv nvim-linux64/bin/* /usr/local/bin/ \
+	&& sudo mv nvim-linux64/lib/* /usr/local/lib/ \
 	&& rm -rf nvim-linux64* \
 	&& npm install -g @angular/cli aws-cdk neovim ng wip
 
