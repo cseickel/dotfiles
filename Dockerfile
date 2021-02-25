@@ -41,7 +41,7 @@ RUN yay -S --noprogressbar --noconfirm \
 RUN mkdir -p ~/.config/nvim/colors \
 	&& cd /home/$UNAME \
 	&& git config --global pull.ff only \
-	&& git clone https://github.com/tmux-plugins/tpm.tmux/plugins/tpm \
+	&& git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
 	&& git clone https://github.com/cseickel/dotfiles.git .dotfiles \
 	&& /bin/sh /home/$UNAME/.dotfiles/install \
 	&& nvim +PlugInstall +qa
