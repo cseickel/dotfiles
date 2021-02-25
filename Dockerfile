@@ -18,7 +18,7 @@ RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
 
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
 	   git python3 python-pip nodejs npm wget curl \
-	   zsh bat fzf \
+	   tmux zsh bat fzf \
 	&& update-ca-trust \
 	&& useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -41,7 +41,9 @@ RUN yay -S --noprogressbar --noconfirm \
 RUN mkdir -p ~/.config/nvim/colors \
 	&& cd /home/$UNAME \
 	&& git config --global pull.ff only \
+	&& git clone https://github.com/tmux-plugins/tpm.tmux/plugins/tpm \
 	&& git clone https://github.com/cseickel/dotfiles.git .dotfiles \
 	&& /bin/sh /home/$UNAME/.dotfiles/install \
-	&& nvim +PlugInstall +qa \
-	&& nvim +PlugInstall +qa # the second one is for CoC to install it's packages
+	&& nvim +PlugInstall +qa
+
+CMD tmux
