@@ -9,6 +9,13 @@ ENV \
 
 COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
 
+# WORKAROUND for glibc 2.33 and old Docker
+# See https://github.com/actions/virtual-environments/issues/2658
+# Thanks to https://github.com/lxqt/lxqt-panel/pull/1562
+RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
+    curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && \
+    bsdtar -C / -xvf "$patched_glibc"
+
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
 	   git zsh python3 python-pip nodejs npm wget curl \
 	&& update-ca-trust \
