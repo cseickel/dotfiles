@@ -31,7 +31,8 @@ RUN yay -S --noprogressbar --noconfirm \
 	&& sudo npm install -g @angular/cli aws-cdk neovim ng wip \
 	&& yay -Sc --noprogressbar --noconfirm
 
-RUN cd /home/$UNAME \
-	&& git clone https://github.com/cseickel/dotfiles.git \
+RUN mkdir -p ~/.config/nvim/colors \
+	&& cd /home/$UNAME \
+	&& git clone https://github.com/cseickel/dotfiles.git .dotfiles \
 	&& /bin/sh /home/$UNAME/.dotfiles/install \
 	&& nvim +PlugInstall +qa
