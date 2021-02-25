@@ -11,7 +11,7 @@ COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-
 
 RUN pacman -Syu --noprogressbar --noconfirm \
 	&& pacman -S --noprogressbar --noconfirm \
-	   git zsh ca-certificates-utils python3 nodejs npm \
+	   git zsh python3 python-pip nodejs npm wget curl \
 	&& update-ca-trust \
 	&& useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -23,7 +23,9 @@ RUN cd /home/$UNAME \
 	&& cd yay \
 	&& makepkg -si --noprogressbar --noconfirm
 
-RUN yay -S --noprogressbar --noconfirm neovim-nightly-bin \
+RUN yay -S --noprogressbar --noconfirm \
+	   neovim-nightly-bin neovim-plug oh-my-zsh-git spaceship-prompt \
+	   aspnet-runtime-3.1 dotnet-sdk-3.1 \
 	&& /bin/sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
 	&& sudo pip --disable-pip-version-check install pynvim \
 	&& sudo npm install -g @angular/cli aws-cdk neovim ng wip \
@@ -31,4 +33,5 @@ RUN yay -S --noprogressbar --noconfirm neovim-nightly-bin \
 
 RUN cd /home/$UNAME \
 	&& git clone https://github.com/cseickel/dotfiles.git \
-	&& /bin/sh /home/$UNAME/.dotfiles/install
+	&& /bin/sh /home/$UNAME/.dotfiles/install \
+	&& nvim +PlugInstall +qa
