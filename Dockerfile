@@ -9,8 +9,7 @@ ENV \
 
 COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
 
-RUN pacman -Syu --noprogressbar --noconfirm \
-	&& pacman -S --noprogressbar --noconfirm \
+RUN pacman -Syu --noprogressbar --noconfirm --needed \
 	   git zsh python3 python-pip nodejs npm wget curl \
 	&& update-ca-trust \
 	&& useradd -m -s "${SHELL}" "${UNAME}" \
