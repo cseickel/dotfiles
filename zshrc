@@ -71,6 +71,14 @@ prompt spaceship
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+if [ -f /.dockerenv ]; then
+    # at least this is needed when connecting to docker
+    # from windows powershell in windows terminal...
+    bindkey  "^[[1~" beginning-of-line
+    bindkey  "^[[4~" end-of-line
+    bindkey  "^[[3~" delete-char
+fi
+
 if [ -f $HOME/.local-env.sh  ]; then
     source $HOME/.local-env.sh
 fi
