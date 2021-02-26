@@ -77,6 +77,11 @@ if [ -f /.dockerenv ]; then
     bindkey  "^[[1~" beginning-of-line
     bindkey  "^[[4~" end-of-line
     bindkey  "^[[3~" delete-char
+
+    # these work in neovim terminal
+    bindkey  "^[[H" beginning-of-line
+    bindkey  "^[[F" end-of-line
+
 fi
 
 if [ -f $HOME/.local-env.sh  ]; then

@@ -66,7 +66,7 @@ hi TabModified guifg=#d7d787 ctermfg=186 guibg=#444444 ctermbg=238 gui=NONE cter
 hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
 
 " dwm tiling window manager
-let g:dwm_master_pane_width = 90
+let g:dwm_master_pane_width = "60"
 let g:dwm_map_keys=0
 
 
