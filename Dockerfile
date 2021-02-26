@@ -34,7 +34,7 @@ RUN cd /home/$UNAME \
 RUN yay -S --noprogressbar --noconfirm \
        neovim-nightly-bin neovim-plug \
        oh-my-zsh-git spaceship-prompt \
-       aspnet-runtime-3.1 dotnet-sdk-3.1 \
+       aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
@@ -48,4 +48,5 @@ RUN mkdir -p ~/.config/nvim/colors \
     && nvim +PlugInstall +qa \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
-CMD tmux
+WORKDIR /home/arch
+ENV TERM xterm-256color

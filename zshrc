@@ -75,6 +75,12 @@ if [ -f $HOME/.local-env.sh  ]; then
     source $HOME/.local-env.sh
 fi
 
+# start ssh-agent
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+    eval $(ssh-agent)
+    ssh-add ~/.ssh/*id_rsa
+fi
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
