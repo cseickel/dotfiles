@@ -18,7 +18,8 @@ RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
 
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
        git python3 python-pip nodejs npm wget curl \
-       tmux zsh bat fzf \
+       tmux zsh bat fzf openssh \
+    && pacman -Scc --noprogressbar --noconfirm \
     && update-ca-trust \
     && useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -36,7 +37,7 @@ RUN yay -S --noprogressbar --noconfirm \
        aspnet-runtime-3.1 dotnet-sdk-3.1 \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
-    && yay -Sc --noprogressbar --noconfirm
+    && yay -Scc --noprogressbar --noconfirm
 
 RUN mkdir -p ~/.config/nvim/colors \
     && cd /home/$UNAME \
