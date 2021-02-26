@@ -68,13 +68,21 @@ nnoremap <silent> <leader>6 :6wincmd w <cr>
 nnoremap <silent> <leader>7 :7wincmd w <cr>
 nnoremap <silent> <leader>8 :8wincmd w <cr>
 nnoremap <silent> <leader>9 :9wincmd w <cr>
-nnoremap <silent> <leader><leader> :wincmd w <cr>
+nnoremap <silent> <leader>0 :10wincmd w <cr>
+nnoremap <silent> <leader>< :wincmd w <cr>
+nnoremap <silent> <leader>> :wincmd W <cr>
 
 " window movement
 nnoremap <silent> <C-h>     <C-w>H
 nnoremap <silent> <C-j>     <C-w>x<C-w>j
 nnoremap <silent> <C-k>     <C-w>k<C-w>x
 nnoremap <silent> <C-l>     <C-w>K
+
+" window navigation
+nnoremap <silent> <M-h>     <C-w>h
+nnoremap <silent> <M-j>     <C-w>j
+nnoremap <silent> <M-k>     <C-w>k
+nnoremap <silent> <M-l>     <C-w>l
 
 " Create tool window at bottom
 nnoremap <silent> <leader>tw :botright split<bar>resize 10<bar>setlocal winfixheight<cr>
