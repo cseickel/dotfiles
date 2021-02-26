@@ -1,11 +1,8 @@
-[user]
-	email = cseickel@rwjf.org
-	name = Chris Seickel
 [merge]
     tool = vim_mergetool
     conflictstyle = diff3
 [mergetool "vim_mergetool"]
     cmd = vim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
     trustExitCode = true
-[credential]
-	helper = store
+[pull]
+	ff = only
