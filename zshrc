@@ -71,7 +71,6 @@ prompt spaceship
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
-source $ZSH/oh-my-zsh.sh
 if [ -f $HOME/.local-env.sh  ]; then
     source $HOME/.local-env.sh
 fi
