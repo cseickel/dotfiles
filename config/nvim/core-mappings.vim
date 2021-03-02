@@ -1,4 +1,17 @@
-inoremap jk <Esc>
+" Turns off highlight of last search and paste mode when you hit Escape.
+function! MyEscape()
+    noh
+    set nopaste
+endfunction
+nnoremap <silent> <Esc> <Esc>:call MyEscape()<CR>
+" Map jk to Esc
+imap <silent> jk <Esc>
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
 
 "" Map leader to ,
 let mapleader=","
@@ -23,6 +36,16 @@ nnoremap <silent> <C-v> p
 vnoremap <silent> <C-v> d"0p
 inoremap <silent> <C-v> <Esc>pi
 tnoremap <silent> <C-v> <c-\><c-n>pi
+
+" Paste mode
+nmap <C-p> :set paste<bar>startinsert<cr>
+imap <C-p> <C-o>:set paste<cr>
+
+" Select All
+noremap  <silent> <C-a> ggVG
+inoremap <silent> <C-a> <Esc>ggVG
+vnoremap <silent> <C-a> <Esc>ggVG
+
 
 " Standard Cut shortcut
 function! CopyDefaultRegisters()

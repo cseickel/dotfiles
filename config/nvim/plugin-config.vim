@@ -99,24 +99,6 @@ let g:closetag_close_shortcut = '<leader>>'
 
 
 " Omnisharp Settings
-
-" Don't autoselect first omnicomplete option, show options even if there is only
-" one (so the preview documentation is accessible). Remove 'preview', 'popup'
-" and 'popuphidden' if you don't want to see any documentation whatsoever.
-" Note that neovim does not support `popuphidden` or `popup` yet:
-" https://github.com/neovim/neovim/issues/10996
-if has('patch-8.1.1880')
-    set completeopt=longest,menuone,popuphidden
-    " Highlight the completion documentation popup background/foreground the same as
-    " the completion menu itself, for better readability with highlighted
-    " documentation.
-    set completepopup=highlight:Pmenu,border:on
-else
-    set completeopt=longest,menuone,preview
-    " Set desired preview window height for viewing documentation.
-    set previewheight=5
-endif
-
 let g:OmniSharp_fzf_options = { 'down': '30%' } " max 30% of the screen height
 "let g:OmniSharp_fzf_options = { 'down': '12' }  " max 12 lines high
 "let g:OmniSharp_fzf_options = { 'right': '50%' } " vertical split
