@@ -13,9 +13,9 @@ nmap     <silent> <C-q>     <Plug>DWMClose
 nmap     <silent> ;         <Plug>DWMShrinkMaster
 nmap     <silent> '         <Plug>DWMGrowMaster
 nmap     <silent> <C-h>     <Plug>DWMFocus
-nnoremap <silent> <C-j>     <C-W>x<C-w>j
-nnoremap <silent> <C-k>     <C-W>k<C-w>x
-nmap     <silent> <C-l>     <Plug>DWMInsertMainHere
+nmap     <silent> <C-j>     <Plug>DWMMoveDown
+nmap     <silent> <C-k>     <Plug>DWMMoveUp
+nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
 
 function! FernInit() abort

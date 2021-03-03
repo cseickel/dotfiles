@@ -6,5 +6,3 @@
     trustExitCode = true
 [pull]
 	ff = only
-[credential]
-	helper = "!f() { /home/arch/.vscode-server/bin/622cb03f7e070a9670c94bae1a45d78d7181fbd4/node /tmp/vscode-remote-containers-2ebc7667eb3d66735acac59dc045929e354c5230.js $*; }; f"

@@ -56,6 +56,9 @@ endfunction
 vnoremap <silent> <C-x> "0d:call CopyDefaultRegisters()<cr>
 nnoremap <silent> <C-x> V"0d:call CopyDefaultRegisters()<cr>
 
+" Search and Replace Selected Text
+vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
+
 " Re-map add mark, bceuase I will shadow it with EasyClip's m for move
 nnoremap am m
 
