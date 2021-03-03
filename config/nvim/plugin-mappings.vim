@@ -1,14 +1,11 @@
-nnoremap <silent> <C-t> :tabnew<cr><bar>:Fern . -reveal=#<cr>
+nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename 
-nnoremap <silent> <leader>/ :execute 'TabooRename '.fnamemodify(getcwd(), ':t')<cr>
-nnoremap <silent> <leader>// :tabdo execute 'TabooRename '.fnamemodify(getcwd(), ':t')<cr>
-nnoremap <silent> <leader>./ :tabdo lcd %:h <bar> :tabdo execute 'TabooRename '.fnamemodify(getcwd(), ':t')<cr>
 nnoremap <silent> <leader><leader> :BufExplorer<CR>
 
 nnoremap <silent> - :Fern . -reveal=%<CR>
-nnoremap <silent> \ :CocCommand explorer<CR>
+nnoremap <silent> \ :Fern . -reveal=% -drawer -toggle<CR>
 
-nnoremap <silent> <C-n>     :call DWM_New()<cr><bar>:Fern . -reveal=#<cr>
+nnoremap <silent> <C-n>     :call DWM_New()<cr><bar>:Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
 nmap     <silent> ;         <Plug>DWMShrinkMaster
 nmap     <silent> '         <Plug>DWMGrowMaster
