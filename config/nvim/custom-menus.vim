@@ -7,6 +7,8 @@ let content = [
             \ ['Re&name Symbol         ,rn', 'call feedkeys(",rn")'],
             \ ['--'],
             \ ['Code &Actions           ,a', 'call feedkeys(",a")'],
-            \ ['Auto&Fix               ,fx', 'call feedkeys(",fx")']]
+            \ ['Auto&Fix               ,fx', 'call feedkeys(",fx")'],
+            \ ['--'],
+            \ ['Pretty Print Json         ', '%!python -m json.tool']]
 " set cursor to the last position
 noremap <space><space> :call quickui#context#open(content, {'index':g:quickui#context#cursor})<cr>

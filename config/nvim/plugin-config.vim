@@ -131,7 +131,13 @@ let g:Hexokinase_highlighters = ['foregroundfull']
 
 
 " Startify
+let g:startify_commands = [
+            \ { 't': ['Open Terminal', 'ToggleTabTerminal'] },
+            \ { '-': ['Browse Directory', 'Fern .'] }
+            \ ]
+
 let g:startify_lists = [
+            \ { 'header': ['   Commands'],       'type': 'commands' },
             \ { 'header': ['   Sessions'],       'type': 'sessions' },
             \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
             \ ]
@@ -142,7 +148,8 @@ let g:startify_session_persistence = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_change_cmd = 'tcd'
 let g:startify_change_to_dir = 1
-let g:startify_session_savevars = ['g:Taboo_tabs', 'taboo_tab_name']
+let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name', 
+            \ 't:terminal', 'g:terminal', 'w:terminal']
 let g:startify_session_savecmds = ["tabdo execute 'tcd %:p:h'"]
 
 set sessionoptions=blank,curdir,folds,help,tabpages,winpos
