@@ -9,7 +9,6 @@ set nocompatible
 set wildmenu
 set wildmode=longest,list
 "source $VIMRUNTIME/menu.vim
-set updatetime=1000
 set splitbelow
 set splitright
 
@@ -61,7 +60,27 @@ set ruler
 set number
 set wrap
 set signcolumn=yes
-set cursorline
+
+" Tweaks to improve performance
+set nocursorline
+set updatetime=1000
+set ttyfast
+set lazyredraw
+set re=1
+
+set number relativenumber
+function! SetFocusedNumber()
+  if expand('%') =~ "term://"
+    set nonumber
+  else
+    set number relativenumber cursorline
+  endif
+endfunction
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * call SetFocusedNumber()
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber nocursorline
+augroup END
 
 
 " For regular expressions turn magic on
@@ -95,9 +114,6 @@ endif
 
 " For Neovim 0.1.3 and 0.1.4
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-"" Disable the blinking cursor.
-set gcr=a:blinkon0
 
 "" Status bar
 set laststatus=2
