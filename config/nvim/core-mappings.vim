@@ -1,10 +1,7 @@
 " Turns off highlight of last search and paste mode when you hit Escape.
-function! MyEscape()
-    noh
-    set nopaste
-endfunction
-nnoremap <silent> <Esc> <Esc>:call MyEscape()<CR>
+nnoremap <silent> <Esc> <Esc>:noh<bar>set nopaste<CR>
 " Map jk to Esc
+map <silent> jk <Esc>  
 imap <silent> jk <Esc>
 
 " Search mappings: These will make it so that going to the next one in a

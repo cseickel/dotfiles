@@ -64,16 +64,13 @@ set signcolumn=yes
 " Tweaks to improve performance
 set nocursorline
 set updatetime=1000
-set ttyfast
 set lazyredraw
-set re=1
 
-set number relativenumber
 function! SetFocusedNumber()
   if expand('%') =~ "term://"
-    set nonumber
+    set nonumber nocursorline
   else
-    set number relativenumber cursorline
+    set number relativenumber
   endif
 endfunction
 augroup numbertoggle
@@ -132,5 +129,5 @@ set guicursor=n-v-c:block-Cursor/lCursor
             \,i-ci-ve:ver100-iCursor
             \,r-cr:block-rCursor
             \,o:hor50-Cursor/lCursor
-		    \,sm:block-iCursor
+            \,sm:block-iCursor
             \,a:blinkwait1000-blinkon500-blinkoff250

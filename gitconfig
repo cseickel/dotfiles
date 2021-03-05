@@ -6,3 +6,5 @@
     trustExitCode = true
 [pull]
 	ff = only
+[core]
+	editor = nvim
