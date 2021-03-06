@@ -97,6 +97,7 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'gcmt/taboo.vim'
 "Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 "Plug 'blueyed/vim-diminactive'
+Plug 'TaDaa/vimade'
 Plug 'psliwka/vim-smoothie'
 Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 Plug 'cseickel/dwm.vim'
