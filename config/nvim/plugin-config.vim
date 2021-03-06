@@ -190,3 +190,22 @@ let g:scrollview_column = 1
 let g:vimade = {
     \ "fadelevel": 0.6
 \ }
+
+
+" Pair expansion is dot-repeatable by default:
+let g:pear_tree_repeatable_expand = 0
+let g:pear_tree_smart_openers = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
+let g:pear_tree_map_special_keys = 0
+
+function! InitTerminal()
+    setlocal nonumber norelativenumber noruler
+    setlocal autowriteall modifiable
+    VimadeBufDisable
+endfunction
+
+augroup terminal_autocmd
+    autocmd!
+    autocmd TermOpen * call InitTerminal()
+augroup END

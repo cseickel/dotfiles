@@ -55,7 +55,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
-Plug 'cohama/lexima.vim'
+Plug 'tmsvg/pear-tree'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
 Plug 'dense-analysis/ale'

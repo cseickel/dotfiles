@@ -117,7 +117,7 @@ tnoremap <M-3> <c-\><c-n>:b#<cr>
 
 function! EnterTerminal()
     setlocal nonumber norelativenumber autowriteall modifiable noruler
-    setlocal ft=terminal
+    "setlocal ft=terminal
     "setlocal winfixheight
     "setlocal noshowmode
     "setlocal laststatus=0

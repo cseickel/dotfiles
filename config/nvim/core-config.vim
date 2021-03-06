@@ -131,3 +131,17 @@ set guicursor=n-v-c:block-Cursor/lCursor
             \,o:hor50-Cursor/lCursor
             \,sm:block-iCursor
             \,a:blinkwait1000-blinkon500-blinkoff250
+
+
+function! TwoSpaceIndent()
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
+endfunction
+
+augroup core_autocmd
+  autocmd!
+  autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
+  autocmd FileType javascript,typescript call TwoSpaceIndent()
+augroup END

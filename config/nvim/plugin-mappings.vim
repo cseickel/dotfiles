@@ -132,6 +132,5 @@ augroup END
 nnoremap <silent> <leader>sh :botright split<bar>resize 10<bar>ToggleTabTerminal<cr>
 nnoremap <silent> <leader>tt :ToggleTabTerminal<cr>
 
-nnoremap <silent><M-z> :MaximizerToggle<CR>
-vnoremap <silent><M-z> :MaximizerToggle<CR>gv
-inoremap <silent><M-z> <C-o>:MaximizerToggle<CR>
+imap <BS> <Plug>(PearTreeBackspace)
+imap <CR> <Plug>(PearTreeExpand)
