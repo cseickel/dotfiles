@@ -183,3 +183,7 @@ let g:auto_start_insert = 0
 let g:preserve_alternate_buffer=0
 
 let g:db_ui_use_nerd_fonts = 1
+
+let g:scrollview_winblend = 92
+let g:scrollview_column = 1
+"highlight ScrollView ctermbg=23 guibg=DeepSkyBlue4
