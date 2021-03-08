@@ -77,7 +77,7 @@ prompt spaceship
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git aws docker fzf)
 
 if [ -f /.dockerenv ]; then
     # at least this is needed when connecting to docker

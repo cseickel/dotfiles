@@ -19,7 +19,7 @@ let g:indentLine_faster = 1
 
 
 " ntpeters/vim-better-whitespace
-let g:better_whitespace_enabled=1
+let g:beter_whitespace_enabled=1
 let g:better_whitespace_ctermcolor=236
 let g:strip_whitespace_on_save=1
 let g:strip_whitelines_at_eof=1
@@ -35,14 +35,28 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_skip_empty_sections = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_inactive_collapse=1
+let g:airline_section_c="%{GetFileName()} %m"
 let g:airline_section_z="☰ %3l/%-3L c:%-2c"
 
+
+function! GetFileName()
+    if expand('%') =~ "term://"
+        return 'TERMINAL'
+    else
+        if expand("%:t") =~ '.space-filler.'
+            return expand("#:f")
+        else
+            return expand('%:f')
+        endif
+    endif
+endfunction
 function! Custom_Inactive(...)
     let builder = a:1
     let context = a:2
 
     call builder.add_section('airline_a', ' %{tabpagewinnr(tabpagenr())} ')
-    call builder.add_section('airline_c', " %{expand('%')=~'term://'?'TERMINAL':expand('%:f')} %m%=%{&l:ft} %{WebDevIconsGetFileTypeSymbol()} ")
+    call builder.add_section('airline_c', 
+        \" %{GetFileName()} %m%=%{&l:ft} %{WebDevIconsGetFileTypeSymbol()} ")
 
     "return 0   " the default: draw the rest of the statusline
     return 1   " modify the statusline with the current contents of the builder
@@ -148,9 +162,8 @@ let g:startify_session_persistence = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_change_cmd = 'tcd'
 let g:startify_change_to_dir = 1
-let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name', 
+let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
             \ 't:terminal', 'g:terminal', 'w:terminal']
-let g:startify_session_savecmds = ["tabdo execute 'tcd %:p:h'"]
 
 set sessionoptions=blank,curdir,folds,help,tabpages,winpos
 
@@ -186,9 +199,11 @@ let g:db_ui_use_nerd_fonts = 1
 
 let g:scrollview_winblend = 92
 let g:scrollview_column = 1
+let g:scrollview_current_only = 1
 
 let g:vimade = {
-    \ "fadelevel": 0.6
+    \ "fadelevel": 0.77,
+    \ "basebg": "#000000"
 \ }
 
 

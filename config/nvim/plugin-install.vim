@@ -68,9 +68,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
-Plug 'lambdalisue/gina.vim'
+Plug 'sodapopcan/vim-twiggy'
 Plug 'samoshkin/vim-mergetool'
+
 Plug 'puremourning/vimspector'
 Plug 'mhinz/vim-startify'
 
@@ -78,6 +78,8 @@ Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'caenrique/nvim-toggle-terminal'
+Plug 'liuchengxu/vista.vim'
+
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local

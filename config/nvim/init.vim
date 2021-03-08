@@ -10,7 +10,7 @@ source ~/.config/nvim/custom-menus.vim
 "set fillchars+=vert:▏
 "set fillchars+=vert:▍
 "set fillchars+=vert:▉
- set fillchars+=vert:▕
+set fillchars+=vert:▕
 highlight VertSplit guifg=#444444 ctermfg=238 guibg=#161616 ctermbg=233
 
 

@@ -66,17 +66,69 @@ set nocursorline
 set updatetime=1000
 set lazyredraw
 
-function! SetFocusedNumber()
-  if expand('%') =~ "term://"
-    set nonumber nocursorline
-  else
-    set number relativenumber
+function! HideOneLineWindows(...)
+  if mode() != 'n'
+    return
+  endif
+  let l:currwin = winnr()
+  for i in range(1, winnr('$'))
+    if winwidth(i) > 1
+      if winheight(i) > 1
+        if bufname(winbufnr(i)) =~ ".space-filler."
+          execute i . 'wincmd w'
+          b#
+        endif
+      else
+        if !(bufname(winbufnr(i)) =~ ".space-filler.")
+          execute i . 'wincmd w'
+          let l:original_ft = &ft
+          let l:original_ext = expand('%:e')
+          execute "e ~/.config/nvim/.space-filler." . l:original_ext
+          let &ft = l:original_ft
+          setlocal nobuflisted readonly
+        endif
+      endif
+    endif
+  endfor
+  if winnr() != l:currwin
+    execute l:currwin . 'wincmd w'
+    AirlineRefresh
   endif
 endfunction
+
+if exists('g:my_hide_one_liner_timer')
+  call timer_stop(g:my_hide_one_liner_timer)
+endif
+let g:my_hide_one_liner_timer = timer_start(300, 'HideOneLineWindows', {'repeat': -1})
+
+function! SetRelative()
+  if expand('%') =~ "term://"
+    setlocal nonumber norelativenumber
+  else
+    if expand("%:t") =~ ".space-filler."
+      setlocal nonumber norelativenumber nowrap signcolumn=no
+    else
+      setlocal nonumber relativenumber wrap
+    endif
+  endif
+endfunction
+
+function! SetNoRelative()
+  if expand('%') =~ "term://"
+    setlocal nonumber norelativenumber
+  else
+    if expand("%:t") =~ ".space-filler."
+      setlocal nonumber norelativenumber nowrap signcolumn=no
+    else
+      setlocal number norelativenumber wrap signcolumn=yes
+    endif
+  endif
+endfunction
+
 augroup numbertoggle
   autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * call SetFocusedNumber()
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber nocursorline
+  autocmd BufEnter,FocusGained,InsertLeave * call SetRelative()
+  autocmd BufLeave,FocusLost,InsertEnter   * call SetNoRelative()
 augroup END
 
 
