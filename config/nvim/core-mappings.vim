@@ -82,18 +82,16 @@ nnoremap <silent> <leader>. :tcd %:p:h<CR>
 "nnoremap <Up>    <c-w>k
 "nnoremap <Right> <c-w>l
 
-nnoremap <silent> <leader>1 :1wincmd w <cr>
-nnoremap <silent> <leader>2 :2wincmd w <cr>
-nnoremap <silent> <leader>3 :3wincmd w <cr>
-nnoremap <silent> <leader>4 :4wincmd w <cr>
-nnoremap <silent> <leader>5 :5wincmd w <cr>
-nnoremap <silent> <leader>6 :6wincmd w <cr>
-nnoremap <silent> <leader>7 :7wincmd w <cr>
-nnoremap <silent> <leader>8 :8wincmd w <cr>
-nnoremap <silent> <leader>9 :9wincmd w <cr>
-nnoremap <silent> <leader>0 :10wincmd w <cr>
-nnoremap <silent> <leader>< :wincmd w <cr>
-nnoremap <silent> <leader>> :wincmd W <cr>
+nnoremap <silent> `1 :1wincmd w <cr>
+nnoremap <silent> `2 :2wincmd w <cr>
+nnoremap <silent> `3 :3wincmd w <cr>
+nnoremap <silent> `4 :4wincmd w <cr>
+nnoremap <silent> `5 :5wincmd w <cr>
+nnoremap <silent> `6 :6wincmd w <cr>
+nnoremap <silent> `7 :7wincmd w <cr>
+nnoremap <silent> `8 :8wincmd w <cr>
+nnoremap <silent> `9 :9wincmd w <cr>
+nnoremap <silent> `0 :10wincmd w <cr>
 
 " window movement
 nnoremap <silent> <C-h> <C-w>H
@@ -107,9 +105,6 @@ nnoremap <silent> <M-h>     <C-w>h
 nnoremap <silent> <M-j>     <C-w>j
 nnoremap <silent> <M-k>     <C-w>k
 nnoremap <silent> <M-l>     <C-w>l
-
-" Create tool window at bottom
-nnoremap <silent> <leader>tw :botright split<bar>resize 10<bar>setlocal winfixheight<cr>
 
 " terminal emulation
 nnoremap <silent> <leader>sh :botright terminal<cr><bar>resize 10<bar>setlocal winfixheight<CR>

@@ -28,7 +28,7 @@ let g:better_whitespace_filetypes_blacklist=[
     \'diff', 'gitcommit','unite', 'qf', 'help', 'markdown', 'vim']
 
 " vim-airline
-let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#branch#enabled = 1 
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
@@ -146,7 +146,7 @@ let g:Hexokinase_highlighters = ['foregroundfull']
 
 " Startify
 let g:startify_commands = [
-            \ { 't': ['Open Terminal', 'ToggleTabTerminal'] },
+            \ { 't': ['Open Terminal', 'terminal'] },
             \ { '-': ['Browse Directory', 'Fern .'] }
             \ ]
 

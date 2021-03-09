@@ -77,7 +77,6 @@ Plug 'mhinz/vim-startify'
 Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'caenrique/nvim-toggle-terminal'
 Plug 'liuchengxu/vista.vim'
 
 

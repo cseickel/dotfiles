@@ -129,8 +129,6 @@ augroup omnisharp_commands
 augroup END
 
 
-nnoremap <silent> <leader>sh :botright split<bar>resize 10<bar>ToggleTabTerminal<cr>
-nnoremap <silent> <leader>tt :ToggleTabTerminal<cr>
 
 imap <BS> <Plug>(PearTreeBackspace)
 imap <CR> <Plug>(PearTreeExpand)
