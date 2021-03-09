@@ -36,6 +36,7 @@ let g:airline_skip_empty_sections = 1
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 let g:airline_inactive_collapse=1
 let g:airline_section_c="%{GetFileName()} %m"
+let g:airline_section_x=""
 let g:airline_section_z="☰ %3l/%-3L c:%-2c"
 
 
@@ -56,7 +57,7 @@ function! Custom_Inactive(...)
 
     call builder.add_section('airline_a', ' %{tabpagewinnr(tabpagenr())} ')
     call builder.add_section('airline_c', 
-        \" %{GetFileName()} %m%=%{&l:ft} %{WebDevIconsGetFileTypeSymbol()} ")
+        \" %{GetFileName()} %m%=%{WebDevIconsGetFileTypeSymbol()} ")
 
     "return 0   " the default: draw the rest of the statusline
     return 1   " modify the statusline with the current contents of the builder
