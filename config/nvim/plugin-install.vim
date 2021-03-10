@@ -97,9 +97,7 @@ Plug 'skywind3000/vim-quickui'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'gcmt/taboo.vim'
 "Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
-"Plug 'blueyed/vim-diminactive'
-Plug 'TaDaa/vimade'
-"Plug 'psliwka/vim-smoothie'
+"Plug 'TaDaa/vimade' " nice, but has issues with popup windows
 Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 Plug 'cseickel/dwm.vim'
 

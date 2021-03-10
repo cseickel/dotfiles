@@ -192,8 +192,14 @@ function! TwoSpaceIndent()
   setlocal expandtab
 endfunction
 
+function! InitTerminal()
+  setlocal nonumber norelativenumber noruler
+  setlocal autowriteall modifiable
+endfunction
+
 augroup core_autocmd
   autocmd!
   autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
   autocmd FileType javascript,typescript call TwoSpaceIndent()
+  autocmd TermOpen * call InitTerminal()
 augroup END
