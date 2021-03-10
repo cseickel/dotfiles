@@ -47,6 +47,13 @@ nmap <leader>fm <Plug>(fzf-maps-n)
 xmap <leader>fm <Plug>(fzf-maps-x)
 omap <leader>fm <Plug>(fzf-maps-o)
 
+nnoremap <leader>ga :FzfPreviewGitActions<CR>
+nnoremap <leader>q  :FzfPreviewQuickFix<CR>
+nnoremap <leader>l  :FzfPreviewLocationList<CR>
+nnoremap <leader>f  :FzfPreviewBufferLines<CR>
+nnoremap <leader>rg :<C-u>FzfPreviewProjectGrep<Space>
+xnoremap <leader>rg "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+
 " Mergetool shortcuts
 nnoremap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'
 nnoremap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Right>'
