@@ -50,4 +50,6 @@ RUN cd /home/$UNAME \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
     && nvim +PlugInstall +qa
 
+RUN yay -Syu ripgrep --noprogressbar --noconfirm
+
 ENV TERM xterm-256color
