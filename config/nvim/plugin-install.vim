@@ -85,13 +85,8 @@ Plug 'liuchengxu/vista.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "color schemes
-Plug 'tomasiser/vim-code-dark'
-Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'dunstontc/vim-vscode-theme'
-Plug 'joshdick/onedark.vim'
 Plug 'jacoborus/tender.vim'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'haishanh/night-owl.vim'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine'

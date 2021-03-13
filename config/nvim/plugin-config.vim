@@ -3,9 +3,6 @@
 colorscheme dark_plus
 "colorscheme night-owl
 let g:airline_powerline_fonts = 1
-"let g:airline_theme = 'codedark'
-"let g:airline_theme = 'dark_plus'
-"let g:airline_theme = 'bubblegum'
 let g:airline_theme = 'tender'
 
 
@@ -200,7 +197,7 @@ let g:preserve_alternate_buffer=0
 
 let g:db_ui_use_nerd_fonts = 1
 
-let g:scrollview_winblend = 92
+let g:scrollview_winblend = 94
 let g:scrollview_column = 1
 let g:scrollview_current_only = 1
 
