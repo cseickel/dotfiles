@@ -741,11 +741,18 @@ highlight ALEError cterm=NONE gui=NONE
 highlight ALEWarning cterm=NONE gui=NONE
 highlight ALEStyleError cterm=NONE gui=NONE
 highlight ALEStyleWarning cterm=NONE gui=NONE
+
 highlight ALEInfoSign ctermfg=9 guifg=#b5cea8 ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
 highlight ALEErrorSign ctermfg=1 guifg=#d16969 ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
 highlight ALEWarningSign ctermfg=3 guifg=#d7ba7d ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
 highlight ALEStyleErrorSign ctermfg=3 guifg=#dcdcaa ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
 highlight ALEStyleWarningSign ctermfg=3 guifg=#dcdcaa ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
+highlight ALEInfoSign ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
+highlight ALEErrorSign ctermfg=1 guifg=#d16969 cterm=NONE gui=NONE
+highlight ALEWarningSign ctermfg=3 guifg=#d7ba7d cterm=NONE gui=NONE
+highlight ALEStyleErrorSign ctermfg=3 guifg=#dcdcaa cterm=NONE gui=NONE
+highlight ALEStyleWarningSign ctermfg=3 guifg=#dcdcaa cterm=NONE gui=NONE
+
 highlight ALEInfoLine cterm=NONE gui=NONE
 highlight ALEErrorLine cterm=NONE gui=NONE
 highlight ALEWarningLine cterm=NONE gui=NONE
@@ -753,8 +760,12 @@ highlight link NeomakeErrorSign ALEErrorSign
 highlight link NeomakeWarningSign ALEWarningSign
 highlight link NeomakeMessagesSign ALEInfoSign
 highlight link NeomakeInfoSign ALEInfoSign
+
 highlight BookmarkSign ctermfg=6 guifg=#4ec9b0 ctermbg=0 guibg=#303030 cterm=NONE gui=NONE
 highlight BookmarkAnnotationSign ctermfg=6 guifg=#4ec9b0 ctermbg=0 guibg=#303030 cterm=NONE gui=NONE
+highlight BookmarkSign ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
+highlight BookmarkAnnotationSign ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
+
 highlight BookmarkLine cterm=NONE gui=NONE
 highlight BookmarkAnnotationLine cterm=NONE gui=NONE
 highlight BufTabLineCurrent ctermfg=0 guifg=#1e1e1e ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
@@ -767,10 +778,10 @@ highlight deniteConcealedMark ctermfg=4 guifg=#264f78 cterm=NONE gui=NONE
 highlight deniteModeNormal ctermfg=2 guifg=#608b4e cterm=NONE gui=NONE
 highlight deniteModeInsert ctermfg=2 guifg=#608b4e cterm=NONE gui=NONE
 highlight deniteSource_Projectile_Name ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
-highlight GitGutterAdd ctermfg=2 guifg=#608b4e ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
-highlight GitGutterChange ctermfg=3 guifg=#d7ba7d ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
-highlight GitGutterDelete ctermfg=1 guifg=#d16969 ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
-highlight GitGutterChangeDelete ctermfg=3 guifg=#d7ba7d ctermbg=0 guibg=#1e1e1e cterm=NONE gui=NONE
+highlight GitGutterAdd ctermfg=2 guifg=#608b4e cterm=NONE gui=NONE
+highlight GitGutterChange ctermfg=3 guifg=#d7ba7d cterm=NONE gui=NONE
+highlight GitGutterDelete ctermfg=1 guifg=#d16969 cterm=NONE gui=NONE
+highlight GitGutterChangeDelete ctermfg=3 guifg=#d7ba7d cterm=NONE gui=NONE
 highlight GitGutterAddLine cterm=NONE gui=NONE
 highlight GitGutterChangeLine cterm=NONE gui=NONE
 highlight GitGutterDeleteLine cterm=NONE gui=NONE

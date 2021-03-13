@@ -1,6 +1,7 @@
 
 " Theme
 colorscheme dark_plus
+"colorscheme night-owl
 let g:airline_powerline_fonts = 1
 "let g:airline_theme = 'codedark'
 "let g:airline_theme = 'dark_plus'
@@ -203,12 +204,11 @@ let g:scrollview_winblend = 92
 let g:scrollview_column = 1
 let g:scrollview_current_only = 1
 
-"let g:vimade = { "fadelevel": 0.77, "basebg": "#000000" }
-
-
 " Pair expansion is dot-repeatable by default:
 let g:pear_tree_repeatable_expand = 0
 let g:pear_tree_smart_openers = 1
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
+
+"let g:vimade = { "fadelevel": 0.77, "basebg": "#000000" }

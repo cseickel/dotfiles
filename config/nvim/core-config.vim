@@ -63,7 +63,7 @@ set signcolumn=yes
 
 " Tweaks to improve performance
 set nocursorline
-set updatetime=1000
+set updatetime=300
 set lazyredraw
 
 function! HideOneLineWindows(...)
@@ -103,12 +103,12 @@ let g:my_hide_one_liner_timer = timer_start(300, 'HideOneLineWindows', {'repeat'
 
 function! SetRelative()
   if expand('%') =~ "term://"
-    setlocal nonumber norelativenumber
+    setlocal nonumber norelativenumber nocursorline signcolumn=yes
   else
     if expand("%:t") =~ ".space-filler."
       setlocal nonumber norelativenumber nowrap signcolumn=no
     else
-      setlocal nonumber relativenumber wrap
+      setlocal nonumber relativenumber wrap 
     endif
   endif
 endfunction
