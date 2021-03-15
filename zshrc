@@ -155,9 +155,9 @@ alias tcd='nvr --remote-send "jk:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
-alias gcf='git checkout $(git branch --all | fzf)'
+alias gcof='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
 alias gca='git commit --amend --no-edit'
-alias gfp='git push --force-with-lease'
+alias gpf='git push --force-with-lease'
 alias gco='git checkout '
 
 
