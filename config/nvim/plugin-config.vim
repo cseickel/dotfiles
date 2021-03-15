@@ -27,9 +27,11 @@ endif
 
 " Theme
 "colorscheme dark_plus
-"colorscheme nvcode
-colorscheme OceanicNext
-"colorscheme zephyr
+colorscheme nvcode
+"colorscheme OceanicNext
+"let g:sonokai_style = 'shusia'
+"let g:sonokai_disable_italic_comment = 1
+"colorscheme sonokai
 
 
 let g:airline_powerline_fonts = 1
@@ -270,7 +272,7 @@ highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
 "let g:terminal_color_foreground = g:terminal_color_7
 "" }}}
 ""
-"highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
+highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
 "
 highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
@@ -287,23 +289,25 @@ highlight GitGutterDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 "
-"highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
-"highlight link csThis Language
-"highlight link csNew Constant
-"highlight link csInterpolation Identifier
-"highlight link csInterpolationDelim Constant
-"highlight link csDocComment SpecialComment
-"highlight link csDocExample Identifier
-"highlight link csDocString Identifier
-"highlight link csOperator Conditional
-"highlight link csOperLambda Conditional
-"highlight link csModifier Conditional
-"highlight link csLinqKeyword Conditional
-"highlight link csUnspecifiedStatement PlainText
-"highlight link csContextualStatement Control
-"highlight link csUnsupportedStatement PlainText
-"
-"highlight StartifyFile ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
+highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
+highlight link csThis Language
+highlight link csNew Constant
+highlight link csInterpolation Identifier
+highlight link csInterpolationDelim Constant
+highlight link csDocComment SpecialComment
+highlight link csDocExample Identifier
+highlight link csDocString Identifier
+highlight link csOperator Conditional
+highlight link csOperLambda Conditional
+highlight link csModifier Conditional
+highlight link csLinqKeyword Conditional
+highlight link csUnspecifiedStatement PlainText
+highlight link csContextualStatement Control
+highlight link csUnsupportedStatement PlainText
+
+hi TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+
+highlight StartifyFile ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
 highlight StartifyBracket ctermfg=0 guifg=#1e1e1e cterm=NONE gui=NONE
 "highlight StartifyNumber ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
 "highlight StartifyVar ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
@@ -320,11 +324,12 @@ highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 "highlight Cursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "highlight TermCursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "
-highlight NormalNC guibg=#303030
-highlight EndOfBuffer guifg=#202020 guibg=None ctermfg=None ctermbg=None
+hi Normal guibg=#1c1c1c
+highlight NormalNC guibg=#262626
+highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
 highlight LineNR guibg=None ctermbg=None
 highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
-highlight CursorLineNr ctermbg=None guibg=None guifg=#569cd6
+highlight CursorLineNr ctermfg=2 guifg=#608b4e ctermbg=None guibg=None
 
 
 highlight Cursor guibg=#5f87af ctermbg=67

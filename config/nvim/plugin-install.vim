@@ -77,9 +77,13 @@ Plug 'mhinz/vim-startify'
 Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'ntpeters/vim-better-whitespace'
+"color scheme
+Plug 'dunstontc/vim-vscode-theme'
+Plug 'taniarascia/new-moon.vim'
+Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'mhartington/oceanic-next'
-Plug 'glepnir/zephyr-nvim'
+Plug 'sainnhe/sonokai'
 Plug 'nvim-treesitter/nvim-treesitter'
 
 Plug 'liuchengxu/vista.vim'
@@ -89,10 +93,6 @@ Plug 'liuchengxu/vista.vim'
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"color schemes
-Plug 'dunstontc/vim-vscode-theme'
-Plug 'taniarascia/new-moon.vim'
-Plug 'jacoborus/tender.vim'
 
 Plug 'ryanoasis/vim-devicons'
 "Plug 'Yggdroot/indentLine'
