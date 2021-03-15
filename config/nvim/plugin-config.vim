@@ -1,10 +1,39 @@
+"tresitter setup
+" configure treesitter
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust" },  -- list of language that will be disabled
+  },
+  indent = {
+    enable = true
+  }
+}
+EOF
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+
+" configure nvcode-color-schemes
+let g:nvcode_termcolors=256
+
+" checks if your terminal has 24-bit color support
+if (has("termguicolors"))
+    set termguicolors
+    hi LineNr ctermbg=NONE guibg=NONE
+endif
 
 " Theme
-colorscheme dark_plus
-"colorscheme night-owl
+"colorscheme dark_plus
+"colorscheme nvcode
+colorscheme OceanicNext
+"colorscheme zephyr
+
+
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'tender'
-
 
 " IndentLine
 let g:indentLine_color_term = 236
@@ -80,7 +109,7 @@ hi TabModified guifg=#d7d787 ctermfg=186 guibg=#444444 ctermbg=238 gui=NONE cter
 hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
 
 " dwm tiling window manager
-let g:dwm_master_pane_width = "60"
+let g:dwm_master_pane_width = 90
 let g:dwm_map_keys=0
 
 
@@ -126,7 +155,7 @@ let g:OmniSharp_popup_options = {
             \ 'winhl': 'Normal:NormalFloat'
             \}
 " Enable snippet completion, using the ultisnips plugin
-" let g:OmniSharp_want_snippet=1
+let g:OmniSharp_want_snippet=1
 
 "*****************************************************************************
 "" Fern File Tree
@@ -209,3 +238,96 @@ let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
 
 "let g:vimade = { "fadelevel": 0.77, "basebg": "#000000" }
+
+" Style vertical split bar
+"set fillchars+=vert:▏
+"set fillchars+=vert:▍
+"set fillchars+=vert:▉
+"set fillchars+=vert:▕
+set fillchars+=vert:█
+highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
+
+" nvcode overrides from dark+
+
+"" Terminal Colors:  {{{
+"let g:terminal_color_0  = '#1e1e1e'  " black
+"let g:terminal_color_1  = '#f44747'  " red
+"let g:terminal_color_2  = '#608b4e'  " green
+"let g:terminal_color_3  = '#d7ba7d'  " yellow
+"let g:terminal_color_4  = '#569cd6'  " blue
+"let g:terminal_color_5  = '#c586c0'  " magenta
+"let g:terminal_color_6  = '#4ec9b0'  " cyan
+"let g:terminal_color_7  = '#d4d4d4'  " white
+"let g:terminal_color_8  = '#1e1e1e'  " bright_black
+"let g:terminal_color_9  = '#f44747'  " bright_red
+"let g:terminal_color_10 = '#608b4e'  " bright_green
+"let g:terminal_color_11 = '#d7ba7d'  " bright_yellow
+"let g:terminal_color_12 = '#569cd6'  " bright_blue
+"let g:terminal_color_13 = '#c586c0'  " bright_magenta
+"let g:terminal_color_14 = '#4ec9b0'  " bright_cyan
+"let g:terminal_color_15 = '#d4d4d4'  " bright_white
+"let g:terminal_color_background = g:terminal_color_0
+"let g:terminal_color_foreground = g:terminal_color_7
+"" }}}
+""
+"highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
+"
+highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
+highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
+highlight ALEWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
+highlight ALEStyleErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
+highlight ALEStyleWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
+
+highlight GitGutterAdd cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterAddLine cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterChange cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterChangeLine cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterDelete cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
+"
+"highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
+"highlight link csThis Language
+"highlight link csNew Constant
+"highlight link csInterpolation Identifier
+"highlight link csInterpolationDelim Constant
+"highlight link csDocComment SpecialComment
+"highlight link csDocExample Identifier
+"highlight link csDocString Identifier
+"highlight link csOperator Conditional
+"highlight link csOperLambda Conditional
+"highlight link csModifier Conditional
+"highlight link csLinqKeyword Conditional
+"highlight link csUnspecifiedStatement PlainText
+"highlight link csContextualStatement Control
+"highlight link csUnsupportedStatement PlainText
+"
+"highlight StartifyFile ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
+highlight StartifyBracket ctermfg=0 guifg=#1e1e1e cterm=NONE gui=NONE
+"highlight StartifyNumber ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
+"highlight StartifyVar ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
+"highlight StartifySpecial ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
+highlight StartifySlash ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
+highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
+"highlight StartifySelect ctermfg=4 guifg=#569cd6 cterm=NONE gui=NONE
+"highlight StartifyHeader ctermfg=4 guifg=#569cd6 cterm=NONE gui=NONE
+"highlight StartifySection ctermfg=13 guifg=#c586c0 cterm=NONE gui=NONE
+"
+"highlight iCursor ctermbg=4 guibg=#569cd6 cterm=NONE gui=NONE
+"highlight vCursor ctermbg=13 guibg=#c586c0 cterm=NONE gui=NONE
+"highlight rCursor ctermbg=1 guibg=#d16969 cterm=NONE gui=NONE
+"highlight Cursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
+"highlight TermCursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
+"
+highlight NormalNC guibg=#303030
+highlight EndOfBuffer guifg=#202020 guibg=None ctermfg=None ctermbg=None
+highlight LineNR guibg=None ctermbg=None
+highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
+highlight CursorLineNr ctermbg=None guibg=None guifg=#569cd6
+
+
+highlight Cursor guibg=#5f87af ctermbg=67
+highlight iCursor guibg=#ffffaf ctermbg=229
+highlight rCursor guibg=#af0000 ctermbg=124
+

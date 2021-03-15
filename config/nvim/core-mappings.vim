@@ -67,11 +67,11 @@ inoremap <C-q> <Esc>:q<cr>
 noremap <leader>q :botright copen
 
 " Quick folding of a block in normal mode with the 'z' key
-nnoremap z V%zf
-autocmd FileType xml nnoremap <buffer> z Vatzf
-autocmd FileType html nnoremap <buffer> z Vatzf
+"nnoremap z V%zf
+"autocmd FileType xml nnoremap <buffer> z Vatzf
+"autocmd FileType html nnoremap <buffer> z Vatzf
 " and unfold with uppercase 'Z'
-nnoremap Z zo
+"nnoremap Z zo
 
 nnoremap <silent> <leader>. :tcd %:p:h<CR>
 
