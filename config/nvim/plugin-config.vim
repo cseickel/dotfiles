@@ -177,7 +177,7 @@ let g:Hexokinase_highlighters = ['foregroundfull']
 
 " Startify
 let g:startify_commands = [
-            \ { 't': ['Open Terminal', 'terminal'] },
+            \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
             \ { '-': ['Browse Directory', 'Fern .'] }
             \ ]
 
@@ -228,7 +228,7 @@ let g:preserve_alternate_buffer=0
 
 let g:db_ui_use_nerd_fonts = 1
 
-let g:scrollview_winblend = 94
+let g:scrollview_winblend = 60
 let g:scrollview_column = 1
 let g:scrollview_current_only = 1
 

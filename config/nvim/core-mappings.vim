@@ -98,16 +98,21 @@ nnoremap <silent> <C-h> <C-w>H
 nnoremap <silent> <C-j> <C-w>x<C-w>j
 nnoremap <silent> <C-k> <C-w>k<C-w>x
 nnoremap <silent> <C-l> <C-w>K
+
+" window resize
 nnoremap <silent> _     <C-w>_
+"nnoremap <silent> <     <C-w><
+"nnoremap <silent> >     <C-w>>
+nnoremap <silent> -     <C-w>-
+nnoremap <silent> +     <C-w>+
+nnoremap <silent> =     <C-w>+
 
 " window navigation
-nnoremap <silent> <M-h>     <C-w>h
-nnoremap <silent> <M-j>     <C-w>j
-nnoremap <silent> <M-k>     <C-w>k
-nnoremap <silent> <M-l>     <C-w>l
+nnoremap <silent> <M-h> <C-w>h
+nnoremap <silent> <M-j> <C-w>j
+nnoremap <silent> <M-k> <C-w>k
+nnoremap <silent> <M-l> <C-w>l
 
-" terminal emulation
-nnoremap <silent> <leader>sh :botright terminal<cr><bar>resize 10<bar>setlocal winfixheight<CR>
 tnoremap jk <c-\><c-n>
 tnoremap <M-3> <c-\><c-n>:b#<cr>
 
@@ -134,3 +139,15 @@ augroup core_autocmd
     autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
     autocmd FileType javascript,typescript call TwoSpaceIndent()
 augroup END
+
+function! RecycleTerminal()
+    for buf in getbufinfo({ 'buflisted': 1 })
+        if buf.name =~ "term://" && len(buf.windows) == 0
+            execute "buffer " . buf.bufnr
+            return buf.name
+        endif
+    endfor
+    terminal
+endfunction
+
+nnoremap <silent> <leader>sh :botright split<bar>resize 10<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>

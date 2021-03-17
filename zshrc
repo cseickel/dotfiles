@@ -140,9 +140,9 @@ nvim_wrapper() {
             nvim $argv
         else
             if test -z $argv; then
-                nvr -l -c new
+                nvr -cc "topleft split | Startify"
             else
-                nvr -l $argv
+                nvr -cc "topleft split" --remote $argv
             fi
         fi
     else
@@ -155,10 +155,18 @@ alias tcd='nvr --remote-send "jk:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
-alias gcof='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
-alias gca='git commit --amend --no-edit'
+
+alias checkout='git checkout'
+alias pull="git pull"
+alias status="git status"
+alias add="git add"
+alias commit='git commit'
+alias push='git push'
+alias gca='git commit -a -m'
+alias gcan='git commit -a --amend --no-edit'
+alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease'
 alias gpf='git push --force-with-lease'
-alias gco='git checkout '
+alias gco='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
 
 
 SPACESHIP_CHAR_SYMBOL='❯ '

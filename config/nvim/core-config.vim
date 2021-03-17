@@ -200,6 +200,6 @@ endfunction
 augroup core_autocmd
   autocmd!
   autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
-  autocmd FileType javascript,typescript call TwoSpaceIndent()
+  autocmd FileType javascript,typescript,html call TwoSpaceIndent()
   autocmd TermOpen * call InitTerminal()
 augroup END

@@ -2,13 +2,13 @@ nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename 
 nnoremap <silent> <leader><leader> :BufExplorer<CR>
 
-nnoremap <silent> - :Fern . -reveal=%<CR>
-nnoremap <silent> \ :Fern . -reveal=% -drawer -toggle<CR>
+nnoremap <silent> \ :Fern . -reveal=%<CR>
+nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
 
-nnoremap <silent> <C-n>     :call DWM_New()<cr><bar>:Startify<cr>
+nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
-nmap     <silent> ;         <Plug>DWMShrinkMaster
-nmap     <silent> '         <Plug>DWMGrowMaster
+nmap     <silent> <         <Plug>DWMShrinkMaster
+nmap     <silent> >         <Plug>DWMGrowMaster
 nmap     <silent> <C-h>     <Plug>DWMFocus
 nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
@@ -26,7 +26,7 @@ function! FernInit() abort
             \ )
     nmap <buffer> <space> <Plug>(fern-my-open-expand-collapse)
     nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
-    nnoremap <buffer> - :b#<cr>
+    nnoremap <buffer> <bar> :b#<cr>
     nnoremap <buffer> <tab> <Plug>(fern-action-mark:toggle)j
     nmap <buffer> F <Plug>(fern-action-new-file)
     nmap <buffer> D <Plug>(fern-action-new-dir)
