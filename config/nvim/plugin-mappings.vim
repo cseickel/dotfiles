@@ -61,46 +61,6 @@ nnoremap <expr> <C-Down> &diff? '<Plug>(MergetoolDiffExchangeDown)' : '<C-Down>'
 nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 
 
-"*****************************************************************************
-"" Coc Mappings
-"*****************************************************************************
-" select the first completion item and confirm the completion when no item has been selected:
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<Tab>" :
-            \ coc#refresh()
-
-" use <c-space>for trigger completion
-imap <silent><expr> <c-space> coc#refresh()
-
-" GoTo code navigation
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gt :CocCommand fzf-preview.CocTypeDefinitions<cr>
-nmap <silent> <leader>gi :CocCommand fzf-preview.CocImplementations<cr>
-nmap <silent> <leader>gr :CocCommand fzf-preview.CocReferences<cr>
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap keys for applying codeAction to the current line.
-nmap <leader>a <Plug>(coc-codeaction-line)
-vmap <leader>a <Plug>(coc-codeaction-selected)
-" Apply AutoFix to problem on the current line.
-nmap <leader>fx  <Plug>(coc-fix-current)
-
-" Highlight the symbol and its references when holding the cursor.
-augroup coc_commands
-    autocmd!
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-augroup END
 augroup omnisharp_commands
     autocmd!
 
@@ -136,6 +96,12 @@ augroup omnisharp_commands
 augroup END
 
 
-
 imap <BS> <Plug>(PearTreeBackspace)
 imap <CR> <Plug>(PearTreeExpand)
+
+
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })

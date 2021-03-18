@@ -51,7 +51,7 @@ Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+"Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -84,9 +84,11 @@ Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter'
 
-Plug 'liuchengxu/vista.vim'
 
 
 " UI Stuff
@@ -109,6 +111,7 @@ Plug 'cseickel/dwm.vim'
 "" Plug install packages - Stuff I might need
 "*************************************************************
 Plug 'mileszs/ack.vim'
+Plug 'liuchengxu/vista.vim'
 
 " SQL Interface
 Plug 'tpope/vim-dadbod'

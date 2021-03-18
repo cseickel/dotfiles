@@ -1,8 +1,12 @@
-source ~/.config/nvim/core-config.vim
-source ~/.config/nvim/core-mappings.vim
-source ~/.config/nvim/plugin-install.vim
-source ~/.config/nvim/plugin-config.vim
-source ~/.config/nvim/plugin-mappings.vim
-source ~/.config/nvim/custom-menus.vim
+let wd = getcwd()
+cd ~/.config/nvim
 
+source core-config.vim
+source core-mappings.vim
+source plugin-install.vim
+source plugin-config.vim
+source plugin-mappings.vim
+source custom-menus.vim
+lua    require('config')
 
+exe 'cd ' . wd
