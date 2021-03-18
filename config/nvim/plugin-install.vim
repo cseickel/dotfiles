@@ -95,7 +95,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ryanoasis/vim-devicons'
-"Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 
 Plug 'skywind3000/vim-quickui'
 Plug 'tmux-plugins/vim-tmux-focus-events'

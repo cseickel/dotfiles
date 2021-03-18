@@ -178,7 +178,7 @@ let g:Hexokinase_highlighters = ['foregroundfull']
 " Startify
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
-            \ { '-': ['Browse Directory', 'Fern .'] }
+            \ { '\': ['Browse Directory', 'Fern .'] }
             \ ]
 
 let g:startify_lists = [
