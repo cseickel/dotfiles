@@ -50,7 +50,8 @@ RUN cd /home/$UNAME \
     && /bin/sh /home/$UNAME/.dotfiles/install \
     && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
-    && nvim +PlugInstall +qa \
+    && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
+    && nvim +qa \
     && echo "default-cache-ttl 3600" > ~/.gnupg/gpg-agent.conf \
     && echo "max-cache-ttl 57600" >> ~/.gnupg/gpg-agent.conf
 
