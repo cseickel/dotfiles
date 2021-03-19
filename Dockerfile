@@ -52,8 +52,9 @@ RUN cd /home/$UNAME \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
     && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
     && nvim +qa \
-    && echo "default-cache-ttl 3600" > ~/.gnupg/gpg-agent.conf \
-    && echo "max-cache-ttl 57600" >> ~/.gnupg/gpg-agent.conf
+    && mkdir -p /home/$UNAME/.gnupg \
+    && echo "default-cache-ttl 3600" > /home/$UNAME/gnupg/gpg-agent.conf \
+    && echo "max-cache-ttl 57600" >> /home/$UNAME/gnupg/gpg-agent.conf
 
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
