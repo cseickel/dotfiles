@@ -53,8 +53,8 @@ RUN cd /home/$UNAME \
     && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
     && nvim +qa \
     && mkdir -p /home/$UNAME/.gnupg \
-    && echo "default-cache-ttl 3600" > /home/$UNAME/gnupg/gpg-agent.conf \
-    && echo "max-cache-ttl 57600" >> /home/$UNAME/gnupg/gpg-agent.conf
+    && echo "default-cache-ttl 3600" > /home/$UNAME/.gnupg/gpg-agent.conf \
+    && echo "max-cache-ttl 57600" >> /home/$UNAME/.gnupg/gpg-agent.conf
 
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
