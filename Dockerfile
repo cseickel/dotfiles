@@ -34,11 +34,11 @@ RUN cd /home/$UNAME \
     && cd .. \
     && rm -Rf yay
 
-RUN yay -S --noprogressbar --noconfirm \
+RUN yay -Syu --noprogressbar --noconfirm \
        neovim-nightly-bin neovim-plug neovim-remote \
        oh-my-zsh-git spaceship-prompt \
        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
-       ripgrep docker \
+       ripgrep docker tree-sitter aws-vault pass \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
@@ -50,12 +50,16 @@ RUN cd /home/$UNAME \
     && /bin/sh /home/$UNAME/.dotfiles/install \
     && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
-    && nvim +PlugInstall +qa
+    && nvim +PlugInstall +qa \
+    && echo "default-cache-ttl 3600" > ~/.gnupg/gpg-agent.conf \
+    && echo "max-cache-ttl 57600" >> ~/.gnupg/gpg-agent.conf
 
-RUN echo fs.inotify.max_user_watches=524288 \
-    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
-      && sudo sysctl --system
+# This probably only needs to be run on the host
+# RUN echo fs.inotify.max_user_watches=524288 \
+#    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
+#      && sudo sysctl --system
 
-#RUN yay -Syu --noprogressbar --noconfirm && yay -Scc --noprogressbar --noconfirm
+#RUN yay -Syu --noprogressbar --noconfirm \
+#    && yay -Scc --noprogressbar --noconfirm
 
 ENV TERM xterm-256color

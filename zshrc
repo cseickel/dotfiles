@@ -172,4 +172,6 @@ alias gco='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '
 
+export AWS_VAULT_BACKEND=pass
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
