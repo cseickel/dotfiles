@@ -86,8 +86,9 @@ Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+Plug 'kabouzeid/nvim-lspinstall'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'hrsh7th/nvim-compe'
 
 
 

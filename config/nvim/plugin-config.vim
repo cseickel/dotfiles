@@ -2,7 +2,7 @@ set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
 " configure nvcode-color-schemes
-let g:nvcode_termcolors=256
+let g:nvcodetermcolors=256
 
 " checks if your terminal has 24-bit color support
 if (has("termguicolors"))
@@ -223,6 +223,12 @@ let g:pear_tree_smart_openers = 1
 let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
+
+" Set completeopt to have a better completion experience
+let g:completion_enable_snippet = 'UltiSnips'
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
 
 "let g:vimade = { "fadelevel": 0.77, "basebg": "#000000" }
 
