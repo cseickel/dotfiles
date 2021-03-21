@@ -63,7 +63,7 @@ set signcolumn=yes
 
 " Tweaks to improve performance
 set nocursorline
-set updatetime=300
+set updatetime=1000
 set lazyredraw
 
 function! HideOneLineWindows(...)
