@@ -50,11 +50,12 @@ RUN cd /home/$UNAME \
     && /bin/sh /home/$UNAME/.dotfiles/install \
     && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
-    && nvim +PlugInstall +qa
+    && nvim -u /home/$UNAME/.config/nvim/plugin-install.vim +PlugInstall +qa \
+    && nvim -u /home/$UNAME/.config/nvim/plugin-install.vim +qa
 
-RUN echo fs.inotify.max_user_watches=524288 \
-    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
-      && sudo sysctl --system
+#RUN echo fs.inotify.max_user_watches=524288 \
+#    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
+#      && sudo sysctl --system
 
 #RUN yay -Syu --noprogressbar --noconfirm && yay -Scc --noprogressbar --noconfirm
 
