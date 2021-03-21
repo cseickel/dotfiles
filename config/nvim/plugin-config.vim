@@ -315,6 +315,10 @@ highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 "highlight Cursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "highlight TermCursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "
+hi LspReferenceText cterm=underline gui=bold
+hi LspReferenceRead cterm=underline gui=bold
+hi LspReferenceWrite cterm=underline gui=bold
+
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None

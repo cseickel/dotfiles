@@ -75,6 +75,10 @@ nnoremap <silent> <leader>gi <cmd>lua vim.lsp.buf.implementation() <cr>
 nnoremap <silent> <leader>gr <cmd>lua vim.lsp.buf.references()<cr>
 nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<cr>
 nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.code_action()<cr>
+nnoremap <silent> K          <cmd>lua vim.lsp.buf.hover()<cr>   
+nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
+nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
+nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
 function! InitCS()
     let l:compe_config = {}
@@ -100,12 +104,21 @@ function! InitCS()
     nmap <silent><buffer> <leader>rn <Plug>(omnisharp_rename)
 endfunction
 
+function! DocHighlight()
+    if &ft == 'cs' 
+        OmniSharpTypeLookup
+    else 
+        lua vim.lsp.buf.document_highlight()
+    endif
+endfunction
+
 augroup omnisharp_commands
     autocmd!
     " Show type information automatically when the cursor stops moving.
     " Note that the type is echoed to the Vim command line, and will overwrite
     " any other messages in this space including e.g. ALE linting messages.
-    autocmd CursorHold *.cs OmniSharpTypeLookup
+    autocmd CursorHold * call DocHighlight()
+	autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
     " The following commands are contextual, based on the cursor position.
     autocmd FileType cs call InitCS()
 augroup END
