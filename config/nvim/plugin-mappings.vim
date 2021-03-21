@@ -1,5 +1,5 @@
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
-nnoremap <M-t> :TabooRename 
+nnoremap <M-t> :TabooRename
 nnoremap <silent> <leader><leader> :BufExplorer<CR>
 
 nnoremap <silent> \ :Fern . -reveal=%<CR>
@@ -60,82 +60,65 @@ nnoremap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Righ
 nnoremap <expr> <C-Down> &diff? '<Plug>(MergetoolDiffExchangeDown)' : '<C-Down>'
 nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 
+imap <BS> <Plug>(PearTreeBackspace)
+imap <CR> <Plug>(PearTreeExpand)
 
-"*****************************************************************************
-"" Coc Mappings
-"*****************************************************************************
-" select the first completion item and confirm the completion when no item has been selected:
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-" use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+nnoremap <silent> <leader>gd <cmd>lua vim.lsp.buf.definition()<cr>
+nnoremap <silent> <leader>gt <cmd>lua vim.lsp.buf.type_definition()<cr>
+nnoremap <silent> <leader>gi <cmd>lua vim.lsp.buf.implementation() <cr>
+nnoremap <silent> <leader>gr <cmd>lua vim.lsp.buf.references()<cr>
+nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<cr>
+nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.code_action()<cr>
+nnoremap <silent> K          <cmd>lua vim.lsp.buf.hover()<cr>   
+nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
+nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
+nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
+
+function! InitCS()
+    let l:compe_config = {}
+    let l:compe_config.source = {}
+    let l:compe_config.source.omni = v:true
+    call compe#setup(l:compe_config, 0)
+    nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
+    nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
+    nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
+    nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
+    nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
+    nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
+    nmap <silent><buffer> <leader>k <Plug>(omnisharp_documentation)
+    nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
+    nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
+    nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
+    imap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
+    nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
+    nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
+    nmap <silent><buffer> gcc <Plug>(omnisharp_global_code_check)
+    nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
+    nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
+    nmap <silent><buffer> <leader>rn <Plug>(omnisharp_rename)
 endfunction
 
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<Tab>" :
-            \ coc#refresh()
+function! DocHighlight()
+    if &ft == 'cs' 
+        OmniSharpTypeLookup
+    else 
+        lua vim.lsp.buf.document_highlight()
+    endif
+endfunction
 
-" use <c-space>for trigger completion
-imap <silent><expr> <c-space> coc#refresh()
-
-" GoTo code navigation
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gt :CocCommand fzf-preview.CocTypeDefinitions<cr>
-nmap <silent> <leader>gi :CocCommand fzf-preview.CocImplementations<cr>
-nmap <silent> <leader>gr :CocCommand fzf-preview.CocReferences<cr>
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap keys for applying codeAction to the current line.
-nmap <leader>a <Plug>(coc-codeaction-line)
-vmap <leader>a <Plug>(coc-codeaction-selected)
-" Apply AutoFix to problem on the current line.
-nmap <leader>fx  <Plug>(coc-fix-current)
-
-" Highlight the symbol and its references when holding the cursor.
-augroup coc_commands
-    autocmd!
-    autocmd CursorHold * silent call CocActionAsync('highlight')
-augroup END
 augroup omnisharp_commands
     autocmd!
-
     " Show type information automatically when the cursor stops moving.
     " Note that the type is echoed to the Vim command line, and will overwrite
     " any other messages in this space including e.g. ALE linting messages.
-    autocmd CursorHold *.cs OmniSharpTypeLookup
-
+    autocmd CursorHold * call DocHighlight()
+	autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
     " The following commands are contextual, based on the cursor position.
-    autocmd FileType cs nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
-    autocmd FileType cs nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
-    autocmd FileType cs nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
-    autocmd FileType cs nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
-    autocmd FileType cs nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
-    autocmd FileType cs nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
-    autocmd FileType cs nmap <silent><buffer> <leader>k <Plug>(omnisharp_documentation)
-    autocmd FileType cs nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
-    autocmd FileType cs nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
-    autocmd FileType cs nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
-    autocmd FileType cs imap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
-
-    " Navigate up and down by method/property/field
-    autocmd FileType cs nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
-    autocmd FileType cs nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
-    " Find all code errors/warnings for the current solution and populate the quickfix window
-    autocmd FileType cs nmap <silent><buffer> gcc <Plug>(omnisharp_global_code_check)
-    " Contextual code actions (uses fzf, vim-clap, CtrlP or unite.vim selector when available)
-    autocmd FileType cs nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
-
-    autocmd FileType cs nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
-
-    autocmd FileType cs nmap <silent><buffer> <leader>rn <Plug>(omnisharp_rename)
+    autocmd FileType cs call InitCS()
 augroup END
-
-
-
-imap <BS> <Plug>(PearTreeBackspace)
-imap <CR> <Plug>(PearTreeExpand)

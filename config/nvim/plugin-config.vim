@@ -1,23 +1,8 @@
-"tresitter setup
-" configure treesitter
-lua << EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { "c", "rust" },  -- list of language that will be disabled
-  },
-  indent = {
-    enable = true
-  }
-}
-EOF
-
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
 " configure nvcode-color-schemes
-let g:nvcode_termcolors=256
+let g:nvcodetermcolors=256
 
 " checks if your terminal has 24-bit color support
 if (has("termguicolors"))
@@ -239,6 +224,12 @@ let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
 
+" Set completeopt to have a better completion experience
+let g:completion_enable_snippet = 'UltiSnips'
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+
 "let g:vimade = { "fadelevel": 0.77, "basebg": "#000000" }
 
 " Style vertical split bar
@@ -324,6 +315,10 @@ highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 "highlight Cursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "highlight TermCursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "
+hi LspReferenceText cterm=underline gui=bold
+hi LspReferenceRead cterm=underline gui=bold
+hi LspReferenceWrite cterm=underline gui=bold
+
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
