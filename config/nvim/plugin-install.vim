@@ -89,6 +89,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'hrsh7th/nvim-compe'
+Plug 'onsails/lspkind-nvim'
 
 
 
