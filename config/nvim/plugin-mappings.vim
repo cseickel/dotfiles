@@ -69,12 +69,12 @@ inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
-nnoremap <silent> <leader>gd call vim.lsp.buf.definition()
-nnoremap <silent> <leader>gt call vim.lsp.buf.type_definition()
-nnoremap <silent> <leader>gi call vim.lsp.buf.implementation() 
-nnoremap <silent> <leader>gr call vim.lsp.buf.references()
-nnoremap <silent> <leader>rn call vim.lsp.buf.rename()
-nnoremap <silent> <leader>a  call vim.lsp.buf.code_action()
+nnoremap <silent> <leader>gd <cmd>lua vim.lsp.buf.definition()<cr>
+nnoremap <silent> <leader>gt <cmd>lua vim.lsp.buf.type_definition()<cr>
+nnoremap <silent> <leader>gi <cmd>lua vim.lsp.buf.implementation() <cr>
+nnoremap <silent> <leader>gr <cmd>lua vim.lsp.buf.references()<cr>
+nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<cr>
+nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.code_action()<cr>
 
 function! InitCS()
     let l:compe_config = {}
