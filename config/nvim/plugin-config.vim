@@ -42,8 +42,9 @@ let g:better_whitespace_filetypes_blacklist=[
     \'diff', 'gitcommit','unite', 'qf', 'help', 'markdown', 'vim']
 
 " vim-airline
-let g:airline#extensions#branch#enabled = 1 
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#ale#enabled = 0
+let g:airline#extensions#nvimlsp#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_skip_empty_sections = 1
@@ -315,9 +316,9 @@ highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 "highlight Cursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "highlight TermCursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
 "
-hi LspReferenceText cterm=underline gui=bold
-hi LspReferenceRead cterm=underline gui=bold
-hi LspReferenceWrite cterm=underline gui=bold
+hi LspReferenceText cterm=underline gui=bold guibg=#404040
+hi LspReferenceRead cterm=underline gui=bold guibg=#404040
+hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
 
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626

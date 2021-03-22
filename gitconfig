@@ -2,7 +2,7 @@
     tool = vim_mergetool
     conflictstyle = diff3
 [mergetool "vim_mergetool"]
-    cmd = nvim -f -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
+    cmd = nvr --remote-tab-wait -c 'MergetoolStart "$MERGED" "$BASE" "$LOCAL" "$REMOTE"'
     trustExitCode = true
 [pull]
 	ff = only

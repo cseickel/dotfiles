@@ -108,7 +108,7 @@ function! DocHighlight()
     if &ft == 'cs' 
         OmniSharpTypeLookup
     else 
-        lua vim.lsp.buf.document_highlight()
+        silent! lua vim.lsp.buf.document_highlight()
     endif
 endfunction
 

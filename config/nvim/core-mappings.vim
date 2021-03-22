@@ -1,5 +1,7 @@
 " Turns off highlight of last search and paste mode when you hit Escape.
 nnoremap <silent> <Esc> <Esc>:noh<bar>set nopaste<CR>
+" claer search term for real
+command C let @/=""
 " Map jk to Esc
 map <silent> jk <Esc>  
 imap <silent> jk <Esc>
@@ -22,16 +24,16 @@ nnoremap <silent> <tab> :tabnext<cr>
 nnoremap <silent> <S-tab> :tabprevious<cr>
 
 " Standard Save shortcuts
-noremap <silent> <C-s> :w<cr>
-inoremap <silent> <C-s> <Esc>:w<cr>
-noremap <silent> <M-s> :wa<cr>
-inoremap <silent> <M-s> <Esc>:wa<cr>
+noremap  <silent> <C-s> :w<cr>
+inoremap <silent> <C-s> <C-o>:w<cr>
+noremap  <silent> <M-s> :wa<cr>
+inoremap <silent> <M-s> <C-o>:wa<cr>
 
 " Use Control + v for paste, ALt + v for visual block mode
-noremap <silent> <M-v> <C-v>
+noremap  <silent> <M-v> <C-v>
 nnoremap <silent> <C-v> p
-vnoremap <silent> <C-v> d"0p
-inoremap <silent> <C-v> <Esc>pi
+vnoremap <silent> <C-v> "_dp
+inoremap <silent> <C-v> <C-o>p
 tnoremap <silent> <C-v> <c-\><c-n>pi
 
 " Paste mode
