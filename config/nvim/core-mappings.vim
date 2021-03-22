@@ -1,10 +1,11 @@
 " Turns off highlight of last search and paste mode when you hit Escape.
 nnoremap <silent> <Esc> <Esc>:noh<bar>set nopaste<CR>
-" claer search term for real
+" clear search term for real
 command C let @/=""
 " Map jk to Esc
-map <silent> jk <Esc>  
-imap <silent> jk <Esc>
+map <silent> <C-\> <Esc>  
+imap <silent> <C-\> <Esc>
+tnoremap <silent> <C-\> <c-\><c-n>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -18,6 +19,7 @@ let mapleader=","
 " Switch to previous buffer
 nnoremap <M-3> :b#<cr>
 inoremap <M-3> <Esc>:b#<cr>
+tnoremap <M-3> <c-\><c-n>:b#<cr>
 
 " Tab Navigation
 nnoremap <silent> <tab> :tabnext<cr>
@@ -114,9 +116,6 @@ nnoremap <silent> <M-h> <C-w>h
 nnoremap <silent> <M-j> <C-w>j
 nnoremap <silent> <M-k> <C-w>k
 nnoremap <silent> <M-l> <C-w>l
-
-tnoremap jk <c-\><c-n>
-tnoremap <M-3> <c-\><c-n>:b#<cr>
 
 function! EnterTerminal()
     setlocal nonumber norelativenumber autowriteall modifiable noruler
