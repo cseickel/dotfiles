@@ -1,19 +1,18 @@
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename
 nnoremap <silent> <leader><leader> :BufExplorer<CR>
+nmap     <tab>    <Plug>(wintabs_next) 
+nmap     <S-tab>  <Plug>(wintabs_previous) 
 
 nnoremap <silent> \ :Fern . -reveal=%<CR>
 nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
 
-nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
-nmap     <silent> <C-q>     <Plug>DWMClose
-nmap     <silent> <         <Plug>DWMShrinkMaster
-nmap     <silent> >         <Plug>DWMGrowMaster
-nmap     <silent> <C-h>     <Plug>DWMFocus
-nmap     <silent> <C-j>     <Plug>DWMMoveDown
-nmap     <silent> <C-k>     <Plug>DWMMoveUp
-nmap     <silent> <C-l>     <Plug>DWMMoveRight
-
+nnoremap <silent> <C-n>     :vsplit<bar>Startify<cr>
+nmap     <silent> <C-q>     <Plug>(wintabs_close)
+nmap     <silent> <C-h>     <Plug>(wintabs_move_to_window_left)
+nmap     <silent> <C-l>     <Plug>(wintabs_move_to_window_right)
+nmap     <silent> <C-k>     <Plug>(wintabs_move_to_window_above)
+nmap     <silent> <C-j>     <Plug>(wintabs_move_to_window_below)
 
 function! FernInit() abort
     call glyph_palette#apply()

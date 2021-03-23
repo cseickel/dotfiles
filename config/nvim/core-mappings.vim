@@ -99,9 +99,12 @@ nnoremap <silent> `0 :10wincmd w <cr>
 
 " window movement
 nnoremap <silent> <C-h> <C-w>H
-nnoremap <silent> <C-j> <C-w>x<C-w>j
-nnoremap <silent> <C-k> <C-w>k<C-w>x
+nnoremap <silent> <C-j> <C-w>J
+nnoremap <silent> <C-k> <C-w>K
 nnoremap <silent> <C-l> <C-w>K
+" swap windows in a vertical stack
+nnoremap <silent> <C-J> <C-w>x<C-w>j
+nnoremap <silent> <C-K> <C-w>k<C-w>x
 
 " window resize
 nnoremap <silent> _     <C-w>_

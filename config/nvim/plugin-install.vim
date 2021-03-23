@@ -21,23 +21,7 @@ if !filereadable(vimplug_exists)
     autocmd VimEnter * PlugInstall
 endif
 
-"*************************************************************
-"" Settings related to plugins
-"*************************************************************
-let g:coc_global_extensions = [
-            \"coc-angular",
-            \"coc-eslint",
-            \"coc-fzf-preview",
-            \"coc-java",
-            \"coc-json",
-            \"coc-python",
-            \"coc-tsserver",
-            \"coc-db",
-            \"coc-styled-components"]
-"            \"coc-explorer",
-
 call plug#begin(expand('~/.config/nvim/plugged'))
-
 "*************************************************************
 "" Plug install packages - Stuff I definitely use
 "*************************************************************
@@ -51,14 +35,12 @@ Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
-"Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
 Plug 'tmsvg/pear-tree'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
-Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -103,12 +85,13 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'skywind3000/vim-quickui'
 Plug 'tmux-plugins/vim-tmux-focus-events'
-Plug 'gcmt/taboo.vim'
+"Plug 'gcmt/taboo.vim'
 "Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 "Plug 'TaDaa/vimade' " nice, but has issues with popup windows
 Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
-Plug 'cseickel/dwm.vim'
-
+"Plug 'cseickel/dwm.vim'
+"Plug 'zefei/vim-wintabs'
+Plug 'pacha/vem-tabline'
 "*************************************************************
 "" Plug install packages - Stuff I might need
 "*************************************************************

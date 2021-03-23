@@ -42,7 +42,7 @@ let g:better_whitespace_filetypes_blacklist=[
     \'diff', 'gitcommit','unite', 'qf', 'help', 'markdown', 'vim']
 
 " vim-airline
-let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#ale#enabled = 0
 let g:airline#extensions#nvimlsp#enabled = 1
 let g:airline#extensions#tabline#enabled = 0
@@ -95,6 +95,11 @@ hi TabLineFill guifg=NONE ctermfg=NONE guibg=#444444 ctermbg=238 gui=NONE cterm=
 hi TabLineSel guifg=#73cef4 ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
 hi TabModified guifg=#d7d787 ctermfg=186 guibg=#444444 ctermbg=238 gui=NONE cterm=NONE
 hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
+
+let g:wintabs_display="statusline"
+let g:wintabs_reverse_order=1
+let g:wintabs_ui_active_left="["
+let g:wintabs_ui_active_right="]"
 
 " dwm tiling window manager
 let g:dwm_master_pane_width = 90
@@ -281,21 +286,21 @@ highlight GitGutterDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 "
-highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
-highlight link csThis Language
-highlight link csNew Constant
-highlight link csInterpolation Identifier
-highlight link csInterpolationDelim Constant
-highlight link csDocComment SpecialComment
-highlight link csDocExample Identifier
-highlight link csDocString Identifier
-highlight link csOperator Conditional
-highlight link csOperLambda Conditional
-highlight link csModifier Conditional
-highlight link csLinqKeyword Conditional
-highlight link csUnspecifiedStatement PlainText
-highlight link csContextualStatement Control
-highlight link csUnsupportedStatement PlainText
+"highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
+"highlight link csThis Language
+"highlight link csNew Constant
+"highlight link csInterpolation Identifier
+"highlight link csInterpolationDelim Constant
+"highlight link csDocComment SpecialComment
+"highlight link csDocExample Identifier
+"highlight link csDocString Identifier
+"highlight link csOperator Conditional
+"highlight link csOperLambda Conditional
+"highlight link csModifier Conditional
+"highlight link csLinqKeyword Conditional
+"highlight link csUnspecifiedStatement PlainText
+"highlight link csContextualStatement Control
+"highlight link csUnsupportedStatement PlainText
 
 hi TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
