@@ -117,30 +117,6 @@ nnoremap <silent> <M-j> <C-w>j
 nnoremap <silent> <M-k> <C-w>k
 nnoremap <silent> <M-l> <C-w>l
 
-function! EnterTerminal()
-    setlocal nonumber norelativenumber autowriteall modifiable noruler
-    "setlocal ft=terminal
-    "setlocal winfixheight
-    "setlocal noshowmode
-    "setlocal laststatus=0
-    "setlocal noshowcmd
-    "setlocal cmdheight=1
-endfunction
-
-function! TwoSpaceIndent()
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
-    setlocal expandtab
-endfunction
-
-augroup core_autocmd
-    autocmd!
-    autocmd TermEnter * call EnterTerminal()
-    autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
-    autocmd FileType javascript,typescript call TwoSpaceIndent()
-augroup END
-
 function! RecycleTerminal()
     for buf in getbufinfo({ 'buflisted': 1 })
         if buf.name =~ "term://" && len(buf.windows) == 0

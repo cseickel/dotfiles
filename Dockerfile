@@ -38,7 +38,7 @@ RUN yay -Syu --noprogressbar --noconfirm \
        neovim-nightly-bin neovim-plug neovim-remote \
        oh-my-zsh-git spaceship-prompt \
        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
-       ripgrep docker tree-sitter aws-vault pass \
+       ripgrep docker docker-compose tree-sitter aws-vault pass \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
@@ -51,7 +51,7 @@ RUN cd /home/$UNAME \
     && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
     && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
-    && nvim +qa \
+    && nvim --headless +qa \
     && mkdir -p /home/$UNAME/.gnupg \
     && echo "default-cache-ttl 3600" > /home/$UNAME/.gnupg/gpg-agent.conf \
     && echo "max-cache-ttl 57600" >> /home/$UNAME/.gnupg/gpg-agent.conf

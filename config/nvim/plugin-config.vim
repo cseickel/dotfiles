@@ -30,6 +30,9 @@ let g:indentLine_enabled = 1
 let g:indentLine_char = '▏'
 "let g:indentLine_char_list = ['│','┆','┊','⋮',':', '·', '·', '·', '·']
 let g:indentLine_faster = 1
+let g:indent_blankline_space_char = ' '
+let g:indent_blankline_space_char_blankline = ' '
+let g:indent_blankline_use_treesitter = v:true
 
 
 " ntpeters/vim-better-whitespace
@@ -85,8 +88,8 @@ let g:webdevicons_enable_startify = 1
 
 " Tab styling
 "let g:taboo_tab_format=" %d %f %m %x⎹"
-let g:taboo_tab_format=" %d%U .../%P %m %x⎹"
-let g:taboo_renamed_tab_format=" %l %m %x⎹"
+let g:taboo_tab_format=" %d%U .../%P %m %x▕"
+let g:taboo_renamed_tab_format=" %l %m %x▕"
 let g:taboo_close_tab_label = ""
 let g:taboo_modified_tab_flag="פֿ"
 
@@ -149,6 +152,11 @@ let g:OmniSharp_want_snippet=1
 "" Fern File Tree
 "*****************************************************************************
 let g:fern#renderer = "nerdfont"
+let g:chadtree_settings = { 'keymap': {} }
+let g:chadtree_settings.keymap.bigger = [">"]
+let g:chadtree_settings.keymap.smaller = ["<"]
+let g:chadtree_settings.keymap.change_focus = ["<cr>"]
+let g:chadtree_settings.keymap.change_focus_up = ["<bs>"]
 
 " Buffeur Explorer
 let g:bufExplorerShowRelativePath=1
@@ -280,22 +288,6 @@ highlight GitGutterDelete cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
-"
-highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
-highlight link csThis Language
-highlight link csNew Constant
-highlight link csInterpolation Identifier
-highlight link csInterpolationDelim Constant
-highlight link csDocComment SpecialComment
-highlight link csDocExample Identifier
-highlight link csDocString Identifier
-highlight link csOperator Conditional
-highlight link csOperLambda Conditional
-highlight link csModifier Conditional
-highlight link csLinqKeyword Conditional
-highlight link csUnspecifiedStatement PlainText
-highlight link csContextualStatement Control
-highlight link csUnsupportedStatement PlainText
 
 hi TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
@@ -332,3 +324,18 @@ highlight Cursor guibg=#5f87af ctermbg=67
 highlight iCursor guibg=#ffffaf ctermbg=229
 highlight rCursor guibg=#af0000 ctermbg=124
 
+highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
+highlight link csThis Language
+highlight link csNew Constant
+highlight link csInterpolation Identifier
+highlight link csInterpolationDelim Constant
+highlight link csDocComment SpecialComment
+highlight link csDocExample Identifier
+highlight link csDocString Identifier
+highlight link csOperator Conditional
+highlight link csOperLambda Conditional
+highlight link csModifier Conditional
+highlight link csLinqKeyword Conditional
+" highlight link csUnspecifiedStatement PlainText
+" highlight link csContextualStatement Control
+" highlight link csUnsupportedStatement PlainText

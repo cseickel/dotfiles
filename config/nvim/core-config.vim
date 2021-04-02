@@ -58,7 +58,7 @@ set mousemodel=popup
 syntax enable
 set ruler
 set number
-set wrap
+set nowrap
 set signcolumn=yes
 
 " Tweaks to improve performance
@@ -99,21 +99,30 @@ endfunction
 if exists('g:my_hide_one_liner_timer')
   call timer_stop(g:my_hide_one_liner_timer)
 endif
-let g:my_hide_one_liner_timer = timer_start(300, 'HideOneLineWindows', {'repeat': -1})
+let g:my_hide_one_liner_timer = timer_start(100, 'HideOneLineWindows', {'repeat': -1})
 
 function! SetRelative()
+  if &ft == 'CHADtree'
+    setlocal nonumber norelativenumber
+    return
+  endif
   if expand('%') =~ "term://"
     setlocal nonumber norelativenumber nocursorline signcolumn=yes
   else
     if expand("%:t") =~ ".space-filler."
       setlocal nonumber norelativenumber nowrap signcolumn=no
     else
-      setlocal nonumber relativenumber wrap 
+      setlocal nonumber relativenumber 
     endif
   endif
+  redraw
 endfunction
 
 function! SetNoRelative()
+  if &ft == 'CHADtree'
+    setlocal nonumber norelativenumber
+    return
+  endif
   if expand('%') =~ "term://"
     setlocal nonumber norelativenumber
   else
@@ -125,12 +134,22 @@ function! SetNoRelative()
   endif
 endfunction
 
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * call SetRelative()
-  autocmd BufLeave,FocusLost,InsertEnter   * call SetNoRelative()
-augroup END
+function! EnterTerminal()
+  setlocal nonumber norelativenumber autowriteall modifiable noruler
+  "setlocal ft=terminal
+  "setlocal winfixheight
+  "setlocal noshowmode
+  "setlocal laststatus=0
+  "setlocal noshowcmd
+  "setlocal cmdheight=1
+endfunction
 
+function! TwoSpaceIndent()
+  setlocal shiftwidth=2
+  setlocal tabstop=2
+  setlocal softtabstop=2
+  setlocal expandtab
+endfunction
 
 " For regular expressions turn magic on
 set magic
@@ -202,4 +221,6 @@ augroup core_autocmd
   autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
   autocmd FileType javascript,typescript,html call TwoSpaceIndent()
   autocmd TermOpen * call InitTerminal()
+  autocmd BufEnter,FocusGained,InsertLeave,CmdlineLeave * call SetRelative() | redraw
+  autocmd BufLeave,FocusLost,InsertEnter,CmdlineEnter   * call SetNoRelative() | redraw
 augroup END

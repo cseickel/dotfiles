@@ -49,6 +49,8 @@ Plug 'lambdalisue/nerdfont.vim'
 Plug 'lambdalisue/glyph-palette.vim'
 Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+"CHADTree conflicts with scrollview and dwm right now
+"Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
 "Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -66,6 +68,9 @@ Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRe
 "Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'kana/vim-textobj-user'
+Plug 'sgur/vim-textobj-parameter'
+Plug 'AckslD/nvim-revJ.lua'
 
 Plug 'tpope/vim-fugitive'
 Plug 'sodapopcan/vim-twiggy'
@@ -84,6 +89,7 @@ Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
+Plug 'sheerun/vim-polyglot'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
@@ -100,6 +106,7 @@ Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'skywind3000/vim-quickui'
 Plug 'tmux-plugins/vim-tmux-focus-events'
