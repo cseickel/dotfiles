@@ -151,7 +151,7 @@ nvim_wrapper() {
 }
 alias nvim="nvim_wrapper"
 alias vim="nvim_wrapper"
-alias tcd='nvr --remote-send "jk:tcd $(pwd)<cr>"'
+alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
@@ -167,7 +167,7 @@ alias gcan='git commit -a --amend --no-edit'
 alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease'
 alias gpf='git push --force-with-lease'
 alias gco='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
-
+alias branch-reset-origin="git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
 
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '

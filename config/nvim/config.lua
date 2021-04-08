@@ -20,6 +20,7 @@ local on_attach = function()
             nvim_lua = true;
             spell = true;
             ultisnips = true;
+            buffer = true;
         };
     }, 0)
 end
@@ -29,7 +30,7 @@ local function setup_servers()
 	for _, server in pairs(servers) do
 		require'lspconfig'[server].setup{on_attach=on_attach};
 	end
-end
+ end
 
 setup_servers()
 

@@ -82,8 +82,14 @@ nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
 function! InitCS()
     let l:compe_config = {}
+    let l:compe_config.documentation = v:true
+    let l:compe_config.min_length = 1
     let l:compe_config.source = {}
+    let l:compe_config.source.calc = v:true
+    let l:compe_config.source.path = v:true
     let l:compe_config.source.omni = v:true
+    let l:compe_config.source.spell = v:true
+    let l:compe_config.source.ultisnips = v:true
     call compe#setup(l:compe_config, 0)
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
     nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
@@ -91,11 +97,10 @@ function! InitCS()
     nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
     nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
     nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
-    nmap <silent><buffer> <leader>k <Plug>(omnisharp_documentation)
+    nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
     nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
     nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
     nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
-    imap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
     nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
     nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
     nmap <silent><buffer> gcc <Plug>(omnisharp_global_code_check)
