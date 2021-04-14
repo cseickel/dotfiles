@@ -1,4 +1,6 @@
 vim.o.completeopt = "menuone,noselect"
+LspInstall = require'lspinstall'
+
 local on_attach = function()
     require'compe'.setup({
         enabled = true;
@@ -25,8 +27,8 @@ local on_attach = function()
     }, 0)
 end
 local function setup_servers()
-	require'lspinstall'.setup()
-	local servers = require'lspinstall'.installed_servers()
+	LspInstall.setup()
+	local servers = LspInstall.installed_servers()
 	for _, server in pairs(servers) do
 		require'lspconfig'[server].setup{on_attach=on_attach};
 	end
@@ -35,7 +37,7 @@ local function setup_servers()
 setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function ()
+LspInstall.post_install_hook = function ()
 	setup_servers() -- reload installed servers
 	vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
@@ -44,7 +46,7 @@ require'nvim-treesitter.configs'.setup {
 	ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 	highlight = {
 		enable = true,              -- false will disable the whole extension
-		disable = { "c_sharp" },  -- list of language that will be disabled
+		--disable = { "c_sharp" },  -- list of language that will be disabled
 	},
 	indent = {
 		enable = true
