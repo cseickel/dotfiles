@@ -166,7 +166,7 @@ let g:bufExplorerDisableDefaultKeyMapping=1
 
 
 " colorizer
-let g:Hexokinase_highlighters = ['foregroundfull']
+"let g:Hexokinase_highlighters = ['foregroundfull']
 
 
 " Startify

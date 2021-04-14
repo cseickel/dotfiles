@@ -63,34 +63,42 @@ nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 imap <BS> <Plug>(PearTreeBackspace)
 imap <CR> <Plug>(PearTreeExpand)
 
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+"*****************************************************************************
+"" Coc Mappings
+"*****************************************************************************
+" select the first completion item and confirm the completion when no item has been selected:
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
-nnoremap <silent> <leader>gd <cmd>lua vim.lsp.buf.definition()<cr>
-nnoremap <silent> <leader>gt <cmd>lua vim.lsp.buf.type_definition()<cr>
-nnoremap <silent> <leader>gi <cmd>lua vim.lsp.buf.implementation() <cr>
-nnoremap <silent> <leader>gr <cmd>lua vim.lsp.buf.references()<cr>
-nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<cr>
-nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.code_action()<cr>
-nnoremap <silent> K          <cmd>lua vim.lsp.buf.hover()<cr>   
-nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.set_loclist()<cr>
-nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
-nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
+
+" use <c-space>for trigger completion
+imap <silent><expr> <c-space> coc#refresh()
+
+" GoTo code navigation
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gt :CocCommand fzf-preview.CocTypeDefinitions<cr>
+nmap <silent> <leader>gi :CocCommand fzf-preview.CocImplementations<cr>
+nmap <silent> <leader>gr :CocCommand fzf-preview.CocReferences<cr>
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>a <Plug>(coc-codeaction-line)
+vmap <leader>a <Plug>(coc-codeaction-selected)
+" Apply AutoFix to problem on the current line.
+nmap <leader>fx  <Plug>(coc-fix-current)
 
 function! InitCS()
-    let l:compe_config = {}
-    let l:compe_config.documentation = v:true
-    let l:compe_config.min_length = 1
-    let l:compe_config.source = {}
-    let l:compe_config.source.calc = v:true
-    let l:compe_config.source.path = v:true
-    let l:compe_config.source.omni = v:true
-    let l:compe_config.source.spell = v:true
-    let l:compe_config.source.ultisnips = v:true
-    call compe#setup(l:compe_config, 0)
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
     nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
     nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
@@ -113,7 +121,7 @@ function! DocHighlight()
     if &ft == 'cs' 
         OmniSharpTypeLookup
     else 
-        silent! lua vim.lsp.buf.document_highlight()
+        call CocActionAsync('highlight')
     endif
 endfunction
 
@@ -123,7 +131,6 @@ augroup omnisharp_commands
     " Note that the type is echoed to the Vim command line, and will overwrite
     " any other messages in this space including e.g. ALE linting messages.
     autocmd CursorHold * call DocHighlight()
-	autocmd CursorMoved * lua vim.lsp.buf.clear_references()
     " The following commands are contextual, based on the cursor position.
     autocmd FileType cs call InitCS()
 augroup END

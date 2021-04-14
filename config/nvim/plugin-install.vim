@@ -33,6 +33,7 @@ let g:coc_global_extensions = [
             \"coc-python",
             \"coc-tsserver",
             \"coc-db",
+            \"coc-highlight",
             \"coc-styled-components"]
 "            \"coc-explorer",
 
@@ -53,7 +54,7 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
-"Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -80,7 +81,7 @@ Plug 'puremourning/vimspector'
 Plug 'mhinz/vim-startify'
 
 Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
-Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+"Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'ntpeters/vim-better-whitespace'
 "color scheme
 Plug 'dunstontc/vim-vscode-theme'
@@ -91,13 +92,12 @@ Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
 "Plug 'sheerun/vim-polyglot'
 
-Plug 'neovim/nvim-lspconfig'
-Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'hrsh7th/nvim-compe'
-Plug 'onsails/lspkind-nvim'
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'kabouzeid/nvim-lspinstall'
+"Plug 'onsails/lspkind-nvim'
+"Plug 'hrsh7th/nvim-compe'
 
+Plug 'nvim-treesitter/nvim-treesitter'
 
 
 " UI Stuff
