@@ -60,9 +60,6 @@ nnoremap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Righ
 nnoremap <expr> <C-Down> &diff? '<Plug>(MergetoolDiffExchangeDown)' : '<C-Down>'
 nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 
-imap <BS> <Plug>(PearTreeBackspace)
-imap <CR> <Plug>(PearTreeExpand)
-
 "*****************************************************************************
 "" Coc Mappings
 "*****************************************************************************

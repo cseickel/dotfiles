@@ -16,6 +16,7 @@
     ~/.config/nvim/plugin-mappings.vim: config/nvim/plugin-mappings.vim
     ~/.config/nvim/custom-menus.vim: config/nvim/custom-menus.vim
     ~/.config/nvim/config.lua: config/nvim/config.lua
+    ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/nvim/colors:
         glob: true
         path: config/nvim/colors/*

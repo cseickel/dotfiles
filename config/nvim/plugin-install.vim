@@ -34,6 +34,11 @@ let g:coc_global_extensions = [
             \"coc-tsserver",
             \"coc-db",
             \"coc-highlight",
+            \"coc-sql",
+            \"coc-sh",
+            \"coc-snippets",
+            \"coc-vimlsp",
+            \"coc-pairs",
             \"coc-styled-components"]
 "            \"coc-explorer",
 
@@ -58,10 +63,10 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
-Plug 'tmsvg/pear-tree'
+"Plug 'tmsvg/pear-tree'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -69,12 +74,11 @@ Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRe
 "Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'kana/vim-textobj-user'
-Plug 'sgur/vim-textobj-parameter'
-Plug 'AckslD/nvim-revJ.lua'
+"Plug 'kana/vim-textobj-user'
+"Plug 'sgur/vim-textobj-parameter'
+"Plug 'AckslD/nvim-revJ.lua'
 
 Plug 'tpope/vim-fugitive'
-Plug 'sodapopcan/vim-twiggy'
 Plug 'samoshkin/vim-mergetool'
 
 Plug 'puremourning/vimspector'
@@ -121,7 +125,6 @@ Plug 'cseickel/dwm.vim'
 "" Plug install packages - Stuff I might need
 "*************************************************************
 Plug 'mileszs/ack.vim'
-Plug 'liuchengxu/vista.vim'
 
 " SQL Interface
 Plug 'tpope/vim-dadbod'

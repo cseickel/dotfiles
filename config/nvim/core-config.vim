@@ -77,6 +77,7 @@ function! HideOneLineWindows(...)
         if bufname(winbufnr(i)) =~ ".space-filler."
           execute i . 'wincmd w'
           b#
+          setlocal number
         endif
       else
         if !(bufname(winbufnr(i)) =~ ".space-filler.")
@@ -85,7 +86,7 @@ function! HideOneLineWindows(...)
           let l:original_ext = expand('%:e')
           execute "e ~/.config/nvim/.space-filler." . l:original_ext
           let &ft = l:original_ft
-          setlocal nobuflisted readonly
+          setlocal nobuflisted readonly nonumber norelativenumber
         endif
       endif
     endif
@@ -212,7 +213,7 @@ function! TwoSpaceIndent()
 endfunction
 
 function! InitTerminal()
-  setlocal nonumber norelativenumber noruler
+  setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
   setlocal autowriteall modifiable
 endfunction
 
@@ -221,6 +222,8 @@ augroup core_autocmd
   autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
   autocmd FileType javascript,typescript,html call TwoSpaceIndent()
   autocmd TermOpen * call InitTerminal()
-  autocmd BufEnter,FocusGained,InsertLeave,CmdlineLeave * call SetRelative() | redraw
-  autocmd BufLeave,FocusLost,InsertEnter,CmdlineEnter   * call SetNoRelative() | redraw
+  "autocmd BufEnter,InsertLeave * call SetRelative()
+  "autocmd CmdlineLeave         * call SetRelative() | redraw
+  "autocmd BufLeave,InsertEnter * call SetNoRelative()
+  "autocmd CmdlineEnter         * call SetNoRelative() | redraw
 augroup END

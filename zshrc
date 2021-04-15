@@ -156,18 +156,20 @@ alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
 
-alias checkout='git checkout'
-alias pull="git pull"
-alias status="git status"
 alias add="git add"
+alias checkout='git checkout'
 alias commit='git commit'
+alias fetch="git fetch"
+alias log="git log"
+alias pull="git pull"
 alias push='git push'
+alias status="git status"
 alias gca='git commit -a -m'
 alias gcan='git commit -a --amend --no-edit'
 alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease'
 alias gpf='git push --force-with-lease'
 alias gco='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
-alias branch-reset-origin="git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
+alias reset-branch="git fetch && git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
 
 
 SPACESHIP_CHAR_SYMBOL='❯ '
