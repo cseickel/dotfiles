@@ -176,5 +176,7 @@ SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '
 
 export AWS_VAULT_BACKEND=pass
+export NODE_OPTIONS="--max-old-space-size=2048"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+ulimit -c 0

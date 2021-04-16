@@ -36,7 +36,6 @@ let g:coc_global_extensions = [
             \"coc-highlight",
             \"coc-sql",
             \"coc-sh",
-            \"coc-snippets",
             \"coc-vimlsp",
             \"coc-pairs",
             \"coc-styled-components"]
@@ -73,7 +72,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins'  }
 "Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
+"Plug 'tpope/vim-commentary'
 "Plug 'kana/vim-textobj-user'
 "Plug 'sgur/vim-textobj-parameter'
 "Plug 'AckslD/nvim-revJ.lua'
@@ -81,12 +80,12 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'samoshkin/vim-mergetool'
 
-Plug 'puremourning/vimspector'
+"Plug 'puremourning/vimspector'
 Plug 'mhinz/vim-startify'
 
 Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
 "Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-Plug 'ntpeters/vim-better-whitespace'
+"Plug 'ntpeters/vim-better-whitespace'
 "color scheme
 Plug 'dunstontc/vim-vscode-theme'
 Plug 'taniarascia/new-moon.vim'
@@ -114,11 +113,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'skywind3000/vim-quickui'
-Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'gcmt/taboo.vim'
 "Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 "Plug 'TaDaa/vimade' " nice, but has issues with popup windows
-Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
+"Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 Plug 'cseickel/dwm.vim'
 
 "*************************************************************
@@ -133,7 +131,5 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" html
-Plug 'mattn/emmet-vim'
 
 call plug#end()
