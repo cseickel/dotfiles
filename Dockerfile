@@ -39,6 +39,7 @@ RUN yay -Syu --noprogressbar --noconfirm \
        oh-my-zsh-git spaceship-prompt \
        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
        ripgrep docker docker-compose tree-sitter aws-vault pass \
+       ncdu glances \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
