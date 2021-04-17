@@ -133,5 +133,4 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'mcchrish/nnn.vim'
-Plug 'lambdalisue/edita.vim'
 call plug#end()

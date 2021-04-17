@@ -135,6 +135,7 @@ function! SetNoRelative()
   endif
 endfunction
 
+let $EDITOR="nvr --remote-wait"
 function! EnterTerminal()
   setlocal nonumber norelativenumber autowriteall modifiable noruler
   "setlocal ft=terminal
