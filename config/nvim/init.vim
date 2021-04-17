@@ -1,4 +1,4 @@
-let wd = getcwd()
+let g:owd = getcwd()
 cd ~/.config/nvim
 
 source core-config.vim
@@ -9,4 +9,4 @@ source plugin-mappings.vim
 source custom-menus.vim
 lua    require('config')
 
-exe 'cd ' . wd
+exe 'cd ' . g:owd

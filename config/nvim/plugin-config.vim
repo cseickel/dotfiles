@@ -152,12 +152,11 @@ let g:OmniSharp_want_snippet=1
 "" Fern File Tree
 "*****************************************************************************
 let g:fern#renderer = "nerdfont"
-let g:chadtree_settings = { 'keymap': {} }
-let g:chadtree_settings.keymap.bigger = [">"]
-let g:chadtree_settings.keymap.smaller = ["<"]
-let g:chadtree_settings.keymap.change_focus = ["<cr>"]
-let g:chadtree_settings.keymap.change_focus_up = ["<bs>"]
+" Add dirs and files inside the brackets that need to remain hidden
+let hide_dirs  = '^\%(\.git\|node_modules\)$'  " here you write the dir names 
+let hide_files = '\%(\.d\.ts\|\.js\)$'    " here you write the file names
 
+let g:fern#default_exclude = hide_dirs . '\|' . hide_files  " here you exclude them
 " Buffeur Explorer
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerShowTabBuffer=1
@@ -234,6 +233,7 @@ let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
 
 " Set completeopt to have a better completion experience
+set completeopt = "menuone,preview"
 let g:completion_enable_snippet = 'UltiSnips'
 " Avoid showing message extra message when using completion
 set shortmess+=c

@@ -132,4 +132,6 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
+Plug 'mcchrish/nnn.vim'
+
 call plug#end()

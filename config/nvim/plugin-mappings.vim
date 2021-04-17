@@ -26,7 +26,7 @@ function! FernInit() abort
             \ )
     nmap <buffer> <space> <Plug>(fern-my-open-expand-collapse)
     nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
-    nnoremap <buffer> <bar> :b#<cr>
+    nnoremap <buffer> \ :b#<cr>
     nnoremap <buffer> <tab> <Plug>(fern-action-mark:toggle)j
     nmap <buffer> F <Plug>(fern-action-new-file)
     nmap <buffer> D <Plug>(fern-action-new-dir)
@@ -47,12 +47,12 @@ nmap <leader>fm <Plug>(fzf-maps-n)
 xmap <leader>fm <Plug>(fzf-maps-x)
 omap <leader>fm <Plug>(fzf-maps-o)
 
-nnoremap <leader>ga :FzfPreviewGitActions<CR>
+nnoremap <leader>gg :FzfPreviewGitActions<CR>
 nnoremap <leader>q  :FzfPreviewQuickFix<CR>
 nnoremap <leader>l  :FzfPreviewLocationList<CR>
 nnoremap <leader>f  :FzfPreviewBufferLines<CR>
-nnoremap <leader>rg :<C-u>FzfPreviewProjectGrep<Space>
-xnoremap <leader>rg "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <leader>ff :<C-u>FzfPreviewProjectGrep<Space>
+xnoremap <leader>ff "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
 
 " Mergetool shortcuts
 nnoremap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'
@@ -88,12 +88,18 @@ nmap <silent> <leader>gr :CocCommand fzf-preview.CocReferences<cr>
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
 " Remap keys for applying codeAction to the current line.
 nmap <leader>a <Plug>(coc-codeaction-line)
 vmap <leader>a <Plug>(coc-codeaction-selected)
-" Apply AutoFix to problem on the current line.
-nmap <leader>fx  <Plug>(coc-fix-current)
+
+function! s:show_documentation()
+    if &filetype == 'vim'
+        execute 'h '.expand('<cword>')
+    else 
+        call CocAction('doHover')
+    endif
+endfunction
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! InitCS()
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
