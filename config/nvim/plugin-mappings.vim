@@ -53,6 +53,7 @@ nnoremap <leader>l  :FzfPreviewLocationList<CR>
 nnoremap <leader>f  :FzfPreviewBufferLines<CR>
 nnoremap <leader>ff :<C-u>FzfPreviewProjectGrep<Space>
 xnoremap <leader>ff "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <leader>o  :execute 'FzfPreviewDirectoryFiles ' . g:owd<CR>
 
 " Mergetool shortcuts
 nnoremap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'

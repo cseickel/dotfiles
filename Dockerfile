@@ -39,7 +39,7 @@ RUN yay -Syu --noprogressbar --noconfirm \
        oh-my-zsh-git spaceship-prompt \
        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
        ripgrep docker docker-compose tree-sitter aws-vault pass \
-       ncdu glances \
+       ncdu glances nnn \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
@@ -62,7 +62,8 @@ RUN cd /home/$UNAME \
 #    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
 #      && sudo sysctl --system
 
-#RUN yay -Syu --noprogressbar --noconfirm \
-#    && yay -Scc --noprogressbar --noconfirm
+ARG CACHE_BREAKER=""
+RUN yay -Syu --noprogressbar --noconfirm \
+    && yay -Scc --noprogressbar --noconfirm
 
 ENV TERM xterm-256color
