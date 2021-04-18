@@ -166,7 +166,20 @@ let g:bufExplorerDisableDefaultKeyMapping=1
 
 " colorizer
 "let g:Hexokinase_highlighters = ['foregroundfull']
-
+function! s:sortBufferInfo(leftArg, rightArg)
+  if a:leftArg['name'] == a:rightArg['name']
+    return 0
+  elseif a:leftArg['name'] < a:rightArg['name']
+    return -1
+  else
+    return 1
+  endif
+endfunction
+function! s:getHiddenBuffers()
+    let buffers = filter(getbufinfo({'buflisted': 1}), 'len(v:val.windows) < 1 && get(v:val, "name", "") > ""')
+    call sort(buffers, function('s:sortBufferInfo'))
+    return map(buffers, '{"cmd": "b" . v:val.bufnr, "line": v:val.name }')
+endfunction
 
 " Startify
 let g:startify_commands = [
@@ -177,6 +190,7 @@ let g:startify_commands = [
 
 let g:startify_lists = [
             \ { 'header': ['   Commands'],       'type': 'commands' },
+            \ { 'header': ['   Hidden Buffers'], 'type': function("s:getHiddenBuffers") },
             \ { 'header': ['   Sessions'],       'type': 'sessions' },
             \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
             \ ]
