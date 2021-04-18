@@ -3,7 +3,9 @@
     link:
         relink: true
         force: true
-
+- create:
+    - ~/.config/nvim/colors
+    - ~/.config/nvim/UltiSnips
 - link:
     ~/.gitconfig: gitconfig
     ~/.tmux.conf: tmux.conf
