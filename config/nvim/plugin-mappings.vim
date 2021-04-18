@@ -5,6 +5,7 @@ nnoremap <silent> <leader><leader> :BufExplorer<CR>
 nnoremap <silent> \ :Fern . -reveal=%<CR>
 nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
 
+let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
 nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
 nmap     <silent> <         <Plug>DWMShrinkMaster

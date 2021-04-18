@@ -171,7 +171,8 @@ let g:bufExplorerDisableDefaultKeyMapping=1
 " Startify
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
-            \ { '\': ['Browse Directory', 'Fern .'] }
+            \ { '\': ['Browse Directory (Fern)', 'Fern .'] },
+            \ { 'n': ['Browse Directory (nnn)', 'NnnPicker'] }
             \ ]
 
 let g:startify_lists = [

@@ -83,8 +83,8 @@ Plug 'samoshkin/vim-mergetool'
 "Plug 'puremourning/vimspector'
 Plug 'mhinz/vim-startify'
 
-Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
-"Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+"Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 "Plug 'ntpeters/vim-better-whitespace'
 "color scheme
 Plug 'dunstontc/vim-vscode-theme'

@@ -122,7 +122,7 @@ fi
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=1000
-setopt INC_APPEND_HISTORY_TIME
+setopt APPEND_HISTORY
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -133,24 +133,6 @@ setopt INC_APPEND_HISTORY_TIME
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Prevent nested vim when using neovim terminal
-nvim_wrapper() {
-    if command -v nvr &> /dev/null; then
-        if test -z $NVIM_LISTEN_ADDRESS; then
-            nvim $argv
-        else
-            if test -z $argv; then
-                nvr -cc "topleft split | Startify"
-            else
-                nvr -cc "topleft split" --remote $argv
-            fi
-        fi
-    else
-        nvim $argv
-    fi
-}
-alias nvim="nvim_wrapper"
-alias vim="nvim_wrapper"
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
