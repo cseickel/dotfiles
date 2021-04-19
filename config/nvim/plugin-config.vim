@@ -178,7 +178,7 @@ endfunction
 function! s:getHiddenBuffers()
     let buffers = filter(getbufinfo({'buflisted': 1}), 'len(v:val.windows) < 1 && get(v:val, "name", "") > ""')
     call sort(buffers, function('s:sortBufferInfo'))
-    return map(buffers, '{"cmd": "b" . v:val.bufnr, "line": v:val.name }')
+    return map(buffers, '{"cmd": "b" . v:val.bufnr, "line": fnamemodify(v:val.name, ":~:.")}')
 endfunction
 
 " Startify

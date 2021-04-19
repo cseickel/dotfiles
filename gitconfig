@@ -6,3 +6,6 @@
     trustExitCode = true
 [pull]
 	ff = only
+[user]
+	email = cseickel@gmail.com
+	name = Chris Seickel
