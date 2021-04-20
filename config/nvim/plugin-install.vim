@@ -30,6 +30,7 @@ let g:coc_global_extensions = [
             \"coc-fzf-preview",
             \"coc-java",
             \"coc-json",
+            \"coc-yaml",
             \"coc-python",
             \"coc-tsserver",
             \"coc-db",
@@ -38,6 +39,7 @@ let g:coc_global_extensions = [
             \"coc-sh",
             \"coc-vimlsp",
             \"coc-pairs",
+            \"coc-docker",
             \"coc-styled-components"]
 "            \"coc-explorer",
 

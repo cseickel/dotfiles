@@ -51,10 +51,10 @@ prompt spaceship
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -124,15 +124,6 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
@@ -159,6 +150,7 @@ SPACESHIP_CHAR_SYMBOL_ROOT='# '
 
 export AWS_VAULT_BACKEND=pass
 export NODE_OPTIONS="--max-old-space-size=2048"
+export NNN_COLORS='#271cb8ae'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ulimit -c 0
@@ -184,7 +176,7 @@ n ()
     # stty lwrap undef
     # stty lnext undef
 
-    nnn "$@"
+    nnn -e "$@"
 
     if [ -f "$NNN_TMPFILE" ]; then
             . "$NNN_TMPFILE"
