@@ -54,7 +54,7 @@ prompt spaceship
 ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+#COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -77,7 +77,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws docker fzf)
+plugins=(git aws docker fzf zsh-autosuggestions)
 
 if [ -f /.dockerenv ]; then
     # at least this is needed when connecting to docker
@@ -128,6 +128,7 @@ alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
+alias cdk="pass show RWJF >> /dev/null && aws-vault exec RWJF --no-session -- cdk"
 
 alias add="git add"
 alias checkout='git checkout'
@@ -142,14 +143,23 @@ alias gcan='git commit -a --amend --no-edit'
 alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease'
 alias gpf='git push --force-with-lease'
 alias gco='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
-alias reset-branch="git fetch && git reset --hard $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
+function fn_reset_branch() {
+    branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
+    git fetch && git reset --hard $branch
+}
+alias reset-branch="fn_reset_branch"
 
+function fn_squash() {
+    commit=$(git log --oneline | fzf | awk '{print $1}')
+    git reset --soft $commit && git commit -a
+}
+alias squash="fn_squash"
 
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '
 
 export AWS_VAULT_BACKEND=pass
-export NODE_OPTIONS="--max-old-space-size=2048"
+export NODE_OPTIONS="--max-old-space-size=4096"
 export NNN_COLORS='#271cb8ae'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
