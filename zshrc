@@ -128,6 +128,7 @@ alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
+
 alias cdk="pass show RWJF >> /dev/null && aws-vault exec RWJF --no-session -- cdk"
 
 alias add="git add"
@@ -142,7 +143,14 @@ alias gca='git commit -a -m'
 alias gcan='git commit -a --amend --no-edit'
 alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease'
 alias gpf='git push --force-with-lease'
-alias gco='git checkout $(git branch --all | fzf | sed "s/remotes\/origin\///")'
+
+# custom fzf integrated actions
+function fn_git_checkout() {
+    branch=$(git branch --all | fzf | sed "s/remotes\/origin\///")
+    git checkout $branch
+}
+alias gco='fn_git_checkout'
+
 function fn_reset_branch() {
     branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
     git fetch && git reset --hard $branch
@@ -154,6 +162,13 @@ function fn_squash() {
     git reset --soft $commit && git commit -a
 }
 alias squash="fn_squash"
+
+function fn_docker_stop() {
+    id=$(docker container ls | fzf | awk '{print $1;}')
+    docker stop $id
+}
+alias stop="fn_docker_stop"
+
 
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '
