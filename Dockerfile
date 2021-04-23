@@ -51,8 +51,6 @@ RUN cd /home/$UNAME \
     && /bin/sh /home/$UNAME/.dotfiles/install \
     && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
-    && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
-    && nvim --headless +qa \
     && mkdir -p /home/$UNAME/.gnupg \
     && echo "default-cache-ttl 3600" > /home/$UNAME/.gnupg/gpg-agent.conf \
     && echo "max-cache-ttl 57600" >> /home/$UNAME/.gnupg/gpg-agent.conf
@@ -62,8 +60,13 @@ RUN cd /home/$UNAME \
 #    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
 #      && sudo sysctl --system
 
+# The following lines can be run repeatedly to update everything
+# just CACHE_BREAKER to todays date or something similar and rebuild
 ARG CACHE_BREAKER=""
 RUN yay -Syu --noprogressbar --noconfirm \
-    && yay -Scc --noprogressbar --noconfirm
+    && yay -Scc --noprogressbar --noconfirm \
+    && nvim --headless -u ~/.config/nvim/plugin-install.vim -c \
+        "PlugUpgrade | PlugClean! | PlugInstall | PlugUpdate | qa" \
+    && nvim --headless +qa
 
 ENV TERM xterm-256color
