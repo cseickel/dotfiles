@@ -1,3 +1,7 @@
+docker build . `
+    --build-arg CACHE_BREAKER=$(Get-Date -Format "yyyy-MM-dd") `
+    -t cseickel/arch-linux
+
 docker run -it `
     -v arch-linux-volume:/home/arch `
     -v /var/run/docker.sock:/var/run/docker.sock `
