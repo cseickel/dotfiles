@@ -65,6 +65,7 @@ RUN cd /home/$UNAME \
 ARG CACHE_BREAKER=""
 RUN yay -Syu --noprogressbar --noconfirm \
     && yay -Scc --noprogressbar --noconfirm \
+    && cd ~/.dotfiles && git stash && git pull \
     && nvim --headless -u ~/.config/nvim/plugin-install.vim -c \
         "PlugUpgrade | PlugClean! | PlugInstall | PlugUpdate | qa" \
     && nvim --headless +qa
