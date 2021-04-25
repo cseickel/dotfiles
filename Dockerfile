@@ -53,7 +53,9 @@ RUN cd /home/$UNAME \
     && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
     && mkdir -p /home/$UNAME/.gnupg \
     && echo "default-cache-ttl 3600" > /home/$UNAME/.gnupg/gpg-agent.conf \
-    && echo "max-cache-ttl 57600" >> /home/$UNAME/.gnupg/gpg-agent.conf
+    && echo "max-cache-ttl 57600" >> /home/$UNAME/.gnupg/gpg-agent.conf \
+    && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
+    && nvim --headless +qa
 
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
@@ -64,10 +66,6 @@ RUN cd /home/$UNAME \
 # just CACHE_BREAKER to todays date or something similar and rebuild
 ARG CACHE_BREAKER=""
 RUN yay -Syu --noprogressbar --noconfirm \
-    && yay -Scc --noprogressbar --noconfirm \
-    && cd ~/.dotfiles && git stash && git pull \
-    && nvim --headless -u ~/.config/nvim/plugin-install.vim -c \
-        "PlugUpgrade | PlugClean! | PlugInstall | PlugUpdate | qa" \
-    && nvim --headless +qa
+    && yay -Scc --noprogressbar --noconfirm 
 
 ENV TERM xterm-256color

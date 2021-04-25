@@ -128,8 +128,10 @@ alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
+alias ta="tmux attach"
 
 alias cdk="pass show RWJF >> /dev/null && aws-vault exec RWJF --no-session -- cdk"
+alias aws="pass show RWJF >> /dev/null && aws-vault exec RWJF -- aws"
 
 alias add="git add"
 alias checkout='git checkout'
@@ -173,6 +175,7 @@ alias stop="fn_docker_stop"
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '
 
+export ASPNETCORE_ENVIRONMENT=dev
 export AWS_VAULT_BACKEND=pass
 export NODE_OPTIONS="--max-old-space-size=4096"
 export NNN_COLORS='#271cb8ae'
@@ -208,3 +211,7 @@ n ()
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
 }
+
+#if [[ -n $SSH_CONNECTION ]] ; then
+#    [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session }
+#fi
