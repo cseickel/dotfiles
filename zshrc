@@ -140,15 +140,16 @@ alias fetch="git fetch"
 alias log="git log"
 alias pull="git pull"
 alias push='git push'
+alias stash="git stash"
 alias status="git status"
 alias gca='git commit -a -m'
 alias gcan='git commit -a --amend --no-edit'
-alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease'
+alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
 alias gpf='git push --force-with-lease'
 
 # custom fzf integrated actions
 function fn_git_checkout() {
-    branch=$(git branch --all | fzf | sed "s/remotes\/origin\///")
+    branch=$(git branch --all | fzf | sed "s/remotes\/origin\///" | xargs) 
     git checkout $branch
 }
 alias gco='fn_git_checkout'
