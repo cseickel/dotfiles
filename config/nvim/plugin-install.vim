@@ -35,10 +35,8 @@ let g:coc_global_extensions = [
             \"coc-tsserver",
             \"coc-db",
             \"coc-highlight",
-            \"coc-sql",
             \"coc-sh",
             \"coc-vimlsp",
-            \"coc-pairs",
             \"coc-docker",
             \"coc-styled-components"]
 "            \"coc-explorer",
@@ -64,7 +62,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
-"Plug 'tmsvg/pear-tree'
+Plug 'tmsvg/pear-tree'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
 "Plug 'dense-analysis/ale'
@@ -95,13 +93,14 @@ Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
+
 "Plug 'sheerun/vim-polyglot'
 
+" All of the new functionality in nevim 5 that is not quite stable
 "Plug 'neovim/nvim-lspconfig'
 "Plug 'kabouzeid/nvim-lspinstall'
 "Plug 'onsails/lspkind-nvim'
 "Plug 'hrsh7th/nvim-compe'
-
 Plug 'nvim-treesitter/nvim-treesitter'
 
 

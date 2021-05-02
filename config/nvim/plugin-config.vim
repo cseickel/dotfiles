@@ -1,5 +1,5 @@
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+"set foldmethod=expr
+"set foldexpr=nvim_treesitter#foldexpr()
 
 " configure nvcode-color-schemes
 let g:nvcodetermcolors=256

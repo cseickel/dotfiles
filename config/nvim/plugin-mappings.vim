@@ -123,11 +123,17 @@ function! InitCS()
 endfunction
 
 function! DocHighlight()
-    if &ft == 'cs' 
+    if &ft == 'cs' || &ft == 'csx'
         OmniSharpTypeLookup
     else 
         call CocActionAsync('highlight')
     endif
+endfunction
+
+function! InitSql()
+    nnoremap <silent><buffer> <M-x> :%DB $DBUI_URL<cr>
+    vnoremap <silent><buffer> <M-x> :DB $DBUI_URL<cr>
+    let b:db=$DBUI_URL
 endfunction
 
 augroup omnisharp_commands
@@ -138,4 +144,6 @@ augroup omnisharp_commands
     autocmd CursorHold * call DocHighlight()
     " The following commands are contextual, based on the cursor position.
     autocmd FileType cs call InitCS()
+    autocmd FileType csx call InitCS()
+    autocmd FileType sql call InitSql() 
 augroup END
