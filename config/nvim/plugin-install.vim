@@ -102,7 +102,7 @@ Plug 'sainnhe/sonokai'
 "Plug 'onsails/lspkind-nvim'
 "Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter'
-
+Plug 'folke/lsp-trouble.nvim'
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local

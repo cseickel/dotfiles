@@ -8,8 +8,8 @@ nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
 nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
-nmap     <silent> <         <Plug>DWMShrinkMaster
-nmap     <silent> >         <Plug>DWMGrowMaster
+"nmap     <silent> <         <Plug>DWMShrinkMaster
+"nmap     <silent> >         <Plug>DWMGrowMaster
 nmap     <silent> <C-h>     <Plug>DWMFocus
 nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
@@ -17,6 +17,7 @@ nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
 
 function! FernInit() abort
+    setlocal nonumber
     call glyph_palette#apply()
     nmap <buffer><expr>
             \ <Plug>(fern-my-open-expand-collapse)

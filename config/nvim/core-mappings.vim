@@ -2,7 +2,7 @@
 nnoremap <silent> <Esc> <Esc>:noh<bar>set nopaste<CR>
 " clear search term for real
 command C let @/=""
-" Map jk to Esc
+" Map Control \ to Esc
 map <silent> <C-\> <Esc>  
 imap <silent> <C-\> <Esc>
 tnoremap <silent> <C-\> <c-\><c-n>
@@ -27,35 +27,26 @@ nnoremap <silent> <S-tab> :tabprevious<cr>
 
 " Standard Save shortcuts
 noremap  <silent> <C-s> :w<cr>
-inoremap <silent> <C-s> <C-o>:w<cr>
+inoremap <silent> <C-s> <Esc>:w<cr>
 noremap  <silent> <M-s> :wa<cr>
-inoremap <silent> <M-s> <C-o>:wa<cr>
+inoremap <silent> <M-s> <Esc>:wa<cr>
 
 " Use Control + v for paste, ALt + v for visual block mode
-noremap  <silent> <M-v> <C-v>
-nnoremap <silent> <C-v> p
-vnoremap <silent> <C-v> "_dp
-inoremap <silent> <C-v> <C-o>p
-tnoremap <silent> <C-v> <c-\><c-n>pi
-
-" Paste mode
-nmap <C-p> :set paste<bar>startinsert<cr>
-imap <C-p> <C-o>:set paste<cr>
+nnoremap <silent> <M-v> <C-v>
+nnoremap <silent> <C-v> "0p
+vnoremap <silent> <C-v> "_d"0p
+inoremap <silent> <C-v> <Esc>"0pa
+tnoremap <silent> <C-v> <c-\><c-n>"0pi
 
 " Select All
 noremap  <silent> <C-a> ggVG
 inoremap <silent> <C-a> <Esc>ggVG
 vnoremap <silent> <C-a> <Esc>ggVG
 
-
 " Standard Cut shortcut
-function! CopyDefaultRegisters()
-    let @+=@0
-    let @*=@0
-    let @"=@0
-endfunction
-vnoremap <silent> <C-x> "0d:call CopyDefaultRegisters()<cr>
-nnoremap <silent> <C-x> V"0d:call CopyDefaultRegisters()<cr>
+inoremap <silent> <C-x> <Esc>yawdawi
+vnoremap <silent><C-x> ygvd
+nnoremap <silent> <C-x> Vydd
 
 " Search and Replace Selected Text
 vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
@@ -105,8 +96,8 @@ nnoremap <silent> <C-l> <C-w>K
 
 " window resize
 nnoremap <silent> _     <C-w>_
-"nnoremap <silent> <     <C-w><
-"nnoremap <silent> >     <C-w>>
+nnoremap <silent> <     <C-w>5<
+nnoremap <silent> >     <C-w>5>
 nnoremap <silent> -     <C-w>-
 nnoremap <silent> +     <C-w>+
 nnoremap <silent> =     <C-w>+
