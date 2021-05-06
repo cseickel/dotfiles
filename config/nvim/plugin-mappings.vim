@@ -38,6 +38,16 @@ function! FernInit() abort
     nmap <buffer> s <Plug>(fern-action-open:split)
     nmap <buffer> v <Plug>(fern-action-open:vsplit)
     nmap <buffer> <F5> <Plug>(fern-action-reload)
+
+    nmap <buffer> <CR>
+          \ <Plug>(fern-action-enter)
+          \ <Plug>(fern-wait)
+          \ <Plug>(fern-action-tcd:root)
+
+    nmap <buffer> <BS>
+          \ <Plug>(fern-action-leave)
+          \ <Plug>(fern-wait)
+          \ <Plug>(fern-action-tcd:root)
 endfunction
 augroup FernEvents
     autocmd!

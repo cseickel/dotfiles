@@ -62,6 +62,8 @@ let g:airline#extensions#branch#format = 2
 function! GetFileName()
     if expand('%') =~ "term://"
         return 'TERMINAL'
+    elseif &ft == 'fern'
+        return 'fern'
     else
         if expand("%:t") =~ '.space-filler.'
             return expand("#:f")
@@ -155,7 +157,7 @@ let g:fern#renderer = "nerdfont"
 " Add dirs and files inside the brackets that need to remain hidden
 let hide_dirs  = '^\%(\.git\|node_modules\)$'  " here you write the dir names 
 let hide_files = '\%(\.d\.ts\|\.js\)$'    " here you write the file names
-
+let g:fern#disable_drawer_auto_resize=1
 let g:fern#default_exclude = hide_dirs . '\|' . hide_files  " here you exclude them
 " Buffeur Explorer
 let g:bufExplorerShowRelativePath=1
