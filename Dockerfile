@@ -35,18 +35,20 @@ RUN cd /home/$UNAME \
     && rm -Rf yay
 
 RUN yay -Syu --noprogressbar --noconfirm \
-       neovim-nightly-bin neovim-plug neovim-remote \
+       base-devel cmake unzip ninja tree-sitter neovim-plug neovim-remote \
        oh-my-zsh-git spaceship-prompt \
        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
-       ripgrep docker docker-compose tree-sitter aws-vault pass \
-       ncdu glances nnn-nerd neovim-symlinks mssql-tools \
+       ripgrep docker docker-compose aws-vault pass \
+       ncdu glances nnn-nerd mssql-tools \
+    && git clone https://github.com/neovim/neovim \
+    && cd neovim \
+    && make CMAKE_BUILD_TYPE=Release \
+    && sudo make install \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
 
 RUN cd /home/$UNAME \
-    && mkdir -p .config/nvim/colors \
-    && mkdir -p .config/nvim/UltiSnips \
     && git clone https://github.com/cseickel/dotfiles.git .dotfiles \
     && /bin/sh /home/$UNAME/.dotfiles/install \
     && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \

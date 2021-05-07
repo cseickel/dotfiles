@@ -15,6 +15,9 @@ nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
+let g:EasyClipUsePasteToggleDefaults = 0
+nmap <C-f> <plug>EasyClipSwapPasteForward
+nmap <C-d> <plug>EasyClipSwapPasteBackwards
 
 function! FernInit() abort
     setlocal nonumber
