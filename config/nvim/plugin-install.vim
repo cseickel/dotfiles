@@ -58,7 +58,7 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocUpdate' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -69,7 +69,7 @@ Plug 'nickspoons/vim-sharpenup'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins'  }
+Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins' }
 "Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-commentary'
@@ -101,7 +101,7 @@ Plug 'sainnhe/sonokai'
 "Plug 'kabouzeid/nvim-lspinstall'
 "Plug 'onsails/lspkind-nvim'
 "Plug 'hrsh7th/nvim-compe'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/lsp-trouble.nvim'
 
 " UI Stuff

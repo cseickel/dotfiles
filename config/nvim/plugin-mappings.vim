@@ -19,6 +19,7 @@ let g:EasyClipUsePasteToggleDefaults = 0
 nmap <C-f> <plug>EasyClipSwapPasteForward
 nmap <C-d> <plug>EasyClipSwapPasteBackwards
 
+let g:EasyClipUsePasteToggleDefaults = 0
 function! FernInit() abort
     setlocal nonumber
     call glyph_palette#apply()
