@@ -10,7 +10,6 @@ fi
 if [ -f $HOME/.oh-my-zsh/oh-my-zsh.sh  ]; then
     export ZSH="$HOME/.oh-my-zsh"
 fi
-source "$ZSH/oh-my-zsh.sh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -78,6 +77,7 @@ ENABLE_CORRECTION="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git aws docker fzf zsh-autosuggestions)
+source "$ZSH/oh-my-zsh.sh"
 
 if [ -f /.dockerenv ]; then
     # at least this is needed when connecting to docker
