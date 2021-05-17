@@ -44,6 +44,8 @@ RUN yay -Syu --noprogressbar --noconfirm \
     && cd neovim \
     && make CMAKE_BUILD_TYPE=Release \
     && sudo make install \
+    && sudo link /usr/local/bin/nvim /usr/local/bin/vi \
+    && sudo link /usr/local/bin/nvim /usr/local/bin/vim \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm

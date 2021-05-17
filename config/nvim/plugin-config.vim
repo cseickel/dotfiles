@@ -12,7 +12,7 @@ endif
 
 " Theme
 "colorscheme dark_plus
-colorscheme nvcode
+colorscheme nvcode "<-- this one is best with tree-sitter
 "colorscheme OceanicNext
 "let g:sonokai_style = 'shusia'
 "let g:sonokai_disable_italic_comment = 1

@@ -14,6 +14,7 @@ nmap     <silent> <C-h>     <Plug>DWMFocus
 nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
+nnoremap <silent> <C-m>     :-1tabedit % <bar> exec "TabooRename " . expand("%:t")<CR>
 
 let g:EasyClipUsePasteToggleDefaults = 0
 nmap <C-f> <plug>EasyClipSwapPasteForward

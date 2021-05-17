@@ -93,8 +93,9 @@ Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
+Plug 'GustavoPrietoP/doom-one.vim'
 
-"Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
 " All of the new functionality in nevim 5 that is not quite stable
 "Plug 'neovim/nvim-lspconfig'
