@@ -93,7 +93,9 @@ nnoremap <silent> <C-h> <C-w>H
 nnoremap <silent> <C-j> <C-w>x<C-w>j
 nnoremap <silent> <C-k> <C-w>k<C-w>x
 nnoremap <silent> <C-l> <C-w>K
-nnoremap <silent> <C-m> :-1tabedit % <cr>
+nnoremap <silent> Z :-1tabedit % <cr>
+nnoremap <silent> X :q<cr>
+nnoremap ZZ <Nop>
 " window resize
 nnoremap <silent> _     <C-w>5<
 nnoremap <silent> +     <C-w>5>

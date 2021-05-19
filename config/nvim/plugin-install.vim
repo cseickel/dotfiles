@@ -58,7 +58,7 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocUpdate' }
+"Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocUpdate' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -98,10 +98,10 @@ Plug 'GustavoPrietoP/doom-one.vim'
 Plug 'sheerun/vim-polyglot'
 
 " All of the new functionality in nevim 5 that is not quite stable
-"Plug 'neovim/nvim-lspconfig'
-"Plug 'kabouzeid/nvim-lspinstall'
-"Plug 'onsails/lspkind-nvim'
-"Plug 'hrsh7th/nvim-compe'
+Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
+Plug 'onsails/lspkind-nvim'
+Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/lsp-trouble.nvim'
 
