@@ -95,11 +95,9 @@ nnoremap <silent> <C-k> <C-w>k<C-w>x
 nnoremap <silent> <C-l> <C-w>K
 nnoremap <silent> <C-m> :-1tabedit % <cr>
 " window resize
-nnoremap <silent> _     <C-w>_
-nnoremap <silent> <     <C-w>5<
-nnoremap <silent> >     <C-w>5>
+nnoremap <silent> _     <C-w>5<
+nnoremap <silent> +     <C-w>5>
 nnoremap <silent> -     <C-w>-
-nnoremap <silent> +     <C-w>+
 nnoremap <silent> =     <C-w>+
 
 " window navigation

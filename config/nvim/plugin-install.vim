@@ -135,4 +135,5 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'mcchrish/nnn.vim'
+Plug 'jamestthompson3/nvim-remote-containers'
 call plug#end()
