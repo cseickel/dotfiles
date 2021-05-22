@@ -57,7 +57,7 @@ require('lspkind').init({
     -- enables text annotations
     --
     -- default: true
-    with_text = true,
+    with_text = false,
 
     -- default symbol map
     -- can be either 'default' or
@@ -120,7 +120,7 @@ require'trouble'.setup {
     indent_lines = true, -- add an indent guide below the fold icons
     auto_open = false, -- automatically open the list when you have diagnostics
     auto_close = false, -- automatically close the list when you have no diagnostics
-    auto_preview = true, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
+    auto_preview = false, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
     auto_fold = false, -- automatically fold a file trouble list at creation
     signs = {
         -- icons / text used for a diagnostic
@@ -198,4 +198,4 @@ require('telescope').setup{
     buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
   }
 }
-
+require("which-key").setup()
