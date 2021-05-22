@@ -70,14 +70,22 @@ function! HideOneLineWindows(...)
   if mode() != 'n'
     return
   endif
+  
   let l:currwin = winnr()
   for i in range(1, winnr('$'))
+    if !&buflisted
+      continue
+    endif
     if winwidth(i) > 1
       if winheight(i) > 1
         if bufname(winbufnr(i)) =~ ".space-filler."
           execute i . 'wincmd w'
           b#
-          setlocal number
+          if expand('%') =~ "term://"
+            setlocal nonumber norelativenumber nocursorline signcolumn=yes
+          else
+            setlocal number signcolumn=yes
+          endif
         endif
       else
         if !(bufname(winbufnr(i)) =~ ".space-filler.")
@@ -100,7 +108,7 @@ endfunction
 if exists('g:my_hide_one_liner_timer')
   call timer_stop(g:my_hide_one_liner_timer)
 endif
-let g:my_hide_one_liner_timer = timer_start(100, 'HideOneLineWindows', {'repeat': -1})
+"let g:my_hide_one_liner_timer = timer_start(100, 'HideOneLineWindows', {'repeat': -1})
 
 function! SetRelative()
   if &ft == 'CHADtree'

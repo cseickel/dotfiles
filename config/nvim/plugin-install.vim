@@ -17,7 +17,7 @@ if !filereadable(vimplug_exists)
     echo "Installing Vim-Plug..."
     echo ""
     silent exec "!"curl_exists" -fLo " . shellescape(vimplug_exists) . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    let g:not_finish_vimplug = "yes"
+    let variable =  value g:not_finish_vimplug = "yes"
     autocmd VimEnter * PlugInstall
 endif
 
@@ -69,7 +69,7 @@ Plug 'nickspoons/vim-sharpenup'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/remote', 'do': ':UpdateRemotePlugins' }
+Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
 "Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-commentary'
@@ -104,6 +104,9 @@ Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/lsp-trouble.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local

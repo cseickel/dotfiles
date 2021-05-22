@@ -1,4 +1,4 @@
-FROM archlinux:base-devel
+FROM archlinux:base-devel:
 
 ENV \
     UID="1000" \
@@ -17,8 +17,7 @@ RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
 COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
 
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
-       git python3 python-pip nodejs npm wget curl \
-       tmux zsh bat fzf openssh \
+       git wget curl openssh \
     && update-ca-trust \
     && useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
@@ -34,12 +33,14 @@ RUN cd /home/$UNAME \
     && cd .. \
     && rm -Rf yay
 
-RUN yay -Syu --noprogressbar --noconfirm \
+RUN yay -Syu --noprogressbar --noconfirm --needed \
+       tmux zsh bat fzf python3 python-pip nodejs npm  jq \
        base-devel cmake unzip ninja tree-sitter neovim-plug neovim-remote \
-       oh-my-zsh-git spaceship-prompt \
-       aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin \
-       ripgrep docker docker-compose aws-vault pass \
-       ncdu glances nnn-nerd mssql-tools \
+       oh-my-zsh-git spaceship-prompt zoxide-bin \
+       aspnet-runtime-3.1 dotnet-sdk-3.1 \
+       aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
+       ripgrep docker docker-compose \
+       ncdu glances mssql-tools lazydocker \
     && git clone https://github.com/neovim/neovim \
     && cd neovim \
     && make CMAKE_BUILD_TYPE=Release \

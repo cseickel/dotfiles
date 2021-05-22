@@ -78,6 +78,8 @@ ENABLE_CORRECTION="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git aws docker fzf zsh-autosuggestions)
 source "$ZSH/oh-my-zsh.sh"
+eval "$(zoxide init zsh)"
+
 
 if [ -f /.dockerenv ]; then
     # at least this is needed when connecting to docker
@@ -172,6 +174,12 @@ function fn_docker_stop() {
     docker stop $id
 }
 alias stop="fn_docker_stop"
+
+function fn_aws_tail() {
+    group=$(aws logs describe-log-groups | jq -r ".logGroups[].logGroupName" | fzf)
+    aws logs tail $group --format short --follow "$@"
+}
+alias awstail="fn_aws_tail"
 
 
 SPACESHIP_CHAR_SYMBOL='❯ '

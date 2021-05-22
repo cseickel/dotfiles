@@ -1,6 +1,7 @@
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename
 nnoremap <silent> <leader><leader> :BufExplorer<CR>
+nnoremap <C-p> :Telescope builtin<cr>
 
 nnoremap <silent> \ :Fern . -reveal=%<CR>
 nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
@@ -14,7 +15,22 @@ nmap     <silent> <C-h>     <Plug>DWMFocus
 nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
-nnoremap <silent> Z         :-1tabedit % <bar> exec "TabooRename " . expand("%:t")<CR>
+
+function! MyZoom()
+    let l:top = line("w0")
+    let l:line = line(".")
+    -1tabedit %
+    execute "normal " . l:top . "zt"
+    execute l:line
+    execute "TabooRename " . expand("%:t")
+endfunction
+nnoremap <silent> Z         :call MyZoom()<cr>
+
+function! MyTrouble()
+    Trouble
+    call DWM_MoveRight()
+endfunction
+nnoremap <silent> <leader>t :call MyTrouble()<cr>
 
 let g:EasyClipUsePasteToggleDefaults = 0
 nmap <C-f> <plug>EasyClipSwapPasteForward
@@ -78,9 +94,9 @@ nnoremap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Righ
 nnoremap <expr> <C-Down> &diff? '<Plug>(MergetoolDiffExchangeDown)' : '<C-Down>'
 nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 
-let USE_COC = v:false
+let g:USE_COC = v:false
 
-if USE_COC
+if g:USE_COC
     "*****************************************************************************
     "" Coc Mappings
     "*****************************************************************************
@@ -121,45 +137,6 @@ if USE_COC
         endif
     endfunction
     nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-    function! InitCS()
-        nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
-        nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
-        nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
-        nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
-        nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
-        nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
-        nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
-        nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
-        nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
-        nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
-        nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
-        nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
-        nmap <silent><buffer> gcc <Plug>(omnisharp_global_code_check)
-        nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
-        nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
-        nmap <silent><buffer> <leader>rn <Plug>(omnisharp_rename)
-    endfunction
-
-    function! DocHighlight()
-        if &ft == 'cs' || &ft == 'csx'
-            OmniSharpTypeLookup
-        else 
-            call CocActionAsync('highlight')
-        endif
-    endfunction
-
-    augroup omnisharp_commands
-        autocmd!
-        " Show type information automatically when the cursor stops moving.
-        " Note that the type is echoed to the Vim command line, and will overwrite
-        " any other messages in this space including e.g. ALE linting messages.
-        autocmd CursorHold * call DocHighlight()
-        " The following commands are contextual, based on the cursor position.
-        autocmd FileType cs call InitCS()
-        autocmd FileType csx call InitCS()
-        autocmd FileType sql call InitSql() 
-    augroup END
 else
     "*****************************************************************************
     "" LSP Mappings
@@ -180,8 +157,11 @@ else
     nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.set_loclist()<cr>
     nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
     nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
+endif
 
-    function! InitCS()
+
+function! InitCS()
+    if !g:USE_COC
         let l:compe_config = {}
         let l:compe_config.documentation = v:true
         let l:compe_config.min_length = 1
@@ -192,48 +172,53 @@ else
         let l:compe_config.source.spell = v:true
         let l:compe_config.source.ultisnips = v:true
         call compe#setup(l:compe_config, 0)
-        nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
-        nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
-        nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
-        nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
-        nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
-        nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
-        nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
-        nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
-        nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
-        nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
-        nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
-        nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
-        nmap <silent><buffer> gcc <Plug>(omnisharp_global_code_check)
-        nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
-        nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
-        nmap <silent><buffer> <leader>rn <Plug>(omnisharp_rename)
-    endfunction
+    endif
+    nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
+    nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
+    nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
+    nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
+    nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
+    nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
+    nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
+    nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
+    nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
+    nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
+    nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
+    nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
+    nmap <silent><buffer> gcc <Plug>(omnisharp_global_code_check)
+    nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
+    nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
+    nmap <silent><buffer> <leader>rn <Plug>(omnisharp_rename)
+endfunction
 
-    function! DocHighlight()
-        if &ft == 'cs' 
-            OmniSharpTypeLookup
-        else 
+function! DocHighlight()
+    if &ft == 'cs' || &ft == 'csx'
+        OmniSharpTypeLookup
+    else 
+        if g:USE_COC
+            call CocActionAsync('highlight')
+        else
             silent! lua vim.lsp.buf.document_highlight()
         endif
-    endfunction
-
-    augroup omnisharp_commands
-        autocmd!
-        " Show type information automatically when the cursor stops moving.
-        " Note that the type is echoed to the Vim command line, and will overwrite
-        " any other messages in this space including e.g. ALE linting messages.
-        autocmd CursorHold * call DocHighlight()
-        autocmd CursorMoved * lua vim.lsp.buf.clear_references()
-        " The following commands are contextual, based on the cursor position.
-        autocmd FileType cs call InitCS()
-    augroup END
-
-endif
-
+    endif
+endfunction
 
 function! InitSql()
     nnoremap <silent><buffer> <M-x> :%DB $DBUI_URL<cr>
     vnoremap <silent><buffer> <M-x> :DB $DBUI_URL<cr>
     let b:db=$DBUI_URL
 endfunction
+
+augroup plugin_mappings_augroup
+    autocmd!
+    " Show type information automatically when the cursor stops moving.
+    " Note that the type is echoed to the Vim command line, and will overwrite
+    " any other messages in this space including e.g. ALE linting messages.
+    autocmd CursorHold * call DocHighlight()
+    autocmd CursorMoved * lua vim.lsp.buf.clear_references()
+    " The following commands are contextual, based on the cursor position.
+    autocmd FileType cs call InitCS()
+    autocmd FileType csx call InitCS()
+    autocmd FileType sql call InitSql() 
+augroup END
+
