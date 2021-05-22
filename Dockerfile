@@ -1,4 +1,4 @@
-FROM archlinux:base-devel:
+FROM archlinux:base-devel
 
 ENV \
     UID="1000" \

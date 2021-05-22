@@ -17,7 +17,7 @@ if !filereadable(vimplug_exists)
     echo "Installing Vim-Plug..."
     echo ""
     silent exec "!"curl_exists" -fLo " . shellescape(vimplug_exists) . " --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    let variable =  value g:not_finish_vimplug = "yes"
+    let g:not_finish_vimplug = "yes"
     autocmd VimEnter * PlugInstall
 endif
 
@@ -107,6 +107,7 @@ Plug 'folke/lsp-trouble.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'folke/which-key.nvim'
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local

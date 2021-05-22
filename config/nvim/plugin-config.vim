@@ -331,6 +331,7 @@ hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
 
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626
+highlight link TroubleNormal NormalNC
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
 highlight LineNR guibg=None ctermbg=None
 highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
