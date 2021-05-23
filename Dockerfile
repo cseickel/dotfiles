@@ -59,9 +59,6 @@ RUN git clone https://github.com/Samsung/netcoredbg.git \
     && cd ../.. \
     && sudo rm -Rf netcoredbg
 
-RUN git clone https://github.com/cseickel/dotfiles.git /home/$UNAME/dotfiles \
-    && /bin/sh /home/$UNAME/dotfiles/install 
-
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
 #    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
