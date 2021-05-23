@@ -29,5 +29,5 @@
       path: config/nvim/UltiSnips/*
 - shell:
   - [./tmux_install_plugins.sh, Installing tmux plugins.]
-  - [nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugClean! | PlugInstall | PlugUpdate | qa", Installing nvim plugins.]
+  - [nvim --headless -u ~/.config/nvim/plugin-install.vim +PlugInstall +qa, Installing nvim plugins.]
 

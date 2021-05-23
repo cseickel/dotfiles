@@ -65,12 +65,14 @@ Plug 'alvan/vim-closetag'
 Plug 'tmsvg/pear-tree'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+
 "Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
-"Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-commentary'
 "Plug 'kana/vim-textobj-user'
@@ -80,7 +82,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'samoshkin/vim-mergetool'
 
-"Plug 'puremourning/vimspector'
 Plug 'mhinz/vim-startify'
 
 "Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
