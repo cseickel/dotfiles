@@ -6,8 +6,10 @@
 - create:
     - ~/.config/nvim/colors
     - ~/.config/nvim/UltiSnips
+    - ~/.gnupg
 - link:
     ~/.gitconfig: gitconfig
+    ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
     ~/.config/nvim/init.vim: config/nvim/init.vim
@@ -25,3 +27,7 @@
     ~/.config/nvim/UltiSnips:
       glob: true
       path: config/nvim/UltiSnips/*
+- shell:
+  - [./tmux_install_plugins.sh, Installing tmux plugins.]
+  - [nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugClean! | PlugInstall | PlugUpdate | qa", Installing nvim plugins.]
+

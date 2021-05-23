@@ -50,16 +50,8 @@ RUN yay -Syu --noprogressbar --noconfirm \
 
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && sudo locale-gen \
-    && cd /home/$UNAME \
-    && git clone https://github.com/cseickel/dotfiles.git .dotfiles \
-    && /bin/sh /home/$UNAME/.dotfiles/install \
-    && git clone https://github.com/tmux-plugins/tpm .tmux/plugins/tpm \
-    && ~/.tmux/plugins/tpm/scripts/install_plugins.sh \
-    && mkdir -p /home/$UNAME/.gnupg \
-    && echo "default-cache-ttl 3600" > /home/$UNAME/.gnupg/gpg-agent.conf \
-    && echo "max-cache-ttl 57600" >> /home/$UNAME/.gnupg/gpg-agent.conf \
-    && nvim --headless -u ~/.config/nvim/plugin-install.vim -c "PlugInstall | qa" \
-    && nvim --headless +qa
+    && git clone https://github.com/cseickel/dotfiles.git /home/$UNAME/dotfiles \
+    && /bin/sh /home/$UNAME/.dotfiles/install 
 
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
