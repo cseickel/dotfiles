@@ -69,16 +69,17 @@ ENABLE_CORRECTION="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=/usr/share/zsh
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git aws docker fzf zsh-autosuggestions)
-source "$ZSH/oh-my-zsh.sh"
+plugins=(git aws docker fzf)
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 eval "$(zoxide init zsh)"
+source "$ZSH/oh-my-zsh.sh"
 
 
 if [ -f /.dockerenv ]; then
