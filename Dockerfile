@@ -6,6 +6,8 @@ ENV \
     UNAME="arch" \
     SHELL="/bin/zsh" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
+    && sudo locale-gen
 
 # WORKAROUND for glibc 2.33 and old Docker
 # See https://github.com/actions/virtual-environments/issues/2658
@@ -17,12 +19,10 @@ RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
 COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
 
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
-       git python3 python-pip nodejs npm wget curl \
-       tmux zsh bat fzf openssh \
+       cmake clang unzip ninja git curl wget openssh zsh \
     && update-ca-trust \
     && useradd -m -s "${SHELL}" "${UNAME}" \
-    && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && pacman -Scc --noprogressbar --noconfirm
+    && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER arch
 WORKDIR /home/arch
@@ -34,24 +34,33 @@ RUN cd /home/$UNAME \
     && cd .. \
     && rm -Rf yay
 
-RUN yay -Syu --noprogressbar --noconfirm \
-       base-devel cmake unzip ninja tree-sitter neovim-plug neovim-remote \
-       oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-       aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
-       ripgrep docker docker-compose aws-vault pass \
-       ncdu glances nnn-nerd mssql-tools jq zoxide-bin lazydocker \
-    && git clone https://github.com/neovim/neovim \
-    && cd neovim \
-    && make CMAKE_BUILD_TYPE=Release \
-    && sudo make install \
+RUN yay -Syu --noprogressbar --noconfirm --needed \
+        python3 python-pip nodejs npm \
+        tmux bat fzf tree-sitter neovim-plug neovim-remote \
+        oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
+        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
+        ripgrep docker docker-compose aws-vault pass \
+        ncdu glances nnn-nerd mssql-tools jq zoxide-bin lazydocker \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
 
-RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
-    && sudo locale-gen \
-    && git clone https://github.com/cseickel/dotfiles.git /home/$UNAME/dotfiles \
-    && /bin/sh /home/$UNAME/.dotfiles/install 
+RUN git clone https://github.com/neovim/neovim \
+    && cd neovim \
+    && make CMAKE_BUILD_TYPE=Release \
+    && sudo make install \
+    && cd .. && sudo rm -Rf neovim 
+
+RUN git clone https://github.com/Samsung/netcoredbg.git \
+    && mkdir netcoredbg/build \
+    && cd netcoredbg/build \
+    && CC=clang CXX=clang++ cmake .. -GNinja -DDOTNET_DIR=/usr/share/dotnet -DCMAKE_INSTALL_PREFIX=/usr/bin \
+    && sudo ninja install \
+    && cd ../.. \
+    && sudo rm -Rf netcoredbg
+
+RUN git clone https://github.com/cseickel/dotfiles.git /home/$UNAME/dotfiles \
+    && /bin/sh /home/$UNAME/dotfiles/install 
 
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
