@@ -1,8 +1,0 @@
-angular
-angular-cli
-cdk
-neovim
-ng
-node-gyp
-typescript
-wip

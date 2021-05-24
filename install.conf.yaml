@@ -9,6 +9,8 @@
     - ~/.config/nvim/UltiSnips
     - ~/.gnupg
 - link:
+    ~/start-arch-linux-docker.sh: start-arch-linux-docker.sh
+    ~/start-code-server.sh: start-code-server.sh
     ~/.gitconfig: gitconfig
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
