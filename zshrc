@@ -101,8 +101,8 @@ fi
 
 # start ssh-agent
 if [[ ! "$SSH_AUTH_SOCK" ]]; then
-    eval $(ssh-agent)
-    ssh-add ~/.ssh/*id_rsa
+    eval $(ssh-agent) > /dev/null
+    [[ -z $(ssh-add -l | grep "Identity added" ) ]] && grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add > /dev/null
 fi
 
 # User configuration

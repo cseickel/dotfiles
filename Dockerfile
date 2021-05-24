@@ -76,7 +76,6 @@ RUN yay -Syu --noprogressbar --noconfirm \
     && yay -Scc --noprogressbar --noconfirm
 
 ENV TERM="xterm-256color" \
-    PASSWORD="vscode" \
     PORT=8888
 
-CMD [ "/usr/bin/code-server" ]
+CMD [ "/usr/bin/code-server", "--auth",  "none" ]
