@@ -52,7 +52,7 @@ nnoremap <silent> <C-x> Vydd
 vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
 
 " Re-map add mark, bceuase I will shadow it with EasyClip's m for move
-nnoremap am m
+nnoremap <leader>m m
 
 " Close window
 noremap <C-q> :q<cr>

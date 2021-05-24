@@ -3,6 +3,7 @@
     link:
         relink: true
         force: true
+        relative: true
 - create:
     - ~/.config/nvim/colors
     - ~/.config/nvim/UltiSnips

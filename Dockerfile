@@ -57,7 +57,12 @@ RUN git clone https://github.com/Samsung/netcoredbg.git \
     && CC=clang CXX=clang++ cmake .. -GNinja -DDOTNET_DIR=/usr/share/dotnet -DCMAKE_INSTALL_PREFIX=/usr/bin \
     && sudo ninja install \
     && cd ../.. \
-    && sudo rm -Rf netcoredbg
+    && sudo rm -Rf netcoredbg \
+    && yay -S --noprogressbar --noconfirm code-server
+
+# I don't know why I have to set this again, but I do...
+RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
+    && sudo locale-gen
 
 # This probably only needs to be run on the host
 # RUN echo fs.inotify.max_user_watches=524288 \
@@ -68,6 +73,10 @@ RUN git clone https://github.com/Samsung/netcoredbg.git \
 # just CACHE_BREAKER to todays date or something similar and rebuild
 ARG CACHE_BREAKER=""
 RUN yay -Syu --noprogressbar --noconfirm \
-    && yay -Scc --noprogressbar --noconfirm 
+    && yay -Scc --noprogressbar --noconfirm
 
-ENV TERM xterm-256color
+ENV TERM="xterm-256color" \
+    PASSWORD="vscode" \
+    PORT=8888
+
+CMD [ "/usr/bin/code-server" ]

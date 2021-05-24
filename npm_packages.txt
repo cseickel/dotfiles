@@ -1,7 +1,0 @@
-angular
-angular-cli
-cdk
-neovim
-ng
-node-gyp
-wip
