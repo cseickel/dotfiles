@@ -5,7 +5,7 @@ if [[ $EXISTING ]]; then
     echo "docker container stop $EXISTING"
     echo ""
 else
-    EXISTING=$(docker run -d -v ~/:/home/arch -v /var/run/docker.sock:/var/run/docker.sock --network host --name code-server cseickel/arch-linux)
+    EXISTING=$(docker run -d --pull always -e PORT=8080 -v ~/:/home/arch -v /var/run/docker.sock:/var/run/docker.sock --network host --name code-server cseickel/arch-linux)
 fi
 docker logs --follow $EXISTING
 
