@@ -5,9 +5,6 @@ if [[ $EXISTING ]]; then
     echo "docker container stop $EXISTING"
     echo ""
 else
-    docker build . \
-        --build-arg CACHE_BREAKER=$(date +"%Y-%m-%d") \
-        -t cseickel/arch-linux
     EXISTING=$(docker run -d -v ~/:/home/arch -v /var/run/docker.sock:/var/run/docker.sock --network host --name code-server cseickel/arch-linux)
 fi
 docker logs --follow $EXISTING
