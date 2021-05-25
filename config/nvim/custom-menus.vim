@@ -1,6 +1,6 @@
 let content = [
-            \ ['Code &Actions           ,a', 'call feedkeys(",a")'],
-            \ ['Re&name Symbol         ,rn', 'call feedkeys(",rn")'],
+            \ ['Code &Actions          ,a', 'call feedkeys(",a")'],
+            \ ['Re&name Symbol         ,n', 'call feedkeys(",n")'],
             \ ['--'],
             \ ['Go to &Definition      ,gd', 'call feedkeys(",gd")'],
             \ ['Go to &Type Definition ,gt', 'call feedkeys(",gt")'],

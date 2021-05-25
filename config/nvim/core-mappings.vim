@@ -45,7 +45,7 @@ vnoremap <silent> <C-a> <Esc>ggVG
 
 " Standard Cut shortcut
 inoremap <silent> <C-x> <Esc>yawdawi
-vnoremap <silent><C-x> ygvd
+vnoremap <silent> <C-x> ygvd
 nnoremap <silent> <C-x> Vydd
 
 " Search and Replace Selected Text
@@ -61,40 +61,35 @@ inoremap <C-q> <Esc>:q<cr>
 " Open quickfix at bottom of all windows
 noremap <leader>q :botright copen
 
-" Quick folding of a block in normal mode with the 'z' key
+"" Quick folding of a block in normal mode with the 'z' key
 "nnoremap z V%zf
-"autocmd FileType xml nnoremap <buffer> z Vatzf
-"autocmd FileType html nnoremap <buffer> z Vatzf
-" and unfold with uppercase 'Z'
+"" and unfold with uppercase 'Z'
 "nnoremap Z zo
+"augroup fold_augroup
+"    autocmd!
+"    autocmd FileType xml nnoremap <buffer> z Vatzf
+"    autocmd FileType html nnoremap <buffer> z Vatzf
+"augroup END
 
 nnoremap <silent> <leader>. :tcd %:p:h<CR>
 
-
-" Window navigation
-"nnoremap <Left>  <c-w>h
-"nnoremap <Down>  <c-w>j
-"nnoremap <Up>    <c-w>k
-"nnoremap <Right> <c-w>l
-
-nnoremap <silent> `1 :1wincmd w <cr>
-nnoremap <silent> `2 :2wincmd w <cr>
-nnoremap <silent> `3 :3wincmd w <cr>
-nnoremap <silent> `4 :4wincmd w <cr>
-nnoremap <silent> `5 :5wincmd w <cr>
-nnoremap <silent> `6 :6wincmd w <cr>
-nnoremap <silent> `7 :7wincmd w <cr>
-nnoremap <silent> `8 :8wincmd w <cr>
-nnoremap <silent> `9 :9wincmd w <cr>
-nnoremap <silent> `0 :10wincmd w <cr>
+nnoremap <silent> <leader>w1 :1wincmd w <cr>
+nnoremap <silent> <leader>w2 :2wincmd w <cr>
+nnoremap <silent> <leader>w3 :3wincmd w <cr>
+nnoremap <silent> <leader>w4 :4wincmd w <cr>
+nnoremap <silent> <leader>w5 :5wincmd w <cr>
+nnoremap <silent> <leader>w6 :6wincmd w <cr>
+nnoremap <silent> <leader>w7 :7wincmd w <cr>
+nnoremap <silent> <leader>w8 :8wincmd w <cr>
+nnoremap <silent> <leader>w9 :9wincmd w <cr>
+nnoremap <silent> <leader>w0 :10wincmd w <cr>
 
 " window movement
 nnoremap <silent> <C-h> <C-w>H
 nnoremap <silent> <C-j> <C-w>x<C-w>j
 nnoremap <silent> <C-k> <C-w>k<C-w>x
 nnoremap <silent> <C-l> <C-w>K
-nnoremap <silent> Z :execute "-1tabedit % | " . line(".") <cr>
-nnoremap <silent> X :q<cr>
+nnoremap <silent> <leader>z :execute "-1tabedit % | " . line(".") <cr>
 nnoremap ZZ <Nop>
 " window resize
 nnoremap <silent> _     <C-w>5<

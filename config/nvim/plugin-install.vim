@@ -20,32 +20,8 @@ if !filereadable(vimplug_exists)
     let g:not_finish_vimplug = "yes"
     autocmd VimEnter * PlugInstall
 endif
-
-"*************************************************************
-"" Settings related to plugins
-"*************************************************************
-let g:coc_global_extensions = [
-            \"coc-angular",
-            \"coc-eslint",
-            \"coc-fzf-preview",
-            \"coc-java",
-            \"coc-json",
-            \"coc-yaml",
-            \"coc-python",
-            \"coc-tsserver",
-            \"coc-db",
-            \"coc-highlight",
-            \"coc-sh",
-            \"coc-vimlsp",
-            \"coc-docker",
-            \"coc-styled-components"]
-"            \"coc-explorer",
-
 call plug#begin(expand('~/.config/nvim/plugged'))
 
-"*************************************************************
-"" Plug install packages - Stuff I definitely use
-"*************************************************************
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'lambdalisue/fern.vim'
@@ -58,7 +34,6 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'qpkorr/vim-bufkill'
-"Plug 'neoclide/coc.nvim', { 'branch': 'release', 'do': ':CocUpdate' }
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -84,18 +59,10 @@ Plug 'samoshkin/vim-mergetool'
 
 Plug 'mhinz/vim-startify'
 
-"Plug 'sheerun/vim-polyglot' " syntax highlighting for all languages!
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
-"Plug 'ntpeters/vim-better-whitespace'
 "color scheme
-Plug 'dunstontc/vim-vscode-theme'
-Plug 'taniarascia/new-moon.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'sainnhe/sonokai'
-Plug 'GustavoPrietoP/doom-one.vim'
-
 Plug 'sheerun/vim-polyglot'
 
 " All of the new functionality in nevim 5 that is not quite stable
@@ -103,6 +70,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
+Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/lsp-trouble.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -126,9 +94,6 @@ Plug 'gcmt/taboo.vim'
 "Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 Plug 'cseickel/dwm.vim'
 
-"*************************************************************
-"" Plug install packages - Stuff I might need
-"*************************************************************
 Plug 'mileszs/ack.vim'
 
 " SQL Interface
@@ -139,6 +104,4 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-Plug 'mcchrish/nnn.vim'
-Plug 'jamestthompson3/nvim-remote-containers'
 call plug#end()

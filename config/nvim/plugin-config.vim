@@ -13,10 +13,6 @@ endif
 " Theme
 "colorscheme dark_plus
 colorscheme nvcode "<-- this one is best with tree-sitter
-"colorscheme OceanicNext
-"let g:sonokai_style = 'shusia'
-"let g:sonokai_disable_italic_comment = 1
-"colorscheme sonokai
 
 
 let g:airline_powerline_fonts = 1
@@ -187,7 +183,6 @@ endfunction
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
             \ { '\': ['Browse Directory (Fern)', 'Fern .'] },
-            \ { 'n': ['Browse Directory (nnn)', 'NnnPicker'] }
             \ ]
 
 let g:startify_lists = [
@@ -208,12 +203,6 @@ let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
 
 set sessionoptions=blank,curdir,folds,help,tabpages,winpos
 
-" Minimap
-"let g:minimap_width=8
-"let g:minimap_auto_start=1
-"let g:minimap_auto_start_win_enter=1
-
-
 " vim-quickui menus
 let g:quickui_border_style = 2
 let g:quickui_color_scheme = 'papercol dark'
@@ -232,15 +221,7 @@ let g:fzf_preview_dev_icons_limit = 5000
 " The theme used in the bat preview
 let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'OneHalfDark'
 
-"Togle Terminal
-let g:auto_start_insert = 0
-let g:preserve_alternate_buffer=0
-
 let g:db_ui_use_nerd_fonts = 1
-
-let g:scrollview_winblend = 60
-let g:scrollview_column = 1
-let g:scrollview_current_only = 1
 
 " Pair expansion is dot-repeatable by default:
 let g:pear_tree_repeatable_expand = 0
@@ -249,8 +230,6 @@ let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
 
-" Set completeopt to have a better completion experience
-set completeopt = "menuone,preview"
 let g:completion_enable_snippet = 'UltiSnips'
 " Avoid showing message extra message when using completion
 set shortmess+=c
@@ -331,7 +310,8 @@ hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
 
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626
-highlight link TroubleNormal NormalNC
+highlight TroubleNormal guibg=#262626
+highlight TroubleText guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
 highlight LineNR guibg=None ctermbg=None
 highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
@@ -354,6 +334,7 @@ highlight link csOperator Conditional
 highlight link csOperLambda Conditional
 highlight link csModifier Conditional
 highlight link csLinqKeyword Conditional
+
 " highlight link csUnspecifiedStatement PlainText
 " highlight link csContextualStatement Control
 " highlight link csUnsupportedStatement PlainText

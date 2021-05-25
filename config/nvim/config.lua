@@ -1,36 +1,10 @@
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menuone,noinsert,noselect"
 LspInstall = require'lspinstall'
-
-local on_attach = function()
-    require'compe'.setup({
-        enabled = true;
-        autocomplete = true;
-        debug = false;
-        min_length = 1;
-        preselect = 'enable';
-        throttle_time = 80;
-        source_timeout = 200;
-        incomplete_delay = 400;
-        max_abbr_width = 100;
-        max_kind_width = 100;
-        max_menu_width = 100;
-        documentation = true;
-        source = {
-            path = true;
-            calc = true;
-            nvim_lsp = true;
-            nvim_lua = true;
-            spell = true;
-            ultisnips = false;
-            buffer = true;
-        };
-    }, 0)
-end
 local function setup_servers()
 	LspInstall.setup()
 	local servers = LspInstall.installed_servers()
 	for _, server in pairs(servers) do
-		require'lspconfig'[server].setup{on_attach=on_attach};
+		require'lspconfig'[server].setup{on_attach=require'completion'.on_attach};
 	end
  end
 
@@ -57,7 +31,7 @@ require('lspkind').init({
     -- enables text annotations
     --
     -- default: true
-    with_text = false,
+    with_text = true,
 
     -- default symbol map
     -- can be either 'default' or
@@ -132,22 +106,6 @@ require'trouble'.setup {
     },
     use_lsp_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
 }
- 
-vim.lsp.handlers["textDocument/hover"] =
-  vim.lsp.with(
-  vim.lsp.handlers.hover,
-  {
-    border = "single"
-  }
-)
-
-vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {
-    border = "single"
-  }
-)
 
 require('telescope').setup{
   defaults = {
@@ -250,7 +208,7 @@ dap.configurations.cs = {
     name = "launch - netcoredbg",
     request = "launch",
     program = function()
-        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/netcoreapp3.1/Debug/', 'file')
+        return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/netcoreapp3.1/', 'file')
     end,
   },
 }
