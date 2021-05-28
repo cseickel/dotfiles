@@ -7,8 +7,17 @@ nnoremap <silent> \ :Fern . -reveal=%<CR>
 nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
 
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
+function! BufferDelete() abort
+    if winnr('$') > 1
+        bd
+        call DWM_Focus()
+    else
+        bd
+    endif
+endfunction 
 nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
+nmap     <silent> <M-q>     :call BufferDelete()<cr>
 "nmap     <silent> <         <Plug>DWMShrinkMaster
 "nmap     <silent> >         <Plug>DWMGrowMaster
 nmap     <silent> <C-h>     <Plug>DWMFocus
@@ -16,7 +25,7 @@ nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
-function! ToggleWindowZoom()
+function! ToggleWindowZoom() abort
     if winnr('$') > 1
         let l:top = line("w0")
         let l:line = line(".")
@@ -41,7 +50,7 @@ endfunction
 
 nnoremap <silent> <leader>wz :call ToggleWindowZoom()<cr>
 
-function! ShowTrouble()
+function! ShowTrouble() abort
     Trouble
     call DWM_MoveRight()
 endfunction
