@@ -177,11 +177,20 @@ function fn_docker_stop() {
 alias stop="fn_docker_stop"
 
 function fn_aws_tail() {
-    group=$(aws logs describe-log-groups | jq -r ".logGroups[].logGroupName" | fzf)
-    aws logs tail $group --format short --follow "$@"
+    USE_LAST="FALSE"
+    if [[ $1 == "-" ]]; then
+        USE_LAST="TRUE"
+        shift
+    fi
+    if [[ $USE_LAST == "FALSE" || -z $LAST_AWS_LOG_GROUP ]]; then
+        export LAST_AWS_LOG_GROUP=$(aws logs describe-log-groups | jq -r ".logGroups[].logGroupName" | fzf)
+    fi
+    echo "Tailing: $LAST_AWS_LOG_GROUP..."
+    aws logs tail $LAST_AWS_LOG_GROUP --format short --follow "$@"
 }
 alias awstail="fn_aws_tail"
 
+command -v z >/dev/null 2>&1 && alias cd="z"
 
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '

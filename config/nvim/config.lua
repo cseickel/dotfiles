@@ -20,7 +20,7 @@ require'nvim-treesitter.configs'.setup {
 	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 	highlight = {
 		enable = true,              -- false will disable the whole extension
-		disable = { "c_sharp" },  -- list of language that will be disabled
+		--disable = { "c_sharp" },  -- list of language that will be disabled
 	},
 	indent = {
 		enable = false
@@ -38,7 +38,7 @@ require('lspkind').init({
     -- 'codicons' for codicon preset (requires vscode-codicons font installed)
     --
     -- default: 'default'
-    preset = 'codicons',
+    preset = 'default',
 
     -- override preset symbols
     --
@@ -63,7 +63,8 @@ require('lspkind').init({
       Folder = '',
       EnumMember = '',
       Constant = '',
-      Struct = ''
+      Struct = '',
+      Operator = ''
     },
 })
 
@@ -213,3 +214,4 @@ dap.configurations.cs = {
   },
 }
 
+require('lspsaga').init_lsp_saga()

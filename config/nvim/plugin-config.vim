@@ -155,12 +155,14 @@ let hide_dirs  = '^\%(\.git\|node_modules\)$'  " here you write the dir names
 let hide_files = '\%(\.d\.ts\|\.js\)$'    " here you write the file names
 let g:fern#disable_drawer_auto_resize=1
 let g:fern#default_exclude = hide_dirs . '\|' . hide_files  " here you exclude them
-" Buffeur Explorer
+
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerShowTabBuffer=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerDisableDefaultKeyMapping=1
 
+let g:sharpenup_create_mappings = 0
+let g:OmniSharp_highlighting = 0
 
 " colorizer
 "let g:Hexokinase_highlighters = ['foregroundfull']
@@ -322,18 +324,18 @@ highlight Cursor guibg=#5f87af ctermbg=67
 highlight iCursor guibg=#ffffaf ctermbg=229
 highlight rCursor guibg=#af0000 ctermbg=124
 
-highlight csType ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
-highlight link csThis Language
-highlight link csNew Constant
-highlight link csInterpolation Identifier
-highlight link csInterpolationDelim Constant
-highlight link csDocComment SpecialComment
-highlight link csDocExample Identifier
-highlight link csDocString Identifier
-highlight link csOperator Conditional
-highlight link csOperLambda Conditional
-highlight link csModifier Conditional
-highlight link csLinqKeyword Conditional
+highlight Type ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
+highlight link This Language
+highlight link New Constant
+highlight link Interpolation Identifier
+highlight link InterpolationDelim Constant
+highlight link DocComment SpecialComment
+highlight link DocExample Identifier
+highlight link DocString Identifier
+highlight link Operator Conditional
+highlight link OperLambda Conditional
+highlight link Modifier Conditional
+highlight link LinqKeyword Conditional
 
 " highlight link csUnspecifiedStatement PlainText
 " highlight link csContextualStatement Control

@@ -25,7 +25,17 @@ function! ToggleWindowZoom()
         execute l:line
         execute "TabooRename " . expand("%:t")
     else
+        let l:name = expand("%:p")
+        let l:top = line("w0")
+        let l:line = line(".")
         tabclose
+        let windowNr = bufwinnr(l:name)
+        if windowNr > 0
+            execute windowNr 'wincmd w'
+            execute "normal " . l:top . "zt"
+            execute l:line
+            execute "TabooRename " . expand("%:t")
+        endif
     endif
 endfunction
 
@@ -38,10 +48,7 @@ endfunction
 nnoremap <silent> <leader>t :call ShowTrouble()<cr>
 
 let g:EasyClipUsePasteToggleDefaults = 0
-nmap <C-f> <plug>EasyClipSwapPasteForward
-nmap <C-d> <plug>EasyClipSwapPasteBackwards
 
-let g:EasyClipUsePasteToggleDefaults = 0
 function! FernInit() abort
     setlocal nonumber
     call glyph_palette#apply()
@@ -80,17 +87,13 @@ augroup FernEvents
     autocmd FileType fern call FernInit()
 augroup END
 
-"Mapping selecting mappings
-nmap <leader>fm <Plug>(fzf-maps-n)
-xmap <leader>fm <Plug>(fzf-maps-x)
-omap <leader>fm <Plug>(fzf-maps-o)
 
-nnoremap <leader>fg :FzfPreviewGitActions<CR>
+nnoremap <leader>fg  :FzfPreviewGitActions<CR>
 nnoremap <leader>fq  :FzfPreviewQuickFix<CR>
 nnoremap <leader>fl  :FzfPreviewLocationList<CR>
 nnoremap <leader>fb  :FzfPreviewBufferLines<CR>
-nnoremap <leader>ff :<C-u>FzfPreviewProjectGrep<Space>
-xnoremap <leader>ff "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <leader>ff  :<C-u>FzfPreviewProjectGrep<Space>
+xnoremap <leader>ff  "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
 nnoremap <leader>fo  :execute 'FzfPreviewDirectoryFiles ' . g:owd<CR>
 
 " Mergetool shortcuts
@@ -102,7 +105,7 @@ nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 "*****************************************************************************
 "" LSP Mappings
 "*****************************************************************************
-inoremap <silent><expr> <C-Space> <Plug>(completion_trigger)
+imap <silent> <C-Space> <Plug>(completion_trigger)
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
@@ -119,8 +122,36 @@ nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.set_loclist()<cr>
 nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
 nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
+nnoremap <silent> <leader>gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent> <leader>s  <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+nnoremap <silent> <leader>n  <cmd>lua require('lspsaga.rename').rename()<CR>
+nnoremap <silent> <leader>a  <cmd>lua require('lspsaga.codeaction').code_action()<CR>
+vnoremap <silent> <leader>a  :<C-U>lua require('lspsaga.codeaction').range_code_action()<CR>
+nnoremap <silent> <leader>p  <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+
+nnoremap <silent> <leader>d  <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>[  <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
+nnoremap <silent> <leader>]  <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
+
+
+nnoremap <silent> K          <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+nnoremap <silent> <C-f>      <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+nnoremap <silent> <C-b>      <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+
+" float terminal also you can pass the cli command in open_float_terminal function
+nnoremap <silent> <A-d> <cmd>lua require('lspsaga.floaterm').open_float_terminal("lazydocker")<CR>
+tnoremap <silent> <A-d> <C-\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>
+nnoremap <silent> <A-t> <cmd>lua require('lspsaga.floaterm').open_float_terminal()<CR>
+tnoremap <silent> <A-t> <C-\><C-n>:lua require('lspsaga.floaterm').close_float_terminal()<CR>
+
 
 function! InitCS()
+    inoremap <silent><buffer><expr> <C-Space> compe#complete()
+    inoremap <silent><buffer><expr> <CR>      compe#confirm('<CR>')
+    inoremap <silent><buffer><expr> <C-e>     compe#close('<C-e>')
+    inoremap <silent><buffer><expr> <C-f>     compe#scroll({ 'delta': +4 })
+    inoremap <silent><buffer><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
     let l:compe_config = {}
     let l:compe_config.documentation = v:true
     let l:compe_config.min_length = 1
@@ -129,9 +160,8 @@ function! InitCS()
     let l:compe_config.source.path = v:true
     let l:compe_config.source.omni = v:true
     let l:compe_config.source.spell = v:true
-    let l:compe_config.source.ultisnips = v:true
+    let l:compe_config.source.ultisnips = v:false
     call compe#setup(l:compe_config, 0)
-    inoremap <silent><buffer><expr> <C-Space> compe#complete()
 
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
     nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
@@ -141,21 +171,28 @@ function! InitCS()
     nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
     nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
     nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
-    nmap <silent><buffer> <leader>u <Plug>(omnisharp_fix_usings)
+    nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
     nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
     nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
     nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
-    nmap <silent><buffer> <leader>gcc <Plug>(omnisharp_global_code_check)
+    nmap <silent><buffer> <leader>t <Plug>(omnisharp_global_code_check)
     nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
     nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
     nmap <silent><buffer> <leader>n <Plug>(omnisharp_rename)
+
+    nmap <silent> <buffer> <C-k> <Plug>(omnisharp_signature_help)
+    imap <silent> <buffer> <C-k> <Plug>(omnisharp_signature_help)
+
+    nmap <silent> <buffer> <Leader>sr <Plug>(omnisharp_restart_server)
+    nmap <silent> <buffer> <Leader>ss <Plug>(omnisharp_start_server)
+    nmap <silent> <buffer> <Leader>sp <Plug>(omnisharp_stop_server)
 endfunction
 
 function! DocHighlight()
     if &ft == 'cs' || &ft == 'csx'
         OmniSharpTypeLookup
-    else 
-        silent! lua vim.lsp.buf.document_highlight()
+    else
+        lua vim.lsp.buf.document_highlight()
     endif
 endfunction
 
@@ -167,12 +204,8 @@ endfunction
 
 augroup plugin_mappings_augroup
     autocmd!
-    " Show type information automatically when the cursor stops moving.
-    " Note that the type is echoed to the Vim command line, and will overwrite
-    " any other messages in this space including e.g. ALE linting messages.
-    autocmd CursorHold * call DocHighlight()
-    autocmd CursorMoved * lua vim.lsp.buf.clear_references()
-    " The following commands are contextual, based on the cursor position.
+    autocmd CursorHold * silent! call DocHighlight()
+    autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
     autocmd FileType cs call InitCS()
     autocmd FileType csx call InitCS()
     autocmd FileType sql call InitSql() 
