@@ -232,11 +232,47 @@ require("toggleterm").setup{
     -- not natively supported but implemented in this plugin.
     --border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
     border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" },
-    winblend = 6,
+    winblend = 4,
     highlights = {
       border = "VertSplit",
       background = "Normal",
-    }
+    },
+    height = function ()
+        return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 14)))
+    end,
+    width = function () 
+        return math.ceil(math.min(vim.o.columns, math.max(80, vim.o.columns - 30)))
+    end 
   }
 }
+
+local state = {}
+
+local function open_shadow_win()
+    local opts =  {
+        relative= 'editor',
+        style= 'minimal',
+        width= vim.o.columns,
+        height= vim.o.lines,
+        row= 0,
+        col= 0,
+    }
+    local shadow_winhl = 'Normal:NormalNC,EndOfBuffer:NormalNC'
+    local shadow_bufnr = vim.api.nvim_create_buf(false,true)
+    local shadow_winid = vim.api.nvim_open_win(shadow_bufnr,true,opts)
+    vim.api.nvim_win_set_option(shadow_winid,'winhl',shadow_winhl)
+    vim.api.nvim_win_set_option(shadow_winid,'winblend',60)
+    return shadow_winid
+end
+
+local shadow_term = require('toggleterm.terminal').Terminal:new({
+    on_close = function(term)
+        vim.api.nvim_win_close(state.shadow_winid, true);
+    end,
+})
+
+function _G.shadow_term_toggle()
+    state.shadow_winid = open_shadow_win()
+    shadow_term:toggle()
+end
 

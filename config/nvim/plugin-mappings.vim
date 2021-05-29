@@ -56,6 +56,8 @@ function! ShowTrouble() abort
 endfunction
 nnoremap <silent> <leader>t :call ShowTrouble()<cr>
 
+nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
+
 let g:EasyClipUsePasteToggleDefaults = 0
 
 function! FernInit() abort
