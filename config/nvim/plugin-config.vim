@@ -87,7 +87,7 @@ let g:webdevicons_enable_startify = 1
 " Tab styling
 "let g:taboo_tab_format=" %d %f %m %x⎹"
 let g:taboo_tab_format=" %d%U .../%P %m %x▕"
-let g:taboo_renamed_tab_format=" %l %m %x▕"
+let g:taboo_renamed_tab_format=" %d %l %m %x▕"
 let g:taboo_close_tab_label = ""
 let g:taboo_modified_tab_flag="פֿ"
 

@@ -26,14 +26,8 @@ nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
 function! ToggleWindowZoom() abort
-    if winnr('$') > 1
-        let l:top = line("w0")
-        let l:line = line(".")
-        -1tabedit %
-        execute "normal " . l:top . "zt"
-        execute l:line
-        execute "TabooRename " . expand("%:t")
-    else
+    if exists("b:is_zoomed_win") && b:is_zoomed_win
+        unlet b:is_zoomed_win
         let l:name = expand("%:p")
         let l:top = line("w0")
         let l:line = line(".")
@@ -43,7 +37,16 @@ function! ToggleWindowZoom() abort
             execute windowNr 'wincmd w'
             execute "normal " . l:top . "zt"
             execute l:line
-            execute "TabooRename " . expand("%:t")
+        endif
+    else
+        if winnr('$') > 1
+            let l:top = line("w0")
+            let l:line = line(".")
+            -1tabedit %
+            let b:is_zoomed_win = 1
+            execute "normal " . l:top . "zt"
+            execute l:line
+            execute "TabooRename  " . expand("%:t")
         endif
     endif
 endfunction
