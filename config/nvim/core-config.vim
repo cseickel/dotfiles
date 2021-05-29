@@ -231,6 +231,7 @@ augroup core_autocmd
   autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
   autocmd FileType javascript,typescript,html call TwoSpaceIndent()
   autocmd TermOpen * call InitTerminal()
+  autocmd TermEnter * call InitTerminal()
   "autocmd BufEnter,InsertLeave * call SetRelative()
   "autocmd CmdlineLeave         * call SetRelative() | redraw
   "autocmd BufLeave,InsertEnter * call SetNoRelative()

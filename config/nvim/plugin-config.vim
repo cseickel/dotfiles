@@ -101,6 +101,10 @@ hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bol
 let g:dwm_master_pane_width = 90
 let g:dwm_map_keys=0
 
+let g:scrollview_current_only=1
+let g:scrollview_winblend=60
+let g:scrollview_column=1
+
 
 " typescript
 let g:yats_host_keyword = 1
@@ -237,7 +241,7 @@ let g:completion_enable_snippet = 'UltiSnips'
 set shortmess+=c
 
 
-"let g:vimade = { "fadelevel": 0.77, "basebg": "#000000" }
+let g:vimade = { "fadelevel": 0.77 }
 
 " Style vertical split bar
 "set fillchars+=vert:▏

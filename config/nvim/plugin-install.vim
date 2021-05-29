@@ -66,7 +66,7 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 "color scheme
 Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 
 " All of the new functionality in nevim 5 that is not quite stable
 Plug 'neovim/nvim-lspconfig'
@@ -80,7 +80,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/which-key.nvim'
-Plug 'glepnir/lspsaga.nvim'
+Plug 'akinsho/nvim-toggleterm.lua'
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
@@ -95,7 +95,7 @@ Plug 'skywind3000/vim-quickui'
 Plug 'gcmt/taboo.vim'
 "Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 "Plug 'TaDaa/vimade' " nice, but has issues with popup windows
-"Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
+Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 Plug 'cseickel/dwm.vim'
 
 Plug 'mileszs/ack.vim'
