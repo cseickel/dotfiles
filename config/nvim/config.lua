@@ -1,10 +1,27 @@
 local vim = vim
 vim.o.completeopt = "menuone,noselect"
+local custom_border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" }
+vim.lsp.handlers["textDocument/hover"] =
+  vim.lsp.with(
+  vim.lsp.handlers.hover,
+  {
+    border = 'single'
+  }
+)
+
+vim.lsp.handlers["textDocument/signatureHelp"] =
+  vim.lsp.with(
+  vim.lsp.handlers.signature_help,
+  {
+    border = 'single'
+  }
+)
+
 require'lsp_signature'.on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
     handler_opts = {
         border = "single"
-    }
+    },
 })
 require'compe'.setup {
   enabled = true;
@@ -360,14 +377,15 @@ require("toggleterm").setup{
     -- the 'curved' border is a custom border type
     -- not natively supported but implemented in this plugin.
     --border = 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
-    border = { " ", "▆", " ", "▏", " ", "▔", " ", "▕" },
+    border = custom_border,
     winblend = 0,
     highlights = {
       border = "VertSplit",
       background = "Normal",
     },
     height = function ()
-        return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 14)))
+        --return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 14)))
+        return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 8)))
     end,
     width = function () 
         return math.ceil(math.min(vim.o.columns, math.max(80, vim.o.columns - 30)))
@@ -390,7 +408,7 @@ local function open_shadow_win()
     local shadow_bufnr = vim.api.nvim_create_buf(false,true)
     local shadow_winid = vim.api.nvim_open_win(shadow_bufnr,true,opts)
     vim.api.nvim_win_set_option(shadow_winid,'winhl',shadow_winhl)
-    vim.api.nvim_win_set_option(shadow_winid,'winblend',60)
+    vim.api.nvim_win_set_option(shadow_winid,'winblend',50)
     return shadow_winid
 end
 

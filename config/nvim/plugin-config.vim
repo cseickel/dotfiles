@@ -317,6 +317,7 @@ hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
 
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626
+highlight link NormalFloat NormalNC
 highlight TroubleNormal guibg=#262626
 highlight TroubleText guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
