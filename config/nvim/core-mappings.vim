@@ -44,9 +44,9 @@ inoremap <silent> <C-a> <Esc>ggVG
 vnoremap <silent> <C-a> <Esc>ggVG
 
 " Standard Cut shortcut
-inoremap <silent> <C-x> <Esc>yawdawi
-vnoremap <silent> <C-x> ygvd
-nnoremap <silent> <C-x> Vydd
+"inoremap <silent> <C-x> <Esc>yawdawi
+"vnoremap <silent> <C-x> ygvd
+"nnoremap <silent> <C-x> Vydd
 
 " Search and Replace Selected Text
 vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>

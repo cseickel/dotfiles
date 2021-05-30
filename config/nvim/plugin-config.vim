@@ -167,6 +167,7 @@ let g:bufExplorerDisableDefaultKeyMapping=1
 
 let g:sharpenup_create_mappings = 0
 let g:OmniSharp_highlighting = 0
+let g:completion_auto_change_source = 0
 
 " colorizer
 "let g:Hexokinase_highlighters = ['foregroundfull']

@@ -102,13 +102,13 @@ augroup FernEvents
 augroup END
 
 
-nnoremap <leader>fg  :FzfPreviewGitActions<CR>
-nnoremap <leader>fq  :FzfPreviewQuickFix<CR>
-nnoremap <leader>fl  :FzfPreviewLocationList<CR>
-nnoremap <leader>fb  :FzfPreviewBufferLines<CR>
-nnoremap <leader>ff  :<C-u>FzfPreviewProjectGrep<Space>
-xnoremap <leader>ff  "sy:FzfPreviewProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-nnoremap <leader>fo  :execute 'FzfPreviewDirectoryFiles ' . g:owd<CR>
+nnoremap <leader>fg  :FzfPreviewGitActionsRpc<CR>
+nnoremap <leader>fq  :FzfPreviewQuickFixRpc<CR>
+nnoremap <leader>fl  :FzfPreviewLocationListRpc<CR>
+nnoremap <leader>fb  :FzfPreviewBufferLinesRpc<CR>
+nnoremap <leader>ff  :<C-u>FzfPreviewProjectGrepRpc<Space>
+xnoremap <leader>ff  "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <leader>fo  :FzfPreviewDirectoryFilesRpc .<CR>
 
 " Mergetool shortcuts
 nnoremap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'
@@ -119,9 +119,6 @@ nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 "*****************************************************************************
 "" LSP Mappings
 "*****************************************************************************
-imap <silent> <C-Space> <Plug>(completion_trigger)
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
 
@@ -136,14 +133,17 @@ nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.set_loclist()<cr>
 nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
 nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 function! InitCS()
-    inoremap <silent><buffer><expr> <C-Space> compe#complete()
-    inoremap <silent><buffer><expr> <CR>      compe#confirm('<CR>')
-    inoremap <silent><buffer><expr> <C-e>     compe#close('<C-e>')
-    inoremap <silent><buffer><expr> <C-f>     compe#scroll({ 'delta': +4 })
-    inoremap <silent><buffer><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
     let l:compe_config = {}
     let l:compe_config.documentation = v:true
     let l:compe_config.min_length = 1
@@ -152,7 +152,8 @@ function! InitCS()
     let l:compe_config.source.path = v:true
     let l:compe_config.source.omni = v:true
     let l:compe_config.source.spell = v:true
-    let l:compe_config.source.ultisnips = v:false
+    let l:compe_config.source.ultisnips = v:true
+    let l:compe_config.source.vsnip = v:false
     call compe#setup(l:compe_config, 0)
 
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
@@ -164,7 +165,6 @@ function! InitCS()
     nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
     nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
     nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
-    nmap <silent><buffer> <C-\> <Plug>(omnisharp_signature_help)
     nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
     nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
     nmap <silent><buffer> <leader>t <Plug>(omnisharp_global_code_check)

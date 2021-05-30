@@ -73,7 +73,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
-Plug 'nvim-lua/completion-nvim'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/lsp-trouble.nvim'
 Plug 'nvim-lua/popup.nvim'
@@ -81,6 +81,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
+
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
@@ -107,5 +108,7 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 call plug#end()
