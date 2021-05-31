@@ -34,6 +34,10 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'samoshkin/vim-mergetool'
+
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
 Plug 'tmsvg/pear-tree'
@@ -49,14 +53,10 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-commentary'
 "Plug 'kana/vim-textobj-user'
 "Plug 'sgur/vim-textobj-parameter'
 "Plug 'AckslD/nvim-revJ.lua'
-
-Plug 'tpope/vim-fugitive'
-Plug 'samoshkin/vim-mergetool'
 
 Plug 'mhinz/vim-startify'
 
@@ -79,7 +79,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
-
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local

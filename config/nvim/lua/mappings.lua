@@ -1,5 +1,17 @@
 require("which-key").register({
     K = { "Show documentation"},
+    ["["] = {
+        name = "Previous...",
+        d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
+        l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
+        q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
+    },
+    ["]"] = {
+        name = "Next...",
+        d = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Next Diagnostic" },
+        l = { "<cmd>lnext<cr>",                               "Next Location List" },
+        q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
+    },
 })
 
 require("which-key").register({
@@ -40,7 +52,6 @@ require("which-key").register({
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     s = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",        "Show signature help" },
     t = { "<cmd>call ShowTrouble()<cr>",                      "Show Trouble (diagnostics)" },
-    ["["] = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Jump to prev diagnostic" },
-    ["]"] = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Jump to next diagnostic" },
+    T = { "<cmd>TroubleClose<cr>",                            "Close Trouble" },
     z = { ":call ToggleWindowZoom()<cr>",                     "Zoom Window (toggle)" },
 }, { prefix = "<leader>" })

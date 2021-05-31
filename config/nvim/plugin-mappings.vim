@@ -51,9 +51,29 @@ function! ToggleWindowZoom() abort
     endif
 endfunction
 
-function! ShowTrouble() abort
-    Trouble
+function! LayoutTrouble() abort
     call DWM_MoveRight()
+    let trouble_lines = line('$')
+    if trouble_lines < 8
+        resize 8
+    else
+        execute 'resize ' . trouble_lines
+    endif
+endfunction
+
+function! ShowTrouble() abort
+    TroubleClose
+    Trouble lsp_workspace_diagnostics
+    call LayoutTrouble()
+endfunction
+
+function! ReplaceQuickfix() abort
+    if &buftype == 'quickfix'
+        cclose
+        TroubleClose
+        Trouble quickfix
+        call LayoutTrouble()
+    endif
 endfunction
 
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
@@ -171,7 +191,8 @@ augroup plugin_mappings_augroup
     autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
     autocmd FileType cs call InitCS()
     autocmd FileType csx call InitCS()
-    autocmd FileType sql call InitSql() 
+    autocmd FileType sql call InitSql()
+    autocmd FileType qf call timer_start(10, { tid -> execute('call ReplaceQuickfix()')})
 augroup END
 
 function! Syn()
