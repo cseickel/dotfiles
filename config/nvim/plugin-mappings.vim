@@ -51,13 +51,10 @@ function! ToggleWindowZoom() abort
     endif
 endfunction
 
-nnoremap <silent> <leader>wz :call ToggleWindowZoom()<cr>
-
 function! ShowTrouble() abort
     Trouble
     call DWM_MoveRight()
 endfunction
-nnoremap <silent> <leader>t :call ShowTrouble()<cr>
 
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
 
@@ -102,14 +99,6 @@ augroup FernEvents
 augroup END
 
 
-nnoremap <leader>fg  :FzfPreviewGitActionsRpc<CR>
-nnoremap <leader>fq  :FzfPreviewQuickFixRpc<CR>
-nnoremap <leader>fl  :FzfPreviewLocationListRpc<CR>
-nnoremap <leader>fb  :FzfPreviewBufferLinesRpc<CR>
-nnoremap <leader>ff  :<C-u>FzfPreviewProjectGrepRpc<Space>
-xnoremap <leader>ff  "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-nnoremap <leader>fo  :FzfPreviewDirectoryFilesRpc .<CR>
-
 " Mergetool shortcuts
 nnoremap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'
 nnoremap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Right>'
@@ -121,17 +110,6 @@ nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 "*****************************************************************************
 inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
-
-nnoremap <silent> <leader>gd <cmd>lua vim.lsp.buf.definition()<cr>
-nnoremap <silent> <leader>gt <cmd>lua vim.lsp.buf.type_definition()<cr>
-nnoremap <silent> <leader>gi <cmd>lua vim.lsp.buf.implementation() <cr>
-nnoremap <silent> <leader>gr <cmd>lua vim.lsp.buf.references()<cr>
-nnoremap <silent> <leader>n  <cmd>lua vim.lsp.buf.rename()<cr>
-nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.code_action()<cr>
-nnoremap <silent> K          <cmd>lua vim.lsp.buf.hover()<cr>   
-nnoremap <silent> <leader>d  <cmd>lua vim.lsp.diagnostic.set_loclist()<cr>
-nnoremap <silent> <leader>[  <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
-nnoremap <silent> <leader>]  <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
 
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm('<CR>')
@@ -157,27 +135,20 @@ function! InitCS()
     call compe#setup(l:compe_config, 0)
 
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
-    nmap <silent><buffer> <leader>gu <Plug>(omnisharp_find_usages)
+    nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_usages)
     nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
-    nmap <silent><buffer> <leader>pd <Plug>(omnisharp_preview_definition)
-    nmap <silent><buffer> <leader>pi <Plug>(omnisharp_preview_implementations)
     nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
-    nmap <silent><buffer> K          <Plug>(omnisharp_documentation)
-    nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_symbol)
-    nmap <silent><buffer> <leader>fu <Plug>(omnisharp_fix_usings)
-    nmap <silent><buffer> [[ <Plug>(omnisharp_navigate_up)
-    nmap <silent><buffer> ]] <Plug>(omnisharp_navigate_down)
+    nmap <silent><buffer> <leader>d <Plug>(omnisharp_preview_definition)
+    nmap <silent><buffer> <leader>i <Plug>(omnisharp_preview_implementations)
+    nmap <silent><buffer>         K <Plug>(omnisharp_documentation)
+    nmap <silent><buffer> <leader>u <Plug>(omnisharp_fix_usings)
+    nmap <silent><buffer>        [[ <Plug>(omnisharp_navigate_up)
+    nmap <silent><buffer>        ]] <Plug>(omnisharp_navigate_down)
     nmap <silent><buffer> <leader>t <Plug>(omnisharp_global_code_check)
     nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
-    nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
+    nmap <silent><buffer>         = <Plug>(omnisharp_code_format)
     nmap <silent><buffer> <leader>n <Plug>(omnisharp_rename)
-
-    nmap <silent> <buffer> <C-k> <Plug>(omnisharp_signature_help)
-    imap <silent> <buffer> <C-k> <Plug>(omnisharp_signature_help)
-
-    nmap <silent> <buffer> <Leader>sr <Plug>(omnisharp_restart_server)
-    nmap <silent> <buffer> <Leader>ss <Plug>(omnisharp_start_server)
-    nmap <silent> <buffer> <Leader>sp <Plug>(omnisharp_stop_server)
+    nmap <silent><buffer> <leader>s <Plug>(omnisharp_signature_help)
 endfunction
 
 function! DocHighlight()

@@ -6,6 +6,7 @@ source core-mappings.vim
 source plugin-install.vim
 source plugin-config.vim
 lua    require('config')
+lua    require('mappings')
 source plugin-mappings.vim
 source custom-menus.vim
 

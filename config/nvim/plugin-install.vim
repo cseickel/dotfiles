@@ -33,7 +33,6 @@ Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "CHADTree conflicts with scrollview and dwm right now
 "Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
-Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-repeat'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -50,7 +49,6 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
 Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-commentary'
 "Plug 'kana/vim-textobj-user'

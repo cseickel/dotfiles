@@ -12,6 +12,7 @@ tnoremap <silent> <C-\> <c-\><c-n>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+nnoremap s ciw
 
 "" Map leader to ,
 let mapleader=","
@@ -113,4 +114,4 @@ function! RecycleTerminal()
     terminal
 endfunction
 
-nnoremap <silent> <leader>sh :botright split<bar>resize 10<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
+nnoremap <silent> <leader>s :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>

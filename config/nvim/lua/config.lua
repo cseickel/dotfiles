@@ -1,5 +1,6 @@
 local vim = vim
 vim.o.completeopt = "menuone,noselect"
+
 local custom_border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" }
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(
@@ -9,21 +10,16 @@ vim.lsp.handlers["textDocument/hover"] =
   }
 )
 
-vim.lsp.handlers["textDocument/signatureHelp"] =
-  vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {
-    border = 'single'
-  }
-)
+--vim.lsp.handlers["textDocument/signatureHelp"] =
+--  vim.lsp.with(
+--  vim.lsp.handlers.signature_help,
+--  {
+--    border = 'single'
+--  }
+--)
 
-require'lsp_signature'.on_attach({
-    bind = true, -- This is mandatory, otherwise border config won't get registered.
-    handler_opts = {
-        border = "single"
-    },
-})
-require'compe'.setup {
+
+require('compe').setup {
   enabled = true;
   autocomplete = true;
   debug = false;
@@ -104,18 +100,28 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
+local function lsp_attach() 
+    require('lsp_signature').on_attach({
+        bind = true,
+        handler_opts = {
+            border = "single"
+        },
+        hint_enable = false
+    })
+end
+
 LspInstall = require'lspinstall'
 Compe = require'compe'
 local function setup_servers()
-	LspInstall.setup()
-	local servers = LspInstall.installed_servers()
-	for _, server in pairs(servers) do
-		require'lspconfig'[server].setup{
+    LspInstall.setup()
+    local servers = LspInstall.installed_servers()
+    for _, server in pairs(servers) do
+        require('lspconfig')[server].setup({
             capabilities = capabilities,
-            on_attach = require'lsp_signature'.on_attach
-        };
-	end
- end
+            on_attach = lsp_attach
+        });
+    end
+end
 
 setup_servers()
 
@@ -176,43 +182,6 @@ require('lspkind').init({
       Operator = ''
     },
 })
-
-local omnisharp_data = {}
-local function omnisharp_callback()
-    return omnisharp_data.callback
-end
-
---function _G.omnisharp_complete(items)
---    for _, item in pairs(items) do
---        item.user_data = vim.fn.json_encode({ hover = item.info })
---        item.dup = 0
---    end
---    omnisharp_data.callback = false
---    omnisharp_data.items = items
---end
---
---local function omnisharp_trigger(prefix, score_func)
---    vim.api.nvim_call_function('OmniSharpTrigger',{ prefix })
---    omnisharp_data.callback = true
---end
---require('completion').addCompletionSource('omnisharp', {  
---    item = omnisharp_complete,
---    trigger = omnisharp_trigger,
---    callback = omnisharp_callback
---})
---
---vim.g.completion_chain_complete_list = {
---    default = {
---        { ins_complete = false, complete_items = { 'lsp', 'UltiSnips', 'path' } },
---        { ins_complete = false, complete_items = { 'lsp'} },
---        { ins_complete = false, complete_items = { 'UltiSnips' } },
---        { ins_complete = false, complete_items = { 'path' } },
---    },
---    cs = {
---        { ins_complete = false, complete_items = { 'path', 'UltiSnips', 'buffers' } },
---        { ins_complete = true, mode = { 'omni' } },
---    },
---}
 
 require'trouble'.setup {
     position = "top", -- position of the list can be: bottom, top, left, right
@@ -384,8 +353,7 @@ require("toggleterm").setup{
       background = "Normal",
     },
     height = function ()
-        --return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 14)))
-        return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 8)))
+        return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
     end,
     width = function () 
         return math.ceil(math.min(vim.o.columns, math.max(80, vim.o.columns - 30)))
@@ -408,7 +376,7 @@ local function open_shadow_win()
     local shadow_bufnr = vim.api.nvim_create_buf(false,true)
     local shadow_winid = vim.api.nvim_open_win(shadow_bufnr,true,opts)
     vim.api.nvim_win_set_option(shadow_winid,'winhl',shadow_winhl)
-    vim.api.nvim_win_set_option(shadow_winid,'winblend',50)
+    vim.api.nvim_win_set_option(shadow_winid,'winblend',60)
     return shadow_winid
 end
 

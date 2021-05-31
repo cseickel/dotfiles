@@ -6,6 +6,7 @@
         relative: true
 - create:
     - ~/.config/nvim/colors
+    - ~/.config/nvim/lua
     - ~/.config/nvim/UltiSnips
     - ~/.gnupg
 - link:
@@ -22,7 +23,8 @@
     ~/.config/nvim/plugin-config.vim: config/nvim/plugin-config.vim
     ~/.config/nvim/plugin-mappings.vim: config/nvim/plugin-mappings.vim
     ~/.config/nvim/custom-menus.vim: config/nvim/custom-menus.vim
-    ~/.config/nvim/config.lua: config/nvim/config.lua
+    ~/.config/nvim/lua/config.lua: config/nvim/lua/config.lua
+    ~/.config/nvim/lua/mappings.lua: config/nvim/lua/mappings.lua
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/nvim/colors:
         glob: true

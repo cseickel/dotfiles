@@ -14,7 +14,7 @@ endif
 "colorscheme dark_plus
 colorscheme nvcode "<-- this one is best with tree-sitter
 
-
+let g:gitgutter_map_keys = 0
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'tender'
 
