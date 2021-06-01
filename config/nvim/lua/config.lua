@@ -19,15 +19,12 @@ vim.lsp.handlers["textDocument/hover"] =
 
 MyTrouble = function(kind)
     vim.cmd([[
-    call CloseTerminal()
-    TroubleClose
-    Trouble ]] .. kind .. [[
-    call DWM_MoveRight()
-    ]])
+    call CloseAllTools()
+    Trouble ]] .. kind)
 end
 
 --vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
---vim.lsp.handlers['textDocument/references'] = function() MyTrouble('lsp_references') end
+vim.lsp.handlers['textDocument/references'] = function() MyTrouble('lsp_references') end
 --vim.lsp.handlers['textDocument/definition'] = function() MyTrouble('lsp_definitions') end
 --vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 --vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler

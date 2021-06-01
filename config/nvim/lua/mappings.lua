@@ -1,7 +1,18 @@
 -- make sure to run this code before calling setup()
 -- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
+local trouble = require('trouble')
 local presets = require("which-key.plugins.presets")
 presets.operators["v"] = nil
+
+local next_trouble = function()
+    trouble.action('next')
+    trouble.action('preview')
+end
+
+local prev_trouble = function()
+    trouble.action('previous')
+    trouble.action('preview')
+end
 
 require("which-key").register({
     K = { "Show documentation"},
@@ -10,12 +21,14 @@ require("which-key").register({
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
         l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
         q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
+        t = { prev_trouble,                                   "Previous Trouble" },
     },
     ["]"] = {
         name = "Next...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Next Diagnostic" },
         l = { "<cmd>lnext<cr>",                               "Next Location List" },
         q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
+        t = { next_trouble,                                   "Next Trouble" },
     },
 })
 
@@ -49,8 +62,9 @@ require("which-key").register({
     g = {
         name = "Go to...",
         d = { "<cmd>lua vim.lsp.buf.definition()<cr>",        "Go to Definition"},
-        i = { "<cmd>lua vim.lsp.buf.Implementation()<cr>",    "Go to Implementation"},
-        r = { "<cmd>Telescope lsp_references<cr>",            "Find References"},
+        i = { "<cmd>lua vim.lsp.buf.implementation()<cr>",    "Go to Implementation"},
+        --r = { "<cmd>Telescope lsp_references<cr>",            "Find References"},
+        r = { "<cmd>lua vim.lsp.buf.references()<cr>",        "Find References"},
         t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>",   "Go to Type Definition"},
     },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },

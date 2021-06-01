@@ -70,19 +70,22 @@ function! LayoutTrouble() abort
     endif
 endfunction
 
-function! ShowTrouble() abort
-    cclose
-    TroubleClose
-    Trouble lsp_workspace_diagnostics
-    "call LayoutTrouble()
-endfunction
-
-function! ReplaceQuickfix() abort
+function! CloseAllTools()
     call CloseTerminal()
     cclose
     lclose
     TroubleClose
     redraw
+endfunction
+
+function! ShowTrouble() abort
+    call CloseAllTools()
+    Trouble lsp_workspace_diagnostics
+    "call LayoutTrouble()
+endfunction
+
+function! ReplaceQuickfix() abort
+    call CloseAllTools()
     Trouble quickfix
     "call LayoutTrouble()
 endfunction
