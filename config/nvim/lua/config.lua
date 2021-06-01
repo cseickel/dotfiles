@@ -18,11 +18,16 @@ vim.lsp.handlers["textDocument/hover"] =
 --)
 
 MyTrouble = function(kind)
-    vim.cmd("TroubleClose\nTrouble " .. kind .. "\ncall DWM_MoveRight()")
+    vim.cmd([[
+    call CloseTerminal()
+    TroubleClose
+    Trouble ]] .. kind .. [[
+    call DWM_MoveRight()
+    ]])
 end
 
 --vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-vim.lsp.handlers['textDocument/references'] = function() MyTrouble('lsp_references') end
+--vim.lsp.handlers['textDocument/references'] = function() MyTrouble('lsp_references') end
 --vim.lsp.handlers['textDocument/definition'] = function() MyTrouble('lsp_definitions') end
 --vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 --vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
@@ -195,7 +200,7 @@ require('lspkind').init({
 })
 
 require'trouble'.setup {
-    position = "top", -- position of the list can be: bottom, top, left, right
+    position = "bottom", -- position of the list can be: bottom, top, left, right
     height = 10, -- height of the trouble list when position is top or bottom
     width = 50, -- width of the list when position is left or right
     icons = true, -- use devicons for filenames
@@ -245,13 +250,13 @@ require('telescope').setup{
       '--column',
       '--smart-case'
     },
-    prompt_position = "bottom",
-    prompt_prefix = "> ",
+    prompt_position = "top",
+    prompt_prefix = "🔍 ",
     selection_caret = "> ",
     entry_prefix = "  ",
     initial_mode = "insert",
     selection_strategy = "reset",
-    sorting_strategy = "descending",
+    sorting_strategy = "ascending",
     layout_strategy = "horizontal",
     layout_defaults = {
       horizontal = {

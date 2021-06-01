@@ -1,3 +1,8 @@
+-- make sure to run this code before calling setup()
+-- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
+local presets = require("which-key.plugins.presets")
+presets.operators["v"] = nil
+
 require("which-key").register({
     K = { "Show documentation"},
     ["["] = {
@@ -45,12 +50,13 @@ require("which-key").register({
         name = "Go to...",
         d = { "<cmd>lua vim.lsp.buf.definition()<cr>",        "Go to Definition"},
         i = { "<cmd>lua vim.lsp.buf.Implementation()<cr>",    "Go to Implementation"},
-        r = { "<cmd>lua vim.lsp.buf.references()<cr>",        "Find References"},
+        r = { "<cmd>Telescope lsp_references<cr>",            "Find References"},
         t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>",   "Go to Type Definition"},
     },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
-    s = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",        "Show signature help" },
+    S = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",        "Show signature help" },
+    s = { "Open Terminal" },
     t = { "<cmd>call ShowTrouble()<cr>",                      "Show Trouble (diagnostics)" },
     T = { "<cmd>TroubleClose<cr>",                            "Close Trouble" },
     z = { ":call ToggleWindowZoom()<cr>",                     "Zoom Window (toggle)" },

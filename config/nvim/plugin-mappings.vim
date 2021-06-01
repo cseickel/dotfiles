@@ -51,6 +51,15 @@ function! ToggleWindowZoom() abort
     endif
 endfunction
 
+function! CloseTerminal() abort
+    let l:windows = {}
+    for win in nvim_tabpage_list_wins(0)
+        if nvim_buf_get_name(nvim_win_get_buf(win)) =~ "term://" && nvim_win_get_width(win) == &columns && nvim_win_get_height(win) < (&lines-3)
+            call nvim_win_close(win, 1)
+        endif
+    endfor
+endfunction
+
 function! LayoutTrouble() abort
     call DWM_MoveRight()
     let trouble_lines = line('$')
@@ -62,18 +71,20 @@ function! LayoutTrouble() abort
 endfunction
 
 function! ShowTrouble() abort
+    cclose
     TroubleClose
     Trouble lsp_workspace_diagnostics
-    call LayoutTrouble()
+    "call LayoutTrouble()
 endfunction
 
 function! ReplaceQuickfix() abort
-    if &buftype == 'quickfix'
-        cclose
-        TroubleClose
-        Trouble quickfix
-        call LayoutTrouble()
-    endif
+    call CloseTerminal()
+    cclose
+    lclose
+    TroubleClose
+    redraw
+    Trouble quickfix
+    "call LayoutTrouble()
 endfunction
 
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
@@ -192,7 +203,9 @@ augroup plugin_mappings_augroup
     autocmd FileType cs call InitCS()
     autocmd FileType csx call InitCS()
     autocmd FileType sql call InitSql()
-    autocmd FileType qf call timer_start(10, { tid -> execute('call ReplaceQuickfix()')})
+    autocmd FileType qf,Trouble call CloseTerminal()
+    autocmd FileType json nnoremap <buffer> = :%!python -m json.tool<cr>
+    autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})
 augroup END
 
 function! Syn()
