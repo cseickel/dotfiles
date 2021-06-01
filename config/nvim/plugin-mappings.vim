@@ -182,7 +182,7 @@ function! InitCS()
     nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
     nmap <silent><buffer>         = <Plug>(omnisharp_code_format)
     nmap <silent><buffer> <leader>n <Plug>(omnisharp_rename)
-    nmap <silent><buffer> <leader>s <Plug>(omnisharp_signature_help)
+    nmap <silent><buffer> <leader>S <Plug>(omnisharp_signature_help)
 endfunction
 
 function! DocHighlight()
@@ -206,7 +206,8 @@ augroup plugin_mappings_augroup
     autocmd FileType cs call InitCS()
     autocmd FileType csx call InitCS()
     autocmd FileType sql call InitSql()
-    autocmd FileType qf,Trouble call CloseTerminal()
+    autocmd FileType qf,Trouble call CloseAllTools()
+    autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> = :%!python -m json.tool<cr>
     autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})
 augroup END

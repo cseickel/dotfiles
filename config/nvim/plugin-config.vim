@@ -253,30 +253,8 @@ set fillchars+=vert:█
 highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
 
 " nvcode overrides from dark+
-
-"" Terminal Colors:  {{{
-"let g:terminal_color_0  = '#1e1e1e'  " black
-"let g:terminal_color_1  = '#f44747'  " red
-"let g:terminal_color_2  = '#608b4e'  " green
-"let g:terminal_color_3  = '#d7ba7d'  " yellow
-"let g:terminal_color_4  = '#569cd6'  " blue
-"let g:terminal_color_5  = '#c586c0'  " magenta
-"let g:terminal_color_6  = '#4ec9b0'  " cyan
-"let g:terminal_color_7  = '#d4d4d4'  " white
-"let g:terminal_color_8  = '#1e1e1e'  " bright_black
-"let g:terminal_color_9  = '#f44747'  " bright_red
-"let g:terminal_color_10 = '#608b4e'  " bright_green
-"let g:terminal_color_11 = '#d7ba7d'  " bright_yellow
-"let g:terminal_color_12 = '#569cd6'  " bright_blue
-"let g:terminal_color_13 = '#c586c0'  " bright_magenta
-"let g:terminal_color_14 = '#4ec9b0'  " bright_cyan
-"let g:terminal_color_15 = '#d4d4d4'  " bright_white
-"let g:terminal_color_background = g:terminal_color_0
-"let g:terminal_color_foreground = g:terminal_color_7
-"" }}}
-""
 highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
-"
+
 highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
@@ -296,29 +274,19 @@ hi TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE 
 
 highlight StartifyFile ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
 highlight StartifyBracket ctermfg=0 guifg=#1e1e1e cterm=NONE gui=NONE
-"highlight StartifyNumber ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
-"highlight StartifyVar ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
-"highlight StartifySpecial ctermfg=9 guifg=#b5cea8 cterm=NONE gui=NONE
 highlight StartifySlash ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
-"highlight StartifySelect ctermfg=4 guifg=#569cd6 cterm=NONE gui=NONE
-"highlight StartifyHeader ctermfg=4 guifg=#569cd6 cterm=NONE gui=NONE
-"highlight StartifySection ctermfg=13 guifg=#c586c0 cterm=NONE gui=NONE
-"
-"highlight iCursor ctermbg=4 guibg=#569cd6 cterm=NONE gui=NONE
-"highlight vCursor ctermbg=13 guibg=#c586c0 cterm=NONE gui=NONE
-"highlight rCursor ctermbg=1 guibg=#d16969 cterm=NONE gui=NONE
-"highlight Cursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
-"highlight TermCursor ctermbg=2 guibg=#608b4e cterm=NONE gui=NONE
-"
+
+hi LspTroubleText guibg=none ctermbg=none ctermfg=244 guifg=#abb2bf
 hi LspReferenceText cterm=underline gui=bold guibg=#404040
 hi LspReferenceRead cterm=underline gui=bold guibg=#404040
 hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
+hi link vimUserFunc none
 
 hi Normal guibg=#1c1c1c
 highlight NormalNC guibg=#262626
 highlight link NormalFloat NormalNC
-highlight TroubleNormal guibg=#262626
+highlight TroubleNormal guibg=none ctermbg=none
 highlight TroubleText guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
 highlight LineNR guibg=None ctermbg=None
