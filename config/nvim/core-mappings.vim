@@ -34,10 +34,10 @@ inoremap <silent> <M-s> <Esc>:wa<cr>
 
 " Use Control + v for paste, ALt + v for visual block mode
 nnoremap <silent> <M-v> <C-v>
-nnoremap <silent> <C-v> "0p
-vnoremap <silent> <C-v> "_d"0p
-inoremap <silent> <C-v> <Esc>"0pa
-tnoremap <silent> <C-v> <c-\><c-n>"0pi
+nmap <silent> <C-v> p
+vmap <silent> <C-v> p
+imap <silent> <C-v> <Esc>pa
+tmap <silent> <C-v> <c-\>pa
 
 " Select All
 noremap  <silent> <C-a> ggVG
@@ -104,6 +104,14 @@ nnoremap <silent> <M-j> <C-w>j
 nnoremap <silent> <M-k> <C-w>k
 nnoremap <silent> <M-l> <C-w>l
 
+function! CloseTerminal() abort
+    for win in nvim_tabpage_list_wins(0)
+        if nvim_buf_get_name(nvim_win_get_buf(win)) =~ "term://" && nvim_win_get_width(win) == &columns && nvim_win_get_height(win) < (&lines-3)
+            call nvim_win_close(win, 1)
+        endif
+    endfor
+endfunction
+
 function! RecycleTerminal()
     for buf in getbufinfo({ 'buflisted': 1 })
         if buf.name =~ "term://" && len(buf.windows) == 0
@@ -115,3 +123,4 @@ function! RecycleTerminal()
 endfunction
 
 nnoremap <silent> <leader>s :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
+nnoremap <silent> <leader>S :call CloseTerminal()<cr>
