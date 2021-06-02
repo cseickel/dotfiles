@@ -8,6 +8,5 @@ source plugin-config.vim
 lua    require('config')
 lua    require('mappings')
 source plugin-mappings.vim
-source custom-menus.vim
 
 exe 'cd ' . g:owd
