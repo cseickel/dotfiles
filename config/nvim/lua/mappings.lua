@@ -33,9 +33,11 @@ require("which-key").register({
 })
 
 require("which-key").register({
-    ["."] = { "Set Working Directory" },
+    ["."] = { "Set Working Directory from current file" },
     [","] = { "Show Buffers" },
+    ["="] = { "Format Document" },
     h = { "<cmd>Telescope help_tags<cr>", "VIM Help" },
+    j = { "<cmd>Vista finder<cr>",                            "Jump to Method, Class, etc"},
     m = { "add Mark" },
     q = { "Show Quickfix" },
     f = {
@@ -70,9 +72,9 @@ require("which-key").register({
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
-    s = { "Open Terminal" },
+    s = { "Open  Terminal" },
     S = { "Close Terminal" },
-    t = { "<cmd>call ShowTrouble()<cr>",                      "Show Trouble (diagnostics)" },
+    t = { "<cmd>call ShowTrouble()<cr>",                      "Open  Trouble (diagnostics)" },
     T = { "<cmd>TroubleClose<cr>",                            "Close Trouble" },
     z = { ":call ToggleWindowZoom()<cr>",                     "Zoom Window (toggle)" },
 }, { prefix = "<leader>" })

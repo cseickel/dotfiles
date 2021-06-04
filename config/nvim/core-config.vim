@@ -8,6 +8,7 @@ set showtabline=2
 set nocompatible
 set wildmenu
 set wildmode=longest,list
+set pumheight=20
 "source $VIMRUNTIME/menu.vim
 set splitbelow
 set splitright

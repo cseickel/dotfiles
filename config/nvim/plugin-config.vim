@@ -165,6 +165,9 @@ let g:bufExplorerShowTabBuffer=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerDisableDefaultKeyMapping=1
 
+let g:vista_ignore_kinds=["Variable", "Constant", "Property"]
+let g:vista_default_executive="nvim_lsp"
+
 let g:sharpenup_create_mappings = 0
 let g:OmniSharp_highlighting = 0
 let g:completion_auto_change_source = 0
@@ -209,10 +212,6 @@ let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
             \ 't:terminal', 'g:terminal', 'w:terminal']
 
 set sessionoptions=blank,curdir,folds,help,tabpages,winpos
-
-" vim-quickui menus
-let g:quickui_border_style = 2
-let g:quickui_color_scheme = 'papercol dark'
 
 
 "fzf preview

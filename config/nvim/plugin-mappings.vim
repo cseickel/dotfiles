@@ -133,6 +133,8 @@ nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 "*****************************************************************************
 "" LSP Mappings
 "*****************************************************************************
+nnoremap <silent>       K         :lua vim.lsp.buf.hover()<cr>
+nnoremap <silent>       <leader>= :lua vim.lsp.buf.formatting()<cr>
 inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
 
@@ -171,7 +173,7 @@ function! InitCS()
     nmap <silent><buffer>        ]] <Plug>(omnisharp_navigate_down)
     nmap <silent><buffer> <leader>t <Plug>(omnisharp_global_code_check)
     nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
-    nmap <silent><buffer>         = <Plug>(omnisharp_code_format)
+    nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
     nmap <silent><buffer> <leader>n <Plug>(omnisharp_rename)
     nmap <silent><buffer> <leader>? <Plug>(omnisharp_signature_help)
 endfunction
@@ -199,7 +201,7 @@ augroup plugin_mappings_augroup
     autocmd FileType sql call InitSql()
     autocmd FileType qf,Trouble call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
-    autocmd FileType json nnoremap <buffer> = :%!python -m json.tool<cr>
+    autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
     autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})
 augroup END
 

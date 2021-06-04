@@ -77,7 +77,6 @@ Plug 'ntpeters/vim-better-whitespace'
 
 " UI Stuff
 "Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
-Plug 'skywind3000/vim-quickui'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'jacoborus/tender.vim'
 Plug 'vim-airline/vim-airline'

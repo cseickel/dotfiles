@@ -151,7 +151,7 @@ require'nvim-treesitter.configs'.setup {
 		--disable = { "c_sharp" },  -- list of language that will be disabled
 	},
 	indent = {
-		enable = false
+		enable = true
 	}
 }
 
