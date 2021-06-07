@@ -84,7 +84,7 @@ Plug 'akinsho/nvim-toggleterm.lua'
 Plug 'liuchengxu/vista.vim'
 
 " UI Stuff
-"Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
+Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
