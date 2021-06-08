@@ -22,9 +22,18 @@ nnoremap <M-3> :b#<cr>
 inoremap <M-3> <Esc>:b#<cr>
 tnoremap <M-3> <c-\><c-n>:b#<cr>
 
-" Tab Navigation
-nnoremap <silent> <tab> :tabnext<cr>
-nnoremap <silent> <S-tab> :tabprevious<cr>
+" Quick edits from normal/visual mode
+nnoremap <silent> <tab> >>
+nnoremap <silent> <S-tab> <<
+nnoremap <silent> <cr> i<cr><esc>
+nnoremap <silent> <bs> i<bs><esc>l
+nnoremap <silent> <space> i<space><esc>l
+
+vnoremap <silent> <tab> >gv
+vnoremap <silent> <s-tab> <gv
+vnoremap <silent> <cr> s<cr><esc>
+vnoremap <silent> <bs> xh 
+vnoremap <silent> <space> s<space><esc>
 
 " Standard Save shortcuts
 noremap  <silent> <C-s> :w<cr>
@@ -48,6 +57,7 @@ vnoremap <silent> <C-a> <Esc>ggVG
 "inoremap <silent> <C-x> <Esc>yawdawi
 "vnoremap <silent> <C-x> ygvd
 "nnoremap <silent> <C-x> Vydd
+
 
 " Search and Replace Selected Text
 vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
@@ -91,18 +101,22 @@ nnoremap <silent> <C-j> <C-w>x<C-w>j
 nnoremap <silent> <C-k> <C-w>k<C-w>x
 nnoremap <silent> <C-l> <C-w>K
 nnoremap <silent> <leader>z :execute "-1tabedit % | " . line(".") <cr>
-nnoremap ZZ <Nop>
+
+" window navigation
+nnoremap <silent> h <C-w>h
+nnoremap <silent> j <C-w>j
+nnoremap <silent> k <C-w>k
+nnoremap <silent> l <C-w>l
+
+" tab navigation
+nnoremap <silent> H :tabprevious<cr>
+nnoremap <silent> L :tabnext<cr>
+
 " window resize
 nnoremap <silent> _     <C-w>5<
 nnoremap <silent> +     <C-w>5>
 nnoremap <silent> -     <C-w>-
 nnoremap <silent> =     <C-w>+
-
-" window navigation
-nnoremap <silent> <M-h> <C-w>h
-nnoremap <silent> <M-j> <C-w>j
-nnoremap <silent> <M-k> <C-w>k
-nnoremap <silent> <M-l> <C-w>l
 
 function! CloseTerminal() abort
     for win in nvim_tabpage_list_wins(0)

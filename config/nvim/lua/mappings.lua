@@ -15,7 +15,14 @@ local prev_trouble = function()
 end
 
 require("which-key").register({
+    h = { "Focus window to the LEFT" },
+    j = { "Focus window BELOW" },
+    k = { "Focus window ABOVE" },
+    l = { "Focus window to the RIGHT" },
+    H = { "Previous Tab" },
+    L = { "Next Tab" },
     K = { "Show documentation"},
+    s = { "Substitute Word" },
     ["["] = {
         name = "Previous...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
