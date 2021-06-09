@@ -1,7 +1,5 @@
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename
-nnoremap <silent> <leader><leader> :BufExplorer<CR>
-nnoremap <C-p> :Telescope builtin<cr>
 
 nnoremap <silent> \ :Fern . -reveal=%<CR>
 nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>

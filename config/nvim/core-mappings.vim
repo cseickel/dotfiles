@@ -41,15 +41,17 @@ inoremap <silent> <C-s> <Esc>:w<cr>
 noremap  <silent> <M-s> :wa<cr>
 inoremap <silent> <M-s> <Esc>:wa<cr>
 
-" Use Control + v for paste, ALt + v for visual block mode
+" Control+v is for paste, use Alt+v for visual block mode
 nnoremap <silent> <M-v> <C-v>
-nmap <silent> <C-v> p
-vmap <silent> <C-v> p
-imap <silent> <C-v> <Esc>pa
-tmap <silent> <C-v> <c-\>pa
+
+" Control+p as universal paste shortcut in all modes
+nmap <silent> <C-p> p
+vmap <silent> <C-p> p
+imap <silent> <C-p> <Esc>pa
+tmap <silent> <C-p> <c-\>pa
 
 " Select All
-noremap  <silent> <C-a> ggVG
+nnoremap <silent> <C-a> ggVG
 inoremap <silent> <C-a> <Esc>ggVG
 vnoremap <silent> <C-a> <Esc>ggVG
 

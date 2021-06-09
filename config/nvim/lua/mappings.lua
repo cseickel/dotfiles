@@ -39,12 +39,27 @@ require("which-key").register({
     },
 })
 
+local showSymbolFinder = function ()
+    local opts= {
+        symbols = {
+            "interface",
+            "class",
+            "constructor",
+            "method",
+        }
+    }
+    if vim.bo.filetype == "vim" then
+        opts.symbols = { "function" }
+    end
+    require('telescope.builtin').lsp_document_symbols(opts)
+end
+
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
-    [","] = { "Show Buffers" },
+    [","] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
     h = { "<cmd>Telescope help_tags<cr>", "VIM Help" },
-    j = { "<cmd>Vista finder<cr>",                            "Jump to Method, Class, etc"},
+    j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     m = { "add Mark" },
     q = { "Show Quickfix" },
     f = {

@@ -36,6 +36,7 @@ Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-eunuch'
 Plug 'samoshkin/vim-mergetool'
 
 Plug 'svermeulen/vim-easyclip'
