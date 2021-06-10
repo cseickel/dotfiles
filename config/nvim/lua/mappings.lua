@@ -40,15 +40,24 @@ require("which-key").register({
 })
 
 local showSymbolFinder = function ()
+    local preview_width = vim.o.columns - 20 - 65
+    if preview_width < 80 then
+        preview_width = 80
+    end
     local opts= {
         symbols = {
             "interface",
             "class",
             "constructor",
             "method",
+        },
+        entry_maker = require('telescope-custom').gen_from_lsp_symbols(),
+        layout_config = {
+            width_padding=10,
+            preview_width=preview_width
         }
     }
-    if vim.bo.filetype == "vim" then
+    if vim.bo.filetype == "vim" or vim.bo.filetype == "lua" then
         opts.symbols = { "function" }
     end
     require('telescope.builtin').lsp_document_symbols(opts)

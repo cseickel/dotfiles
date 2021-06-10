@@ -173,12 +173,12 @@ require('lspkind').init({
     -- default: {}
     symbol_map = {
       Text = '',
-      Method = 'ƒ',
+      Method = '',
       Function = '',
       Constructor = '',
       Variable = '',
-      Class = '',
-      Interface = 'ﰮ',
+      Class = '',
+      Interface = '',
       Module = '',
       Property = '',
       Unit = '',
@@ -247,6 +247,11 @@ require('telescope').setup{
       '--column',
       '--smart-case'
     },
+    mappings = {
+      i = {
+        ["<esc>"] = require('telescope.actions').close
+      },
+    },
     prompt_position = "top",
     prompt_prefix = "🔍 ",
     selection_caret = "> ",
@@ -257,32 +262,16 @@ require('telescope').setup{
     layout_strategy = "horizontal",
     layout_defaults = {
       horizontal = {
-        mirror = false,
+        width_padding = 10,
+        height_padding = 0.1,
+        preview_width = 0.5,
       },
       vertical = {
-        mirror = false,
-      },
+        width_padding = 0.05,
+        height_padding = 1,
+        preview_height = 0.5,
+      }
     },
-    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-    file_ignore_patterns = {},
-    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    shorten_path = true,
-    winblend = 0,
-    width = 0.95,
-    preview_cutoff = 120,
-    results_height = 1,
-    results_width = 0.8,
-    border = {},
-    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    color_devicons = true,
-    use_less = true,
-    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-
-    -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
   }
 }
 
