@@ -31,13 +31,14 @@ Plug 'lambdalisue/glyph-palette.vim'
 Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 "CHADTree conflicts with scrollview and dwm right now
-"Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
 Plug 'samoshkin/vim-mergetool'
+Plug 'nanotee/zoxide.vim'
 
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
@@ -79,10 +80,11 @@ Plug 'folke/lsp-trouble.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
 
-Plug 'liuchengxu/vista.vim'
 
 " UI Stuff
 Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local

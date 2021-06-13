@@ -114,11 +114,48 @@ nnoremap <silent> l <C-w>l
 nnoremap <silent> H :tabprevious<cr>
 nnoremap <silent> L :tabnext<cr>
 
+function! SmartWindowResize(orientation, direction) abort
+    if a:orientation == "v"
+        let s:size = winwidth(0)
+    endif
+    if a:orientation == "h"
+        let s:size = winheight(0) * 2
+    endif
+
+    let s:incr = 5
+    if s:size < 70
+        let s:incr = 4
+    endif
+    if s:size < 60
+        let s:incr = 3
+    endif
+    if s:size < 50
+        let s:incr = 2
+    endif
+    if s:size < 40
+        let s:incr = 1
+    endif
+
+    if a:orientation == "h"
+        if a:direction < 1
+            execute "resize -" . s:incr
+        else
+            execute "resize +" . s:incr
+        endif
+    endif
+    if a:orientation == "v"
+        if a:direction < 1
+            execute "vert resize -" . s:incr
+        else
+            execute "vert resize +" . s:incr
+        endif
+    endif
+endfunction
 " window resize
-nnoremap <silent> _     <C-w>5<
-nnoremap <silent> +     <C-w>5>
-nnoremap <silent> -     <C-w>-
-nnoremap <silent> =     <C-w>+
+nnoremap <silent> _     :call SmartWindowResize("h", 0)<cr>
+nnoremap <silent> +     :call SmartWindowResize("h", 1)<cr>
+nnoremap <silent> -     :call SmartWindowResize("v", 0)<cr>
+nnoremap <silent> =     :call SmartWindowResize("v", 1)<cr>
 
 function! CloseTerminal() abort
     for win in nvim_tabpage_list_wins(0)

@@ -105,6 +105,8 @@ let g:scrollview_current_only=1
 let g:scrollview_winblend=60
 let g:scrollview_column=1
 
+let g:chadtree_settings = { "theme": { "text_colour_set": "nord" } }
+
 
 " typescript
 let g:yats_host_keyword = 1
@@ -189,6 +191,21 @@ function! s:getHiddenBuffers()
     return map(buffers, '{"cmd": "b" . v:val.bufnr, "line": fnamemodify(v:val.name, ":~:.")}')
 endfunction
 
+function! CustomStartifyBeforeSave() abort
+    for win in nvim_list_wins()
+        " close floating windows
+        if nvim_win_get_config(win).relative > ""
+            call nvim_win_close(win, 1)
+        else
+            let l:ft = nvim_buf_get_option(nvim_win_get_buf(win), "ft")
+            " close tree drawer plugins
+            if l:ft =~ "tree" || l:ft == "fern"
+                call nvim_win_close(win, 1)
+            endif
+        endif
+    endfor
+endfunction
+
 " Startify
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
@@ -204,7 +221,7 @@ let g:startify_lists = [
 let g:startify_session_delete_buffers = 0
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
-"let g:startify_session_before_save = ['tabdo MinimapClose']
+let g:startify_session_before_save = ['call CustomStartifyBeforeSave()']
 let g:startify_fortune_use_unicode = 1
 let g:startify_change_cmd = 'tcd'
 let g:startify_change_to_dir = 1

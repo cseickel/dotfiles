@@ -63,11 +63,14 @@ local showSymbolFinder = function ()
     require('telescope.builtin').lsp_document_symbols(opts)
 end
 
+
+
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
     [","] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
-    h = { "<cmd>Telescope help_tags<cr>", "VIM Help" },
+    d = { "<cmd>Tzi<cr>",                                     "Change Directory"},
+    h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     m = { "add Mark" },
     q = { "Show Quickfix" },

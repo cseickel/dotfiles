@@ -1,8 +1,13 @@
+imap     <silent> <C-p> <esc>:Telescope registers<cr>
+tmap     <silent> <C-p> <C-\>:Telescope registers<cr>
+nnoremap <silent> <C-p> :Telescope registers<cr>
+vnoremap <silent> <C-p> :Telescope registers<cr>
+
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename
 
 nnoremap <silent> \ :Fern . -reveal=%<CR>
-nnoremap <silent> <bar> :Fern . -reveal=% -drawer -toggle<CR>
+nnoremap <silent> <bar> :CHADopen<CR>
 
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
 function! BufferDelete() abort
