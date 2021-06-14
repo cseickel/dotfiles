@@ -1,15 +1,8 @@
-imap     <silent> <C-p> <esc>:Telescope registers<cr>
-tmap     <silent> <C-p> <C-\>:Telescope registers<cr>
-nnoremap <silent> <C-p> :Telescope registers<cr>
-vnoremap <silent> <C-p> :Telescope registers<cr>
-
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
-nnoremap <M-t> :TabooRename
-
-nnoremap <silent> \ :Fern . -reveal=%<CR>
-nnoremap <silent> <bar> :CHADopen<CR>
+nnoremap <M-t> :TabooRename 
 
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
+
 function! BufferDelete() abort
     if winnr('$') > 1
         bd
@@ -87,44 +80,6 @@ endfunction
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
 
 let g:EasyClipUsePasteToggleDefaults = 0
-
-function! FernInit() abort
-    setlocal nonumber
-    call glyph_palette#apply()
-    nmap <buffer><expr>
-            \ <Plug>(fern-my-open-expand-collapse)
-            \ fern#smart#leaf(
-            \   "\<Plug>(fern-action-open)",
-            \   "\<Plug>(fern-action-expand)",
-            \   "\<Plug>(fern-action-collapse)",
-            \ )
-    nmap <buffer> <space> <Plug>(fern-my-open-expand-collapse)
-    nmap <buffer> <2-LeftMouse> <Plug>(fern-my-open-expand-collapse)
-    nnoremap <buffer> \ :b#<cr>
-    nnoremap <buffer> <tab> <Plug>(fern-action-mark:toggle)j
-    nmap <buffer> F <Plug>(fern-action-new-file)
-    nmap <buffer> D <Plug>(fern-action-new-dir)
-    nmap <buffer> d <Plug>(fern-action-remove)
-    nmap <buffer> m <Plug>(fern-action-move)
-    nmap <buffer> r <Plug>(fern-action-rename)
-    nmap <buffer> s <Plug>(fern-action-open:split)
-    nmap <buffer> v <Plug>(fern-action-open:vsplit)
-    nmap <buffer> <F5> <Plug>(fern-action-reload)
-
-    nmap <buffer> <CR>
-          \ <Plug>(fern-action-enter)
-          \ <Plug>(fern-wait)
-          \ <Plug>(fern-action-tcd:root)
-
-    nmap <buffer> <BS>
-          \ <Plug>(fern-action-leave)
-          \ <Plug>(fern-wait)
-          \ <Plug>(fern-action-tcd:root)
-endfunction
-augroup FernEvents
-    autocmd!
-    autocmd FileType fern call FernInit()
-augroup END
 
 
 " Mergetool shortcuts

@@ -29,7 +29,7 @@ let g:indentLine_faster = 1
 let g:indent_blankline_space_char = ' '
 let g:indent_blankline_space_char_blankline = ' '
 let g:indent_blankline_use_treesitter = v:true
-
+let g:indentLine_fileTypeExclude = [ "NvimTree" ]
 
 " ntpeters/vim-better-whitespace
 let g:beter_whitespace_enabled=1
@@ -83,6 +83,33 @@ call airline#add_inactive_statusline_func('Custom_Inactive')
 
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_startify = 1
+
+let g:nvim_tree_width = 38
+let g:nvim_tree_tab_open = 1
+let g:nvim_tree_gitignore = 1
+let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
+let g:nvim_tree_indent_markers = 0 "0 by default, this option shows indent markers when folders are open
+let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_show_icons = {
+            \ 'git': 0,
+            \ 'folders': 1,
+            \ 'files': 1,
+            \ 'folder_arrows': 1,
+            \}
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_highlight_opened_files = 0
+let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
+let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+let g:nvim_tree_hijack_cursor = 1
+let g:nvim_tree_icons = { "default" : "" }
+
+highlight CursorLine guibg=#363636
+highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
+highlight NvimTreeNormalNC guibg=#303030 guifg=#d0d0d0
+highlight NvimTreeIndentMarker guifg=#404040
+highlight NvimTreeGitStaged guifg=#dcdcaa gui=BOLD
+highlight NvimTreeGitDirty guifg=#ce9178 gui=BOLD
+highlight NvimTreeGitNew guifg=#c95555 gui=BOLD
 
 " Tab styling
 "let g:taboo_tab_format=" %d %f %m %x⎹"
@@ -197,8 +224,8 @@ function! CustomStartifyBeforeSave() abort
         if nvim_win_get_config(win).relative > ""
             call nvim_win_close(win, 1)
         else
-            let l:ft = nvim_buf_get_option(nvim_win_get_buf(win), "ft")
             " close tree drawer plugins
+            let l:ft = nvim_buf_get_option(nvim_win_get_buf(win), "ft")
             if l:ft =~ "tree" || l:ft == "fern"
                 call nvim_win_close(win, 1)
             endif
@@ -209,7 +236,7 @@ endfunction
 " Startify
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
-            \ { '\': ['Browse Directory (Fern)', 'Fern .'] },
+            \ { '\': ['Open Tree', 'CHADopen --always-focus'] },
             \ ]
 
 let g:startify_lists = [

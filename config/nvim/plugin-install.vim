@@ -1,4 +1,5 @@
 
+
 "*************************************************************
 "" Vim-Plug core
 "*************************************************************
@@ -23,15 +24,15 @@ endif
 call plug#begin(expand('~/.config/nvim/plugged'))
 
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
+
 Plug 'antoinemadec/FixCursorHold.nvim'
-Plug 'lambdalisue/fern.vim'
-Plug 'lambdalisue/fern-git-status.vim'
-Plug 'lambdalisue/nerdfont.vim'
-Plug 'lambdalisue/glyph-palette.vim'
-Plug 'lambdalisue/fern-hijack.vim'
-Plug 'lambdalisue/fern-renderer-nerdfont.vim'
-"CHADTree conflicts with scrollview and dwm right now
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
+"Plug 'lambdalisue/fern.vim'
+"Plug 'lambdalisue/fern-git-status.vim'
+"Plug 'lambdalisue/nerdfont.vim'
+"Plug 'lambdalisue/glyph-palette.vim'
+"Plug 'lambdalisue/fern-hijack.vim'
+"Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'

@@ -14,6 +14,16 @@ local prev_trouble = function()
     trouble.action('preview')
 end
 
+local focus_tree = function()
+    if require('nvim-tree.view').win_open() then
+        vim.cmd("1wincmd w")
+    else
+        require('nvim-tree').open()
+        vim.cmd("setlocal winhighlight=Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC")
+        vim.cmd("setlocal cursorline")
+    end
+end
+
 require("which-key").register({
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
@@ -23,6 +33,8 @@ require("which-key").register({
     L = { "Next Tab" },
     K = { "Show documentation"},
     s = { "Substitute Word" },
+    ["\\"] = { focus_tree,                                    "Open  Tree" },
+    ["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["["] = {
         name = "Previous...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },

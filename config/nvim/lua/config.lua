@@ -2,6 +2,8 @@ local vim = vim
 vim.o.completeopt = "menuone,noselect"
 
 local custom_border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" }
+require'nvim-web-devicons'.setup({ default = true })
+
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -395,3 +397,54 @@ function _G.shadow_term_toggle()
     state.shadow_winid = open_shadow_win()
     shadow_term:toggle()
 end
+
+local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+function _G.open_nvim_tree_selection()
+    local lib = require "nvim-tree.lib"
+    local node = lib.get_node_at_cursor()
+    if node then
+        if node.entries ~= nil then
+            lib.unroll_dir(node)
+        else
+            for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+                if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == node.absolute_path then
+                    vim.api.nvim_set_current_win(win)
+                    vim.cmd("call DWM_Focus()")
+                    return
+                end
+            end
+            vim.cmd("call DWM_New()")
+            vim.cmd("e " .. node.absolute_path)
+        end
+    end
+end
+
+vim.g.nvim_tree_bindings = {
+    ["<CR>"]           = tree_cb("edit"),
+    ["<2-LeftMouse>"]  = tree_cb("edit"),
+    ["o"]              = ":lua _G.open_nvim_tree_selection()<cr>",
+    ["."]              = tree_cb("cd"),
+    ["<BS>"]           = tree_cb("dir_up"),
+    ["<C-t>"]          = tree_cb("tabnew"),
+    ["<"]              = tree_cb("prev_sibling"),
+    [">"]              = tree_cb("next_sibling"),
+    ["<S-CR>"]         = tree_cb("close_node"),
+    ["<Tab>"]          = tree_cb("preview"),
+    ["I"]              = tree_cb("toggle_ignored"),
+    ["H"]              = tree_cb("toggle_dotfiles"),
+    ["R"]              = tree_cb("refresh"),
+    ["a"]              = tree_cb("create"),
+    ["d"]              = tree_cb("remove"),
+    ["r"]              = tree_cb("rename"),
+    ["<C-r>"]          = tree_cb("full_rename"),
+    ["x"]              = tree_cb("cut"),
+    ["c"]              = tree_cb("copy"),
+    ["p"]              = tree_cb("paste"),
+    ["y"]              = tree_cb("copy_name"),
+    ["Y"]              = tree_cb("copy_path"),
+    ["gy"]             = tree_cb("copy_absolute_path"),
+    ["[c"]             = tree_cb("prev_git_item"),
+    ["]c"]             = tree_cb("next_git_item"),
+    ["-"]              = tree_cb("dir_up"),
+    ["q"]              = tree_cb("close"),
+}
