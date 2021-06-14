@@ -3,6 +3,7 @@ vim.o.completeopt = "menuone,noselect"
 
 local custom_border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" }
 require'nvim-web-devicons'.setup({ default = true })
+require('gitsigns').setup()
 
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(

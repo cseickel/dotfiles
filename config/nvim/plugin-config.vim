@@ -236,7 +236,7 @@ endfunction
 " Startify
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
-            \ { '\': ['Open Tree', 'CHADopen --always-focus'] },
+            \ { 'f': ['Find Files', 'Telescope find_files'] },
             \ ]
 
 let g:startify_lists = [

@@ -53,7 +53,7 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 "Plug 'dense-analysis/ale'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "Plug 'tpope/vim-commentary'
@@ -67,7 +67,6 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 "color scheme
 Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
-"Plug 'sheerun/vim-polyglot'
 
 " All of the new functionality in nevim 5 that is not quite stable
 Plug 'neovim/nvim-lspconfig'
@@ -85,6 +84,7 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
+Plug 'lewis6991/gitsigns.nvim'
 
 
 " UI Stuff
