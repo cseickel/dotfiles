@@ -105,11 +105,13 @@ let g:nvim_tree_icons = { "default" : "" }
 
 highlight CursorLine guibg=#363636
 highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
-highlight NvimTreeNormalNC guibg=#303030 guifg=#d0d0d0
+highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
 highlight NvimTreeIndentMarker guifg=#404040
-highlight NvimTreeGitStaged guifg=#dcdcaa gui=BOLD
-highlight NvimTreeGitDirty guifg=#ce9178 gui=BOLD
+highlight NvimTreeGitStaged guifg=#ffd787 gui=BOLD
+highlight NvimTreeGitDirty guifg=#ffd787 gui=BOLD
 highlight NvimTreeGitNew guifg=#c95555 gui=BOLD
+highlight GitSignsChange guifg=#ffd787 
+highlight GitSignsAdd guifg=#5faf5f
 
 " Tab styling
 "let g:taboo_tab_format=" %d %f %m %x⎹"
