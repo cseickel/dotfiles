@@ -143,19 +143,19 @@ setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
 LspInstall.post_install_hook = function ()
-	setup_servers() -- reload installed servers
-	vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+    setup_servers() -- reload installed servers
+    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
 
 require'nvim-treesitter.configs'.setup {
-	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-	highlight = {
-		enable = true,              -- false will disable the whole extension
-		--disable = { "c_sharp" },  -- list of language that will be disabled
-	},
-	indent = {
-		enable = true
-	}
+    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    highlight = {
+        enable = true,              -- false will disable the whole extension
+        --disable = { "c_sharp" },  -- list of language that will be disabled
+    },
+    indent = {
+        enable = true
+    }
 }
 
 require('lspkind').init({
@@ -400,37 +400,58 @@ function _G.shadow_term_toggle()
 end
 
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
-function _G.open_nvim_tree_selection()
+function _G.open_nvim_tree_selection(targetWindow)
     local lib = require "nvim-tree.lib"
     local node = lib.get_node_at_cursor()
+    local windows = {}
     if node then
         if node.entries ~= nil then
             lib.unroll_dir(node)
         else
             for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+                windows[vim.api.nvim_win_get_number(win)] = win;
                 if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == node.absolute_path then
                     vim.api.nvim_set_current_win(win)
                     vim.cmd("call DWM_Focus()")
                     return
                 end
             end
-            vim.cmd("call DWM_New()")
+            if targetWindow == "smart" then
+                -- if there are no windows to the right of the "main" window,
+                -- then we are not in a tiling layout and we should just reuse
+                -- that main window.
+                local treeWidth = vim.api.nvim_win_get_width(windows[1])
+                local mainWidth = vim.api.nvim_win_get_width(windows[2])
+                local combinedWidth = treeWidth + 1 + mainWidth
+                if combinedWidth == vim.o.columns then
+                    targetWindow = "main"
+                else
+                    targetWindow = "new"
+                end
+            end
+            if targetWindow == "main" then
+                vim.cmd("2wincmd w")
+            elseif targetWindow == "new" then
+                vim.cmd("call DWM_New()")
+            else
+                error("'" .. targetWindow .. "' is not a valid choice for targetWindow in open_nvim_tree_selection(targetWindow)")
+            end
             vim.cmd("e " .. node.absolute_path)
         end
     end
 end
 
 vim.g.nvim_tree_bindings = {
-    ["<CR>"]           = tree_cb("edit"),
-    ["<2-LeftMouse>"]  = tree_cb("edit"),
-    ["o"]              = ":lua _G.open_nvim_tree_selection()<cr>",
+    ["<CR>"]           = ":lua _G.open_nvim_tree_selection('smart')<cr>", -- open in MAIN if one window, or NEW if multiple
+    ["<2-LeftMouse>"]  = ":lua _G.open_nvim_tree_selection('smart')<cr>", -- open in MAIN if one window, or NEW if multiple
+    ["e"]              = tree_cb("edit"), -- show window chooser
+    ["n"]              = ":lua _G.open_nvim_tree_selection('new')<cr>",  -- open in NEW window
+    ["m"]              = ":lua _G.open_nvim_tree_selection('main')<cr>", -- open in MAIN window
+    ["<C-t>"]          = tree_cb("tabnew"),
     ["."]              = tree_cb("cd"),
     ["<BS>"]           = tree_cb("dir_up"),
-    ["<C-t>"]          = tree_cb("tabnew"),
     ["<"]              = tree_cb("prev_sibling"),
     [">"]              = tree_cb("next_sibling"),
-    ["<S-CR>"]         = tree_cb("close_node"),
-    ["<Tab>"]          = tree_cb("preview"),
     ["I"]              = tree_cb("toggle_ignored"),
     ["H"]              = tree_cb("toggle_dotfiles"),
     ["R"]              = tree_cb("refresh"),
@@ -446,6 +467,5 @@ vim.g.nvim_tree_bindings = {
     ["gy"]             = tree_cb("copy_absolute_path"),
     ["[c"]             = tree_cb("prev_git_item"),
     ["]c"]             = tree_cb("next_git_item"),
-    ["-"]              = tree_cb("dir_up"),
     ["q"]              = tree_cb("close"),
 }

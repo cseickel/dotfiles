@@ -23,11 +23,12 @@ inoremap <M-3> <Esc>:b#<cr>
 tnoremap <M-3> <c-\><c-n>:b#<cr>
 
 " Quick edits from normal/visual mode
-nnoremap <silent> <tab> >>
-nnoremap <silent> <S-tab> <<
-nnoremap <silent> <cr> i<cr><esc>
-nnoremap <silent> <bs> i<bs><esc>l
-nnoremap <silent> <space> i<space><esc>l
+nnoremap <silent> <tab>     >>
+nnoremap <silent> <S-tab>   <<
+nnoremap <silent> <leader>o i<cr><esc>
+nnoremap <silent> <leader>O moO<esc>`o
+nnoremap <silent> <bs>      i<bs><esc>l
+nnoremap <silent> <space>   i<space><esc>l
 
 vnoremap <silent> <tab> >gv
 vnoremap <silent> <s-tab> <gv

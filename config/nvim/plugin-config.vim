@@ -84,12 +84,12 @@ call airline#add_inactive_statusline_func('Custom_Inactive')
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_startify = 1
 
-let g:nvim_tree_width = 38
+let g:nvim_tree_width = 40
 let g:nvim_tree_tab_open = 1
 let g:nvim_tree_gitignore = 1
 let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
 let g:nvim_tree_indent_markers = 0 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
+let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
 let g:nvim_tree_show_icons = {
             \ 'git': 0,
             \ 'folders': 1,
@@ -99,7 +99,7 @@ let g:nvim_tree_show_icons = {
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_highlight_opened_files = 0
 let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
+let g:nvim_tree_disable_window_picker = 0 "0 by default, will disable the window picker.
 let g:nvim_tree_hijack_cursor = 1
 let g:nvim_tree_icons = { "default" : "" }
 
@@ -107,10 +107,10 @@ highlight CursorLine guibg=#363636
 highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
 highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
 highlight NvimTreeIndentMarker guifg=#404040
-highlight NvimTreeGitStaged guifg=#ffd787 gui=BOLD
-highlight NvimTreeGitDirty guifg=#ffd787 gui=BOLD
+highlight NvimTreeGitStaged guifg=#d7af5f gui=BOLD
+highlight NvimTreeGitDirty guifg=#d7af5f gui=BOLD
 highlight NvimTreeGitNew guifg=#c95555 gui=BOLD
-highlight GitSignsChange guifg=#ffd787 
+highlight GitSignsChange guifg=#d7af5f 
 highlight GitSignsAdd guifg=#5faf5f
 
 " Tab styling
