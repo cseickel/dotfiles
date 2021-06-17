@@ -103,7 +103,9 @@ let g:nvim_tree_disable_window_picker = 0 "0 by default, will disable the window
 let g:nvim_tree_hijack_cursor = 1
 let g:nvim_tree_icons = { "default" : "" }
 
+
 highlight CursorLine guibg=#363636
+highlight NvimTreeOpenedFile gui=italic
 highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
 highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
 highlight NvimTreeIndentMarker guifg=#404040
@@ -296,7 +298,7 @@ let g:vimade = { "fadelevel": 0.77 }
 "set fillchars+=vert:▕
 set fillchars+=vert:█
 highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
-
+highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
 " nvcode overrides from dark+
 highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
 
@@ -343,7 +345,7 @@ highlight Cursor guibg=#5f87af ctermbg=67
 highlight iCursor guibg=#ffffaf ctermbg=229
 highlight rCursor guibg=#af0000 ctermbg=124
 
-highlight Type ctermfg=6 guifg=#4ec9b0 cterm=italic gui=italic
+highlight Type ctermfg=6 guifg=#4ec9b0
 highlight link This Language
 highlight link New Constant
 highlight link Interpolation Identifier
