@@ -1,3 +1,4 @@
+set guifont="Input NF 10"
 let g:owd = getcwd()
 cd ~/.config/nvim
 

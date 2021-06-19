@@ -60,8 +60,8 @@ syntax enable
 set ruler
 set number
 set nowrap
-set signcolumn=yes
-
+set signcolumn=yes:2
+"
 " Tweaks to improve performance
 set nocursorline
 set updatetime=1000

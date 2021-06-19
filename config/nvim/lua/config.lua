@@ -3,8 +3,14 @@ vim.o.completeopt = "menuone,noselect"
 
 local custom_border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" }
 require'nvim-web-devicons'.setup({ default = true })
-require('gitsigns').setup()
-
+vim.fn.sign_define("LspDiagnosticsSignError",
+    {text = "", texthl = "LspDiagnosticsSignError"})
+vim.fn.sign_define("LspDiagnosticsSignWarning",
+    {text = "", texthl = "LspDiagnosticsSignWarning"})
+vim.fn.sign_define("LspDiagnosticsSignInformation",
+    {text = "", texthl = "LspDiagnosticsSignInformation"})
+vim.fn.sign_define("LspDiagnosticsSignHint",
+    {text = "", texthl = "LspDiagnosticsSignHint"})
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(
   vim.lsp.handlers.hover,
@@ -116,7 +122,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 
-local function lsp_attach() 
+local function lsp_attach()
     require('lsp_signature').on_attach({
         bind = true,
         handler_opts = {
@@ -236,7 +242,7 @@ require'trouble'.setup {
         information = "",
         other = "﫠"
     },
-    use_lsp_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
+    use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 }
 
 require('telescope').setup{
@@ -345,6 +351,7 @@ require("toggleterm").setup{
   start_in_insert = true,
   direction = 'float',
   persist_size = false,
+
   close_on_exit = true, -- close the terminal window when the process exits
   shell = vim.o.shell, -- change the default shell
   -- This field is only relevant if direction is set to 'float'

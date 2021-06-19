@@ -44,6 +44,7 @@ Plug 'nanotee/zoxide.vim'
 Plug 'svermeulen/vim-easyclip'
 Plug 'alvan/vim-closetag'
 Plug 'tmsvg/pear-tree'
+Plug 'sbdchd/neoformat'
 
 " C Sharp related plugins
 Plug 'OmniSharp/omnisharp-vim'
@@ -53,7 +54,7 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 "Plug 'dense-analysis/ale'
-"Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "Plug 'tpope/vim-commentary'
@@ -76,7 +77,6 @@ Plug 'hrsh7th/nvim-compe'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/lsp-trouble.nvim'
-"Plug 'folke/lsp-colors.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -84,7 +84,7 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
-Plug 'lewis6991/gitsigns.nvim'
+"Plug 'lewis6991/gitsigns.nvim'
 
 
 " UI Stuff

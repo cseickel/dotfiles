@@ -14,7 +14,6 @@ endif
 "colorscheme dark_plus
 colorscheme nvcode "<-- this one is best with tree-sitter
 
-let g:gitgutter_map_keys = 0
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'tender'
 
@@ -85,7 +84,7 @@ let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_startify = 1
 
 let g:nvim_tree_width = 40
-let g:nvim_tree_tab_open = 1
+let g:nvim_tree_tab_open = 0
 let g:nvim_tree_gitignore = 1
 let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
 let g:nvim_tree_indent_markers = 0 "0 by default, this option shows indent markers when folders are open
@@ -100,20 +99,29 @@ let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git att
 let g:nvim_tree_highlight_opened_files = 0
 let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
 let g:nvim_tree_disable_window_picker = 0 "0 by default, will disable the window picker.
-let g:nvim_tree_hijack_cursor = 1
+let g:nvim_tree_hijack_cursor = 0
 let g:nvim_tree_icons = { "default" : "" }
-
 
 highlight CursorLine guibg=#363636
 highlight NvimTreeOpenedFile gui=italic
 highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
 highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
 highlight NvimTreeIndentMarker guifg=#404040
-highlight NvimTreeGitStaged guifg=#d7af5f gui=BOLD
-highlight NvimTreeGitDirty guifg=#d7af5f gui=BOLD
-highlight NvimTreeGitNew guifg=#c95555 gui=BOLD
-highlight GitSignsChange guifg=#d7af5f 
-highlight GitSignsAdd guifg=#5faf5f
+highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
+highlight NvimTreeGitStaged guifg=#d7af5f gui=Italic
+highlight NvimTreeGitDirty guifg=#d7af5f gui=Italic
+highlight NvimTreeGitNew guifg=#c95555 gui=Italic
+
+let g:gitgutter_map_keys = 0
+let g:gitgutter_sign_added = '┃'
+let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_removed = '▁'
+let g:gitgutter_sign_removed_first_line = '▔'
+let g:gitgutter_sign_removed_above_and_below = '['
+let g:gitgutter_sign_modified_removed = '┻'
+let g:gitgutter_sign_allow_clobber = 0
+let g:gitgutter_sign_priority=1
+
 
 " Tab styling
 "let g:taboo_tab_format=" %d %f %m %x⎹"
@@ -228,9 +236,9 @@ function! CustomStartifyBeforeSave() abort
         if nvim_win_get_config(win).relative > ""
             call nvim_win_close(win, 1)
         else
-            " close tree drawer plugins
+            " close drawer and tool windows
             let l:ft = nvim_buf_get_option(nvim_win_get_buf(win), "ft")
-            if l:ft =~ "tree" || l:ft == "fern"
+            if l:ft =~ "tree" || l:ft == "fern" || l:ft == "Trouble"
                 call nvim_win_close(win, 1)
             endif
         endif
@@ -301,6 +309,8 @@ highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
 " nvcode overrides from dark+
 highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
+highlight TSComment none
+highlight link TSComment Comment
 
 highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
@@ -308,14 +318,15 @@ highlight ALEWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEStyleErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEStyleWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
 
-highlight GitGutterAdd cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterAdd cterm=NONE gui=NONE guibg=None ctermbg=None guifg=#5faf5f
 highlight GitGutterAddLine cterm=NONE gui=NONE guibg=None ctermbg=None
-highlight GitGutterChange cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterChange cterm=NONE gui=NONE guibg=None ctermbg=None guifg=#d7af5f
 highlight GitGutterChangeLine cterm=NONE gui=NONE guibg=None ctermbg=None
-highlight GitGutterDelete cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterDelete cterm=NONE gui=NONE guibg=None ctermbg=None guifg=#ff5555 gui=Bold 
 highlight GitGutterDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
-highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None
+highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None guifg=#c97755 gui=Bold
 highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
+
 
 hi TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
@@ -324,10 +335,24 @@ highlight StartifyBracket ctermfg=0 guifg=#1e1e1e cterm=NONE gui=NONE
 highlight StartifySlash ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 
+hi TroubleText none
 hi LspTroubleText guibg=none ctermbg=none ctermfg=244 guifg=#abb2bf
 hi LspReferenceText cterm=underline gui=bold guibg=#404040
 hi LspReferenceRead cterm=underline gui=bold guibg=#404040
 hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
+
+hi LspDiagnosticsSignWarning none
+hi LspDiagnosticsSignInformation none
+hi LspDiagnosticsSignError none
+hi LspDiagnosticsSignHint none
+hi LspDiagnosticsVirtualTextError none
+hi LspDiagnosticsVirtualTextWarning none
+hi LspDiagnosticsVirtualTextInformation none
+hi LspDiagnosticsVirtualTextHint none
+hi LspDiagnosticsDefaultWarning guifg=#d7d700 gui=Italic
+hi LspDiagnosticsDefaultInformation guifg=#87d7ff gui=Italic
+hi LspDiagnosticsDefaultHint guifg=#ffffd7 gui=Italic
+hi LspDiagnosticsDefaultError guifg=#d70000 gui=Italic,Bold
 hi link vimUserFunc none
 
 hi Normal guibg=#1c1c1c
@@ -343,7 +368,7 @@ highlight CursorLineNr ctermfg=2 guifg=#608b4e ctermbg=None guibg=None
 
 highlight Cursor guibg=#5f87af ctermbg=67
 highlight iCursor guibg=#ffffaf ctermbg=229
-highlight rCursor guibg=#af0000 ctermbg=124
+highlight rCursor guibg=#d70000 ctermbg=124
 
 highlight Type ctermfg=6 guifg=#4ec9b0
 highlight link This Language

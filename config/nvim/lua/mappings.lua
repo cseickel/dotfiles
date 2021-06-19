@@ -18,9 +18,12 @@ local focus_tree = function()
     if require('nvim-tree.view').win_open() then
         vim.cmd("1wincmd w")
     else
-        require('nvim-tree').open()
+        vim.cmd("NvimTreeFindFile")
         vim.cmd("setlocal winhighlight=Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC")
         vim.cmd("setlocal cursorline")
+        local lib = require('nvim-tree.lib')
+        local folder = vim.fn.getcwd()
+        lib.change_dir(folder)
     end
 end
 
@@ -79,7 +82,8 @@ end
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
-    [","] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
+    [","] = { "f,ls<cr><esc>",                                "Newline at next comma" },
+    ["b"] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
     d = { "<cmd>Tzi<cr>",                                     "Change Directory"},
     h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },

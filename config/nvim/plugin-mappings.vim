@@ -96,7 +96,7 @@ nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
 "" LSP Mappings
 "*****************************************************************************
 nnoremap <silent>       K         :lua vim.lsp.buf.hover()<cr>
-nnoremap <silent>       <leader>= :lua vim.lsp.buf.formatting()<cr>
+nnoremap <silent>       <leader>= :Neoformat<cr>
 inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
 
@@ -158,6 +158,7 @@ augroup plugin_mappings_augroup
     autocmd!
     autocmd CursorHold * silent! call DocHighlight()
     autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
+    autocmd FileType typescript,javascript nnoremap <buffer><leader>= :lua vim.lsp.buf.formatting()<cr>
     autocmd FileType cs call InitCS()
     autocmd FileType csx call InitCS()
     autocmd FileType sql call InitSql()
