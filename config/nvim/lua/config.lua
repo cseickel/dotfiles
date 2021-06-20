@@ -447,7 +447,7 @@ function _G.open_nvim_tree_selection(targetWindow)
         end
     end
 end
-
+--vim.g.nvim_tree_disable_keybindings = 1
 vim.g.nvim_tree_bindings = {
     ["<CR>"]           = ":lua _G.open_nvim_tree_selection('smart')<cr>", -- open in MAIN if one window, or NEW if multiple
     ["<2-LeftMouse>"]  = ":lua _G.open_nvim_tree_selection('smart')<cr>", -- open in MAIN if one window, or NEW if multiple
@@ -475,4 +475,6 @@ vim.g.nvim_tree_bindings = {
     ["[c"]             = tree_cb("prev_git_item"),
     ["]c"]             = tree_cb("next_git_item"),
     ["q"]              = tree_cb("close"),
+    ["-"]              = ":call SmartWindowResize('v', 0)<cr>",
+    ["="]              = ":call SmartWindowResize('v', 1)<cr>"
 }

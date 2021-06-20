@@ -1,4 +1,4 @@
-set guifont="Input NF 10"
+set guifont=JetBrainsMono\ Nerd\ Font:h11
 let g:owd = getcwd()
 cd ~/.config/nvim
 

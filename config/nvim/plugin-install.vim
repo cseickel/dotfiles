@@ -1,5 +1,3 @@
-
-
 "*************************************************************
 "" Vim-Plug core
 "*************************************************************
@@ -27,12 +25,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'antoinemadec/FixCursorHold.nvim'
-"Plug 'lambdalisue/fern.vim'
-"Plug 'lambdalisue/fern-git-status.vim'
-"Plug 'lambdalisue/nerdfont.vim'
-"Plug 'lambdalisue/glyph-palette.vim'
-"Plug 'lambdalisue/fern-hijack.vim'
-"Plug 'lambdalisue/fern-renderer-nerdfont.vim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -57,10 +49,6 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"Plug 'tpope/vim-commentary'
-"Plug 'kana/vim-textobj-user'
-"Plug 'sgur/vim-textobj-parameter'
-"Plug 'AckslD/nvim-revJ.lua'
 
 Plug 'mhinz/vim-startify'
 

@@ -28,7 +28,6 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
-set listchars=tab:--▶,space:·,trail:·,extends:>,precedes:<
 
 "" Enable hidden buffers
 set hidden
@@ -59,8 +58,9 @@ set mousemodel=popup
 syntax enable
 set ruler
 set number
-set nowrap
-set signcolumn=yes:2
+set wrap linebreak breakindent
+set showbreak=\ ﬌\ 
+set signcolumn=auto:2
 "
 " Tweaks to improve performance
 set nocursorline

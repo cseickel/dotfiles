@@ -93,7 +93,7 @@ let g:nvim_tree_show_icons = {
             \ 'git': 0,
             \ 'folders': 1,
             \ 'files': 1,
-            \ 'folder_arrows': 1,
+            \ 'folder_arrows': 0,
             \}
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 let g:nvim_tree_highlight_opened_files = 0
@@ -108,9 +108,10 @@ highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
 highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
 highlight NvimTreeIndentMarker guifg=#404040
 highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
-highlight NvimTreeGitStaged guifg=#d7af5f gui=Italic
-highlight NvimTreeGitDirty guifg=#d7af5f gui=Italic
-highlight NvimTreeGitNew guifg=#c95555 gui=Italic
+highlight NvimTreeGitStaged guifg=#d7af5f gui=Bold
+highlight NvimTreeGitDirty guifg=#d7af5f gui=Bold
+highlight NvimTreeGitNew guifg=#d7af5f gui=Bold,Italic
+highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
 
 let g:gitgutter_map_keys = 0
 let g:gitgutter_sign_added = '┃'
