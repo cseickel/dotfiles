@@ -35,7 +35,7 @@ RUN cd /home/$UNAME \
     && rm -Rf yay
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
-        python3 python-pip nodejs npm \
+        python3 python-pip nodejs npm prettier \
         tmux bat fzf tree-sitter neovim-plug neovim-remote \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \

@@ -388,10 +388,11 @@ local function open_shadow_win()
         col= 0,
     }
     local shadow_winhl = 'Normal:NormalNC,EndOfBuffer:NormalNC'
-    local shadow_bufnr = vim.api.nvim_create_buf(false,true)
-    local shadow_winid = vim.api.nvim_open_win(shadow_bufnr,true,opts)
-    vim.api.nvim_win_set_option(shadow_winid,'winhl',shadow_winhl)
-    vim.api.nvim_win_set_option(shadow_winid,'winblend',60)
+    local shadow_bufid = vim.api.nvim_create_buf(false,true)
+    local shadow_winid = vim.api.nvim_open_win(shadow_bufid,true,opts)
+    vim.api.nvim_buf_set_option(shadow_bufid, 'bufhidden', 'delete')
+    vim.api.nvim_win_set_option(shadow_winid, 'winhl', shadow_winhl)
+    vim.api.nvim_win_set_option(shadow_winid, 'winblend', 60)
     return shadow_winid
 end
 
@@ -404,7 +405,21 @@ local shadow_term = require('toggleterm.terminal').Terminal:new({
 function _G.shadow_term_toggle()
     state.shadow_winid = open_shadow_win()
     shadow_term:toggle()
+    local shadow_bufid = vim.api.nvim_win_get_buf(state.shadow_winid)
+    vim.api.nvim_buf_set_name(shadow_bufid, "SHADOW")
 end
+
+vim.cmd([[
+    function! KillShadowWin()
+        if expand("%") == "SHADOW"
+            bwipeout!
+        endif
+    endfunction
+    augroup shadow_term_autocmds
+        autocmd!
+        autocmd WinEnter SHADOW bwipeout!
+    augroup END
+]])
 
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 function _G.open_nvim_tree_selection(targetWindow)
