@@ -39,6 +39,7 @@ Plug 'tmsvg/pear-tree'
 Plug 'sbdchd/neoformat'
 
 " C Sharp related plugins
+Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
 Plug 'hrsh7th/nvim-compe'

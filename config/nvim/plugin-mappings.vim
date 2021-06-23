@@ -70,13 +70,13 @@ function! CloseAllTools()
 endfunction
 
 function! ShowTrouble() abort
-    call CloseAllTools()
+    silent! call CloseAllTools()
     Trouble lsp_workspace_diagnostics
     "call LayoutTrouble()
 endfunction
 
 function! ReplaceQuickfix() abort
-    call CloseAllTools()
+    silent! call CloseAllTools()
     Trouble quickfix
     "call LayoutTrouble()
 endfunction
@@ -110,6 +110,12 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+let g:asyncomplete_enable_for_all = 0
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_min_chars = 1
+let g:OmniSharp_popup_position = 'peek'
+
 function! InitCS()
     let l:compe_config = {}
     let l:compe_config.documentation = v:true
@@ -121,7 +127,12 @@ function! InitCS()
     let l:compe_config.source.spell = v:true
     let l:compe_config.source.ultisnips = v:true
     let l:compe_config.source.vsnip = v:false
+    let l:compe_config.enabled = v:false
     call compe#setup(l:compe_config, 0)
+
+    call asyncomplete#enable_for_buffer()
+    inoremap <buffer><expr> <cr>      pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+    imap     <buffer>       <c-space> <Plug>(asyncomplete_force_refresh)
 
     nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
     nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_usages)
@@ -162,7 +173,7 @@ augroup plugin_mappings_augroup
     autocmd FileType cs call InitCS()
     autocmd FileType csx call InitCS()
     autocmd FileType sql call InitSql()
-    autocmd FileType qf,Trouble call CloseAllTools()
+    autocmd FileType qf,Trouble silent! call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
     autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})

@@ -28,12 +28,12 @@ vim.lsp.handlers["textDocument/hover"] =
 
 MyTrouble = function(kind)
     vim.cmd([[
-    call CloseAllTools()
+    silent! call CloseAllTools()
     Trouble ]] .. kind)
 end
 
 --vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
-vim.lsp.handlers['textDocument/references'] = function() MyTrouble('lsp_references') end
+vim.lsp.handlers['textDocument/references'] = function() vim.cmd('Trouble lsp_references') end
 --vim.lsp.handlers['textDocument/definition'] = function() MyTrouble('lsp_definitions') end
 --vim.lsp.handlers['textDocument/declaration'] = require'lsputil.locations'.declaration_handler
 --vim.lsp.handlers['textDocument/typeDefinition'] = require'lsputil.locations'.typeDefinition_handler
@@ -370,9 +370,9 @@ require("toggleterm").setup{
     height = function ()
         return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
     end,
-    width = function () 
+    width = function ()
         return math.ceil(math.min(vim.o.columns, math.max(80, vim.o.columns - 30)))
-    end 
+    end
   }
 }
 
