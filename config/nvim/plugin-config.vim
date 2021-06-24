@@ -123,6 +123,21 @@ let g:gitgutter_sign_modified_removed = '┻'
 let g:gitgutter_sign_allow_clobber = 0
 let g:gitgutter_sign_priority=1
 
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+let g:conflict_marker_enable_mappings = 0
+
+" Include text after begin and end markers in Highlights
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
+
+highlight ConflictMarkerBegin guibg=#2f7366
+highlight ConflictMarkerOurs guibg=#2e5049
+highlight ConflictMarkerTheirs guibg=#344f69
+highlight ConflictMarkerEnd guibg=#2f628e
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
+
 
 " Tab styling
 "let g:taboo_tab_format=" %d %f %m %x⎹"

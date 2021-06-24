@@ -44,6 +44,7 @@ require("which-key").register({
         l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
         q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
         t = { prev_trouble,                                   "Previous Trouble" },
+        x = { "<cmd>ConflictMarkerPrevHunk<cr>",              "Previous Conflict" }
     },
     ["]"] = {
         name = "Next...",
@@ -51,6 +52,7 @@ require("which-key").register({
         l = { "<cmd>lnext<cr>",                               "Next Location List" },
         q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
         t = { next_trouble,                                   "Next Trouble" },
+        x = { "<cmd>ConflictMarkerNextHunk<cr>",              "Next Conflict" }
     },
 })
 
@@ -85,6 +87,13 @@ require("which-key").register({
     [","] = { "f,ls<cr><esc>",                                "Newline at next comma" },
     ["b"] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
+    c = {
+        name = "Conflict Resolution",
+        b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },
+        o = { "<cmd>ConflictMarkerOurselves<cr>",             "Keep Ourselves (Top/HEAD)" },
+        n = { "<cmd>ConflictMarkerOurselves<cr>",             "Keep None" },
+        t = { "<cmd>ConflictMarkerThemselves<cr>",            "Keep Themselves (Bottom)" },
+    },
     d = { "<cmd>Tzi<cr>",                                     "Change Directory"},
     h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},

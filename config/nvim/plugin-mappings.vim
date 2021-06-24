@@ -86,12 +86,6 @@ nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
 let g:EasyClipUsePasteToggleDefaults = 0
 
 
-" Mergetool shortcuts
-nnoremap <expr> <C-Left> &diff? '<Plug>(MergetoolDiffExchangeLeft)' : '<C-Left>'
-nnoremap <expr> <C-Right> &diff? '<Plug>(MergetoolDiffExchangeRight)' : '<C-Right>'
-nnoremap <expr> <C-Down> &diff? '<Plug>(MergetoolDiffExchangeDown)' : '<C-Down>'
-nnoremap <expr> <C-Up> &diff? '<Plug>(MergetoolDiffExchangeUp)' : '<C-Up>'
-
 "*****************************************************************************
 "" LSP Mappings
 "*****************************************************************************

@@ -28,9 +28,13 @@ Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'
-Plug 'samoshkin/vim-mergetool'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'sindrets/diffview.nvim'
+Plug 'rhysd/conflict-marker.vim'
 Plug 'nanotee/zoxide.vim'
 
 Plug 'svermeulen/vim-easyclip'
@@ -47,9 +51,6 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 "Plug 'dense-analysis/ale'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf', { 'dir': $HOME . '/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 
 Plug 'mhinz/vim-startify'
 

@@ -1,9 +1,3 @@
-[merge]
-    tool = vim_mergetool
-    conflictstyle = diff3
-[mergetool "vim_mergetool"]
-    cmd = nvim -c "MergetoolStart" "$MERGED" "$BASE" "$LOCAL" "$REMOTE"
-    trustExitCode = true
 [pull]
 	ff = only
 [user]
@@ -12,8 +6,6 @@
 
 [pager]
     diff = delta
-    log = delta
-    reflog = delta
     show = delta
 
 [interactive]
@@ -24,7 +16,8 @@
     whitespace-error-style = 22 reverse
 
 [delta "decorations"]
-    commit-decoration-style = bold yellow box ul
-    file-style = bold yellow ul
-    file-decoration-style = none
+    commit-decoration-style = bold "#d7d700" box ul
+    file-style = bold cyan
+    file-decoration-style = bold cyan ul
+    hunk-header-decoration-style = blue box
 
