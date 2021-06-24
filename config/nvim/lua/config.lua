@@ -26,12 +26,6 @@ vim.lsp.handlers["textDocument/hover"] =
 --  }
 --)
 
-MyTrouble = function(kind)
-    vim.cmd([[
-    silent! call CloseAllTools()
-    Trouble ]] .. kind)
-end
-
 --vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
 vim.lsp.handlers['textDocument/references'] = function() vim.cmd('Trouble lsp_references') end
 --vim.lsp.handlers['textDocument/definition'] = function() MyTrouble('lsp_definitions') end
@@ -371,7 +365,7 @@ require("toggleterm").setup{
         return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
     end,
     width = function ()
-        return math.ceil(math.min(vim.o.columns, math.max(80, vim.o.columns - 30)))
+        return math.ceil(math.min(vim.o.columns, math.max(180, vim.o.columns - 30)))
     end
   }
 }
@@ -410,11 +404,6 @@ function _G.shadow_term_toggle()
 end
 
 vim.cmd([[
-    function! KillShadowWin()
-        if expand("%") == "SHADOW"
-            bwipeout!
-        endif
-    endfunction
     augroup shadow_term_autocmds
         autocmd!
         autocmd WinEnter SHADOW bwipeout!

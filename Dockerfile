@@ -35,7 +35,7 @@ RUN cd /home/$UNAME \
     && rm -Rf yay
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
-        python3 python-pip nodejs npm prettier \
+        python3 python-pip nodejs npm prettier git-delta \
         tmux bat fzf tree-sitter neovim-plug neovim-remote \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
@@ -45,12 +45,6 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
 
-RUN git clone https://github.com/neovim/neovim \
-    && cd neovim \
-    && make CMAKE_BUILD_TYPE=Release \
-    && sudo make install \
-    && cd .. && sudo rm -Rf neovim 
-
 RUN git clone https://github.com/Samsung/netcoredbg.git \
     && mkdir netcoredbg/build \
     && cd netcoredbg/build \
@@ -59,6 +53,12 @@ RUN git clone https://github.com/Samsung/netcoredbg.git \
     && cd ../.. \
     && sudo rm -Rf netcoredbg \
     && yay -S --noprogressbar --noconfirm code-server
+
+RUN git clone https://github.com/neovim/neovim \
+    && cd neovim \
+    && make CMAKE_BUILD_TYPE=Release \
+    && sudo make install \
+    && cd .. && sudo rm -Rf neovim 
 
 # I don't know why I have to set this again, but I do...
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
