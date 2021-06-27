@@ -96,21 +96,23 @@ let g:nvim_tree_show_icons = {
             \ 'folder_arrows': 0,
             \}
 let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 0
+let g:nvim_tree_highlight_opened_files = 2
 let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
 let g:nvim_tree_disable_window_picker = 0 "0 by default, will disable the window picker.
 let g:nvim_tree_hijack_cursor = 0
+let g:nvim_tree_auto_close = 1
+let g:nvim_tree_update_cwd = 1
 let g:nvim_tree_icons = { "default" : "" }
 
 highlight CursorLine guibg=#363636
-highlight NvimTreeOpenedFile gui=italic
+highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
 highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
 highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
 highlight NvimTreeIndentMarker guifg=#404040
 highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
-highlight NvimTreeGitStaged guifg=#d7af5f gui=Bold
-highlight NvimTreeGitDirty guifg=#d7af5f gui=Bold
-highlight NvimTreeGitNew guifg=#d7af5f gui=Bold,Italic
+highlight NvimTreeGitStaged guifg=none gui=Italic
+highlight NvimTreeGitDirty guifg=none gui=Italic
+highlight NvimTreeGitNew guifg=none gui=Italic
 highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
 
 let g:gitgutter_map_keys = 0

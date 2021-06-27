@@ -419,35 +419,43 @@ function _G.open_nvim_tree_selection(targetWindow)
         if node.entries ~= nil then
             lib.unroll_dir(node)
         else
+            local nonFloatingWindowCount = 0
             for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-                windows[vim.api.nvim_win_get_number(win)] = win;
-                if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == node.absolute_path then
-                    vim.api.nvim_set_current_win(win)
-                    vim.cmd("call DWM_Focus()")
-                    return
+                if vim.api.nvim_win_get_config(win).relative == "" then
+                    nonFloatingWindowCount = nonFloatingWindowCount + 1
+                    windows[vim.api.nvim_win_get_number(win)] = win;
+                    if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == node.absolute_path then
+                        vim.api.nvim_set_current_win(win)
+                        vim.cmd("call DWM_Focus()")
+                        return
+                    end
                 end
             end
-            if targetWindow == "smart" then
-                -- if there are no windows to the right of the "main" window,
-                -- then we are not in a tiling layout and we should just reuse
-                -- that main window.
-                local treeWidth = vim.api.nvim_win_get_width(windows[1])
-                local mainWidth = vim.api.nvim_win_get_width(windows[2])
-                local combinedWidth = treeWidth + 1 + mainWidth
-                if combinedWidth == vim.o.columns then
-                    targetWindow = "main"
-                else
-                    targetWindow = "new"
-                end
-            end
-            if targetWindow == "main" then
-                vim.cmd("2wincmd w")
-            elseif targetWindow == "new" then
-                vim.cmd("call DWM_New()")
+            if nonFloatingWindowCount < 2 then
+                vim.cmd("vsplit" .. node.absolute_path)
             else
-                error("'" .. targetWindow .. "' is not a valid choice for targetWindow in open_nvim_tree_selection(targetWindow)")
+                if targetWindow == "smart" then
+                    -- if there are no windows to the right of the "main" window,
+                    -- then we are not in a tiling layout and we should just reuse
+                    -- that main window.
+                    local treeWidth = vim.api.nvim_win_get_width(windows[1])
+                    local mainWidth = vim.api.nvim_win_get_width(windows[2])
+                    local combinedWidth = treeWidth + 1 + mainWidth
+                    if combinedWidth == vim.o.columns then
+                        targetWindow = "main"
+                    else
+                        targetWindow = "new"
+                    end
+                end
+                if targetWindow == "main" then
+                    vim.cmd("2wincmd w")
+                elseif targetWindow == "new" then
+                    vim.cmd("call DWM_New()")
+                else
+                    error("'" .. targetWindow .. "' is not a valid choice for targetWindow in open_nvim_tree_selection(targetWindow)")
+                end
+                vim.cmd("e " .. node.absolute_path)
             end
-            vim.cmd("e " .. node.absolute_path)
         end
     end
 end
@@ -480,7 +488,9 @@ vim.g.nvim_tree_bindings = {
     ["]c"]             = tree_cb("next_git_item"),
     ["q"]              = tree_cb("close"),
     ["-"]              = ":call SmartWindowResize('v', 0)<cr>",
-    ["="]              = ":call SmartWindowResize('v', 1)<cr>"
+    ["="]              = ":call SmartWindowResize('v', 1)<cr>",
+    ["H"]             = "<cmd>tabprevious<cr>",
+    ["L"]             = "<cmd>tabnext<cr>",
 }
 
 
