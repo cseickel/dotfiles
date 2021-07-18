@@ -51,6 +51,7 @@ endif
 set mouse=a
 set mousemodel=popup
 
+abbreviate teh the
 
 ""*****************************************************************************
 "" Visual Settings
@@ -155,13 +156,6 @@ function! EnterTerminal()
   "setlocal cmdheight=1
 endfunction
 
-function! TwoSpaceIndent()
-  setlocal shiftwidth=2
-  setlocal tabstop=2
-  setlocal softtabstop=2
-  setlocal expandtab
-endfunction
-
 " For regular expressions turn magic on
 set magic
 
@@ -222,6 +216,13 @@ function! TwoSpaceIndent()
   setlocal expandtab
 endfunction
 
+function! FourSpaceIndent()
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal expandtab
+endfunction
+
 function! InitTerminal()
   setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
   setlocal autowriteall modifiable
@@ -231,6 +232,7 @@ augroup core_autocmd
   autocmd!
   autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
   autocmd FileType javascript,typescript,html call TwoSpaceIndent()
+  autocmd FileType dockerfile,yml call TwoSpaceIndent()
   autocmd TermOpen * call InitTerminal()
   autocmd TermEnter * call InitTerminal()
   "autocmd BufEnter,InsertLeave * call SetRelative()

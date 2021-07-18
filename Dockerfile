@@ -36,7 +36,7 @@ RUN cd /home/$UNAME \
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         python3 python-pip nodejs npm prettier git-delta \
-        tmux bat fzf tree-sitter neovim-plug neovim-remote \
+        tmux bat fzf neovim neovim-plug neovim-remote \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
         ripgrep docker docker-compose aws-vault pass \
@@ -53,12 +53,6 @@ RUN git clone https://github.com/Samsung/netcoredbg.git \
     && cd ../.. \
     && sudo rm -Rf netcoredbg \
     && yay -S --noprogressbar --noconfirm code-server
-
-RUN git clone https://github.com/neovim/neovim \
-    && cd neovim \
-    && make CMAKE_BUILD_TYPE=Release \
-    && sudo make install \
-    && cd .. && sudo rm -Rf neovim 
 
 # I don't know why I have to set this again, but I do...
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \

@@ -83,7 +83,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ryanoasis/vim-devicons'
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'gcmt/taboo.vim'
 "Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}

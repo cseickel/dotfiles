@@ -122,7 +122,10 @@ local function lsp_attach()
         handler_opts = {
             border = "single"
         },
-        hint_enable = false
+        hint_enable = false,
+        flags = {
+          debounce_text_changes = 150,
+        }
     })
 end
 
@@ -255,7 +258,6 @@ require('telescope').setup{
         ["<esc>"] = require('telescope.actions').close
       },
     },
-    prompt_position = "top",
     prompt_prefix = "🔍 ",
     selection_caret = " ",
     entry_prefix = "  ",
@@ -263,15 +265,16 @@ require('telescope').setup{
     selection_strategy = "reset",
     sorting_strategy = "ascending",
     layout_strategy = "horizontal",
-    layout_defaults = {
+    layout_config = {
+      prompt_position = "top",
       horizontal = {
-        width_padding = 10,
-        height_padding = 0.1,
+        width = { padding = 10 },
+        height = { padding = 0.1 },
         preview_width = 0.5,
       },
       vertical = {
-        width_padding = 0.05,
-        height_padding = 1,
+        width = { padding = 0.05 },
+        height = { padding = 1 },
         preview_height = 0.5,
       }
     },
@@ -279,7 +282,6 @@ require('telescope').setup{
 }
 require('telescope').load_extension('fzy_native')
 require'telescope'.load_extension('zoxide')
-
 
 require("which-key").setup()
 
@@ -460,37 +462,38 @@ function _G.open_nvim_tree_selection(targetWindow)
     end
 end
 --vim.g.nvim_tree_disable_keybindings = 1
+vim.g.nvim_tree_disable_default_keybindings = 1
 vim.g.nvim_tree_bindings = {
-    ["<CR>"]           = ":lua _G.open_nvim_tree_selection('smart')<cr>", -- open in MAIN if one window, or NEW if multiple
-    ["<2-LeftMouse>"]  = ":lua _G.open_nvim_tree_selection('smart')<cr>", -- open in MAIN if one window, or NEW if multiple
-    ["e"]              = tree_cb("edit"), -- show window chooser
-    ["n"]              = ":lua _G.open_nvim_tree_selection('new')<cr>",  -- open in NEW window
-    ["m"]              = ":lua _G.open_nvim_tree_selection('main')<cr>", -- open in MAIN window
-    ["<C-t>"]          = tree_cb("tabnew"),
-    ["."]              = tree_cb("cd"),
-    ["<BS>"]           = tree_cb("dir_up"),
-    ["<"]              = tree_cb("prev_sibling"),
-    [">"]              = tree_cb("next_sibling"),
-    ["I"]              = tree_cb("toggle_ignored"),
-    ["H"]              = tree_cb("toggle_dotfiles"),
-    ["R"]              = tree_cb("refresh"),
-    ["a"]              = tree_cb("create"),
-    ["d"]              = tree_cb("remove"),
-    ["r"]              = tree_cb("rename"),
-    ["<C-r>"]          = tree_cb("full_rename"),
-    ["x"]              = tree_cb("cut"),
-    ["c"]              = tree_cb("copy"),
-    ["p"]              = tree_cb("paste"),
-    ["y"]              = tree_cb("copy_name"),
-    ["Y"]              = tree_cb("copy_path"),
-    ["gy"]             = tree_cb("copy_absolute_path"),
-    ["[c"]             = tree_cb("prev_git_item"),
-    ["]c"]             = tree_cb("next_git_item"),
-    ["q"]              = tree_cb("close"),
-    ["-"]              = ":call SmartWindowResize('v', 0)<cr>",
-    ["="]              = ":call SmartWindowResize('v', 1)<cr>",
-    ["H"]             = "<cmd>tabprevious<cr>",
-    ["L"]             = "<cmd>tabnext<cr>",
+    { key = "<CR>",           cb = ":lua _G.open_nvim_tree_selection('smart')<cr>" }, -- open in MAIN if one window, or NEW if multiple
+    { key = "<2-LeftMouse>", cb = ":lua _G.open_nvim_tree_selection('smart')<cr>"}, -- open in MAIN if one window, or NEW if multiple
+    { key = "e",             cb = tree_cb("edit")}, -- show window chooserF
+    { key = "n",             cb = ":lua _G.open_nvim_tree_selection('new')<cr>"},  -- open in NEW windowF
+    { key = "m",             cb = ":lua _G.open_nvim_tree_selection('main')<cr>"}, -- open in MAIN windowF
+    { key = "<C-t>",         cb = tree_cb("tabnew")},
+    { key = ".",             cb = tree_cb("cd")},
+    { key = "<BS>",          cb = tree_cb("dir_up")},
+    { key = "<",             cb = tree_cb("prev_sibling")},
+    { key = ">",             cb = tree_cb("next_sibling")},
+    { key = "I",             cb = tree_cb("toggle_ignored")},
+    { key = "h",             cb = tree_cb("toggle_dotfiles")},
+    { key = "R",             cb = tree_cb("refresh")},
+    { key = "a",             cb = tree_cb("create")},
+    { key = "d",             cb = tree_cb("remove")},
+    { key = "r",             cb = tree_cb("rename")},
+    { key = "<C-r>",         cb = tree_cb("full_rename")},
+    { key = "x",             cb = tree_cb("cut")},
+    { key = "c",             cb = tree_cb("copy")},
+    { key = "p",             cb = tree_cb("paste")},
+    { key = "y",             cb = tree_cb("copy_name")},
+    { key = "Y",             cb = tree_cb("copy_path")},
+    { key = "gy",            cb = tree_cb("copy_absolute_path")},
+    { key = "[c",            cb = tree_cb("prev_git_item")},
+    { key = "]c",            cb = tree_cb("next_git_item")},
+    { key = "q",             cb = tree_cb("close")},
+    { key = "-",             cb = ":call SmartWindowResize('v', 0)<cr>"},
+    { key = "=",             cb = ":call SmartWindowResize('v', 1)<cr>"},
+    { key = "H",            cb = "<cmd>tabprevious<cr>"},
+    { key = "L",            cb = "<cmd>tabnext<cr>"}
 }
 
 

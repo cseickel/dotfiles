@@ -176,6 +176,7 @@ let g:EasyClipAlwaysMoveCursorToEndOfPaste=1
 let g:EasyClipPreserveCursorPositionAfterYank=1
 let g:EasyClipShareYanks=1
 let g:EasyClipUseSubstituteDefaults=0
+let g:EasyClipUsePasteToggleDefaults = 0
 
 
 " vim-closetag config

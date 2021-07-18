@@ -37,19 +37,19 @@ tnoremap <M-3> <c-\><c-n>:b#<cr>
 "vnoremap <silent> <space> s<space><esc>
 
 " Standard Save shortcuts
-noremap  <silent> <C-s> :w<cr>
-inoremap <silent> <C-s> <Esc>:w<cr>
-noremap  <silent> <M-s> :wa<cr>
-inoremap <silent> <M-s> <Esc>:wa<cr>
+noremap  <silent> <C-s> :wa<cr>
+inoremap <silent> <C-s> <Esc>:wa<cr>
+noremap  <silent> <M-s> :echo "Alt-S is not a command!"<cr>
+inoremap <silent> <M-s> <C-o>:echo "Alt-S is not a command!"<cr>
 
 " Control+v is for paste, use Alt+v for visual block mode
 nnoremap <silent> <M-v> <C-v>
 
-" Control+p as universal paste shortcut in all modes
-nmap <silent> <C-p> p
-vmap <silent> <C-p> p
-imap <silent> <C-p> <Esc>pa
-tmap <silent> <C-p> <c-\>pa
+" Control+v as universal paste shortcut in all modes
+nmap <silent> <C-v> p
+vmap <silent> <C-v> p
+imap <silent> <C-v> <Esc>pa
+tmap <silent> <C-v> <c-\>pa
 
 " Select All
 nnoremap <silent> <C-a> ggVG

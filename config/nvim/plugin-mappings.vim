@@ -1,5 +1,11 @@
-nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
+nnoremap <silent> <C-t> :tabnew<cr><bar>:terminal<cr>
 nnoremap <M-t> :TabooRename 
+
+nmap <c-v> <plug>EasyClipPasteAfter
+vmap <c-v> <plug>EasyClipPasteAfter
+imap <c-v> <plug>EasyClipInsertModePaste
+cmap <c-v> <plug>EasyClipCommandModePaste
+
 
 " URL encode/decode selection
 vnoremap <leader>en :!python3 -c 'import sys; from urllib import parse; print(parse.quote_plus(sys.stdin.read().strip()))'<cr>
@@ -83,7 +89,6 @@ endfunction
 
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
 
-let g:EasyClipUsePasteToggleDefaults = 0
 
 
 "*****************************************************************************
@@ -96,8 +101,8 @@ inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
 
 inoremap <silent><expr> <C-Space> compe#complete()
 inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+"inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+"inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"

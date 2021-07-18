@@ -70,7 +70,7 @@ local showSymbolFinder = function ()
         },
         entry_maker = require('telescope-custom').gen_from_lsp_symbols(),
         layout_config = {
-            width_padding=10,
+            width = { padding=10 },
             preview_width=preview_width
         }
     }
@@ -94,7 +94,7 @@ require("which-key").register({
         n = { "<cmd>ConflictMarkerOurselves<cr>",             "Keep None" },
         t = { "<cmd>ConflictMarkerThemselves<cr>",            "Keep Themselves (Bottom)" },
     },
-    d = { "<cmd>Tzi<cr>",                                     "Change Directory"},
+    d = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Show Diagnostic Error" },
     h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     m = { "add Mark" },
