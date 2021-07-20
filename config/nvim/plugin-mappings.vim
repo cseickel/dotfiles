@@ -88,6 +88,7 @@ function! ReplaceQuickfix() abort
 endfunction
 
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
+nnoremap <silent> <C-\> :ToggleTerm<cr>
 
 
 

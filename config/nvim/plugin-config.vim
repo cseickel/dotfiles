@@ -210,23 +210,10 @@ let g:OmniSharp_popup_options = {
 " Enable snippet completion, using the ultisnips plugin
 let g:OmniSharp_want_snippet=1
 
-"*****************************************************************************
-"" Fern File Tree
-"*****************************************************************************
-let g:fern#renderer = "nerdfont"
-" Add dirs and files inside the brackets that need to remain hidden
-let hide_dirs  = '^\%(\.git\|node_modules\)$'  " here you write the dir names 
-let hide_files = '\%(\.d\.ts\|\.js\)$'    " here you write the file names
-let g:fern#disable_drawer_auto_resize=1
-let g:fern#default_exclude = hide_dirs . '\|' . hide_files  " here you exclude them
-
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerShowTabBuffer=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerDisableDefaultKeyMapping=1
-
-let g:vista_ignore_kinds=["Variable", "Constant", "Property"]
-let g:vista_default_executive="nvim_lsp"
 
 let g:sharpenup_create_mappings = 0
 let g:OmniSharp_highlighting = 0
