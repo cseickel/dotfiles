@@ -12,7 +12,11 @@ tnoremap <silent> <C-\> <c-\><c-n>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+" Change word the cursor is on
 nnoremap s ciw
+
+" Reselect pasted text
+nnoremap gp `[v`]
 
 "" Map leader to ,
 let mapleader=","

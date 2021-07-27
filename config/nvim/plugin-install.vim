@@ -46,7 +46,7 @@ Plug 'sbdchd/neoformat'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'nickspoons/vim-sharpenup'
-Plug 'hrsh7th/nvim-compe'
+
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
@@ -59,7 +59,7 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
-" All of the new functionality in nevim 5 that is not quite stable
+" All of the new functionality in nevim 5
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'onsails/lspkind-nvim'
@@ -74,6 +74,7 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
+Plug 'abecodes/tabout.nvim'
 "Plug 'lewis6991/gitsigns.nvim'
 
 
