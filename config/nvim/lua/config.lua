@@ -125,7 +125,8 @@ local function lsp_attach()
         hint_enable = false,
         flags = {
           debounce_text_changes = 150,
-        }
+        },
+        extra_trigger_chars = { "(", "," }
     })
 end
 

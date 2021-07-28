@@ -162,12 +162,6 @@ let g:scrollview_current_only=1
 let g:scrollview_winblend=60
 let g:scrollview_column=1
 
-let g:chadtree_settings = { "theme": { "text_colour_set": "nord" } }
-
-
-" typescript
-let g:yats_host_keyword = 1
-
 
 " clipboard settings
 set clipboard=unnamed,unnamedplus
@@ -263,7 +257,7 @@ let g:startify_lists = [
             \ { 'header': ['   Sessions'],       'type': 'sessions' },
             \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
             \ ]
-let g:startify_session_delete_buffers = 0
+let g:startify_session_delete_buffers = 1
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 let g:startify_session_before_save = ['call CustomStartifyBeforeSave()']
@@ -273,7 +267,7 @@ let g:startify_change_to_dir = 1
 let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
             \ 't:terminal', 'g:terminal', 'w:terminal']
 
-set sessionoptions=blank,curdir,folds,help,tabpages,winpos
+set sessionoptions=curdir,tabpages,winpos
 
 
 "fzf preview

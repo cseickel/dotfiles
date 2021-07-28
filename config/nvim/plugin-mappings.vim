@@ -109,55 +109,6 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-let g:asyncomplete_enable_for_all = 0
-let g:asyncomplete_auto_popup = 1
-let g:asyncomplete_auto_completeopt = 0
-let g:asyncomplete_min_chars = 1
-let g:OmniSharp_popup_position = 'peek'
-
-function! InitCS()
-    let l:compe_config = {}
-    let l:compe_config.documentation = v:true
-    let l:compe_config.min_length = 1
-    let l:compe_config.source = {}
-    let l:compe_config.source.calc = v:true
-    let l:compe_config.source.path = v:true
-    let l:compe_config.source.omni = v:true
-    let l:compe_config.source.spell = v:true
-    let l:compe_config.source.ultisnips = v:true
-    let l:compe_config.source.vsnip = v:false
-    let l:compe_config.enabled = v:false
-    call compe#setup(l:compe_config, 0)
-
-    call asyncomplete#enable_for_buffer()
-    inoremap <buffer><expr> <cr>      pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-    imap     <buffer>       <c-space> <Plug>(asyncomplete_force_refresh)
-
-    nmap <silent><buffer> <leader>gd <Plug>(omnisharp_go_to_definition)
-    nmap <silent><buffer> <leader>gr <Plug>(omnisharp_find_usages)
-    nmap <silent><buffer> <leader>gi <Plug>(omnisharp_find_implementations)
-    nmap <silent><buffer> <leader>gt <Plug>(omnisharp_type_lookup)
-    nmap <silent><buffer> <leader>d <Plug>(omnisharp_preview_definition)
-    nmap <silent><buffer> <leader>i <Plug>(omnisharp_preview_implementations)
-    nmap <silent><buffer>         K <Plug>(omnisharp_documentation)
-    nmap <silent><buffer> <leader>u <Plug>(omnisharp_fix_usings)
-    nmap <silent><buffer>        [[ <Plug>(omnisharp_navigate_up)
-    nmap <silent><buffer>        ]] <Plug>(omnisharp_navigate_down)
-    nmap <silent><buffer> <leader>t <Plug>(omnisharp_global_code_check)
-    nmap <silent><buffer> <leader>a <Plug>(omnisharp_code_actions)
-    nmap <silent><buffer> <leader>= <Plug>(omnisharp_code_format)
-    nmap <silent><buffer> <leader>n <Plug>(omnisharp_rename)
-    nmap <silent><buffer> <leader>? <Plug>(omnisharp_signature_help)
-endfunction
-
-function! DocHighlight()
-    if &ft == 'cs' || &ft == 'csx'
-        OmniSharpTypeLookup
-    else
-        lua vim.lsp.buf.document_highlight()
-    endif
-endfunction
-
 function! InitSql()
     nnoremap <silent><buffer> <M-x> :%DB $DBUI_URL<cr>
     vnoremap <silent><buffer> <M-x> :DB $DBUI_URL<cr>
@@ -166,11 +117,9 @@ endfunction
 
 augroup plugin_mappings_augroup
     autocmd!
-    autocmd CursorHold * silent! call DocHighlight()
+    autocmd CursorHold * silent! lua vim.lsp.buf.document_highlight()
     autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
     autocmd FileType typescript,javascript nnoremap <buffer><leader>= :lua vim.lsp.buf.formatting()<cr>
-    autocmd FileType cs call InitCS()
-    autocmd FileType csx call InitCS()
     autocmd FileType sql call InitSql()
     autocmd FileType qf,Trouble silent! call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
