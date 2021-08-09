@@ -54,14 +54,13 @@ Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
-" All of the new functionality in nevim 5
+" All of the new functionality in neovim 5
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'folke/lsp-trouble.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -70,7 +69,11 @@ Plug 'jvgrootveld/telescope-zoxide'
 Plug 'folke/which-key.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
 Plug 'abecodes/tabout.nvim'
+Plug 'vuki656/package-info.nvim'
 "Plug 'lewis6991/gitsigns.nvim'
+
+Plug 'abecodes/tabout.nvim'
+Plug 'akinsho/nvim-toggleterm.lua'
 
 
 " UI Stuff

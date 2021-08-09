@@ -1,4 +1,4 @@
-nnoremap <silent> <C-t> :tabnew<cr><bar>:terminal<cr>
+nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename 
 
 nmap <c-v> <plug>EasyClipPasteAfter
@@ -57,35 +57,13 @@ function! ToggleWindowZoom() abort
     endif
 endfunction
 
-function! LayoutTrouble() abort
-    call DWM_MoveRight()
-    let trouble_lines = line('$')
-    if trouble_lines < 8
-        resize 8
-    else
-        execute 'resize ' . trouble_lines
-    endif
-endfunction
-
 function! CloseAllTools()
     call CloseTerminal()
     cclose
     lclose
-    TroubleClose
     redraw
 endfunction
 
-function! ShowTrouble() abort
-    silent! call CloseAllTools()
-    Trouble lsp_workspace_diagnostics
-    "call LayoutTrouble()
-endfunction
-
-function! ReplaceQuickfix() abort
-    silent! call CloseAllTools()
-    Trouble quickfix
-    "call LayoutTrouble()
-endfunction
 
 nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
 nnoremap <silent> <C-\> :ToggleTerm<cr>
@@ -124,7 +102,7 @@ augroup plugin_mappings_augroup
     autocmd FileType qf,Trouble silent! call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
-    autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})
+    "autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})
 augroup END
 
 function! Syn()

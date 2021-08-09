@@ -1,18 +1,9 @@
 -- make sure to run this code before calling setup()
 -- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
-local trouble = require('trouble')
+--local trouble = require('trouble')
 local presets = require("which-key.plugins.presets")
 presets.operators["v"] = nil
 
-local next_trouble = function()
-    trouble.action('next')
-    trouble.action('preview')
-end
-
-local prev_trouble = function()
-    trouble.action('previous')
-    trouble.action('preview')
-end
 
 local focus_tree = function()
     if require('nvim-tree.view').win_open() then
@@ -43,7 +34,6 @@ require("which-key").register({
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
         l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
         q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
-        t = { prev_trouble,                                   "Previous Trouble" },
         x = { "<cmd>ConflictMarkerPrevHunk<cr>",              "Previous Conflict" }
     },
     ["]"] = {
@@ -51,7 +41,6 @@ require("which-key").register({
         d = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Next Diagnostic" },
         l = { "<cmd>lnext<cr>",                               "Next Location List" },
         q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
-        t = { next_trouble,                                   "Next Trouble" },
         x = { "<cmd>ConflictMarkerNextHunk<cr>",              "Next Conflict" }
     },
 })
@@ -94,14 +83,18 @@ require("which-key").register({
         n = { "<cmd>ConflictMarkerOurselves<cr>",             "Keep None" },
         t = { "<cmd>ConflictMarkerThemselves<cr>",            "Keep Themselves (Bottom)" },
     },
-    d = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Show Diagnostic Error" },
+    d = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Preview Diagnostic" },
+    D = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",    "Show all Diagnostics" },
     h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
+    l = { "Show Location List" },
+    L = { "Close Location List" },
     m = { "add Mark" },
     q = { "Show Quickfix" },
+    Q = { "Close Quickfix" },
     f = {
         name = "File...", -- optional group name
-        b = { "<cmd>Telescope buffers<cr>",                   "Switch Buffer" },
+        b = { "<cmd>Telescope file_browser<cr>",              "File Browser" },
         f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Find in this file" },
         g = { "<cmd>Telescope live_grep<cr>",                 "Grep" },
         o = { "<cmd>Telescope find_files<cr>",                "Open File" },
@@ -131,9 +124,7 @@ require("which-key").register({
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
-    s = { "Open  Terminal" },
-    S = { "Close Terminal" },
-    t = { "<cmd>call ShowTrouble()<cr>",                      "Open  Trouble (diagnostics)" },
-    T = { "<cmd>TroubleClose<cr>",                            "Close Trouble" },
+    t = { "Open  Terminal" },
+    T = { "Close Terminal" },
     z = { ":call ToggleWindowZoom()<cr>",                     "Zoom Window (toggle)" },
 }, { prefix = "<leader>" })

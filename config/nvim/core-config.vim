@@ -239,4 +239,5 @@ augroup core_autocmd
   "autocmd CmdlineLeave         * call SetRelative() | redraw
   "autocmd BufLeave,InsertEnter * call SetNoRelative()
   "autocmd CmdlineEnter         * call SetNoRelative() | redraw
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
 augroup END

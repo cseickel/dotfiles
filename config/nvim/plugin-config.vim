@@ -248,7 +248,8 @@ endfunction
 " Startify
 let g:startify_commands = [
             \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
-            \ { 'f': ['Find Files', 'Telescope find_files'] },
+            \ { 'b': ['Browse Files', 'Telescope file_browser'] },
+            \ { 'o': ['Open Files', 'Telescope find_files'] },
             \ ]
 
 let g:startify_lists = [

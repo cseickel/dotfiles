@@ -1,4 +1,4 @@
-" Turns off highlight of last search and paste mode when you hit Escape.
+"Show Turns off highlight of last search and paste mode when you hit Escape.
 nnoremap <silent> <Esc> <Esc>:noh<bar>set nopaste<CR>
 " clear search term for real
 command C let @/=""
@@ -50,10 +50,12 @@ inoremap <silent> <M-s> <C-o>:echo "Alt-S is not a command!"<cr>
 nnoremap <silent> <M-v> <C-v>
 
 " Control+v as universal paste shortcut in all modes
-nmap <silent> <C-v> p
-vmap <silent> <C-v> p
-imap <silent> <C-v> <Esc>pa
-tmap <silent> <C-v> <c-\>pa
+nmap <silent> <C-p> p
+vmap <silent> <C-p> p
+imap <silent> <C-p> <Esc>pa
+tmap <silent> <C-p> <c-\>pa
+
+command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
 " Select All
 nnoremap <silent> <C-a> ggVG
@@ -77,7 +79,13 @@ noremap <C-q> :q<cr>
 inoremap <C-q> <Esc>:q<cr>
 
 " Open quickfix at bottom of all windows
-noremap <leader>q :botright copen
+noremap <leader>q :botright copen<cr>
+" Close Quickfix
+noremap <leader>Q :cclose<cr>
+
+" Open/close location list
+noremap <leader>l :lopen<cr>
+noremap <leader>L :lclose<cr>
 
 "" Quick folding of a block in normal mode with the 'z' key
 "nnoremap z V%zf
@@ -170,15 +178,52 @@ function! CloseTerminal() abort
     endfor
 endfunction
 
+function! SaveTerminal() abort
+    for win in nvim_tabpage_list_wins(0)
+        let buf_handle = nvim_win_get_buf(win)
+        let buf_name = nvim_buf_get_name(buf_handle)
+        if buf_name =~ "term://" && nvim_win_get_width(win) == &columns && nvim_win_get_height(win) < (&lines-3)
+            " rename last saved terminal 
+            let g:saved_terminal = buf_handle
+            echo "Terminal Saved: " . buf_name
+        endif
+    endfor
+endfunction
+
+function! OpenSavedTerminal()
+    if g:saved_terminal > 0
+        let buf_name = nvim_buf_get_name(g:saved_terminal)
+        botright split
+        resize 14
+        setlocal winfixheight
+        execute 'b ' . buf_name
+    else
+        echom "No Saved Terminal to restore!"
+    endif
+endfunction
+
+
 function! RecycleTerminal()
-    for buf in getbufinfo({ 'buflisted': 1 })
-        if buf.name =~ "term://" && len(buf.windows) == 0
-            execute "buffer " . buf.bufnr
-            return buf.name
+    let page_handle = nvim_get_current_tabpage()
+    for buf in nvim_list_bufs()
+        if nvim_buf_is_valid(buf) && nvim_buf_is_loaded(buf)
+            try
+                let term_tab_owner = nvim_buf_get_var(buf, "term_tab_owner")
+            catch
+                let term_tab_owner = -1
+            endtry
+            let num_windows = len(filter(nvim_tabpage_list_wins(0), "nvim_win_get_buf(v:val)==" . buf))
+            if num_windows == 0 && term_tab_owner == page_handle
+                execute "buffer " . nvim_buf_get_name(buf)
+                return buf
+            endif
         endif
     endfor
     terminal
+    let b:term_tab_owner = page_handle
 endfunction
 
-nnoremap <silent> <leader>s :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
-nnoremap <silent> <leader>S :call CloseTerminal()<cr>
+nnoremap <silent> <leader>S :call SaveTerminal()<cr>
+nnoremap <silent> <leader>s :call OpenSavedTerminal()<cr>
+nnoremap <silent> <leader>t :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
+nnoremap <silent> <leader>T :call CloseTerminal()<cr>
