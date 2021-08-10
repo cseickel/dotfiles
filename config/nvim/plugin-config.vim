@@ -78,7 +78,7 @@ function! Custom_Inactive(...)
     "return 0   " the default: draw the rest of the statusline
     return 1   " modify the statusline with the current contents of the builder
 endfunction
-call airline#add_inactive_statusline_func('Custom_Inactive')
+"call airline#add_inactive_statusline_func('Custom_Inactive')
 
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_startify = 1

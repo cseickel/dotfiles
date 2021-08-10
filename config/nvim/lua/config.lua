@@ -554,3 +554,61 @@ require('tabout').setup({
 
 require('package-info').setup()
 
+local custom_theme = require'lualine.themes.wombat'
+custom_theme.insert.a.bg = '#ffffaf'
+--custom_theme.insert.a.bg = '#d7d700'
+custom_theme.replace.a.bg = '#ff5555'
+custom_theme.visual.a.bg = '#c586c0'
+custom_theme.command = { a = { bg = '#cccccc', fg = '#101010' } }
+custom_theme.inactive.c.bg = '#444444'
+custom_theme.inactive.b.fg = '#888888'
+
+local diag_config = {
+    'diagnostics',
+    -- table of diagnostic sources, available sources:
+    -- nvim_lsp, coc, ale, vim_lsp
+    sources = { 'nvim_lsp' },
+    -- displays diagnostics from defined severity
+    sections = {'error', 'warn', 'info', 'hint'},
+    -- all colors are in format #rrggbb
+    symbols = {error = '  ', warn = '  ', info = '  ', hint = '  '}
+}
+ local icon_only = {'filetype', format = function() return " " end, right_padding=0}
+--require'tabline'.setup {enable = false}
+require'lualine'.setup {
+  options = {
+    icons_enabled = true,
+    theme = custom_theme,
+    --component_separators = {'|', '|'},
+    --section_separators = {'', ''},
+    --component_separators = { '', '' },
+    --section_separators = {'', ''},
+    component_separators = {'', ''},
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = {},
+    lualine_c = { icon_only, 'filename'},
+    lualine_x = { diag_config },
+    lualine_y = {},
+    lualine_z = { 'location'},
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = { 'vim.api.nvim_win_get_number(0)' },
+    lualine_c = { 'filename' },
+    lualine_x = { diag_config },
+    lualine_y = {},
+    lualine_z = {}
+  },
+ -- tabline = {
+ --       lualine_a = {},
+ --       lualine_b = { 'branch' },
+ --       lualine_c = {},
+ --       lualine_x = { require'tabline'.tabline_tabs },
+ --       lualine_y = {},
+ --       lualine_z = {},
+ -- },
+  extensions = { 'nvim-tree', 'quickfix' }
+}

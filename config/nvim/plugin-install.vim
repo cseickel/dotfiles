@@ -72,14 +72,15 @@ Plug 'abecodes/tabout.nvim'
 Plug 'vuki656/package-info.nvim'
 "Plug 'lewis6991/gitsigns.nvim'
 
-Plug 'abecodes/tabout.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
 
 
 " UI Stuff
 Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'hoob3rt/lualine.nvim'
+"Plug 'kdheepak/tabline.nvim'
 
 Plug 'ryanoasis/vim-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
