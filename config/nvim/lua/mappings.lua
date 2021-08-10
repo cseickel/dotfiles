@@ -124,6 +124,8 @@ require("which-key").register({
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
+    S = { "Save Terminal (yank)" },
+    s = { "Open Saved Terminal (paste)" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },
     z = { ":call ToggleWindowZoom()<cr>",                     "Zoom Window (toggle)" },
