@@ -560,8 +560,23 @@ custom_theme.insert.a.bg = '#ffffaf'
 custom_theme.replace.a.bg = '#ff5555'
 custom_theme.visual.a.bg = '#c586c0'
 custom_theme.command = { a = { bg = '#cccccc', fg = '#101010' } }
+custom_theme.normal.b.bg = '#6a6a6a'
+custom_theme.normal.b.fg = '#bbbbbb'
 custom_theme.inactive.c.bg = '#444444'
-custom_theme.inactive.b.fg = '#888888'
+
+local cbg = '#363636'
+custom_theme.normal.b.bg = '#444444'
+custom_theme.normal.b.fg = '#bbbbbb'
+custom_theme.normal.y = custom_theme.normal.b
+custom_theme.inactive.b = custom_theme.normal.b
+custom_theme.inactive.c = { bg = cbg, fg = '#bbbbbb' }
+custom_theme.inactive.y = custom_theme.normal.b
+
+custom_theme.normal.c = { bg = cbg, fg = custom_theme.normal.a.bg, gui="bold" }
+custom_theme.insert.c = { bg = cbg, fg = custom_theme.insert.a.bg, gui="bold" }
+custom_theme.visual.c = { bg = cbg, fg = custom_theme.visual.a.bg, gui="bold" }
+custom_theme.replace.c = { bg = cbg, fg = custom_theme.replace.a.bg, gui="bold" }
+custom_theme.command.c = { bg = cbg, fg = custom_theme.command.a.bg, gui="bold" }
 
 local diag_config = {
     'diagnostics',
@@ -571,9 +586,8 @@ local diag_config = {
     -- displays diagnostics from defined severity
     sections = {'error', 'warn', 'info', 'hint'},
     -- all colors are in format #rrggbb
-    symbols = {error = '  ', warn = '  ', info = '  ', hint = '  '}
+    symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
 }
- local icon_only = {'filetype', format = function() return " " end, right_padding=0}
 --require'tabline'.setup {enable = false}
 require'lualine'.setup {
   options = {
@@ -583,23 +597,22 @@ require'lualine'.setup {
     --section_separators = {'', ''},
     --component_separators = { '', '' },
     --section_separators = {'', ''},
-    component_separators = {'', ''},
     disabled_filetypes = {}
   },
   sections = {
     lualine_a = { 'mode' },
-    lualine_b = {},
-    lualine_c = { icon_only, 'filename'},
+    lualine_b = { 'filetype' },
+    lualine_c = { 'filename'},
     lualine_x = { diag_config },
-    lualine_y = {},
+    lualine_y = {  },
     lualine_z = { 'location'},
   },
   inactive_sections = {
     lualine_a = {},
-    lualine_b = { 'vim.api.nvim_win_get_number(0)' },
+    lualine_b = { 'filetype'},
     lualine_c = { 'filename' },
     lualine_x = { diag_config },
-    lualine_y = {},
+    lualine_y = { '"WIN #" .. vim.api.nvim_win_get_number(0)' },
     lualine_z = {}
   },
  -- tabline = {
