@@ -623,5 +623,5 @@ require'lualine'.setup {
  --       lualine_y = {},
  --       lualine_z = {},
  -- },
-  extensions = { 'nvim-tree', 'quickfix' }
+  extensions = { 'nvim-tree', 'quickfix', 'fzf' }
 }
