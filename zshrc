@@ -279,18 +279,21 @@ n ()
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
 }
-function create_branch() {
-    echo "Please enter the github issue # to create a branch for:"
-    read issue
+function work-on-issue() {
+    issue=$(gh issue list | fzf --header "PLEASE SELECT AN ISSUE TO WORK ON" | awk -F '\t' '{ print $1 }')
     sanitized=$(gh issue view $issue --json "title" | jq -r ".title" | tr '[:upper:]' '[:lower:]' | tr -s -c "a-z0-9\n" "-" | head -c 60)
     branchname=$issue-$sanitized
-    echo "Branch name:"
-    vared branchname
-    git checkout -b $branchname
-    git push --set-upstream origin $branchname
+    shortname=$(echo $branchname | head -c 30)
+    existing=$(git branch -a | grep -v remotes | grep $shortname | head -n 1)
+    if [[ ! -z "$existing" ]]; then
+        sh -c "git switch $existing"
+    else
+        echo "Please confirm new branch name:"
+        vared branchname
+        git checkout -b $branchname
+        git push --set-upstream origin $branchname
+    fi
 }
-
-
 #if [[ -n $SSH_CONNECTION ]] ; then
 #    [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session }
 #fi
