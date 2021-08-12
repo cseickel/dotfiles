@@ -600,22 +600,64 @@ require'lualine'.setup {
     disabled_filetypes = {}
   },
   sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'filetype' },
+    lualine_a = { {
+            'mode',
+            format = function(data)
+                local winwidth = vim.fn.winwidth(0)
+                local filelength = string.len(vim.fn.expand("%:t"))
+                local maxlength = (winwidth - filelength - 17)
+                if maxlength < 1 then
+                    return data:sub(1, 1)
+                else
+                    return data:sub(1, maxlength)
+                end
+            end
+        }
+    },
+    lualine_b = { {
+            'filetype',
+            format = function(data)
+                local winwidth = vim.fn.winwidth(0)
+                local filelength = string.len(vim.fn.expand("%:t"))
+                local maxlength = (winwidth - filelength - 44)
+                if maxlength < 3 then
+                    return nil
+                else
+                    return data:sub(1, maxlength)
+                end
+            end
+        }
+    },
     lualine_c = { 'filename'},
     lualine_x = { diag_config },
     lualine_y = { {
             'branch',
             format = function(data)
-                local windwidth = vim.fn.winwidth(0)
+                local winwidth = vim.fn.winwidth(0)
                 local filelength = string.len(vim.fn.expand("%:t"))
-                local maxwidth = (windwidth - filelength - 50)
-                if maxwidth < 1 then return "" end
-                return data:sub(1,maxwidth)
+                local maxlength = (winwidth - filelength - 50)
+                if maxlength < 1 then
+                    return nil
+                else
+                    return data:sub(1,maxlength)
+                end
             end
         }
     },
-    lualine_z = { 'location'},
+    lualine_z = { {
+            'location',
+            format = function(data)
+                local winwidth = vim.fn.winwidth(0)
+                local filelength = string.len(vim.fn.expand("%:t"))
+                local maxlength = (winwidth - filelength - 26)
+                if maxlength < 9 then
+                    return nil
+                else
+                    return data
+                end
+            end
+        }
+    },
   },
   inactive_sections = {
     lualine_a = {},
