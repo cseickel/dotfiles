@@ -577,6 +577,10 @@ custom_theme.insert.c = { bg = cbg, fg = custom_theme.insert.a.bg, gui="bold" }
 custom_theme.visual.c = { bg = cbg, fg = custom_theme.visual.a.bg, gui="bold" }
 custom_theme.replace.c = { bg = cbg, fg = custom_theme.replace.a.bg, gui="bold" }
 custom_theme.command.c = { bg = cbg, fg = custom_theme.command.a.bg, gui="bold" }
+custom_theme.terminal = {
+    a = { bg = "#5faf5f", fg = cbg },
+    c = { bg = cbg, fg = "#5faf5f", gui="bold" }
+}
 
 local diag_config = {
     'diagnostics',
