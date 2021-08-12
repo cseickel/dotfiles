@@ -79,7 +79,7 @@ Plug 'akinsho/nvim-toggleterm.lua'
 Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
-Plug 'hoob3rt/lualine.nvim'
+Plug 'shadmansaleh/lualine.nvim'
 "Plug 'kdheepak/tabline.nvim'
 
 Plug 'ryanoasis/vim-devicons'

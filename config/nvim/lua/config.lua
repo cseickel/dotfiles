@@ -604,7 +604,17 @@ require'lualine'.setup {
     lualine_b = { 'filetype' },
     lualine_c = { 'filename'},
     lualine_x = { diag_config },
-    lualine_y = {  },
+    lualine_y = { {
+            'branch',
+            format = function(data)
+                local windwidth = vim.fn.winwidth(0)
+                local filelength = string.len(vim.fn.expand("%:t"))
+                local maxwidth = (windwidth - filelength - 50)
+                if maxwidth < 1 then return "" end
+                return data:sub(1,maxwidth)
+            end
+        }
+    },
     lualine_z = { 'location'},
   },
   inactive_sections = {
