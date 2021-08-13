@@ -554,33 +554,6 @@ require('tabout').setup({
 
 require('package-info').setup()
 
-local custom_theme = require'lualine.themes.wombat'
-custom_theme.insert.a.bg = '#ffffaf'
---custom_theme.insert.a.bg = '#d7d700'
-custom_theme.replace.a.bg = '#ff5555'
-custom_theme.visual.a.bg = '#c586c0'
-custom_theme.command = { a = { bg = '#cccccc', fg = '#101010' } }
-custom_theme.normal.b.bg = '#6a6a6a'
-custom_theme.normal.b.fg = '#bbbbbb'
-custom_theme.inactive.c.bg = '#444444'
-
-local cbg = '#363636'
-custom_theme.normal.b.bg = '#444444'
-custom_theme.normal.b.fg = '#bbbbbb'
-custom_theme.normal.y = custom_theme.normal.b
-custom_theme.inactive.b = custom_theme.normal.b
-custom_theme.inactive.c = { bg = cbg, fg = '#bbbbbb' }
-custom_theme.inactive.y = custom_theme.normal.b
-
-custom_theme.normal.c = { bg = cbg, fg = custom_theme.normal.a.bg, gui="bold" }
-custom_theme.insert.c = { bg = cbg, fg = custom_theme.insert.a.bg, gui="bold" }
-custom_theme.visual.c = { bg = cbg, fg = custom_theme.visual.a.bg, gui="bold" }
-custom_theme.replace.c = { bg = cbg, fg = custom_theme.replace.a.bg, gui="bold" }
-custom_theme.command.c = { bg = cbg, fg = custom_theme.command.a.bg, gui="bold" }
-custom_theme.terminal = {
-    a = { bg = "#5faf5f", fg = cbg },
-    c = { bg = cbg, fg = "#5faf5f", gui="bold" }
-}
 
 local diag_config = {
     'diagnostics',
@@ -596,7 +569,7 @@ local diag_config = {
 require'lualine'.setup {
   options = {
     icons_enabled = true,
-    theme = custom_theme,
+    theme = require('lualine-theme'),
     --component_separators = {'|', '|'},
     --section_separators = {'', ''},
     --component_separators = { '', '' },

@@ -24,6 +24,7 @@
     ~/.config/nvim/plugin-mappings.vim: config/nvim/plugin-mappings.vim
     ~/.config/nvim/lua/config.lua: config/nvim/lua/config.lua
     ~/.config/nvim/lua/mappings.lua: config/nvim/lua/mappings.lua
+    ~/.config/nvim/lua/lualine-theme.lua: config/nvim/lua/lualine-theme.lua
     ~/.config/nvim/lua/telescope-custom.lua: config/nvim/lua/telescope-custom.lua
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
     ~/.config/nvim/colors:
