@@ -3,20 +3,20 @@
 -- Credit: itchyny(lightline)
 -- LuaFormatter off
 local colors = {
+    almost_black = '#101010',
     gray_darkest = '#353535',
-    gray_dark  = '#444444',
+    gray_dark    = '#444444',
     gray_medium  = '#6a6a6a',
     gray_light   = '#bbbbbb',
-    almost_black   = '#101010',
-    command = "#dddddd",
-    insert  = '#cae682',
-    --insert = '#dcdcaa',
-    replace     = '#f44747',
-    normal    = '#8ac6f2',
-    terminal   = '#95e454',
-    visual   = '#c586c0',
+    command      = "#dddddd",
+    insert       = '#ffff5f',
+    terminal     = '#95e454',
+    normal       = '#8ac6f2',
+    visual       = '#c586c0',
+    replace      = '#f44747',
+    purple_182   = '#d7afd7',
 }
--- LuaFormatter on
+
 return {
     normal = {
         a = {
@@ -30,6 +30,10 @@ return {
         c = {
             fg = colors.normal, gui = 'bold',
             bg = colors.gray_darkest
+        },
+        y = {
+            fg = colors.purple_182, gui="bold",
+            bg = colors.gray_dark
         }
     },
     command = {
@@ -88,8 +92,12 @@ return {
             bg = colors.gray_dark
         },
         c = {
-            fg = colors.gray_medium,
+            fg = colors.gray_light,
             bg = colors.gray_darkest
-        }
+        },
+        y = {
+            fg = colors.gray_light,
+            bg = colors.gray_dark
+        },
     }
 }
