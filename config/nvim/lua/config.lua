@@ -572,9 +572,8 @@ require'lualine'.setup {
     theme = require('lualine-theme'),
     --component_separators = {'|', '|'},
     --section_separators = {'', ''},
-    --component_separators = { '', '' },
     --section_separators = {'', ''},
-    disabled_filetypes = {}
+    --component_separators = {'', ''},
   },
   sections = {
     lualine_a = { {

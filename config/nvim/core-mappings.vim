@@ -13,7 +13,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Change word the cursor is on
-nnoremap s ciw
+nnoremap s "_ciw
 
 " Reselect pasted text
 nnoremap gp `[v`]

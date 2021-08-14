@@ -32,7 +32,7 @@ return {
             bg = colors.gray_darkest
         },
         y = {
-            fg = colors.purple_182, gui="bold",
+            fg = colors.purple_182,
             bg = colors.gray_dark
         }
     },
