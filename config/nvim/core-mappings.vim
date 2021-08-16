@@ -1,5 +1,5 @@
 "Show Turns off highlight of last search and paste mode when you hit Escape.
-nnoremap <silent> <Esc> <Esc>:noh<bar>set nopaste<CR>
+nnoremap <silent> <Esc> <Esc>:noh<CR>
 " clear search term for real
 command C let @/=""
 " Map Control \ to Esc
@@ -13,7 +13,14 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Change word the cursor is on
-nnoremap s "_ciw
+nnoremap s "sciw
+" Put all substitues in a s register
+vnoremap s "sys
+" and make S act like C but with s register
+nnoremap S "sC
+
+" Make Y consistent with C and D
+nnoremap Y y$
 
 " Reselect pasted text
 nnoremap gp `[v`]
@@ -41,31 +48,49 @@ tnoremap <M-3> <c-\><c-n>:b#<cr>
 "vnoremap <silent> <space> s<space><esc>
 
 " Standard Save shortcuts
-noremap  <silent> <C-s> :wa<cr>
-inoremap <silent> <C-s> <Esc>:wa<cr>
-noremap  <silent> <M-s> :echo "Alt-S is not a command!"<cr>
-inoremap <silent> <M-s> <C-o>:echo "Alt-S is not a command!"<cr>
+noremap  <silent> <C-s> :w<cr>
+inoremap <silent> <C-s> <Esc>:w<cr>
+vnoremap <silent> <C-s> <Esc>:w<cr>
+noremap  <silent> <M-s> :wa<cr>
+inoremap <silent> <M-s> <Esc>:wa<cr>
+tnoremap <silent> <M-s> <C-\><C-n>:wa<cr>
+inoremap <silent> <C-s> <Esc>:w<cr>
 
 " Control+v is for paste, use Alt+v for visual block mode
 nnoremap <silent> <M-v> <C-v>
+tnoremap <silent> <M-v> <C-v>
 
-" Control+v as universal paste shortcut in all modes
+" Control+p as universal paste shortcut in all modes
 nmap <silent> <C-p> p
 vmap <silent> <C-p> p
 imap <silent> <C-p> <Esc>pa
 tmap <silent> <C-p> <c-\>pa
 
+
+" Use Ctl+c/x/v as secondary clipboard
+nnoremap <silent> <C-c> "cy
+vnoremap <silent> <C-c> "cy
+inoremap <silent> <C-c> <C-o>"cyiw
+tnoremap <silent> <C-c> <c-\><c-n>l"cy$
+
+inoremap <silent> <C-x> <C-o>"cdiw
+vnoremap <silent> <C-x> "cd
+nnoremap <silent> <C-x> "cdiw
+
+nnoremap <silent> <C-v> "cp
+vnoremap <silent> <C-v> "cp
+inoremap <silent> <C-v> <C-o>"cp
+tnoremap <silent> <C-v> <c-\><c-n>"cpa
+
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
+
+
+nmap <silent> <C-c> "cy
 
 " Select All
 nnoremap <silent> <C-a> ggVG
 inoremap <silent> <C-a> <Esc>ggVG
 vnoremap <silent> <C-a> <Esc>ggVG
-
-" Standard Cut shortcut
-"inoremap <silent> <C-x> <Esc>yawdawi
-"vnoremap <silent> <C-x> ygvd
-"nnoremap <silent> <C-x> Vydd
 
 
 " Search and Replace Selected Text

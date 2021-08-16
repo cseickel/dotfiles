@@ -51,7 +51,6 @@ Plug 'mhinz/vim-startify'
 
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 "color scheme
-Plug 'jacoborus/tender.vim'
 Plug 'christianchiarulli/nvcode-color-schemes.vim'
 
 " All of the new functionality in neovim 5
@@ -71,14 +70,12 @@ Plug 'akinsho/nvim-toggleterm.lua'
 Plug 'abecodes/tabout.nvim'
 Plug 'vuki656/package-info.nvim'
 "Plug 'lewis6991/gitsigns.nvim'
-
+Plug 'pwntester/octo.nvim'
 Plug 'akinsho/nvim-toggleterm.lua'
 
 
 " UI Stuff
 Plug 'psliwka/vim-smoothie' " Smooth scrolling, probably better on local
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
 Plug 'shadmansaleh/lualine.nvim'
 "Plug 'kdheepak/tabline.nvim'
 

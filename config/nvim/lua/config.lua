@@ -653,3 +653,6 @@ require'lualine'.setup {
  -- },
   extensions = { 'nvim-tree', 'quickfix', 'fzf' }
 }
+
+require("octo").setup()
+

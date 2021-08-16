@@ -1,11 +1,6 @@
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename 
 
-nmap <c-v> <plug>EasyClipPasteAfter
-vmap <c-v> <plug>EasyClipPasteAfter
-imap <c-v> <plug>EasyClipInsertModePaste
-cmap <c-v> <plug>EasyClipCommandModePaste
-
 
 " URL encode/decode selection
 vnoremap <leader>en :!python3 -c 'import sys; from urllib import parse; print(parse.quote_plus(sys.stdin.read().strip()))'<cr>
