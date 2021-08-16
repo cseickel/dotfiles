@@ -15,9 +15,8 @@ nnoremap N Nzzzv
 " Change word the cursor is on
 nnoremap s "sciw
 " Put all substitues in a s register
-vnoremap s "sys
-" and make S act like C but with s register
-nnoremap S "sC
+vnoremap s "sygvc
+nnoremap S "sYYS
 
 " Make Y consistent with C and D
 nnoremap Y y$

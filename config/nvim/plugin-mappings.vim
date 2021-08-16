@@ -1,11 +1,6 @@
 nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
 nnoremap <M-t> :TabooRename 
 
-
-" URL encode/decode selection
-vnoremap <leader>en :!python3 -c 'import sys; from urllib import parse; print(parse.quote_plus(sys.stdin.read().strip()))'<cr>
-vnoremap <leader>de :!python3 -c 'import sys; from urllib import parse; print(parse.unquote_plus(sys.stdin.read().strip()))'<cr>
-
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
 
 function! BufferDelete() abort
