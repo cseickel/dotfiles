@@ -22,6 +22,7 @@
     ~/.config/nvim/plugin-install.vim: config/nvim/plugin-install.vim
     ~/.config/nvim/plugin-config.vim: config/nvim/plugin-config.vim
     ~/.config/nvim/plugin-mappings.vim: config/nvim/plugin-mappings.vim
+    ~/.config/nvim/lua/plugins.lua: config/nvim/lua/plugins.lua
     ~/.config/nvim/lua/config.lua: config/nvim/lua/config.lua
     ~/.config/nvim/lua/mappings.lua: config/nvim/lua/mappings.lua
     ~/.config/nvim/lua/lualine-theme.lua: config/nvim/lua/lualine-theme.lua
@@ -35,5 +36,5 @@
       path: config/nvim/UltiSnips/*
 - shell:
   - [./tmux_install_plugins.sh, Installing tmux plugins.]
-  - [nvim --headless -u ~/.config/nvim/plugin-install.vim +PlugInstall +qa, Installing nvim plugins.]
+  - [nvim --headless -u ~/.config/nvim/plugin-install.vim, Installing nvim plugins.]
 
