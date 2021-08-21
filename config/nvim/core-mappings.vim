@@ -70,7 +70,6 @@ tmap <silent> <C-p> <c-\>pa
 nnoremap <silent> <C-c> "cy
 vnoremap <silent> <C-c> "cy
 inoremap <silent> <C-c> <C-o>"cyiw
-tnoremap <silent> <C-c> <c-\><c-n>l"cy$
 
 inoremap <silent> <C-x> <C-o>"cdiw
 vnoremap <silent> <C-x> "cd

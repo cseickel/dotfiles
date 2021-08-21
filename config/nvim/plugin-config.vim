@@ -164,11 +164,12 @@ let g:scrollview_column=1
 
 
 " clipboard settings
-set clipboard=unnamed,unnamedplus
+set clipboard=unnamed
 let g:EasyClipAutoFormat=1
 let g:EasyClipAlwaysMoveCursorToEndOfPaste=1
 let g:EasyClipPreserveCursorPositionAfterYank=1
 let g:EasyClipShareYanks=1
+let g:EasyClipYankHistorySize=10
 let g:EasyClipUseSubstituteDefaults=0
 let g:EasyClipUsePasteToggleDefaults = 0
 
