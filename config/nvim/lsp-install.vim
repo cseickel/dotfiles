@@ -1,0 +1,2 @@
+LspInstall dockerfile
+LspInstall typescript
