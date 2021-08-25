@@ -19,10 +19,11 @@ RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
 COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
 
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
-       cmake clang unzip ninja git curl wget openssh zsh \
+       cmake clang unzip ninja git curl wget openssh zsh reflector \
     && update-ca-trust \
     && useradd -m -s "${SHELL}" "${UNAME}" \
-    && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+    && sudo reflector -p https -c us --score 20 --connection-timeout 1 --sort rate --save /etc/pacman.d/mirrorlist
 
 USER arch
 WORKDIR /home/arch
@@ -36,7 +37,7 @@ RUN cd /home/$UNAME \
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         python3 python-pip nodejs npm prettier git-delta github-cli \
-        tmux bat fzf neovim neovim-remote nvim-packer-git \
+        tmux bat fzf kitty-terminfo neovim neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
         ripgrep docker docker-compose aws-vault pass \

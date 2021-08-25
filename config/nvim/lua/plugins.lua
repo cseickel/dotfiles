@@ -24,7 +24,8 @@ return require('packer').startup(function(use)
 
     use 'mhinz/vim-startify'
 
-    use {'rrethy/vim-hexokinase',  run = 'make hexokinase' }
+    --use {'rrethy/vim-hexokinase',  run = 'make hexokinase' }
+    use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
     use 'christianchiarulli/nvcode-color-schemes.vim'
 
     -- All of the new functionality in neovim 5

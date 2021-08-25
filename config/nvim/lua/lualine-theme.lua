@@ -1,7 +1,3 @@
--- Copyright (c) 2020-2021 shadmansaleh
--- MIT license, see LICENSE for more details.
--- Credit: itchyny(lightline)
--- LuaFormatter off
 local colors = {
     almost_black = '#101010',
     gray_darkest = '#353535',
