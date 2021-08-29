@@ -41,19 +41,11 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
         ripgrep docker docker-compose aws-vault pass \
-        ncdu glances nnn-nerd mssql-tools jq zoxide-bin lazydocker \
+        ncdu glances nnn-nerd mssql-tools jq zoxide-git lazydocker \
+	code-server netcoredbg \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
-
-RUN git clone https://github.com/Samsung/netcoredbg.git \
-    && mkdir netcoredbg/build \
-    && cd netcoredbg/build \
-    && CC=clang CXX=clang++ cmake .. -GNinja -DDOTNET_DIR=/usr/share/dotnet -DCMAKE_INSTALL_PREFIX=/usr/bin \
-    && sudo ninja install \
-    && cd ../.. \
-    && sudo rm -Rf netcoredbg \
-    && yay -S --noprogressbar --noconfirm code-server
 
 # I don't know why I have to set this again, but I do...
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
