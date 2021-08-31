@@ -11,3 +11,8 @@ lua    require('mappings')
 source plugin-mappings.vim
 
 exe 'cd ' . g:owd
+
+augroup init
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+augroup END
