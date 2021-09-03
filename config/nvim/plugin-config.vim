@@ -14,9 +14,6 @@ endif
 "colorscheme dark_plus
 colorscheme nvcode "<-- this one is best with tree-sitter
 
-let g:airline_powerline_fonts = 1
-let g:airline_theme = 'tender'
-
 " IndentLine
 let g:indentLine_color_term = 236
 let g:indentLine_color_gui = '#303030'
@@ -30,57 +27,6 @@ let g:indent_blankline_space_char_blankline = ' '
 let g:indent_blankline_use_treesitter = v:true
 let g:indentLine_fileTypeExclude = [ "NvimTree" ]
 
-" ntpeters/vim-better-whitespace
-let g:beter_whitespace_enabled=1
-let g:better_whitespace_ctermcolor=236
-let g:strip_whitespace_on_save=1
-let g:strip_whitelines_at_eof=1
-let g:strip_whitespace_confirm=0
-let g:better_whitespace_filetypes_blacklist=[
-    \'diff', 'gitcommit','unite', 'qf', 'help', 'markdown', 'vim']
-
-" vim-airline
-let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#ale#enabled = 0
-let g:airline#extensions#nvimlsp#enabled = 1
-let g:airline#extensions#tabline#enabled = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline_skip_empty_sections = 1
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-let g:airline_inactive_collapse=1
-let g:airline_section_c="%{GetFileName()} %m"
-let g:airline_section_x=""
-let g:airline_section_z="☰ %3l/%-3L c:%-2c"
-"let g:airline#extensions#branch#displayed_head_limit = 30
-let g:airline#extensions#branch#format = 2
-
-function! GetFileName()
-    if expand('%') =~ "term://"
-        return 'TERMINAL'
-    elseif &ft == 'fern'
-        return 'fern'
-    else
-        if expand("%:t") =~ '.space-filler.'
-            return expand("#:f")
-        else
-            return expand('%:f')
-        endif
-    endif
-endfunction
-function! Custom_Inactive(...)
-    let builder = a:1
-    let context = a:2
-
-    call builder.add_section('airline_a', ' %{tabpagewinnr(tabpagenr())} ')
-    call builder.add_section('airline_c', 
-        \" %{GetFileName()} %m%=%{WebDevIconsGetFileTypeSymbol()} ")
-
-    "return 0   " the default: draw the rest of the statusline
-    return 1   " modify the statusline with the current contents of the builder
-endfunction
-"call airline#add_inactive_statusline_func('Custom_Inactive')
-
-let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_startify = 1
 
 let g:nvim_tree_width = 40
@@ -165,11 +111,11 @@ let g:scrollview_column=1
 
 " clipboard settings
 set clipboard=unnamed
-let g:EasyClipAutoFormat=1
+let g:EasyClipAutoFormat=0
 let g:EasyClipAlwaysMoveCursorToEndOfPaste=1
 let g:EasyClipPreserveCursorPositionAfterYank=1
-let g:EasyClipShareYanks=1
-let g:EasyClipYankHistorySize=10
+let g:EasyClipShareYanks=0
+let g:EasyClipYankHistorySize=0
 let g:EasyClipUseSubstituteDefaults=0
 let g:EasyClipUsePasteToggleDefaults = 0
 
@@ -188,22 +134,6 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag,
 let g:closetag_close_shortcut = '<leader>>'
 
-
-" Omnisharp Settings
-let g:OmniSharp_fzf_options = { 'down': '30%' } " max 30% of the screen height
-"let g:OmniSharp_fzf_options = { 'down': '12' }  " max 12 lines high
-"let g:OmniSharp_fzf_options = { 'right': '50%' } " vertical split
-
-
-" Tell ALE to use OmniSharp for linting C# files, and no other linters.
-let g:ale_linters = { 'cs': ['OmniSharp'] }
-
-let g:sharpenup_create_mappings = 0
-let g:OmniSharp_popup_options = {
-            \ 'winhl': 'Normal:NormalFloat'
-            \}
-" Enable snippet completion, using the ultisnips plugin
-let g:OmniSharp_want_snippet=1
 
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerShowTabBuffer=1

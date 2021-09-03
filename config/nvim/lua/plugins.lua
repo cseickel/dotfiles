@@ -1,6 +1,8 @@
 return require('packer').startup(function(use)
+    local vim = vim
+    use {'lewis6991/impatient.nvim', rocks = 'mpack'}
+    use 'dstein64/vim-startuptime'
     use 'kyazdani42/nvim-web-devicons'
-
     use { 'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTree*',
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
@@ -260,5 +262,7 @@ return require('packer').startup(function(use)
     --use 'honza/vim-snippets'
     --use 'hrsh7th/vim-vsnip'
     --use 'hrsh7th/vim-vsnip-integ'
+
+    use 'dkarter/bullets.vim'
 end)
 

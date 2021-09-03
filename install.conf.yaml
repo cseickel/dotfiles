@@ -28,9 +28,6 @@
     ~/.config/nvim/lua/lualine-theme.lua: config/nvim/lua/lualine-theme.lua
     ~/.config/nvim/lua/telescope-custom.lua: config/nvim/lua/telescope-custom.lua
     ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
-    ~/.config/nvim/colors:
-        glob: true
-        path: config/nvim/colors/*
     ~/.config/nvim/UltiSnips:
       glob: true
       path: config/nvim/UltiSnips/*

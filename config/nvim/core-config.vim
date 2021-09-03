@@ -68,83 +68,6 @@ set nocursorline
 set updatetime=1000
 set lazyredraw
 
-function! HideOneLineWindows(...)
-  if mode() != 'n'
-    return
-  endif
-  
-  let l:currwin = winnr()
-  for i in range(1, winnr('$'))
-    if !&buflisted
-      continue
-    endif
-    if winwidth(i) > 1
-      if winheight(i) > 1
-        if bufname(winbufnr(i)) =~ ".space-filler."
-          execute i . 'wincmd w'
-          b#
-          if expand('%') =~ "term://"
-            setlocal nonumber norelativenumber nocursorline signcolumn=yes
-          else
-            setlocal number signcolumn=yes
-          endif
-        endif
-      else
-        if !(bufname(winbufnr(i)) =~ ".space-filler.")
-          execute i . 'wincmd w'
-          let l:original_ft = &ft
-          let l:original_ext = expand('%:e')
-          execute "e ~/.config/nvim/.space-filler." . l:original_ext
-          let &ft = l:original_ft
-          setlocal nobuflisted readonly nonumber norelativenumber
-        endif
-      endif
-    endif
-  endfor
-  if winnr() != l:currwin
-    execute l:currwin . 'wincmd w'
-    AirlineRefresh
-  endif
-endfunction
-
-if exists('g:my_hide_one_liner_timer')
-  call timer_stop(g:my_hide_one_liner_timer)
-endif
-"let g:my_hide_one_liner_timer = timer_start(100, 'HideOneLineWindows', {'repeat': -1})
-
-function! SetRelative()
-  if &ft == 'CHADtree'
-    setlocal nonumber norelativenumber
-    return
-  endif
-  if expand('%') =~ "term://"
-    setlocal nonumber norelativenumber nocursorline signcolumn=yes
-  else
-    if expand("%:t") =~ ".space-filler."
-      setlocal nonumber norelativenumber nowrap signcolumn=no
-    else
-      setlocal nonumber relativenumber 
-    endif
-  endif
-  redraw
-endfunction
-
-function! SetNoRelative()
-  if &ft == 'CHADtree'
-    setlocal nonumber norelativenumber
-    return
-  endif
-  if expand('%') =~ "term://"
-    setlocal nonumber norelativenumber
-  else
-    if expand("%:t") =~ ".space-filler."
-      setlocal nonumber norelativenumber nowrap signcolumn=no
-    else
-      setlocal number norelativenumber wrap signcolumn=yes
-    endif
-  endif
-endfunction
-
 let $EDITOR="nvr --remote-wait -cc '0wincmd w'"
 function! EnterTerminal()
   setlocal nonumber norelativenumber autowriteall modifiable noruler
@@ -235,9 +158,5 @@ augroup core_autocmd
   autocmd FileType dockerfile,yml call TwoSpaceIndent()
   autocmd TermOpen * call InitTerminal()
   autocmd TermEnter * call InitTerminal()
-  "autocmd BufEnter,InsertLeave * call SetRelative()
-  "autocmd CmdlineLeave         * call SetRelative() | redraw
-  "autocmd BufLeave,InsertEnter * call SetNoRelative()
-  "autocmd CmdlineEnter         * call SetNoRelative() | redraw
-    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
+  autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
 augroup END

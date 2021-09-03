@@ -4,6 +4,7 @@ cd ~/.config/nvim
 
 source core-config.vim
 source core-mappings.vim
+lua    require('impatient')
 lua    require('plugins')
 source plugin-config.vim
 lua    require('config')
