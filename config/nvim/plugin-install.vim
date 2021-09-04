@@ -1,3 +1,3 @@
 lua  require('plugins')
-PackerCompile
+PackerSync
 qa

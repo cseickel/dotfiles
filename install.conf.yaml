@@ -1,11 +1,14 @@
-- clean: ['~']
+- clean:
+    ~/:
+      recursive: false
+    ~/.config/nvim:
+      recursive: true
 - defaults:
     link:
         relink: true
         force: true
         relative: true
 - create:
-    - ~/.config/nvim/colors
     - ~/.config/nvim/lua
     - ~/.config/nvim/UltiSnips
     - ~/.gnupg
@@ -16,21 +19,10 @@
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
-    ~/.config/nvim/init.vim: config/nvim/init.vim
-    ~/.config/nvim/core-config.vim: config/nvim/core-config.vim
-    ~/.config/nvim/core-mappings.vim: config/nvim/core-mappings.vim
-    ~/.config/nvim/plugin-install.vim: config/nvim/plugin-install.vim
-    ~/.config/nvim/plugin-config.vim: config/nvim/plugin-config.vim
-    ~/.config/nvim/plugin-mappings.vim: config/nvim/plugin-mappings.vim
-    ~/.config/nvim/lua/plugins.lua: config/nvim/lua/plugins.lua
-    ~/.config/nvim/lua/config.lua: config/nvim/lua/config.lua
-    ~/.config/nvim/lua/mappings.lua: config/nvim/lua/mappings.lua
-    ~/.config/nvim/lua/lualine-theme.lua: config/nvim/lua/lualine-theme.lua
-    ~/.config/nvim/lua/telescope-custom.lua: config/nvim/lua/telescope-custom.lua
-    ~/.config/nvim/coc-settings.json: config/nvim/coc-settings.json
-    ~/.config/nvim/UltiSnips:
+    ~/.config/nvim:
       glob: true
-      path: config/nvim/UltiSnips/*
+      path: config/nvim/*
+      recursive: true
 - shell:
   - [./tmux_install_plugins.sh, Installing tmux plugins.]
   - [nvim --headless -u ~/.config/nvim/plugin-install.vim, Installing nvim plugins.]

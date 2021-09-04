@@ -36,17 +36,14 @@ vim.lsp.handlers["textDocument/hover"] =
 --vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
 
 
-
-
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
+    properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+    }
 }
 
 local function lsp_attach()
@@ -57,16 +54,16 @@ local function lsp_attach()
         },
         hint_enable = false,
         flags = {
-          debounce_text_changes = 150,
+            debounce_text_changes = 150,
         },
         extra_trigger_chars = { "(", "," }
     })
 end
 
-LspInstall = require'lspinstall'
+local lspInstall = require('lspinstall')
+lspInstall.setup()
 local function setup_servers()
-    LspInstall.setup()
-    local servers = LspInstall.installed_servers()
+    local servers = lspInstall.installed_servers()
     for _, server in pairs(servers) do
         require('lspconfig')[server].setup({
             capabilities = capabilities,
@@ -74,14 +71,16 @@ local function setup_servers()
         });
     end
 end
-
 setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-LspInstall.post_install_hook = function ()
+lspInstall.post_install_hook = function ()
     setup_servers() -- reload installed servers
     vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
+
+
+
 
 require'nvim-treesitter.configs'.setup {
     ensure_installed = { 

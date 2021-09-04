@@ -1,5 +1,5 @@
 return require('packer').startup(function(use)
-    local vim = vim
+    vim = vim
     use {'lewis6991/impatient.nvim', rocks = 'mpack'}
     use 'dstein64/vim-startuptime'
     use 'kyazdani42/nvim-web-devicons'
@@ -156,9 +156,18 @@ return require('packer').startup(function(use)
 
     -- All of the new functionality in neovim 5
     use 'neovim/nvim-lspconfig'
-    use { 'kabouzeid/nvim-lspinstall' }
+    use {
+        'kabouzeid/nvim-lspinstall',
+        run = function()
+            vim.cmd('LspInstall dockerfile')
+            vim.cmd('LspInstall typescript')
+            vim.cmd('LspInstall tailwindcss')
+            vim.cmd('LspInstall vim')
+            vim.cmd('LspInstall lua')
+        end
+    }
 
-    use { 
+    use {
         'hrsh7th/nvim-compe',
         opt = true,
         event = 'InsertEnter *',
@@ -227,7 +236,7 @@ return require('packer').startup(function(use)
             })
         end
     }
-    use 'ray-x/lsp_signature.nvim'
+    use {'ray-x/lsp_signature.nvim' }
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
