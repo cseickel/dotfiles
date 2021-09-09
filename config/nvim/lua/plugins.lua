@@ -273,5 +273,15 @@ return require('packer').startup(function(use)
     --use 'hrsh7th/vim-vsnip-integ'
 
     use 'dkarter/bullets.vim'
+
+    -- Lua
+    use {
+        "SmiteshP/nvim-gps",
+        requires = "nvim-treesitter/nvim-treesitter",
+        config = function ()
+            require('nvim-gps').setup()
+        end
+    }
+
 end)
 
