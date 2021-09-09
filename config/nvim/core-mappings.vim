@@ -53,7 +53,6 @@ vnoremap <silent> <C-s> <Esc>:w<cr>
 noremap  <silent> <M-s> :wa<cr>
 inoremap <silent> <M-s> <Esc>:wa<cr>
 tnoremap <silent> <M-s> <C-\><C-n>:wa<cr>
-inoremap <silent> <C-s> <Esc>:w<cr>
 
 " Control+v is for paste, use Alt+v for visual block mode
 nnoremap <silent> <M-v> <C-v>
@@ -214,8 +213,9 @@ function! SaveTerminal() abort
 endfunction
 
 function! OpenSavedTerminal()
-    if g:saved_terminal > 0
-        let buf_name = nvim_buf_get_name(g:saved_terminal)
+    let saved = get(g:, "saved_terminal", 0)
+    if saved > 0
+        let buf_name = nvim_buf_get_name(saved)
         botright split
         resize 14
         setlocal winfixheight

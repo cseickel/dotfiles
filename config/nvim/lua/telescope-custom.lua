@@ -1,9 +1,5 @@
 local entry_display = require('telescope.pickers.entry_display')
-local path = require('telescope.path')
-local utils = require('telescope.utils')
 local vim=vim
-
-local get_default = utils.get_default
 
 local lsp_type_highlight = {
   ["Class"]    = "TSType",
