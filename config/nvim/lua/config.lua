@@ -338,7 +338,6 @@ local diag_config = {
     -- all colors are in format #rrggbb
     symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
 }
-local gps = require("nvim-gps")
 --require'tabline'.setup {enable = false}
 require'lualine'.setup {
   options = {
@@ -378,29 +377,7 @@ require'lualine'.setup {
             end
         }
     },
-    lualine_c = {
-        'filename',
-        {
-            gps.get_location,
-            condition = gps.is_available,
-            color = { gui = "none" },
-            format = function (data)
-                if data == nil then
-                    return nil
-                end
-                local winwidth = vim.fn.winwidth(0)
-                local filelength = string.len(vim.fn.expand("%:t"))
-                local maxlength = (winwidth - filelength - 51)
-                if maxlength < 1 then
-                    return nil
-                end
-                if string.len(data) > maxlength then
-                    return nil
-                end
-                return data
-            end
-        }
-    },
+    lualine_c = { 'filename' },
     lualine_x = { diag_config },
     lualine_y = { {
             'branch',

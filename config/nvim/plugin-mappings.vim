@@ -21,7 +21,7 @@ nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
-function! ToggleWindowZoom() abort
+function! ToggleWindowZoom(clear_decorations) abort
     if exists("b:is_zoomed_win") && b:is_zoomed_win
         unlet b:is_zoomed_win
         let l:name = expand("%:p")
@@ -35,7 +35,7 @@ function! ToggleWindowZoom() abort
             execute l:line
         endif
     else
-        if winnr('$') > 1
+        if winnr('$') > 1 || a:clear_decorations
             let l:top = line("w0")
             let l:line = line(".")
             -1tabedit %
@@ -43,6 +43,11 @@ function! ToggleWindowZoom() abort
             execute "normal " . l:top . "zt"
             execute l:line
             execute "TabooRename  " . expand("%:t")
+        endif
+        if a:clear_decorations
+            set nonumber
+            set signcolumn=no
+            IndentBlanklineDisable
         endif
     endif
 endfunction

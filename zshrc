@@ -133,6 +133,8 @@ alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
 alias ta="tmux attach"
+alias p="tmux attach -t primary"
+alias s="tmux attach -t secondary"
 
 alias cdk="pass show RWJF >> /dev/null && aws-vault exec RWJF --no-session -- cdk"
 alias aws="pass show RWJF >> /dev/null && aws-vault exec RWJF -- aws"
