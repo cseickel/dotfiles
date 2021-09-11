@@ -171,27 +171,27 @@ require('telescope').setup{
             ["<Esc>"] = require('telescope.actions').close,
             ["<C-b>"] = function()
                 vim.cmd("close!")
-                require('telescope.builtin').file_browser({initial_mode = 'insert'})
+                require('telescope.builtin').file_browser()
             end,
             ["<C-d>"] = function ()
                 vim.cmd("close!")
-                require('telescope').extensions.zoxide.list({initial_mode = 'insert'})
+                require('telescope').extensions.zoxide.list()
             end,
             ["<C-f>"] = function()
                 vim.cmd("close!")
-                require('telescope.builtin').current_buffer_fuzzy_find({initial_mode = 'insert'})
+                require('telescope.builtin').current_buffer_fuzzy_find()
             end,
             ["<C-g>"] = function()
                 vim.cmd("close!")
-                require('telescope.builtin').live_grep({initial_mode = 'insert'})
+                require('telescope.builtin').live_grep()
             end,
             ["<C-o>"] = function()
                 vim.cmd("close!")
-                require('telescope.builtin').find_files({initial_mode = 'insert'})
+                require('telescope.builtin').find_files()
             end,
             ["<C-r>"] = function()
                 vim.cmd("close!")
-                require('telescope.builtin').oldfiles({initial_mode = 'insert'})
+                require('telescope.builtin').oldfiles()
             end,
         }
     },
@@ -223,7 +223,12 @@ require("telescope._extensions.zoxide.config").setup({
   mappings = {
     default = {
       after_action = function(selection)
-        require('telescope.builtin').find_files({initial_mode = 'insert'})
+        vim.cmd([[
+            func! OpenFileFinder(timer)
+                lua require('telescope.builtin').find_files()
+            endfunc
+            call timer_start(1, "OpenFileFinder", {'repeat': 1})
+            ]])
       end
     }
   }
