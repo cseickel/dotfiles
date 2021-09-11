@@ -168,8 +168,28 @@ require('telescope').setup{
     },
     mappings = {
       i = {
-        ["<esc>"] = require('telescope.actions').close
-      },
+            ["<Esc>"] = require('telescope.actions').close,
+            ["<C-b>"] = function()
+                vim.cmd("close!")
+                require('telescope.builtin').file_browser()
+            end,
+            ["<C-d>"] = function ()
+                vim.cmd("close!")
+                require('telescope').extensions.zoxide.list()
+            end,
+            ["<C-g>"] = function()
+                vim.cmd("close!")
+                require('telescope.builtin').live_grep()
+            end,
+            ["<C-o>"] = function()
+                vim.cmd("close!")
+                require('telescope.builtin').find_files()
+            end,
+            ["<C-r>"] = function()
+                vim.cmd("close!")
+                require('telescope.builtin').oldfiles()
+            end,
+        }
     },
     prompt_prefix = "🔍 ",
     selection_caret = " ",

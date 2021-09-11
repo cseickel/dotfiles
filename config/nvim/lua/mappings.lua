@@ -96,6 +96,7 @@ require("which-key").register({
     f = {
         name = "File...", -- optional group name
         b = { "<cmd>Telescope file_browser<cr>",              "File Browser" },
+        d = { "<cmd>Telescope zoxide list<cr>",               "Directory picker (zoxide)" },
         f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Find in this file" },
         g = { "<cmd>Telescope live_grep<cr>",                 "Grep" },
         o = { "<cmd>Telescope find_files<cr>",                "Open File" },
