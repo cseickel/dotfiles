@@ -120,9 +120,9 @@ function make_entry.gen_from_quickfix(opts)
     local line_info = { entry.lnum, "TelescopeResultsLineNr" }
 
     return displayer {
-      filename,
-      line_info,
-      entry.text:gsub("^%s+", ""),
+        { filename, 'TabLineSel' },
+        line_info,
+        entry.text:gsub("^%s+", ""),
     }
   end
 
