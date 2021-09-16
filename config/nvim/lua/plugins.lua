@@ -159,11 +159,22 @@ return require('packer').startup(function(use)
     use {
         'kabouzeid/nvim-lspinstall',
         run = function()
+            vim.cmd('LspInstall angular')
+            vim.cmd('LspInstall bash')
+            vim.cmd('LspInstall csharp')
+            vim.cmd('LspInstall css')
             vim.cmd('LspInstall dockerfile')
-            vim.cmd('LspInstall typescript')
-            vim.cmd('LspInstall tailwindcss')
-            vim.cmd('LspInstall vim')
+            vim.cmd('LspInstall go')
+            vim.cmd('LspInstall graphql')
+            vim.cmd('LspInstall html')
+            vim.cmd('LspInstall java')
+            vim.cmd('LspInstall json')
             vim.cmd('LspInstall lua')
+            vim.cmd('LspInstall python')
+            vim.cmd('LspInstall tailwindcss')
+            vim.cmd('LspInstall typescript')
+            vim.cmd('LspInstall vim')
+            vim.cmd('LspInstall yaml')
         end
     }
 
@@ -296,7 +307,13 @@ return require('packer').startup(function(use)
     use 'folke/which-key.nvim'
     use 'akinsho/nvim-toggleterm.lua'
     --use 'abecodes/tabout.nvim'
-    use 'vuki656/package-info.nvim'
+    use { 
+        'vuki656/package-info.nvim', 
+        opt = true,
+        ft = "json",
+        requires = { "MunifTanjim/nui.nvim" },
+        config = "require('package-info').setup()"
+    }
     --use 'lewis6991/gitsigns.nvim'
     use 'pwntester/octo.nvim'
 

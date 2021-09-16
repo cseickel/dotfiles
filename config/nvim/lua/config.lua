@@ -195,6 +195,11 @@ require('telescope').setup{
             end,
         }
     },
+    pickers = {
+        lsp_code_actions = {
+            theme = "cursor"
+        }
+    },
     prompt_prefix = "🔍 ",
     selection_caret = " ",
     entry_prefix = "  ",
@@ -363,9 +368,6 @@ require("toggleterm").setup{
 --]])
 
 
-require('package-info').setup()
-
-
 local diag_config = {
     'diagnostics',
     -- table of diagnostic sources, available sources:
@@ -389,7 +391,7 @@ require'lualine'.setup {
   sections = {
     lualine_a = { {
             'mode',
-            format = function(data)
+            fmt = function(data)
                 local winwidth = vim.fn.winwidth(0)
                 local filelength = string.len(vim.fn.expand("%:t"))
                 local maxlength = (winwidth - filelength - 17)
@@ -403,7 +405,7 @@ require'lualine'.setup {
     },
     lualine_b = { {
             'filetype',
-            format = function(data)
+            fmt = function(data)
                 local winwidth = vim.fn.winwidth(0)
                 local filelength = string.len(vim.fn.expand("%:t"))
                 local maxlength = (winwidth - filelength - 44)
@@ -419,7 +421,7 @@ require'lualine'.setup {
     lualine_x = { diag_config },
     lualine_y = { {
             'branch',
-            format = function(data)
+            fmt = function(data)
                 local winwidth = vim.fn.winwidth(0)
                 local filelength = string.len(vim.fn.expand("%:t"))
                 local maxlength = (winwidth - filelength - 50)
@@ -433,7 +435,7 @@ require'lualine'.setup {
     },
     lualine_z = { {
             'location',
-            format = function(data)
+            fmt = function(data)
                 local winwidth = vim.fn.winwidth(0)
                 local filelength = string.len(vim.fn.expand("%:t"))
                 local maxlength = (winwidth - filelength - 26)

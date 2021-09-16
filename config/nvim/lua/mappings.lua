@@ -69,14 +69,42 @@ local showSymbolFinder = function ()
     end
     require('telescope.builtin').lsp_document_symbols(opts)
 end
+local getQuickfixOptions = function()
+    local width = math.min(vim.o.columns - 2, 200)
+    local height = math.min(vim.o.lines - 10, 100)
+    local opt = {
+        layout_strategy = 'vertical',
+        layout_config = {
+            width = width,
+            height = height
+        },
+        entry_maker = require('telescope-custom').gen_from_quickfix({width = width}),
+    }
+    return opt
+end
 
+local showDefinition = function ()
+    require("telescope.builtin").lsp_definitions(getQuickfixOptions())
+end
 
+local showImplementation = function ()
+    require("telescope.builtin").lsp_implementations(getQuickfixOptions())
+end
+
+local showReferences = function ()
+    require("telescope.builtin").lsp_references(getQuickfixOptions())
+end
+
+local showType = function ()
+    require("telescope.builtin").lsp_type_definitions(getQuickfixOptions())
+end
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
     [","] = { "f,ls<cr><esc>",                                "Newline at next comma" },
     ["b"] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
+    a = { "<cmd>lua require'telescope.builtin'.lsp_code_actions(require('telescope.themes').get_cursor({}))<cr>",             "Code actions" },
     c = {
         name = "Conflict Resolution",
         b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },
@@ -117,14 +145,16 @@ require("which-key").register({
     },
     g = {
         name = "Go to...",
-        d = { "<cmd>lua vim.lsp.buf.definition()<cr>",        "Go to Definition"},
-        i = { "<cmd>lua vim.lsp.buf.implementation()<cr>",    "Go to Implementation"},
-        --r = { "<cmd>Telescope lsp_references<cr>",            "Find References"},
-        r = { "<cmd>lua vim.lsp.buf.references()<cr>",        "Find References"},
-        t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>",   "Go to Type Definition"},
+        --d = { "<cmd>lua vim.lsp.buf.definition()<cr>",        "Go to Definition"},
+        --i = { "<cmd>lua vim.lsp.buf.implementation()<cr>",    "Go to Implementation"},
+        --r = { "<cmd>lua vim.lsp.buf.references()<cr>",        "Find References"},
+        --t = { "<cmd>lua vim.lsp.buf.type_definition()<cr>",   "Go to Type Definition"},
+        d = { showDefinition,                                 "Go to Definition"},
+        i = { showImplementation,                             "Go to Implementation"},
+        r = { showReferences,                                 "Find References"},
+        t = { showType,                                       "Go to Type Definition"},
     },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
     S = { "Save Terminal (yank)" },
     s = { "Open Saved Terminal (paste)" },

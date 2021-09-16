@@ -1,4 +1,5 @@
 local entry_display = require('telescope.pickers.entry_display')
+local utils = require("telescope.utils")
 local vim=vim
 
 local lsp_type_highlight = {
@@ -91,6 +92,55 @@ function make_entry.gen_from_lsp_symbols(opts)
       col = entry.col,
       symbol_name = symbol_name,
       symbol_type = symbol_type,
+      start = entry.start,
+      finish = entry.finish,
+    }
+  end
+end
+
+function make_entry.gen_from_quickfix(opts)
+  opts = opts or {}
+  local file_width = math.max((opts.width / 2) - 5, 60)
+
+  local displayer = entry_display.create {
+    separator = "▏",
+    items = {
+      { width = file_width },
+      { width = 4 },
+      { remaing = true },
+    },
+  }
+
+  local make_display = function(entry)
+    local filename = utils.transform_path(opts, entry.filename)
+    local fl = string.len(filename)
+    if (fl > file_width) then
+        filename = "..." ..filename:sub(fl - file_width + 5)
+    end
+    local line_info = { entry.lnum, "TelescopeResultsLineNr" }
+
+    return displayer {
+      filename,
+      line_info,
+      entry.text:gsub("^%s+", ""),
+    }
+  end
+
+  return function(entry)
+    local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+
+    return {
+      valid = true,
+
+      value = entry,
+      ordinal = (not opts.ignore_filename and filename or "") .. " " .. entry.text,
+      display = make_display,
+
+      bufnr = entry.bufnr,
+      filename = filename,
+      lnum = entry.lnum,
+      col = entry.col,
+      text = entry.text,
       start = entry.start,
       finish = entry.finish,
     }
