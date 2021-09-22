@@ -171,53 +171,7 @@ function fn_reset_branch() {
     git fetch && git reset --hard $branch
 }
 alias reset-branch="fn_reset_branch"
-
-function git_commit_auto_message() {
-    # auto commit if there are unsaved changes
-    # this is to simplify finding changed files with git diff-tree
-    if [[ ! -z $(git status --porcelain) ]]; then
-        git commit -a -m 'git_commit_auto_message save'
-    fi
-    # extract data from the branch name to craft the commit message
-    branch=$(git rev-parse --abbrev-ref HEAD)
-    id=$(echo $branch | egrep -o 'INVEST-[0-9]+')
-    desc=$(echo $branch | awk 'BEGIN {FS="INVEST-[0-9]+-"}{print $2}' | sed 's/-/ /g')
-    branch_type="build"
-    if [[ branch == feat* ]]; then
-        branch_type="feat"
-    fi
-    if [[ branch == bug* ]]; then
-        branch_type="bugfix"
-    fi
-    if [[ branch == hotfix* ]]; then
-        branch_type="hotfix"
-    fi
-    # this will find the base directory with 
-    # the highest number of files changed in this commit
-    project=$(git diff-tree --no-commit-id --name-only -r HEAD origin/dev \
-        | awk '{split($0, a, "/");print a[1]}' \
-        | uniq -c \
-        | sort -r \
-        | awk 'NR==1{print $2}')
-    if [[ project == "alfresco*" ]]; then
-        project="alfresco"
-    fi
-    if [[ project == "deployment" || project == "cdk-lambdas" ]]; then
-        project="deploy"
-    fi
-    if [[ project == "invest-web*" ]]; then
-        project="invest-web"
-    fi
-    if [[ project == "activiti*" ]]; then
-        project="activiti"
-    fi
-    
-    msg="${branch_type}(${project}): ${id} ${desc}"
-    git commit --no-verify --amend -m $msg
-}
 alias rebase-dev="git fetch && git rebase origin/dev"
-alias rebase-auto="rebase-dev && git reset --soft origin/dev && git add -A && git_commit_auto_message"
-alias rebase-auto-i="rebase-dev && git_commit_auto_message && git rebase -i origin/dev"
 
 function fn_docker_stop() {
     id=$(docker container ls | fzf | awk '{print $1;}')
