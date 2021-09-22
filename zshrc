@@ -282,7 +282,8 @@ n ()
     fi
 }
 
-function local-work-on-issue() {
+function work-on-issue() {
+    git fetch
     issue=$(gh issue list | fzf --header "PLEASE SELECT AN ISSUE TO WORK ON" | awk -F '\t' '{ print $1 }')
     sanitized=$(gh issue view $issue --json "title" | jq -r ".title" | tr '[:upper:]' '[:lower:]' | tr -s -c "a-z0-9\n" "-" | head -c 60)
     branchname=$issue-$sanitized
@@ -293,7 +294,10 @@ function local-work-on-issue() {
     else
         echo "Please confirm new branch name:"
         vared branchname
-        git checkout -b $branchname
+        base=$(git branch --show-current)
+        echo "Please confirm the base branch:"
+        vared base
+        git checkout -b $branchname $base
         git push --set-upstream origin $branchname
     fi
 }
