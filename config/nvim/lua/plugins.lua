@@ -312,8 +312,18 @@ return require('packer').startup(function(use)
         opt = true,
         ft = "json",
         requires = { "MunifTanjim/nui.nvim" },
-        config = "require('package-info').setup()"
+        config = "require('package-info').setup({ debug = true })"
     }
+    use {
+        'rmagatti/goto-preview',
+        config = function()
+            require('goto-preview').setup({ 
+                debug = true,
+                default_mappings = true
+            })
+        end
+    }
+
     --use 'lewis6991/gitsigns.nvim'
     use 'pwntester/octo.nvim'
 

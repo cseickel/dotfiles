@@ -98,12 +98,16 @@ function make_entry.gen_from_lsp_symbols(opts)
   end
 end
 
+local left_pad = function (str, length)
+    return string.rep(' ', length - #str) .. str
+end
+
 function make_entry.gen_from_quickfix(opts)
   opts = opts or {}
-  local file_width = math.max((opts.width / 2) - 5, 60)
+  local file_width = math.max(math.floor(opts.width / 2) - 6, math.min(opts.width - 5, 40))
 
   local displayer = entry_display.create {
-    separator = "▏",
+    separator = " ",
     items = {
       { width = file_width },
       { width = 4 },

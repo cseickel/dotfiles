@@ -281,7 +281,8 @@ n ()
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
 }
-function work-on-issue() {
+
+function local-work-on-issue() {
     issue=$(gh issue list | fzf --header "PLEASE SELECT AN ISSUE TO WORK ON" | awk -F '\t' '{ print $1 }')
     sanitized=$(gh issue view $issue --json "title" | jq -r ".title" | tr '[:upper:]' '[:lower:]' | tr -s -c "a-z0-9\n" "-" | head -c 60)
     branchname=$issue-$sanitized

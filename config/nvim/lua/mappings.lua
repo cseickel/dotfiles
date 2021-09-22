@@ -70,8 +70,8 @@ local showSymbolFinder = function ()
     require('telescope.builtin').lsp_document_symbols(opts)
 end
 local getQuickfixOptions = function()
-    local width = math.min(vim.o.columns - 2, 200)
-    local height = math.min(vim.o.lines - 10, 100)
+    local width = math.min(vim.o.columns - 2, 180)
+    local height = math.min(vim.o.lines - 10, 60)
     local opt = {
         layout_strategy = 'vertical',
         layout_config = {
@@ -98,6 +98,8 @@ end
 local showType = function ()
     require("telescope.builtin").lsp_type_definitions(getQuickfixOptions())
 end
+
+local goto_preview = require('goto-preview')
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
@@ -153,6 +155,8 @@ require("which-key").register({
         i = { showImplementation,                             "Go to Implementation"},
         r = { showReferences,                                 "Find References"},
         t = { showType,                                       "Go to Type Definition"},
+        p = { goto_preview.goto_preview_definition,           "Preview Definition"},
+        P = { goto_preview.close_all_win,                     "Close Previews"},
     },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
