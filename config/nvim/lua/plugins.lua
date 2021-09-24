@@ -307,12 +307,12 @@ return require('packer').startup(function(use)
     use 'folke/which-key.nvim'
     use 'akinsho/nvim-toggleterm.lua'
     --use 'abecodes/tabout.nvim'
-    use { 
-        'vuki656/package-info.nvim', 
+    use {
+        'vuki656/package-info.nvim',
         opt = true,
         ft = "json",
         requires = { "MunifTanjim/nui.nvim" },
-        config = "require('package-info').setup({ debug = true })"
+        config = "require('package-info').setup()"
     }
     use {
         'rmagatti/goto-preview',
@@ -350,6 +350,7 @@ return require('packer').startup(function(use)
         require'hop'.setup()
       end
     }
+    use 'wellle/targets.vim'
 
 end)
 
