@@ -317,10 +317,7 @@ return require('packer').startup(function(use)
     use {
         'rmagatti/goto-preview',
         config = function()
-            require('goto-preview').setup({ 
-                debug = true,
-                default_mappings = true
-            })
+            require('goto-preview').setup({})
         end
     }
 
@@ -344,5 +341,15 @@ return require('packer').startup(function(use)
     use 'kristijanhusak/vim-dadbod-ui'
 
     use 'dkarter/bullets.vim'
+    use 'Darazaki/indent-o-matic'
+    use {
+      'phaazon/hop.nvim',
+      as = 'hop',
+      config = function()
+        -- you can configure Hop the way you like here; see :h hop-config
+        require'hop'.setup()
+      end
+    }
+
 end)
 

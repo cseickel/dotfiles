@@ -19,7 +19,22 @@ local focus_tree = function()
     end
 end
 
+vim.cmd([[
+    vmap gb <cmd>HopChar2<cr>
+    vmap gc <cmd>HopChar1<cr>
+    vmap gw <cmd>HopWord<cr>
+    vmap gl <cmd>HopLine<cr>
+    vmap g/ <cmd>HopPattern<cr>
+]])
 require("which-key").register({
+    g = {
+        name = "Go",
+        b = { "<cmd>HopChar2<cr>",         "Hop Bigram"},
+        c = { "<cmd>HopChar1<cr>",         "Hop Character"},
+        w = { "<cmd>HopWord<cr>",          "Hop Word"},
+        l = { "<cmd>HopLine<cr>",          "Hop Line"},
+        ["/"] = { "<cmd>HopPattern<cr>",   "Hop Pattern"},
+    },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
     k = { "Focus window ABOVE" },

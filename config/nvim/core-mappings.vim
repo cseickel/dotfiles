@@ -13,10 +13,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Change word the cursor is on
-nnoremap s "sciw
-" Put all substitues in a s register
-vnoremap s "sygvc
-nnoremap S "sYYS
+nnoremap s ciw
 
 " Make Y consistent with C and D
 nnoremap Y y$
