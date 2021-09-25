@@ -29,11 +29,11 @@ vim.cmd([[
 require("which-key").register({
     g = {
         name = "Go",
-        b = { "<cmd>HopChar2<cr>",         "Hop Bigram"},
-        c = { "<cmd>HopChar1<cr>",         "Hop Character"},
-        w = { "<cmd>HopWord<cr>",          "Hop Word"},
-        l = { "<cmd>HopLine<cr>",          "Hop Line"},
-        ["/"] = { "<cmd>HopPattern<cr>",   "Hop Pattern"},
+        b = { "<cmd>HopChar2<cr>",         "Hop Bigram" },
+        c = { "<cmd>HopChar1<cr>",         "Hop Character" },
+        w = { "<cmd>HopWord<cr>",          "Hop Word" },
+        l = { "<cmd>HopLine<cr>",          "Hop Line" },
+        ["/"] = { "<cmd>HopPattern<cr>",   "Hop Pattern" },
     },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
