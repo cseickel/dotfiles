@@ -13,7 +13,11 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Change word the cursor is on
-nnoremap s ciw
+nnoremap <space> ciw
+
+" remove s in favor of sandwich commands
+nmap s <Nop>
+xmap s <Nop>
 
 " Make Y consistent with C and D
 nnoremap Y y$
