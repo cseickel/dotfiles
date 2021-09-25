@@ -14,42 +14,48 @@ return require('packer').startup(function(use)
                     if node.entries ~= nil then
                         lib.unroll_dir(node)
                     else
-                        local nonFloatingWindowCount = 0
-                        for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-                            if vim.api.nvim_win_get_config(win).relative == "" then
-                                nonFloatingWindowCount = nonFloatingWindowCount + 1
-                                windows[vim.api.nvim_win_get_number(win)] = win;
-                                if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == node.absolute_path then
-                                    vim.api.nvim_set_current_win(win)
-                                    vim.cmd("call DWM_Focus()")
-                                    return
+                        if node.absolute_path then
+                            local nonFloatingWindowCount = 0
+                            for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+                                if vim.api.nvim_win_get_config(win).relative == "" then
+                                    nonFloatingWindowCount = nonFloatingWindowCount + 1
+                                    windows[vim.api.nvim_win_get_number(win)] = win;
+                                    if vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)) == node.absolute_path then
+                                        vim.api.nvim_set_current_win(win)
+                                        vim.cmd("call DWM_Focus()")
+                                        return
+                                    end
                                 end
                             end
-                        end
-                        if nonFloatingWindowCount < 2 then
-                            vim.cmd("vsplit" .. node.absolute_path)
-                        else
-                            if targetWindow == "smart" then
-                                -- if there are no windows to the right of the "main" window,
-                                -- then we are not in a tiling layout and we should just reuse
-                                -- that main window.
-                                local treeWidth = vim.api.nvim_win_get_width(windows[1])
-                                local mainWidth = vim.api.nvim_win_get_width(windows[2])
-                                local combinedWidth = treeWidth + 1 + mainWidth
-                                if combinedWidth == vim.o.columns then
-                                    targetWindow = "main"
-                                else
-                                    targetWindow = "new"
-                                end
-                            end
-                            if targetWindow == "main" then
-                                vim.cmd("2wincmd w")
-                            elseif targetWindow == "new" then
-                                vim.cmd("call DWM_New()")
+                            if nonFloatingWindowCount < 2 then
+                                vim.cmd("vsplit" .. node.absolute_path)
                             else
-                                error("'" .. targetWindow .. "' is not a valid choice for targetWindow in open_nvim_tree_selection(targetWindow)")
+                                if targetWindow == "smart" then
+                                    -- if there are no windows to the right of the "main" window,
+                                    -- then we are not in a tiling layout and we should just reuse
+                                    -- that main window.
+                                    local treeWidth = vim.api.nvim_win_get_width(windows[1])
+                                    local mainWidth = vim.api.nvim_win_get_width(windows[2])
+                                    local combinedWidth = treeWidth + 1 + mainWidth
+                                    if combinedWidth == vim.o.columns then
+                                        targetWindow = "main"
+                                    else
+                                        targetWindow = "new"
+                                    end
+                                end
+                                if targetWindow == "main" then
+                                    vim.cmd("2wincmd w")
+                                elseif targetWindow == "new" then
+                                    vim.cmd("call DWM_New()")
+                                else
+                                    error("'" .. targetWindow .. "' is not a valid choice for targetWindow in open_nvim_tree_selection(targetWindow)")
+                                end
+                                vim.cmd("e " .. node.absolute_path)
                             end
-                            vim.cmd("e " .. node.absolute_path)
+                        else
+                            if node.name == ".." then
+                                vim.cmd("tcd ..")
+                            end
                         end
                     end
                 end
@@ -178,95 +184,186 @@ return require('packer').startup(function(use)
         end
     }
 
+    --use {
+    --    'hrsh7th/nvim-compe',
+    --    disabled = true,
+    --    opt = true,
+    --    event = 'InsertEnter *',
+    --    config = function()
+    --        require('compe').setup {
+    --            enabled = true;
+    --            autocomplete = true;
+    --            debug = false;
+    --            min_length = 1;
+    --            preselect = 'enable';
+    --            throttle_time = 80;
+    --            source_timeout = 200;
+    --            incomplete_delay = 400;
+    --            max_abbr_width = 100;
+    --            max_kind_width = 100;
+    --            max_menu_width = 100;
+    --            documentation = true;
+
+    --            source = {
+    --                path = true;
+    --                buffer = true;
+    --                calc = true;
+    --                nvim_lsp = true;
+    --                nvim_lua = true;
+    --                vsnip = true;
+    --                ultisnips = false;
+    --            };
+    --        }
+    --    end,
+    --    requires = {
+    --        {'SirVer/ultisnips', opt = true, event='InsertEnter' },
+    --        {'honza/vim-snippets', opt = true, event='InsertEnter' },
+    --        {
+    --            'hrsh7th/vim-vsnip',
+    --            opt = true,
+    --            event='InsertEnter',
+    --            config = function ()
+    --                local t = function(str)
+    --                    return vim.api.nvim_replace_termcodes(str, true, true, true)
+    --                end
+
+    --                local check_back_space = function()
+    --                    local col = vim.fn.col('.') - 1
+    --                    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+    --                        return true
+    --                    else
+    --                        return false
+    --                    end
+    --                end
+
+    --                -- Use (s-)tab to:
+    --                --- move to prev/next item in completion menuone
+    --                --- jump to prev/next snippet's placeholder
+    --                _G.tab_complete = function()
+    --                    print(vim.fn.pumvisible())
+    --                    if vim.fn.pumvisible() == 1 then
+    --                        return t "<C-n>"
+    --                    elseif vim.fn.call("vsnip#available", {1}) == 1 then
+    --                        return t "<Plug>(vsnip-expand-or-jump)"
+    --                    elseif check_back_space() then
+    --                        return t "<Tab>"
+    --                    else
+    --                        return vim.fn['compe#complete']()
+    --                    end
+    --                end
+    --                _G.s_tab_complete = function()
+    --                    print(vim.fn.pumvisible())
+    --                    if vim.fn.pumvisible() == 1 then
+    --                        return t "<C-p>"
+    --                    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+    --                        return t "<Plug>(vsnip-jump-prev)"
+    --                    else
+    --                        -- If <S-Tab> is not working in your terminal, change it to <C-h>
+    --                        return t "<S-Tab>"
+    --                    end
+    --                end
+
+    --                vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+    --                vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+    --                vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+    --                vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+    --            end
+    --        },
+    --        {'hrsh7th/vim-vsnip-integ', opt = true, event='InsertEnter'},
+    --    }
+    --}
+
     use {
-        'hrsh7th/nvim-compe',
-        opt = true,
-        event = 'InsertEnter *',
-        config = function()
-            require('compe').setup {
-                enabled = true;
-                autocomplete = true;
-                debug = false;
-                min_length = 1;
-                preselect = 'enable';
-                throttle_time = 80;
-                source_timeout = 200;
-                incomplete_delay = 400;
-                max_abbr_width = 100;
-                max_kind_width = 100;
-                max_menu_width = 100;
-                documentation = true;
-
-                source = {
-                    path = true;
-                    buffer = true;
-                    calc = true;
-                    nvim_lsp = true;
-                    nvim_lua = true;
-                    vsnip = true;
-                    ultisnips = false;
-                };
-            }
-        end,
+        "hrsh7th/nvim-cmp",
         requires = {
-            {'SirVer/ultisnips', opt = true, event='InsertEnter' },
-            {'honza/vim-snippets', opt = true, event='InsertEnter' },
-            {
-                'hrsh7th/vim-vsnip',
-                opt = true,
-                event='InsertEnter',
-                config = function ()
-                    local t = function(str)
-                        return vim.api.nvim_replace_termcodes(str, true, true, true)
-                    end
+            "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
+            'quangnguyen30192/cmp-nvim-ultisnips', 'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path', 'hrsh7th/cmp-calc',
+            'SirVer/ultisnips', 'honza/vim-snippets', 'hrsh7th/vim-vsnip',
+        },
+        config = function()
+            local cmp = require('cmp')
 
-                    local check_back_space = function()
-                        local col = vim.fn.col('.') - 1
-                        if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-                            return true
-                        else
-                            return false
-                        end
-                    end
+            local t = function(str)
+                return vim.api.nvim_replace_termcodes(str, true, true, true)
+            end
 
-                    -- Use (s-)tab to:
-                    --- move to prev/next item in completion menuone
-                    --- jump to prev/next snippet's placeholder
-                    _G.tab_complete = function()
-                        print(vim.fn.pumvisible())
+            local check_back_space = function()
+                local col = vim.fn.col(".") - 1
+                return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+            end
+
+            cmp.setup {
+
+                formatting = {
+                    format = function(entry, vim_item)
+                        -- fancy icons and a name of kind
+                        vim_item.kind = require("lspkind").presets.default[vim_item.kind] ..
+                                            " " .. vim_item.kind
+                        -- set a name for each source
+                        vim_item.menu = ({
+                            buffer = "[Buffer]",
+                            nvim_lsp = "[LSP]",
+                            ultisnips = "[UltiSnips]",
+                            nvim_lua = "[Lua]",
+                            cmp_tabnine = "[TabNine]",
+                            look = "[Look]",
+                            path = "[Path]",
+                            spell = "[Spell]",
+                            calc = "[Calc]",
+                            emoji = "[Emoji]"
+                        })[entry.source.name]
+                        return vim_item
+                    end
+                },
+                mapping = {
+                    ['<C-p>'] = cmp.mapping.select_prev_item(),
+                    ['<C-n>'] = cmp.mapping.select_next_item(),
+                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.close(),
+                    ['<CR>'] = cmp.mapping.confirm({
+                        behavior = cmp.ConfirmBehavior.Insert,
+                        select = true
+                    }),
+                    ["<Tab>"] = cmp.mapping(function(fallback)
                         if vim.fn.pumvisible() == 1 then
-                            return t "<C-n>"
-                        elseif vim.fn.call("vsnip#available", {1}) == 1 then
-                            return t "<Plug>(vsnip-expand-or-jump)"
+                            if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 or
+                                vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+                                return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"))
+                            end
+
+                            vim.fn.feedkeys(t("<C-n>"), "n")
                         elseif check_back_space() then
-                            return t "<Tab>"
+                            vim.fn.feedkeys(t("<tab>"), "n")
                         else
-                            return vim.fn['compe#complete']()
+                            fallback()
                         end
-                    end
-                    _G.s_tab_complete = function()
-                        print(vim.fn.pumvisible())
+                    end, {"i", "s"}),
+                    ["<S-Tab>"] = cmp.mapping(function(fallback)
                         if vim.fn.pumvisible() == 1 then
-                            return t "<C-p>"
-                        elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-                            return t "<Plug>(vsnip-jump-prev)"
+                            vim.fn.feedkeys(t("<C-p>"), "n")
                         else
-                            -- If <S-Tab> is not working in your terminal, change it to <C-h>
-                            return t "<S-Tab>"
+                            fallback()
                         end
-                    end
-
-                    vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-                    vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-                    vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-                    vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-                end
-            },
-            {'hrsh7th/vim-vsnip-integ', opt = true, event='InsertEnter'},
-        }
+                    end, {"i", "s"})
+                },
+                snippet = {expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end},
+                sources = {
+                    {name = 'buffer'}, {name = 'nvim_lsp'}, {name = "ultisnips"},
+                    {name = "nvim_lua"}, {name = "path"}, {name = "calc"}
+                },
+                completion = {completeopt = 'menu,menuone,noinsert'}
+            }
+        end
     }
 
-    use {'onsails/lspkind-nvim', opt = true, event='InsertEnter', 
+    use {
+        'onsails/lspkind-nvim',
+        disabled = true,
+        opt = true,
+        event='InsertEnter', 
         config = function()
             require('lspkind').init({
                 with_text = true,
@@ -297,7 +394,7 @@ return require('packer').startup(function(use)
             })
         end
     }
-    use {'ray-x/lsp_signature.nvim' }
+    use { 'ray-x/lsp_signature.nvim' }
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
@@ -352,5 +449,17 @@ return require('packer').startup(function(use)
     }
     use 'wellle/targets.vim'
 
+    --use {
+    --    'ms-jpq/coq_nvim',
+    --    branch = "coq",
+    --    run = "vim.cmd('COQdeps')",
+    --    config = function ()
+    --        --require('coq').setup()
+    --    end,
+    --    requires = {
+    --        { 'ms-jpq/coq.artifacts', branch = "artifacts" },
+    --        { 'ms-jpq/coq.thirdparty', branch = "3p" }
+    --    }
+    --}
 end)
 

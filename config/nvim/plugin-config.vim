@@ -228,7 +228,6 @@ let g:completion_enable_snippet = 'UltiSnips'
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
-
 let g:vimade = { "fadelevel": 0.77 }
 
 " Style vertical split bar

@@ -198,6 +198,9 @@ require('telescope').setup{
     pickers = {
         lsp_code_actions = {
             theme = "cursor"
+        },
+        find_files = {
+            hidden = true
         }
     },
     prompt_prefix = "🔍 ",
