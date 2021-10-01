@@ -224,11 +224,11 @@ let g:pear_tree_smart_closers = 1
 let g:pear_tree_smart_backspace = 1
 let g:pear_tree_map_special_keys = 0
 
-let g:completion_enable_snippet = 'UltiSnips'
 " Avoid showing message extra message when using completion
 set shortmess+=c
 
 let g:vimade = { "fadelevel": 0.77 }
+
 
 " Style vertical split bar
 "set fillchars+=vert:▏
@@ -313,6 +313,12 @@ highlight link Operator Conditional
 highlight link OperLambda Conditional
 highlight link Modifier Conditional
 highlight link LinqKeyword Conditional
+
+highlight SidebarNvimNormal ctermfg=249 guifg=#abb2bf 
+highlight link SidebarNvimGitStatusFileName SidebarNvimNormal
+highlight link SidebarNvimLspDiagnosticsMessage SidebarNvimNormal
+highlight link SidebarNvimDockerContainerName SidebarNvimNormal
+highlight link SidebarNvimDatetimeClockValue SidebarNvimNormal
 
 " highlight link csUnspecifiedStatement PlainText
 " highlight link csContextualStatement Control

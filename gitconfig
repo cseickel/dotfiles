@@ -3,6 +3,7 @@
 [user]
 	email = cseickel@gmail.com
 	name = Chris Seickel
+	signingkey = A5575A92B79F8385
 
 [pager]
     diff = delta
@@ -20,3 +21,5 @@
     file-style = bold cyan
     file-decoration-style = bold cyan ul
     hunk-header-decoration-style = blue box
+[commit]
+	gpgSign = true

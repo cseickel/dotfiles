@@ -70,17 +70,6 @@ nnoremap <silent> <C-\> :ToggleTerm<cr>
 "*****************************************************************************
 nnoremap <silent>       K         :lua vim.lsp.buf.hover()<cr>
 nnoremap <silent>       <leader>= :Neoformat<cr>
-"inoremap <expr> <Down>  pumvisible() ? "\<C-n>" : "\<Down>"
-"inoremap <expr> <Up>    pumvisible() ? "\<C-p>" : "\<Up>"
-"
-"inoremap <silent><expr> <C-Space> compe#complete()
-"inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-"inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-"inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 function! InitSql()
     nnoremap <silent><buffer> <M-x> :%DB $DBUI_URL<cr>

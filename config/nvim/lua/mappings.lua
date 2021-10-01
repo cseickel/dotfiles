@@ -44,6 +44,7 @@ require("which-key").register({
     K = { "Show documentation"},
     s = { "Substitute Word" },
     ["\\"] = { focus_tree,                                    "Open  Tree" },
+    --["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["["] = {
         name = "Previous...",
@@ -118,10 +119,10 @@ local goto_preview = require('goto-preview')
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
-    [","] = { "f,ls<cr><esc>",                                "Newline at next comma" },
+    [","] = { "<cmd>HopChar1<cr>",                            "Hop Character" },
     ["b"] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
-    a = { "<cmd>lua require'telescope.builtin'.lsp_code_actions(require('telescope.themes').get_cursor({}))<cr>",             "Code actions" },
+    a = { "<cmd>lua vim.lsp.buf.range_code_action()<cr>",             "Code actions" },
     c = {
         name = "Conflict Resolution",
         b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },
@@ -133,6 +134,7 @@ require("which-key").register({
     D = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",    "Show all Diagnostics" },
     h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
+    J = { "f,ls<cr><esc>",                                    "Newline at next comma" },
     l = { "Show Location List" },
     L = { "Close Location List" },
     m = { "add Mark" },

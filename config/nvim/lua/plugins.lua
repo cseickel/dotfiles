@@ -4,6 +4,7 @@ return require('packer').startup(function(use)
     use 'dstein64/vim-startuptime'
     use 'kyazdani42/nvim-web-devicons'
     use { 'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTree*',
+        commit = "67805502d2a126a4c40466059db8f1770a6625d4",
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
             function _G.open_nvim_tree_selection(targetWindow)
@@ -53,7 +54,7 @@ return require('packer').startup(function(use)
                                 vim.cmd("e " .. node.absolute_path)
                             end
                         else
-                            if node.name == ".." then
+                            if node.name == [[..]] then
                                 vim.cmd("tcd ..")
                             end
                         end
@@ -94,6 +95,7 @@ return require('packer').startup(function(use)
                 { key = "H",            cb = "<cmd>tabprevious<cr>"},
                 { key = "L",            cb = "<cmd>tabnext<cr>"}
             }
+            --require("nvim-tree").setup()
         end
     }
     use 'antoinemadec/FixCursorHold.nvim'
@@ -184,102 +186,18 @@ return require('packer').startup(function(use)
         end
     }
 
-    --use {
-    --    'hrsh7th/nvim-compe',
-    --    disabled = true,
-    --    opt = true,
-    --    event = 'InsertEnter *',
-    --    config = function()
-    --        require('compe').setup {
-    --            enabled = true;
-    --            autocomplete = true;
-    --            debug = false;
-    --            min_length = 1;
-    --            preselect = 'enable';
-    --            throttle_time = 80;
-    --            source_timeout = 200;
-    --            incomplete_delay = 400;
-    --            max_abbr_width = 100;
-    --            max_kind_width = 100;
-    --            max_menu_width = 100;
-    --            documentation = true;
-
-    --            source = {
-    --                path = true;
-    --                buffer = true;
-    --                calc = true;
-    --                nvim_lsp = true;
-    --                nvim_lua = true;
-    --                vsnip = true;
-    --                ultisnips = false;
-    --            };
-    --        }
-    --    end,
-    --    requires = {
-    --        {'SirVer/ultisnips', opt = true, event='InsertEnter' },
-    --        {'honza/vim-snippets', opt = true, event='InsertEnter' },
-    --        {
-    --            'hrsh7th/vim-vsnip',
-    --            opt = true,
-    --            event='InsertEnter',
-    --            config = function ()
-    --                local t = function(str)
-    --                    return vim.api.nvim_replace_termcodes(str, true, true, true)
-    --                end
-
-    --                local check_back_space = function()
-    --                    local col = vim.fn.col('.') - 1
-    --                    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-    --                        return true
-    --                    else
-    --                        return false
-    --                    end
-    --                end
-
-    --                -- Use (s-)tab to:
-    --                --- move to prev/next item in completion menuone
-    --                --- jump to prev/next snippet's placeholder
-    --                _G.tab_complete = function()
-    --                    print(vim.fn.pumvisible())
-    --                    if vim.fn.pumvisible() == 1 then
-    --                        return t "<C-n>"
-    --                    elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    --                        return t "<Plug>(vsnip-expand-or-jump)"
-    --                    elseif check_back_space() then
-    --                        return t "<Tab>"
-    --                    else
-    --                        return vim.fn['compe#complete']()
-    --                    end
-    --                end
-    --                _G.s_tab_complete = function()
-    --                    print(vim.fn.pumvisible())
-    --                    if vim.fn.pumvisible() == 1 then
-    --                        return t "<C-p>"
-    --                    elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    --                        return t "<Plug>(vsnip-jump-prev)"
-    --                    else
-    --                        -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    --                        return t "<S-Tab>"
-    --                    end
-    --                end
-
-    --                vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-    --                vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-    --                vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-    --                vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-    --            end
-    --        },
-    --        {'hrsh7th/vim-vsnip-integ', opt = true, event='InsertEnter'},
-    --    }
-    --}
-
     use {
         "hrsh7th/nvim-cmp",
+        as = "cmp",
         requires = {
             "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
             'quangnguyen30192/cmp-nvim-ultisnips', 'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-path', 'hrsh7th/cmp-calc',
-            'SirVer/ultisnips', 'honza/vim-snippets', 'hrsh7th/vim-vsnip',
+            --'SirVer/ultisnips', 
+            --'honza/vim-snippets', 
+            'hrsh7th/vim-vsnip',
+            'hrsh7th/vim-vsnip-integ',
+            'rafamadriz/friendly-snippets'
         },
         config = function()
             local cmp = require('cmp')
@@ -298,13 +216,12 @@ return require('packer').startup(function(use)
                 formatting = {
                     format = function(entry, vim_item)
                         -- fancy icons and a name of kind
-                        vim_item.kind = require("lspkind").presets.default[vim_item.kind] ..
-                                            " " .. vim_item.kind
+                        vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
                         -- set a name for each source
                         vim_item.menu = ({
                             buffer = "[Buffer]",
                             nvim_lsp = "[LSP]",
-                            ultisnips = "[UltiSnips]",
+                            vsnip = "[VSnip]",
                             nvim_lua = "[Lua]",
                             cmp_tabnine = "[TabNine]",
                             look = "[Look]",
@@ -317,42 +234,22 @@ return require('packer').startup(function(use)
                     end
                 },
                 mapping = {
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
                     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.close(),
-                    ['<CR>'] = cmp.mapping.confirm({
-                        behavior = cmp.ConfirmBehavior.Insert,
-                        select = true
-                    }),
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if vim.fn.pumvisible() == 1 then
-                            if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 or
-                                vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-                                return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>"))
-                            end
-
-                            vim.fn.feedkeys(t("<C-n>"), "n")
-                        elseif check_back_space() then
-                            vim.fn.feedkeys(t("<tab>"), "n")
-                        else
-                            fallback()
-                        end
-                    end, {"i", "s"}),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if vim.fn.pumvisible() == 1 then
-                            vim.fn.feedkeys(t("<C-p>"), "n")
-                        else
-                            fallback()
-                        end
-                    end, {"i", "s"})
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 },
-                snippet = {expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end},
+                snippet = {expand = function(args)
+                    vim.fn["vsnip#anonymous"](args.body)
+                end},
                 sources = {
-                    {name = 'buffer'}, {name = 'nvim_lsp'}, {name = "ultisnips"},
-                    {name = "nvim_lua"}, {name = "path"}, {name = "calc"}
+                    {name = "nvim_lua"},
+                    {name = 'nvim_lsp'},
+                    {name = "vsnip"},
+                    {name = "path"},
+                    {name = "calc"},
+                    {name = 'buffer', keyword_length = 2},
                 },
                 completion = {completeopt = 'menu,menuone,noinsert'}
             }
@@ -406,10 +303,10 @@ return require('packer').startup(function(use)
     --use 'abecodes/tabout.nvim'
     use {
         'vuki656/package-info.nvim',
-        opt = true,
-        ft = "json",
         requires = { "MunifTanjim/nui.nvim" },
-        config = "require('package-info').setup()"
+        config = function()
+            require('package-info').setup()
+        end
     }
     use {
         'rmagatti/goto-preview',
@@ -425,11 +322,33 @@ return require('packer').startup(function(use)
     -- UI Stuff
     use 'psliwka/vim-smoothie'
     use 'shadmansaleh/lualine.nvim'
+    use 'gcmt/taboo.vim'
     --use 'kdheepak/tabline.nvim'
+    --use {
+    --    'akinsho/bufferline.nvim',
+    --    requires = 'kyazdani42/nvim-web-devicons',
+    --    config = function ()
+    --        require("bufferline").setup({
+    --            options = {
+    --                separator_style = "thick",
+    --                diagnostics = "nvim_lsp",
+    --                offsets = {
+    --                    {
+    --                        filetype = "NvimTree",
+    --                        text = "File Explorer",
+    --                        text_align = "left"
+    --                    }
+    --                },
+    --                always_show_bufferline = true,
+    --                sort_by = "directory"
+    --            }
+    --        })
+    --    end
+    --}
+
 
     use 'ryanoasis/vim-devicons'
     use 'lukas-reineke/indent-blankline.nvim'
-    use 'gcmt/taboo.vim'
     use 'dstein64/nvim-scrollview'
     use 'cseickel/dwm.vim'
 
@@ -461,5 +380,28 @@ return require('packer').startup(function(use)
     --        { 'ms-jpq/coq.thirdparty', branch = "3p" }
     --    }
     --}
+
+   -- use {
+   --     'GustavoKatel/sidebar.nvim',
+   -- --     branch = "dev",
+   --     rocks = {'luatz'},
+   --     config = function ()
+   --         require('sidebar-nvim').setup({
+   --             datetime = {
+   --                 format = "%a %b %d, %H:%M",
+   --                 clocks = {
+   --                     { tz = "UTC" },
+   --                     { tz = "America/New_York" }
+   --                 }
+   --             },
+   --             side = "right",
+   --             docker = {
+   --                 show_all = false
+   --             },
+   --             initial_width = 40,
+   --             sections = { "datetime", "git-status", "lsp-diagnostics" }
+   --         })
+   --     end
+   -- }
 end)
 
