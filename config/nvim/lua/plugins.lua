@@ -189,30 +189,23 @@ return require('packer').startup(function(use)
     use {
         "hrsh7th/nvim-cmp",
         as = "cmp",
+        opt = true,
+        event='InsertEnter', 
         requires = {
-            "hrsh7th/cmp-buffer", "hrsh7th/cmp-nvim-lsp",
-            'quangnguyen30192/cmp-nvim-ultisnips', 'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-path', 'hrsh7th/cmp-calc',
-            --'SirVer/ultisnips', 
-            --'honza/vim-snippets', 
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-calc',
+            --'SirVer/ultisnips',
+            --'honza/vim-snippets',
             'hrsh7th/vim-vsnip',
             'hrsh7th/vim-vsnip-integ',
             'rafamadriz/friendly-snippets'
         },
         config = function()
             local cmp = require('cmp')
-
-            local t = function(str)
-                return vim.api.nvim_replace_termcodes(str, true, true, true)
-            end
-
-            local check_back_space = function()
-                local col = vim.fn.col(".") - 1
-                return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
-            end
-
             cmp.setup {
-
                 formatting = {
                     format = function(entry, vim_item)
                         -- fancy icons and a name of kind
@@ -258,7 +251,6 @@ return require('packer').startup(function(use)
 
     use {
         'onsails/lspkind-nvim',
-        disabled = true,
         opt = true,
         event='InsertEnter', 
         config = function()
@@ -367,6 +359,18 @@ return require('packer').startup(function(use)
       end
     }
     use 'wellle/targets.vim'
+    use {
+        'rhysd/clever-f.vim',
+        setup = function()
+            vim.cmd([[
+                let g:clever_f_smart_case=1
+                let g:clever_f_show_prompt=1
+                let g:clever_f_fix_key_direction=1
+                let g:clever_f_chars_match_any_signs=";"
+                highlight CleverFDefaultLabel gui=Bold,Underline guifg=#ffaf00
+            ]])
+        end
+    }
 
     --use {
     --    'ms-jpq/coq_nvim',

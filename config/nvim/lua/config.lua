@@ -56,7 +56,8 @@ local function lsp_attach()
         flags = {
             debounce_text_changes = 150,
         },
-        extra_trigger_chars = { "(", "," }
+        extra_trigger_chars = { "(", "," },
+        toggle_key = "<M-x>"
     })
 end
 

@@ -20,16 +20,16 @@ local focus_tree = function()
 end
 
 vim.cmd([[
-    vmap gb <cmd>HopChar2<cr>
+    vmap ;  <cmd>HopChar2<cr>
     vmap gc <cmd>HopChar1<cr>
     vmap gw <cmd>HopWord<cr>
     vmap gl <cmd>HopLine<cr>
     vmap g/ <cmd>HopPattern<cr>
 ]])
 require("which-key").register({
+    [";"] = { "<cmd>HopChar2<cr>",         "Hop Bigram" },
     g = {
         name = "Go",
-        b = { "<cmd>HopChar2<cr>",         "Hop Bigram" },
         c = { "<cmd>HopChar1<cr>",         "Hop Character" },
         w = { "<cmd>HopWord<cr>",          "Hop Word" },
         l = { "<cmd>HopLine<cr>",          "Hop Line" },
