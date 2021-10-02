@@ -83,8 +83,6 @@ tnoremap <silent> <C-v> <c-\><c-n>"cpa
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
 
-nmap <silent> <C-c> "cy
-
 " Select All
 nnoremap <silent> <C-a> ggVG
 inoremap <silent> <C-a> <Esc>ggVG
@@ -146,9 +144,11 @@ nnoremap <silent> j <C-w>j
 nnoremap <silent> k <C-w>k
 nnoremap <silent> l <C-w>l
 
-" tab navigation
-nnoremap <silent> H :tabprevious<cr>
-nnoremap <silent> L :tabnext<cr>
+" just easier to easier to type than the top row
+nnoremap <silent> H ^
+vnoremap <silent> H ^
+nnoremap <silent> L g_
+vnoremap <silent> L g_
 
 function! SmartWindowResize(orientation, direction) abort
     if a:orientation == "v"
