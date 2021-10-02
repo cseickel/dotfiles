@@ -25,41 +25,31 @@ let g:indentLine_faster = 1
 let g:indent_blankline_space_char = ' '
 let g:indent_blankline_space_char_blankline = ' '
 let g:indent_blankline_use_treesitter = v:true
-let g:indentLine_fileTypeExclude = [ "NvimTree" ]
+let g:indentLine_fileTypeExclude = [ "NvimTree", "terminal", "help", "startify" ]
 
 let g:webdevicons_enable_startify = 1
 
-let g:nvim_tree_width = 40
-let g:nvim_tree_tab_open = 0
-let g:nvim_tree_gitignore = 1
-let g:nvim_tree_follow = 1 "0 by default, this option allows the cursor to be updated when entering a buffer
-let g:nvim_tree_indent_markers = 0 "0 by default, this option shows indent markers when folders are open
-let g:nvim_tree_hide_dotfiles = 0 "0 by default, this option hides files and folders starting with a dot `.`
-let g:nvim_tree_show_icons = {
-            \ 'git': 0,
-            \ 'folders': 1,
-            \ 'files': 1,
-            \ 'folder_arrows': 0,
-            \}
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 2
-let g:nvim_tree_lsp_diagnostics = 1 "0 by default, will show lsp diagnostics in the signcolumn. See :help nvim_tree_lsp_diagnostics
-let g:nvim_tree_disable_window_picker = 0 "0 by default, will disable the window picker.
-let g:nvim_tree_hijack_cursor = 0
-let g:nvim_tree_auto_close = 1
-let g:nvim_tree_update_cwd = 1
-let g:nvim_tree_icons = { "default" : "" }
+                let g:nvim_tree_gitignore = 1
+                let g:nvim_tree_show_icons = {
+                            \ 'git': 0,
+                            \ 'folders': 1,
+                            \ 'files': 1,
+                            \ 'folder_arrows': 0,
+                            \}
+                let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+                let g:nvim_tree_highlight_opened_files = 2
+                let g:nvim_tree_icons = { "default" : "" }
 
-highlight CursorLine guibg=#363636
-highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
-highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
-highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
-highlight NvimTreeIndentMarker guifg=#404040
-highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
-highlight NvimTreeGitStaged guifg=none gui=Italic
-highlight NvimTreeGitDirty guifg=none gui=Italic
-highlight NvimTreeGitNew guifg=none gui=Italic
-highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
+                highlight CursorLine guibg=#363636
+                highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
+                highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
+                highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
+                highlight NvimTreeIndentMarker guifg=#404040
+                highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
+                highlight NvimTreeGitStaged guifg=none gui=Italic
+                highlight NvimTreeGitDirty guifg=none gui=Italic
+                highlight NvimTreeGitNew guifg=none gui=Italic
+                highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
 
 let g:gitgutter_map_keys = 0
 let g:gitgutter_sign_added = '┃'

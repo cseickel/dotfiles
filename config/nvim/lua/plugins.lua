@@ -4,7 +4,11 @@ return require('packer').startup(function(use)
     use 'dstein64/vim-startuptime'
     use 'kyazdani42/nvim-web-devicons'
     use { 'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTree*',
-        commit = "67805502d2a126a4c40466059db8f1770a6625d4",
+        setup = function ()
+           vim.cmd([[
+
+            ]]) 
+        end,
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
             function _G.open_nvim_tree_selection(targetWindow)
@@ -61,41 +65,53 @@ return require('packer').startup(function(use)
                     end
                 end
             end
-            --vim.g.nvim_tree_disable_keybindings = 1
-            vim.g.nvim_tree_disable_default_keybindings = 1
-            vim.g.nvim_tree_bindings = {
-                { key = "<CR>",           cb = ":lua _G.open_nvim_tree_selection('smart')<cr>" }, -- open in MAIN if one window, or NEW if multiple
-                { key = "<2-LeftMouse>", cb = ":lua _G.open_nvim_tree_selection('smart')<cr>"}, -- open in MAIN if one window, or NEW if multiple
-                { key = "e",             cb = tree_cb("edit")}, -- show window chooserF
-                { key = "n",             cb = ":lua _G.open_nvim_tree_selection('new')<cr>"},  -- open in NEW windowF
-                { key = "m",             cb = ":lua _G.open_nvim_tree_selection('main')<cr>"}, -- open in MAIN windowF
-                { key = "<C-t>",         cb = tree_cb("tabnew")},
-                { key = ".",             cb = tree_cb("cd")},
-                { key = "<BS>",          cb = tree_cb("dir_up")},
-                { key = "<",             cb = tree_cb("prev_sibling")},
-                { key = ">",             cb = tree_cb("next_sibling")},
-                { key = "I",             cb = tree_cb("toggle_ignored")},
-                { key = "h",             cb = tree_cb("toggle_dotfiles")},
-                { key = "R",             cb = tree_cb("refresh")},
-                { key = "a",             cb = tree_cb("create")},
-                { key = "d",             cb = tree_cb("remove")},
-                { key = "r",             cb = tree_cb("rename")},
-                { key = "<C-r>",         cb = tree_cb("full_rename")},
-                { key = "x",             cb = tree_cb("cut")},
-                { key = "c",             cb = tree_cb("copy")},
-                { key = "p",             cb = tree_cb("paste")},
-                { key = "y",             cb = tree_cb("copy_name")},
-                { key = "Y",             cb = tree_cb("copy_path")},
-                { key = "gy",            cb = tree_cb("copy_absolute_path")},
-                { key = "[c",            cb = tree_cb("prev_git_item")},
-                { key = "]c",            cb = tree_cb("next_git_item")},
-                { key = "q",             cb = tree_cb("close")},
-                { key = "-",             cb = ":call SmartWindowResize('v', 0)<cr>"},
-                { key = "=",             cb = ":call SmartWindowResize('v', 1)<cr>"},
-                { key = "H",            cb = "<cmd>tabprevious<cr>"},
-                { key = "L",            cb = "<cmd>tabnext<cr>"}
-            }
-            --require("nvim-tree").setup()
+            require("nvim-tree").setup({
+                auto_close = true,
+                update_cwd = true,
+                update_focused_file = {
+                    enable = true
+                },
+                lsp_diagnostics = true,
+                view = {
+                    width = 40,
+                    mappings = {
+                        custom_only = true,
+                        list = {
+                            { key = "<CR>",           cb = ":lua _G.open_nvim_tree_selection('smart')<cr>" }, -- open in MAIN if one window, or NEW if multiple
+                            { key = "<2-LeftMouse>", cb = ":lua _G.open_nvim_tree_selection('smart')<cr>"}, -- open in MAIN if one window, or NEW if multiple
+                            { key = "e",             cb = tree_cb("edit")}, -- show window chooserF
+                            { key = "n",             cb = ":lua _G.open_nvim_tree_selection('new')<cr>"},  -- open in NEW windowF
+                            { key = "m",             cb = ":lua _G.open_nvim_tree_selection('main')<cr>"}, -- open in MAIN windowF
+                            { key = "<C-t>",         cb = tree_cb("tabnew")},
+                            { key = ".",             cb = tree_cb("cd")},
+                            { key = "<BS>",          cb = tree_cb("dir_up")},
+                            { key = "<",             cb = tree_cb("prev_sibling")},
+                            { key = ">",             cb = tree_cb("next_sibling")},
+                            { key = "I",             cb = tree_cb("toggle_ignored")},
+                            { key = "h",             cb = tree_cb("toggle_dotfiles")},
+                            { key = "R",             cb = tree_cb("refresh")},
+                            { key = "a",             cb = tree_cb("create")},
+                            { key = "d",             cb = tree_cb("remove")},
+                            { key = "r",             cb = tree_cb("rename")},
+                            { key = "<C-r>",         cb = tree_cb("full_rename")},
+                            { key = "x",             cb = tree_cb("cut")},
+                            { key = "c",             cb = tree_cb("copy")},
+                            { key = "p",             cb = tree_cb("paste")},
+                            { key = "y",             cb = tree_cb("copy_name")},
+                            { key = "Y",             cb = tree_cb("copy_path")},
+                            { key = "gy",            cb = tree_cb("copy_absolute_path")},
+                            { key = "[c",            cb = tree_cb("prev_git_item")},
+                            { key = "]c",            cb = tree_cb("next_git_item")},
+                            { key = "q",             cb = tree_cb("close")},
+                            { key = "-",             cb = ":call SmartWindowResize('v', 0)<cr>"},
+                            { key = "=",             cb = ":call SmartWindowResize('v', 1)<cr>"},
+                            { key = "H",            cb = "<cmd>tabprevious<cr>"},
+                            { key = "L",            cb = "<cmd>tabnext<cr>"}
+
+                        }
+                    }
+                }
+            })
         end
     }
     use 'antoinemadec/FixCursorHold.nvim'
