@@ -4,11 +4,6 @@ return require('packer').startup(function(use)
     use 'dstein64/vim-startuptime'
     use 'kyazdani42/nvim-web-devicons'
     use { 'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTree*',
-        setup = function ()
-           vim.cmd([[
-
-            ]]) 
-        end,
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
             function _G.open_nvim_tree_selection(targetWindow)
@@ -300,7 +295,7 @@ return require('packer').startup(function(use)
         end
     }
     use { 'ray-x/lsp_signature.nvim' }
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
@@ -330,7 +325,55 @@ return require('packer').startup(function(use)
     -- UI Stuff
     use 'psliwka/vim-smoothie'
     use 'shadmansaleh/lualine.nvim'
-    use 'gcmt/taboo.vim'
+    use {
+        'noib3/cokeline.nvim',
+        config = function ()
+            local get_hex = require('cokeline/utils').get_hex
+
+            require('cokeline').setup({
+              hide_when_one_buffer = false,
+              default_hl = {
+                focused = {
+                  fg = get_hex('TabLineSel', 'fg'),
+                  bg = get_hex('TabLineSel', 'bg'),
+                  style = 'Bold'
+                },
+                unfocused = {
+                  fg = get_hex('TabLine', 'fg'),
+                  bg = get_hex('TabLine', 'bg'),
+                },
+              },
+
+              components = {
+                {
+                  text = function(buffer) return ' ' .. buffer.devicon.icon end,
+                  hl = {
+                    fg = function(buffer) return buffer.devicon.color end,
+                  },
+                },
+                {
+                  text = function(buffer) return buffer.filename end,
+                  hl = {
+                    fg = function(buffer)
+                      if buffer.lsp.errors ~= 0 then
+                        return get_hex('LspDiagnosticsSignError', 'fg')
+                      end
+                      if buffer.lsp.warnings ~= 0 then
+                        return get_hex('LspDiagnosticsSignWarning', 'fg')
+                      end
+                    end,
+                  },
+                },
+                {
+                  text = ' ▕',
+                  delete_buffer_on_left_click = true,
+                },
+              },
+            })
+
+        end
+    }
+    --use 'gcmt/taboo.vim'
     --use 'kdheepak/tabline.nvim'
     --use {
     --    'akinsho/bufferline.nvim',
@@ -423,5 +466,43 @@ return require('packer').startup(function(use)
    --         })
    --     end
    -- }
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                ensure_installed = {
+                    "bash",
+                    "c",
+                    "c_sharp",
+                    "css",
+                    "dockerfile",
+                    "go",
+                    "graphql",
+                    "lua",
+                    "javascript",
+                    "json",
+                    "json5",
+                    "jsonc",
+                    --"html",
+                    "java",
+                    "typescript",
+                    "python",
+                    "r",
+                    "regex",
+                    "scss",
+                    "vim",
+                    "yaml"
+                }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+                highlight = {
+                    enable = true,              -- false will disable the whole extension
+                    disable = { "html" },  -- list of language that will be disabled
+                },
+                indent = {
+                    enable = true
+                }
+            }
+        end
+    }
 end)
 
