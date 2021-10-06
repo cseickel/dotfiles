@@ -42,7 +42,7 @@ function! ToggleWindowZoom(clear_decorations) abort
             let b:is_zoomed_win = 1
             execute "normal " . l:top . "zt"
             execute l:line
-            "execute "TabooRename  " . expand("%:t")
+            execute "TabooRename  " . expand("%:t")
         endif
         if a:clear_decorations
             set nonumber

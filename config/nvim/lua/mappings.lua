@@ -122,7 +122,7 @@ require("which-key").register({
     [","] = { "<cmd>HopChar1<cr>",                            "Hop Character" },
     ["b"] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
-    a = { "<cmd>lua vim.lsp.buf.range_code_action()<cr>",             "Code actions" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",             "Code actions" },
     c = {
         name = "Conflict Resolution",
         b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },

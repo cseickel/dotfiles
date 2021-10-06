@@ -325,55 +325,55 @@ return require('packer').startup(function(use)
     -- UI Stuff
     use 'psliwka/vim-smoothie'
     use 'shadmansaleh/lualine.nvim'
-    use {
-        'noib3/cokeline.nvim',
-        config = function ()
-            local get_hex = require('cokeline/utils').get_hex
+   -- use {
+   --     'noib3/cokeline.nvim',
+   --     config = function ()
+   --         local get_hex = require('cokeline/utils').get_hex
 
-            require('cokeline').setup({
-              hide_when_one_buffer = false,
-              default_hl = {
-                focused = {
-                  fg = get_hex('TabLineSel', 'fg'),
-                  bg = get_hex('TabLineSel', 'bg'),
-                  style = 'Bold'
-                },
-                unfocused = {
-                  fg = get_hex('TabLine', 'fg'),
-                  bg = get_hex('TabLine', 'bg'),
-                },
-              },
+   --         require('cokeline').setup({
+   --           hide_when_one_buffer = false,
+   --           default_hl = {
+   --             focused = {
+   --               fg = get_hex('TabLineSel', 'fg'),
+   --               bg = get_hex('TabLineSel', 'bg'),
+   --               style = 'Bold'
+   --             },
+   --             unfocused = {
+   --               fg = get_hex('TabLine', 'fg'),
+   --               bg = get_hex('TabLine', 'bg'),
+   --             },
+   --           },
 
-              components = {
-                {
-                  text = function(buffer) return ' ' .. buffer.devicon.icon end,
-                  hl = {
-                    fg = function(buffer) return buffer.devicon.color end,
-                  },
-                },
-                {
-                  text = function(buffer) return buffer.filename end,
-                  hl = {
-                    fg = function(buffer)
-                      if buffer.lsp.errors ~= 0 then
-                        return get_hex('LspDiagnosticsSignError', 'fg')
-                      end
-                      if buffer.lsp.warnings ~= 0 then
-                        return get_hex('LspDiagnosticsSignWarning', 'fg')
-                      end
-                    end,
-                  },
-                },
-                {
-                  text = ' ▕',
-                  delete_buffer_on_left_click = true,
-                },
-              },
-            })
+   --           components = {
+   --             {
+   --               text = function(buffer) return ' ' .. buffer.devicon.icon end,
+   --               hl = {
+   --                 fg = function(buffer) return buffer.devicon.color end,
+   --               },
+   --             },
+   --             {
+   --               text = function(buffer) return buffer.filename end,
+   --               hl = {
+   --                 fg = function(buffer)
+   --                   if buffer.lsp.errors ~= 0 then
+   --                     return get_hex('LspDiagnosticsSignError', 'fg')
+   --                   end
+   --                   if buffer.lsp.warnings ~= 0 then
+   --                     return get_hex('LspDiagnosticsSignWarning', 'fg')
+   --                   end
+   --                 end,
+   --               },
+   --             },
+   --             {
+   --               text = ' ▕',
+   --               delete_buffer_on_left_click = true,
+   --             },
+   --           },
+   --         })
 
-        end
-    }
-    --use 'gcmt/taboo.vim'
+   --     end
+   -- }
+    use 'gcmt/taboo.vim'
     --use 'kdheepak/tabline.nvim'
     --use {
     --    'akinsho/bufferline.nvim',
