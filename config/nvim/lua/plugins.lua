@@ -319,7 +319,6 @@ return require('packer').startup(function(use)
     }
 
     --use 'lewis6991/gitsigns.nvim'
-    use 'pwntester/octo.nvim'
 
 
     -- UI Stuff
@@ -374,29 +373,6 @@ return require('packer').startup(function(use)
    --     end
    -- }
     use 'gcmt/taboo.vim'
-    --use 'kdheepak/tabline.nvim'
-    --use {
-    --    'akinsho/bufferline.nvim',
-    --    requires = 'kyazdani42/nvim-web-devicons',
-    --    config = function ()
-    --        require("bufferline").setup({
-    --            options = {
-    --                separator_style = "thick",
-    --                diagnostics = "nvim_lsp",
-    --                offsets = {
-    --                    {
-    --                        filetype = "NvimTree",
-    --                        text = "File Explorer",
-    --                        text_align = "left"
-    --                    }
-    --                },
-    --                always_show_bufferline = true,
-    --                sort_by = "directory"
-    --            }
-    --        })
-    --    end
-    --}
-
 
     use 'ryanoasis/vim-devicons'
     use 'lukas-reineke/indent-blankline.nvim'

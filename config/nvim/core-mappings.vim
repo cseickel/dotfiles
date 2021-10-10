@@ -13,7 +13,7 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Change word the cursor is on
-nnoremap <space> ciw
+nmap <space> ciw
 
 " remove s in favor of sandwich commands
 nmap s <Nop>
