@@ -66,7 +66,9 @@ return require('packer').startup(function(use)
                 update_focused_file = {
                     enable = true
                 },
-                lsp_diagnostics = true,
+                diagnostics = {
+                    enable = true,
+                },
                 view = {
                     width = 40,
                     mappings = {
