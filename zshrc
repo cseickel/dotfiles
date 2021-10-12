@@ -203,6 +203,7 @@ export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 export AWS_VAULT_BACKEND=pass
 export NODE_OPTIONS="--max-old-space-size=4096"
 export NNN_COLORS='#271cb8ae'
+export GPG_TTY=$(tty)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ulimit -c 0
@@ -246,10 +247,12 @@ function work-on-issue() {
     if [[ ! -z "$existing" ]]; then
         sh -c "git switch $existing"
     else
-        echo "Please confirm new branch name:"
+        bold=$(tput bold)
+        normal=$(tput sgr0)
+        echo "${bold}Please confirm new branch name:${normal}"
         vared branchname
         base=$(git branch --show-current)
-        echo "Please confirm the base branch:"
+        echo "${bold}Please confirm the base branch:${normal}"
         vared base
         git checkout -b $branchname $base
         git push --set-upstream origin $branchname
