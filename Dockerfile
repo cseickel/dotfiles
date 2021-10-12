@@ -6,24 +6,18 @@ ENV \
     UNAME="arch" \
     SHELL="/bin/zsh" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && sudo locale-gen
 
-# WORKAROUND for glibc 2.33 and old Docker
-# See https://github.com/actions/virtual-environments/issues/2658
-# Thanks to https://github.com/lxqt/lxqt-panel/pull/1562
-RUN patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
-    curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && \
-    bsdtar -C / -xvf "$patched_glibc"
-
-COPY ./rds-ca-2019-root.crt /usr/share/ca-certificates/trust-source/rds-ca-2019-root.crt
-
 RUN pacman -Syu --noprogressbar --noconfirm --needed \
        cmake clang unzip ninja git curl wget openssh zsh reflector \
-    && update-ca-trust \
     && useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
-    && sudo reflector -p https -c us --score 20 --connection-timeout 1 --sort rate --save /etc/pacman.d/mirrorlist
+    && sudo reflector -p https -c us --score 20 --connection-timeout 1 --sort rate --save /etc/pacman.d/mirrorlist \
+    && wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
+        -o /usr/share/ca-certificates/trust-source/rds-combined-ca-bundle.pem \
+    && update-ca-trust
 
 USER arch
 WORKDIR /home/arch
@@ -37,7 +31,7 @@ RUN cd /home/$UNAME \
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         python3 python-pip nodejs npm prettier git-delta github-cli \
-        tmux bat fzf kitty-terminfo neovim neovim-remote nvim-packer-git \
+        tmux bat fzf kitty-terminfo neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
         ripgrep docker docker-compose aws-vault pass \
