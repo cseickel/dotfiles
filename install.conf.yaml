@@ -25,5 +25,5 @@
       recursive: true
 - shell:
   - [./tmux_install_plugins.sh, Installing tmux plugins.]
-  - [nvim --headless -u ~/.config/nvim/plugin-install.vim, Installing nvim plugins.]
+  - [nvim --headless -c "autocmd User PackerComplete quitall" -c "PackerSync", Installing nvim plugins.]
 
