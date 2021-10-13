@@ -23,3 +23,5 @@
     hunk-header-decoration-style = blue box
 [commit]
 	gpgSign = true
+[tag]
+	gpgSign = true
