@@ -4,11 +4,11 @@ vim.o.completeopt = "menuone,noselect"
 local custom_border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" }
 require'nvim-web-devicons'.setup({ default = true })
 vim.fn.sign_define("LspDiagnosticsSignError",
-    {text = "", texthl = "LspDiagnosticsSignError"})
+    {text = " ", texthl = "LspDiagnosticsSignError"})
 vim.fn.sign_define("LspDiagnosticsSignWarning",
-    {text = "", texthl = "LspDiagnosticsSignWarning"})
+    {text = " ", texthl = "LspDiagnosticsSignWarning"})
 vim.fn.sign_define("LspDiagnosticsSignInformation",
-    {text = "", texthl = "LspDiagnosticsSignInformation"})
+    {text = " ", texthl = "LspDiagnosticsSignInformation"})
 vim.fn.sign_define("LspDiagnosticsSignHint",
     {text = "", texthl = "LspDiagnosticsSignHint"})
 vim.lsp.diagnostic.show_line_diagnostics({ border = 'single' })
@@ -20,13 +20,12 @@ vim.lsp.handlers["textDocument/hover"] =
   })
 
 -- enable border for signature
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help,
-  {
-    border = "single",
-  }
-)
-
+--vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+--  vim.lsp.handlers.signature_help,
+--  {
+--    border = "single",
+--  }
+--)
 --vim.lsp.handlers['textDocument/codeAction'] = require'lsputil.codeAction'.code_action_handler
 --vim.lsp.handlers['textDocument/references'] = function() vim.cmd('Trouble lsp_references') end
 --vim.lsp.handlers['textDocument/definition'] = function() MyTrouble('lsp_definitions') end
@@ -35,57 +34,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --vim.lsp.handlers['textDocument/implementation'] = require'lsputil.locations'.implementation_handler
 --vim.lsp.handlers['textDocument/documentSymbol'] = require'lsputil.symbols'.document_handler
 --vim.lsp.handlers['workspace/symbol'] = require'lsputil.symbols'.workspace_handler
-
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-    }
-}
-
-local function lsp_attach()
-    require('lsp_signature').on_attach({
-        bind = true,
-        handler_opts = {
-            border = "single"
-        },
-        hint_enable = false,
-        flags = {
-            debounce_text_changes = 150,
-        },
-        extra_trigger_chars = { "(", "," },
-        toggle_key = "<M-x>"
-    })
-    --vim.cmd([[
-    --  augroup lsp_au
-    --  autocmd! * <buffer>
-    --  autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()
-    --  augroup END
-    --  ]], false)
-end
-
-local lspInstall = require('lspinstall')
-lspInstall.setup()
-local function setup_servers()
-    local servers = lspInstall.installed_servers()
-    for _, server in pairs(servers) do
-        require('lspconfig')[server].setup({
-            capabilities = capabilities,
-            on_attach = lsp_attach
-        });
-    end
-end
-setup_servers()
-
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-lspInstall.post_install_hook = function ()
-    setup_servers() -- reload installed servers
-    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end
 
 
 --require'trouble'.setup {
@@ -442,4 +390,3 @@ require'lualine'.setup {
  -- },
   extensions = { 'nvim-tree', 'quickfix', 'fzf' }
 }
-

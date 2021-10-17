@@ -53,7 +53,7 @@ RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
 # The following lines can be run repeatedly to update everything
 # just CACHE_BREAKER to todays date or something similar and rebuild
 ARG CACHE_BREAKER=""
-RUN yay -Syu --noprogressbar --noconfirm \
+RUN yay -Syu --noprogressbar --noconfirm neovim-nightly-bin \
     && yay -Scc --noprogressbar --noconfirm
 
 ENV TERM="xterm-256color" \

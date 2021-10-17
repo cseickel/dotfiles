@@ -159,4 +159,5 @@ augroup core_autocmd
   autocmd TermOpen * call InitTerminal()
   autocmd TermEnter * call InitTerminal()
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
+  autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 augroup END

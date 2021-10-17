@@ -3,7 +3,7 @@ return require('packer').startup(function(use)
     use {'lewis6991/impatient.nvim', rocks = 'mpack'}
     use 'dstein64/vim-startuptime'
     use 'kyazdani42/nvim-web-devicons'
-    use { 'kyazdani42/nvim-tree.lua', opt = true, cmd = 'NvimTree*',
+    use { 'kyazdani42/nvim-tree.lua',
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
             function _G.open_nvim_tree_selection(targetWindow)
@@ -60,6 +60,7 @@ return require('packer').startup(function(use)
                     end
                 end
             end
+            local lib = require('nvim-tree.lib')
             require("nvim-tree").setup({
                 auto_close = true,
                 update_cwd = true,
@@ -84,9 +85,9 @@ return require('packer').startup(function(use)
                             { key = "<BS>",          cb = tree_cb("dir_up")},
                             { key = "<",             cb = tree_cb("prev_sibling")},
                             { key = ">",             cb = tree_cb("next_sibling")},
-                            { key = "I",             cb = tree_cb("toggle_ignored")},
-                            { key = "h",             cb = tree_cb("toggle_dotfiles")},
-                            { key = "R",             cb = tree_cb("refresh")},
+                            { key = "h",             cb = tree_cb("toggle_dotfiles") },
+                            { key = "i",             cb = tree_cb("toggle_ignored") },
+                            { key = "R",             cb = tree_cb("refresh") },
                             { key = "a",             cb = tree_cb("create")},
                             { key = "d",             cb = tree_cb("remove")},
                             { key = "r",             cb = tree_cb("rename")},
@@ -102,8 +103,6 @@ return require('packer').startup(function(use)
                             { key = "q",             cb = tree_cb("close")},
                             { key = "-",             cb = ":call SmartWindowResize('v', 0)<cr>"},
                             { key = "=",             cb = ":call SmartWindowResize('v', 1)<cr>"},
-                            { key = "H",            cb = "<cmd>tabprevious<cr>"},
-                            { key = "L",            cb = "<cmd>tabnext<cr>"}
 
                         }
                     }
@@ -176,26 +175,72 @@ return require('packer').startup(function(use)
     use 'christianchiarulli/nvcode-color-schemes.vim'
 
     -- All of the new functionality in neovim 5
-    use 'neovim/nvim-lspconfig'
     use {
-        'kabouzeid/nvim-lspinstall',
+        'williamboman/nvim-lsp-installer',
+        requires = {
+            'ray-x/lsp_signature.nvim',
+            'neovim/nvim-lspconfig'
+        },
+        config = function()
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities.textDocument.completion.completionItem.snippetSupport = true
+            capabilities.textDocument.completion.completionItem.resolveSupport = {
+                properties = {
+                    'documentation',
+                    'detail',
+                    'additionalTextEdits',
+                }
+            }
+
+            local function lsp_attach()
+                require('lsp_signature').on_attach({
+                    bind = true,
+                    handler_opts = {
+                        border = "single"
+                    },
+                    hint_enable = false,
+                    hint_prefix = " ",
+                    floating_window = true,
+                    toggle_key = "<M-x>"
+                })
+                --vim.cmd([[
+                --  augroup lsp_au
+                --  autocmd! * <buffer>
+                --  autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()
+                --  augroup END
+                --  ]], false)
+                --
+            end
+            local opts = {
+                capabilities = capabilities,
+                on_attach = lsp_attach
+            }
+
+            local lsp_installer = require("nvim-lsp-installer")
+            lsp_installer.on_server_ready(function(server)
+                server:setup(opts)
+                vim.cmd [[ do User LspAttachBuffers ]]
+            end)
+        end,
         run = function()
-            vim.cmd('LspInstall angular')
-            vim.cmd('LspInstall bash')
-            vim.cmd('LspInstall csharp')
-            vim.cmd('LspInstall css')
-            vim.cmd('LspInstall dockerfile')
-            vim.cmd('LspInstall go')
+            vim.cmd('LspInstall angularls')
+            vim.cmd('LspInstall bashls')
+            vim.cmd('LspInstall omnisharp')
+            vim.cmd('LspInstall cssls')
+            vim.cmd('LspInstall dockerls')
+            vim.cmd('LspInstall gopls')
             vim.cmd('LspInstall graphql')
             vim.cmd('LspInstall html')
-            vim.cmd('LspInstall java')
-            vim.cmd('LspInstall json')
-            vim.cmd('LspInstall lua')
-            vim.cmd('LspInstall python')
+            vim.cmd('LspInstall jdtls')
+            vim.cmd('LspInstall jsonls')
+            vim.cmd('LspInstall sumneko_lua')
+            vim.cmd('LspInstall pylsp')
+            vim.cmd('LspInstall sqlls')
             vim.cmd('LspInstall tailwindcss')
-            vim.cmd('LspInstall typescript')
-            vim.cmd('LspInstall vim')
-            vim.cmd('LspInstall yaml')
+            vim.cmd('LspInstall tsserver')
+            vim.cmd('lspinstall vimls')
+            vim.cmd('lspinstall xml')
+            vim.cmd('LspInstall yamlls')
         end
     }
 
@@ -265,7 +310,7 @@ return require('packer').startup(function(use)
     use {
         'onsails/lspkind-nvim',
         opt = true,
-        event='InsertEnter', 
+        event='InsertEnter',
         config = function()
             require('lspkind').init({
                 with_text = true,
@@ -296,7 +341,6 @@ return require('packer').startup(function(use)
             })
         end
     }
-    use { 'ray-x/lsp_signature.nvim' }
 
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'

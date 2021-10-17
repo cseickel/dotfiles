@@ -29,27 +29,28 @@ let g:indentLine_fileTypeExclude = [ "NvimTree", "terminal", "help", "startify" 
 
 let g:webdevicons_enable_startify = 1
 
-                let g:nvim_tree_gitignore = 1
-                let g:nvim_tree_show_icons = {
-                            \ 'git': 0,
-                            \ 'folders': 1,
-                            \ 'files': 1,
-                            \ 'folder_arrows': 0,
-                            \}
-                let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-                let g:nvim_tree_highlight_opened_files = 2
-                let g:nvim_tree_icons = { "default" : "" }
+let g:nvim_tree_gitignore = 0
+let g:nvim_tree_hide_dotfiles = 0
+let g:nvim_tree_show_icons = {
+            \ 'git': 0,
+            \ 'folders': 1,
+            \ 'files': 1,
+            \ 'folder_arrows': 0,
+            \}
+let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
+let g:nvim_tree_highlight_opened_files = 2
+let g:nvim_tree_icons = { "default" : "" }
 
-                highlight CursorLine guibg=#363636
-                highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
-                highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
-                highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
-                highlight NvimTreeIndentMarker guifg=#404040
-                highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
-                highlight NvimTreeGitStaged guifg=none gui=Italic
-                highlight NvimTreeGitDirty guifg=none gui=Italic
-                highlight NvimTreeGitNew guifg=none gui=Italic
-                highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
+highlight CursorLine guibg=#363636
+highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
+highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
+highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
+highlight NvimTreeIndentMarker guifg=#404040
+highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
+highlight NvimTreeGitStaged guifg=none gui=Italic
+highlight NvimTreeGitDirty guifg=none gui=Italic
+highlight NvimTreeGitNew guifg=none gui=Italic
+highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
 
 let g:gitgutter_map_keys = 0
 let g:gitgutter_sign_added = '┃'

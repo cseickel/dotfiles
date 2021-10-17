@@ -6,16 +6,19 @@ presets.operators["v"] = nil
 
 
 local focus_tree = function()
-    require('packer').loader('nvim-tree.lua')
+    local cmd = "NvimTreeFindFile"
+    if vim.fn.expand("%") == "" then
+        cmd = "NvimTreeOpen"
+    end
     if require('nvim-tree.view').win_open() then
-        vim.cmd("1wincmd w")
+        vim.cmd(cmd)
     else
-        vim.cmd("NvimTreeFindFile")
+        vim.cmd(cmd)
         vim.cmd("setlocal winhighlight=Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC")
         vim.cmd("setlocal cursorline")
-        local lib = require('nvim-tree.lib')
-        local folder = vim.fn.getcwd()
-        lib.change_dir(folder)
+        --local lib = require('nvim-tree.lib')
+        --local folder = vim.fn.getcwd()
+        --lib.change_dir(folder)
     end
 end
 
