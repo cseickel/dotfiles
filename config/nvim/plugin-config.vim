@@ -249,8 +249,10 @@ highlight GitGutterDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight GitGutterChangeDelete cterm=NONE gui=NONE guibg=None ctermbg=None guifg=#c97755 gui=Bold
 highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 
+" for nvim-cmp
+highlight CmpItemAbbr guifg=#949494
 
-hi TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+highlight TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
 highlight StartifyFile ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
 highlight StartifyBracket ctermfg=0 guifg=#1e1e1e cterm=NONE gui=NONE
