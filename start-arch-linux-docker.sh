@@ -4,9 +4,9 @@ if [[ $EXISTING ]]; then
     docker attach $EXISTING
 else
     EXISTING=$(docker run --rm -d -it \
+        -v /var/run/docker.sock:/var/run/docker.sock \
         -v ~/:/home/arch \
         -v ~/:/home/$USER \
-        -v /var/run/docker.sock:/var/run/docker.sock \
         -e HOME="/home/$USER" \
         --network host \
         --name arch-linux-tmux \

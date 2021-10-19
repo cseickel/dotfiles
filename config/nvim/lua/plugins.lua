@@ -1,9 +1,19 @@
-return require('packer').startup(function(use)
+local startup = function(use)
     vim = vim
     use {'lewis6991/impatient.nvim', rocks = 'mpack'}
+
     use 'dstein64/vim-startuptime'
-    use 'kyazdani42/nvim-web-devicons'
+
+    use {
+        'kyazdani42/nvim-web-devicons',
+        config = function ()
+            require'nvim-web-devicons'.setup({ default = true })
+        end
+    }
+
     use { 'kyazdani42/nvim-tree.lua',
+        opt = true,
+        cmd = "NvimTree*",
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
             function _G.open_nvim_tree_selection(targetWindow)
@@ -110,15 +120,34 @@ return require('packer').startup(function(use)
             })
         end
     }
+
     use 'antoinemadec/FixCursorHold.nvim'
     use 'jlanzarotta/bufexplorer'
     use 'tpope/vim-repeat'
     use 'machakann/vim-sandwich'
     use 'tpope/vim-eunuch'
-    use 'airblade/vim-gitgutter'
-    use {'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
+    --use 'airblade/vim-gitgutter'
+    use {
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
+        config = function()
+            require('gitsigns').setup({
+                signs = {
+                    add          = {hl = 'GitGutterAdd'   , text = '┃'},
+                    change       = {hl = 'GitGutterChange', text = '┃'},
+                    delete       = {hl = 'GitGutterDelete', text = '▁'},
+                    topdelete    = {hl = 'GitGutterDelete', text = '▔'},
+                    changedelete = {hl = 'GitGutterChangeDelete', text = '┻'},
+                  }
+            })
+        end
+    }
+
+    use { 'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
     use 'junegunn/fzf.vim'
-    use { 'sindrets/diffview.nvim', opt = true, cmd = 'DiffviewOpen', 
+    use { 'sindrets/diffview.nvim', opt = true, cmd = 'DiffviewOpen',
         config = function()
             local cb = require'diffview.config'.diffview_callback
             require'diffview'.setup {
@@ -165,8 +194,74 @@ return require('packer').startup(function(use)
     use 'tmsvg/pear-tree'
     use 'sbdchd/neoformat'
 
-    use 'mfussenegger/nvim-dap'
-    use 'rcarriga/nvim-dap-ui'
+    use {
+        'mfussenegger/nvim-dap',
+        opt = true,
+        keys = { "<F5>", "<F10>", "<F11>", "<F12>", "<leader>b" },
+        requires = { 'rcarriga/nvim-dap-ui' },
+        config = function ()
+            vim.cmd([[
+                nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+                nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+                nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+                nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+                nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+            ]])
+            require("dapui").setup({
+              icons = {
+                expanded = "⯆",
+                collapsed = "⯈",
+                circular = "↺"
+              },
+              mappings = {
+                -- Use a table to apply multiple mappings
+                expand = {"<CR>", "<2-LeftMouse>"},
+                open = "o",
+                remove = "d",
+                edit = "e",
+              },
+              sidebar = {
+                elements = {
+                  -- You can change the order of elements in the sidebar
+                  "scopes",
+                  "stacks",
+                  "watches"
+                },
+                size = 40,
+                position = "left" -- Can be "left" or "right"
+              },
+              tray = {
+                elements = {
+                  "repl"
+                },
+                size = 10,
+                position = "bottom" -- Can be "bottom" or "top"
+              },
+              floating = {
+                max_height = nil, -- These can be integers or a float between 0 and 1.
+                max_width = nil   -- Floats will be treated as percentage of your screen.
+              }
+            })
+
+            local dap = require('dap')
+            dap.adapters.netcoredbg = {
+              type = 'executable',
+              command = '/usr/bin/netcoredbg',
+              args = {'--interpreter=vscode'}
+            }
+
+            dap.configurations.cs = {
+              {
+                type = "netcoredbg",
+                name = "launch - netcoredbg",
+                request = "launch",
+                program = function()
+                    return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/netcoreapp3.1/', 'file')
+                end,
+              },
+            }
+        end
+    }
 
     use 'mhinz/vim-startify'
 
@@ -174,7 +269,6 @@ return require('packer').startup(function(use)
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
     use 'christianchiarulli/nvcode-color-schemes.vim'
 
-    -- All of the new functionality in neovim 5
     use {
         'williamboman/nvim-lsp-installer',
         requires = {
@@ -344,23 +438,151 @@ return require('packer').startup(function(use)
 
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use 'nvim-telescope/telescope-fzy-native.nvim'
-    use 'jvgrootveld/telescope-zoxide'
-    use 'folke/which-key.nvim'
-    use 'akinsho/nvim-toggleterm.lua'
+    use {
+        'nvim-telescope/telescope.nvim',
+        opt = true,
+        cmd = "Telescope",
+        requires = {
+            'nvim-telescope/telescope-fzy-native.nvim',
+            'jvgrootveld/telescope-zoxide'
+        },
+        config = function ()
+            require('telescope').setup{
+              defaults = {
+                vimgrep_arguments = {
+                  'rg',
+                  '--color=never',
+                  '--no-heading',
+                  '--with-filename',
+                  '--line-number',
+                  '--column',
+                  '--smart-case'
+                },
+                mappings = {
+                  i = {
+                        ["<Esc>"] = require('telescope.actions').close,
+                        ["<C-b>"] = function()
+                            vim.cmd("close!")
+                            require('telescope.builtin').file_browser()
+                        end,
+                        ["<C-d>"] = function ()
+                            vim.cmd("close!")
+                            require('telescope').extensions.zoxide.list()
+                        end,
+                        ["<C-f>"] = function()
+                            vim.cmd("close!")
+                            require('telescope.builtin').current_buffer_fuzzy_find()
+                        end,
+                        ["<C-g>"] = function()
+                            vim.cmd("close!")
+                            require('telescope.builtin').live_grep()
+                        end,
+                        ["<C-o>"] = function()
+                            vim.cmd("close!")
+                            require('telescope.builtin').find_files()
+                        end,
+                        ["<C-r>"] = function()
+                            vim.cmd("close!")
+                            require('telescope.builtin').oldfiles()
+                        end,
+                    }
+                },
+                pickers = {
+                    lsp_code_actions = {
+                        theme = "cursor"
+                    },
+                    find_files = {
+                        hidden = true
+                    }
+                },
+                prompt_prefix = "🔍 ",
+                selection_caret = " ",
+                entry_prefix = "  ",
+                initial_mode = "insert",
+                selection_strategy = "reset",
+                sorting_strategy = "ascending",
+                layout_strategy = "horizontal",
+                layout_config = {
+                  prompt_position = "top",
+                  horizontal = {
+                    width = { padding = 10 },
+                    height = { padding = 0.1 },
+                    preview_width = 0.5,
+                  },
+                  vertical = {
+                    width = { padding = 0.05 },
+                    height = { padding = 1 },
+                    preview_height = 0.5,
+                  }
+                },
+              }
+            }
+            require('telescope').load_extension('fzy_native')
+            require'telescope'.load_extension('zoxide')
+            require("telescope._extensions.zoxide.config").setup({
+              mappings = {
+                default = {
+                  after_action = function(selection)
+                    vim.cmd([[
+                        func! OpenFileFinder(timer)
+                            lua require('telescope.builtin').find_files()
+                        endfunc
+                        call timer_start(1, "OpenFileFinder", {'repeat': 1})
+                        ]])
+                  end
+                }
+              }
+            })
+        end
+    }
+
+    use {
+        'folke/which-key.nvim',
+        config = function ()
+            require("which-key").setup()
+        end
+    }
+
+    use {
+        'akinsho/nvim-toggleterm.lua',
+        opt = true,
+        keys = "<C-\\>",
+        config = function()
+            require("toggleterm").setup{
+              open_mapping = [[<c-\>]],
+              hide_numbers = true, -- hide the number column in toggleterm buffers
+              shade_filetypes = {},
+              shade_terminals = true,
+              start_in_insert = true,
+              direction = 'float',
+              persist_size = false,
+
+              close_on_exit = true, -- close the terminal window when the process exits
+              shell = vim.o.shell, -- change the default shell
+              -- This field is only relevant if direction is set to 'float'
+              float_opts = {
+                border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" },
+                winblend = 0,
+                highlights = {
+                  border = "VertSplit",
+                  background = "Normal",
+                },
+                height = function ()
+                    return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
+                end,
+                width = function ()
+                    return math.ceil(math.min(vim.o.columns, math.max(181, vim.o.columns - 30)))
+                end
+              }
+            }
+        end
+    }
     --use 'abecodes/tabout.nvim'
     use {
         'vuki656/package-info.nvim',
         requires = { "MunifTanjim/nui.nvim" },
         config = function()
             require('package-info').setup()
-        end
-    }
-    use {
-        'rmagatti/goto-preview',
-        config = function()
-            require('goto-preview').setup({})
         end
     }
 
@@ -527,7 +749,21 @@ return require('packer').startup(function(use)
     use 'gcmt/taboo.vim'
 
     use 'ryanoasis/vim-devicons'
-    use 'lukas-reineke/indent-blankline.nvim'
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function ()
+            require("indent_blankline").setup({
+                color_gui = '#303030',
+                char = '▏',
+                space_char = " ",
+                space_char_blank_line = " ",
+                show_current_context = true,
+                buftype_exclude = { "terminal" },
+                filetype_exclude = { "NvimTree", "help", "startify", "packer" }
+            })
+        end
+    }
+
     use 'dstein64/nvim-scrollview'
     use 'cseickel/dwm.vim'
 
@@ -632,5 +868,17 @@ return require('packer').startup(function(use)
             }
         end
     }
-end)
+
+end
+
+return require('packer').startup({
+    startup,
+    config = {
+        display = {
+          open_fn = function()
+            return require('packer.util').float({ border = 'single' })
+          end
+        }
+    }
+})
 

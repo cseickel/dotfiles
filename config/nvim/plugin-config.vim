@@ -15,18 +15,6 @@ endif
 colorscheme nvcode "<-- this one is best with tree-sitter
 
 " IndentLine
-let g:indentLine_color_term = 236
-let g:indentLine_color_gui = '#303030'
-let g:indentLine_enabled = 1
-"let g:indentLine_concealcursor = 0
-let g:indentLine_char = '▏'
-"let g:indentLine_char_list = ['│','┆','┊','⋮',':', '·', '·', '·', '·']
-let g:indentLine_faster = 1
-let g:indent_blankline_space_char = ' '
-let g:indent_blankline_space_char_blankline = ' '
-let g:indent_blankline_use_treesitter = v:true
-let g:indentLine_fileTypeExclude = [ "NvimTree", "terminal", "help", "startify" ]
-
 let g:webdevicons_enable_startify = 1
 
 let g:nvim_tree_gitignore = 0
@@ -51,16 +39,6 @@ highlight NvimTreeGitStaged guifg=none gui=Italic
 highlight NvimTreeGitDirty guifg=none gui=Italic
 highlight NvimTreeGitNew guifg=none gui=Italic
 highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
-
-let g:gitgutter_map_keys = 0
-let g:gitgutter_sign_added = '┃'
-let g:gitgutter_sign_modified = '┃'
-let g:gitgutter_sign_removed = '▁'
-let g:gitgutter_sign_removed_first_line = '▔'
-let g:gitgutter_sign_removed_above_and_below = '['
-let g:gitgutter_sign_modified_removed = '┻'
-let g:gitgutter_sign_allow_clobber = 0
-let g:gitgutter_sign_priority=1
 
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''
