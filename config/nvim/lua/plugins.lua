@@ -140,6 +140,10 @@ local startup = function(use)
                     delete       = {hl = 'GitGutterDelete', text = '▁'},
                     topdelete    = {hl = 'GitGutterDelete', text = '▔'},
                     changedelete = {hl = 'GitGutterChangeDelete', text = '┻'},
+                  },
+                  watch_gitdir = {
+                    interval = 3000,
+                    follow_files = true
                   }
             })
         end
