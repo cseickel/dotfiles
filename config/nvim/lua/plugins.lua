@@ -763,7 +763,7 @@ local startup = function(use)
                 space_char_blank_line = " ",
                 show_current_context = true,
                 buftype_exclude = { "terminal" },
-                filetype_exclude = { "NvimTree", "help", "startify", "packer" }
+                filetype_exclude = { "NvimTree", "help", "startify", "packer", "lsp-installer"}
             })
         end
     }
