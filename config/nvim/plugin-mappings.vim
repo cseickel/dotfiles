@@ -21,6 +21,10 @@ nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
+imap <c-p> <plug>EasyClipInsertModePaste
+cmap <c-p> <plug>EasyClipCommandModePaste
+
+
 function! ToggleWindowZoom(clear_decorations) abort
     if exists("b:is_zoomed_win") && b:is_zoomed_win
         unlet b:is_zoomed_win

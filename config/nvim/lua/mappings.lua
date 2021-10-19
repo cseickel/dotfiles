@@ -67,7 +67,6 @@ require("which-key").register({
 })
 
 local showSymbolFinder = function ()
-    require('packer').loader('telescope')
     local preview_width = vim.o.columns - 20 - 65
     if preview_width < 80 then
         preview_width = 80
@@ -91,7 +90,6 @@ local showSymbolFinder = function ()
     require('telescope.builtin').lsp_document_symbols(opts)
 end
 local getQuickfixOptions = function()
-    require('packer').loader('telescope')
     local width = math.min(vim.o.columns - 2, 180)
     local height = math.min(vim.o.lines - 10, 60)
     local opt = {

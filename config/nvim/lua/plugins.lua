@@ -149,6 +149,7 @@ local startup = function(use)
         end
     }
 
+    use {'kevinhwang91/nvim-bqf', ft = 'qf'}
     use { 'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
     use 'junegunn/fzf.vim'
     use { 'sindrets/diffview.nvim', opt = true, cmd = 'DiffviewOpen',
@@ -444,8 +445,6 @@ local startup = function(use)
     use 'nvim-lua/plenary.nvim'
     use {
         'nvim-telescope/telescope.nvim',
-        opt = true,
-        cmd = "Telescope",
         requires = {
             'nvim-telescope/telescope-fzy-native.nvim',
             'jvgrootveld/telescope-zoxide'
@@ -757,7 +756,7 @@ local startup = function(use)
         'lukas-reineke/indent-blankline.nvim',
         config = function ()
             require("indent_blankline").setup({
-                color_gui = '#303030',
+                color_gui = '#262626',
                 char = '▏',
                 space_char = " ",
                 space_char_blank_line = " ",
@@ -785,7 +784,7 @@ local startup = function(use)
         require'hop'.setup()
       end
     }
-    use 'wellle/targets.vim'
+    use { 'wellle/targets.vim' }
     use {
         'rhysd/clever-f.vim',
         setup = function()
