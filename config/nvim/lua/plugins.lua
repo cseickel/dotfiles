@@ -121,11 +121,46 @@ local startup = function(use)
         end
     }
 
+    -- SQL Interface
+    use 'tpope/vim-dadbod'
+    use 'kristijanhusak/vim-dadbod-ui'
+
     use 'antoinemadec/FixCursorHold.nvim'
     use 'jlanzarotta/bufexplorer'
     use 'tpope/vim-repeat'
-    use 'machakann/vim-sandwich'
     use 'tpope/vim-eunuch'
+    use 'tpope/vim-surround'
+    use { 'wellle/targets.vim' }
+
+
+    use 'dkarter/bullets.vim'
+    use 'Darazaki/indent-o-matic'
+    use { 
+        'ggandor/lightspeed.nvim',
+        config = function ()
+            vim.cmd([[ highlight LightspeedOneCharMatch gui=Bold,Underline guifg=#ffaf00 ]])
+        end
+    }
+    --use {
+    --  'phaazon/hop.nvim',
+    --  as = 'hop',
+    --  config = function()
+    --    -- you can configure Hop the way you like here; see :h hop-config
+    --    require'hop'.setup()
+    --  end
+    --}
+    --use {
+    --    'rhysd/clever-f.vim',
+    --    setup = function()
+    --        vim.cmd([[
+    --            let g:clever_f_smart_case=1
+    --            let g:clever_f_show_prompt=1
+    --            let g:clever_f_fix_key_direction=1
+    --            let g:clever_f_chars_match_any_signs=";"
+    --            highlight CleverFDefaultLabel gui=Bold,Underline guifg=#ffaf00
+    --        ]])
+    --    end
+    --}
     --use 'airblade/vim-gitgutter'
     use {
         'lewis6991/gitsigns.nvim',
@@ -769,34 +804,6 @@ local startup = function(use)
 
     use 'dstein64/nvim-scrollview'
     use 'cseickel/dwm.vim'
-
-    -- SQL Interface
-    use 'tpope/vim-dadbod'
-    use 'kristijanhusak/vim-dadbod-ui'
-
-    use 'dkarter/bullets.vim'
-    use 'Darazaki/indent-o-matic'
-    use {
-      'phaazon/hop.nvim',
-      as = 'hop',
-      config = function()
-        -- you can configure Hop the way you like here; see :h hop-config
-        require'hop'.setup()
-      end
-    }
-    use { 'wellle/targets.vim' }
-    use {
-        'rhysd/clever-f.vim',
-        setup = function()
-            vim.cmd([[
-                let g:clever_f_smart_case=1
-                let g:clever_f_show_prompt=1
-                let g:clever_f_fix_key_direction=1
-                let g:clever_f_chars_match_any_signs=";"
-                highlight CleverFDefaultLabel gui=Bold,Underline guifg=#ffaf00
-            ]])
-        end
-    }
 
     --use {
     --    'ms-jpq/coq_nvim',
