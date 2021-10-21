@@ -310,6 +310,12 @@ local startup = function(use)
     use 'christianchiarulli/nvcode-color-schemes.vim'
 
     use {
+        'https://gitlab.com/yorickpeterse/nvim-dd.git',
+        config = function ()
+            require('dd').setup({ timeout = 200 })
+        end
+    }
+    use {
         'williamboman/nvim-lsp-installer',
         requires = {
             'ray-x/lsp_signature.nvim',
@@ -790,8 +796,11 @@ local startup = function(use)
     use {
         'lukas-reineke/indent-blankline.nvim',
         config = function ()
+            vim.cmd([[
+                highlight IndentBlanklineChar guifg=#303030
+                highlight IndentBlanklineContextChar guifg=#585858
+            ]])
             require("indent_blankline").setup({
-                color_gui = '#262626',
                 char = '▏',
                 space_char = " ",
                 space_char_blank_line = " ",

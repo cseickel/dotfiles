@@ -23,30 +23,16 @@ local focus_tree = function()
     end
 end
 
-vim.cmd([[
-    vmap ;  <cmd>HopChar2<cr>
-    vmap gc <cmd>HopChar1<cr>
-    vmap gw <cmd>HopWord<cr>
-    vmap gl <cmd>HopLine<cr>
-    vmap g/ <cmd>HopPattern<cr>
-]])
 require("which-key").register({
-    [";"] = { "<cmd>HopChar2<cr>",         "Hop Bigram" },
-    g = {
-        name = "Go",
-        c = { "<cmd>HopChar1<cr>",         "Hop Character" },
-        w = { "<cmd>HopWord<cr>",          "Hop Word" },
-        l = { "<cmd>HopLine<cr>",          "Hop Line" },
-        ["/"] = { "<cmd>HopPattern<cr>",   "Hop Pattern" },
-    },
+    [";"] = { "@q", "Run Macro @q" },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
     k = { "Focus window ABOVE" },
     l = { "Focus window to the RIGHT" },
-    H = { "Previous Tab" },
-    L = { "Next Tab" },
+    H = { "Start of Line" },
+    L = { "End of Line" },
     K = { "Show documentation"},
-    s = { "Substitute Word" },
+    s = { "Lightspeed Search" },
     ["\\"] = { focus_tree,                                    "Open  Tree" },
     --["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
@@ -121,8 +107,7 @@ end
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
-    [","] = { "<cmd>HopChar1<cr>",                            "Hop Character" },
-    ["b"] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
+    [","] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
     ["="] = { "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",             "Code actions" },
     c = {
