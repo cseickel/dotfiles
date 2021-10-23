@@ -103,8 +103,12 @@ local left_pad = function (str, length)
 end
 
 function make_entry.gen_from_quickfix(opts)
-  opts = opts or {}
-  local file_width = math.max(math.floor(opts.width / 2) - 6, math.min(opts.width - 5, 40))
+  opts = opts or { width = 80 }
+  local opt_width = opts.width
+  if type(opts.width) == "function" then
+    opt_width = opts.width()
+  end
+  local file_width = math.max(math.floor(opt_width / 2) - 6, math.min(opt_width - 5, 40))
 
   local displayer = entry_display.create {
     separator = " ",

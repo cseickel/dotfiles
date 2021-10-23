@@ -239,24 +239,26 @@ n ()
 }
 
 function work-on-issue() {
-    git fetch
     issue=$(gh issue list | fzf --header "PLEASE SELECT AN ISSUE TO WORK ON" | awk -F '\t' '{ print $1 }')
     sanitized=$(gh issue view $issue --json "title" | jq -r ".title" | tr '[:upper:]' '[:lower:]' | tr -s -c "a-z0-9\n" "-" | head -c 60)
     branchname=$issue-$sanitized
     shortname=$(echo $branchname | head -c 30)
-    existing=$(git branch -a | grep -v remotes | grep $shortname | head -n 1)
-    if [[ ! -z "$existing" ]]; then
-        sh -c "git switch $existing"
-    else
-        bold=$(tput bold)
-        normal=$(tput sgr0)
-        echo "${bold}Please confirm new branch name:${normal}"
-        vared branchname
-        base=$(git branch --show-current)
-        echo "${bold}Please confirm the base branch:${normal}"
-        vared base
-        git checkout -b $branchname $base
-        git push --set-upstream origin $branchname
+    if [[ -z "$shortname" ]]; then
+        git fetch
+        existing=$(git branch -a | grep -v remotes | grep $shortname | head -n 1)
+        if [[ ! -z "$existing" ]]; then
+            sh -c "git switch $existing"
+        else
+            bold=$(tput bold)
+            normal=$(tput sgr0)
+            echo "${bold}Please confirm new branch name:${normal}"
+            vared branchname
+            base=$(git branch --show-current)
+            echo "${bold}Please confirm the base branch:${normal}"
+            vared base
+            git checkout -b $branchname origin/$base
+            git push --set-upstream origin $branchname
+        fi
     fi
 }
 #if [[ -n $SSH_CONNECTION ]] ; then

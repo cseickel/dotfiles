@@ -88,9 +88,6 @@ vnoremap <silent> <C-a> <Esc>ggVG
 " Search and Replace Selected Text
 vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
 
-" Re-map add mark, bceuase I will shadow it with EasyClip's m for move
-nnoremap <leader>m m
-
 " Close window
 noremap <C-q> :q<cr>
 inoremap <C-q> <Esc>:q<cr>

@@ -124,6 +124,7 @@ local startup = function(use)
     -- SQL Interface
     use 'tpope/vim-dadbod'
     use 'kristijanhusak/vim-dadbod-ui'
+    use 'kristijanhusak/vim-dadbod-completion'
 
     use 'antoinemadec/FixCursorHold.nvim'
     use 'jlanzarotta/bufexplorer'
@@ -488,9 +489,12 @@ local startup = function(use)
         'nvim-telescope/telescope.nvim',
         requires = {
             'nvim-telescope/telescope-fzy-native.nvim',
-            'jvgrootveld/telescope-zoxide'
+            'jvgrootveld/telescope-zoxide',
         },
         config = function ()
+            local quickfix_width = function()
+                return math.min(vim.o.columns - 2, 180)
+            end
             require('telescope').setup{
               defaults = {
                 vimgrep_arguments = {
@@ -537,7 +541,7 @@ local startup = function(use)
                     },
                     find_files = {
                         hidden = true
-                    }
+                    },
                 },
                 prompt_prefix = "🔍 ",
                 selection_caret = " ",
@@ -636,7 +640,7 @@ local startup = function(use)
     -- UI Stuff
     use 'psliwka/vim-smoothie'
     use {
-        'shadmansaleh/lualine.nvim',
+        'nvim-lualine/lualine.nvim',
         config = function ()
             local diag_config = {
                 'diagnostics',
@@ -888,6 +892,66 @@ local startup = function(use)
         end
     }
 
+    use {
+        'chentau/marks.nvim',
+        config = function ()
+            require'marks'.setup {
+                -- whether to map keybinds or not. default true
+                default_mappings = false,
+                -- which builtin marks to show. default {}
+                builtin_marks = { "[", "]", "<", ">", "^" },
+                -- whether movements cycle back to the beginning/end of buffer. default true
+                cyclic = true,
+                -- whether the shada file is updated after modifying uppercase marks. default false
+                force_write_shada = true,
+                -- how often (in ms) to redraw signs/recompute mark positions.
+                -- higher values will have better performance but may cause visual lag,
+                -- while lower values may cause performance penalties. default 150.
+                refresh_interval = 250,
+                mappings = {
+                    set_bookmark0 = ",mm",
+                    delete_line = ",md",
+                    delete_buf = ",mD",
+                    next_bookmark0 = "]]",
+                    prev_bookmark0 = "[[",
+                    preview = ",mp",
+                },
+                bookmark_0 = {
+                    sign = "⚑",
+                    virt_text = "<-- Mark"
+                },
+            }
+        end
+    }
+    --use {
+    --    'MattesGroeger/vim-bookmarks',
+    --    config = function ()
+    --        vim.cmd([[
+    --            let g:bookmark_no_default_key_mappings = 1
+    --            let g:bookmark_save_per_working_dir = 0
+    --            let g:bookmark_auto_save = 1
+    --            let g:bookmark_center = 1
+    --            " Finds the Git super-project directory.
+    --            function! g:BMWorkDirFileLocation()
+    --                let filename = '.vim-bookmarks'
+    --                let location = ''
+    --                if isdirectory('.git')
+    --                    " Current work dir is git's work tree
+    --                    let location = getcwd().'/.git'
+    --                else
+    --                    " Look upwards (at parents) for a directory named '.git'
+    --                    let location = finddir('.git', '.;')
+    --                endif
+    --                if len(location) > 0
+    --                    return location.'/'.filename
+    --                else
+    --                    return getcwd().'/.'.filename
+    --                endif
+    --            endfunction
+
+    --        ]])
+    --    end
+    --}
 end
 
 return require('packer').startup({

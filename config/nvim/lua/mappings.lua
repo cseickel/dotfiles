@@ -24,7 +24,8 @@ local focus_tree = function()
 end
 
 require("which-key").register({
-    [";"] = { "@q", "Run Macro @q" },
+    [";"] = { "<cmd>bprev<cr>",                        "Previous Buffer" },
+    ["'"] = { "<cmd>bnext<cr>",                        "Next Buffer" },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
     k = { "Focus window ABOVE" },
@@ -32,12 +33,13 @@ require("which-key").register({
     H = { "Start of Line" },
     L = { "End of Line" },
     K = { "Show documentation"},
-    s = { "Lightspeed Search" },
+    s = { "Lightspeed Search Forward" },
+    S = { "Lightspeed Search Backward" },
     ["\\"] = { focus_tree,                                    "Open  Tree" },
-    --["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["["] = {
         name = "Previous...",
+        ["[["] = { "Previous Mark" },
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
         l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
         q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
@@ -45,6 +47,7 @@ require("which-key").register({
     },
     ["]"] = {
         name = "Next...",
+        ["]]"] = { "Next Mark" },
         d = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Next Diagnostic" },
         l = { "<cmd>lnext<cr>",                               "Next Location List" },
         q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
@@ -118,13 +121,21 @@ require("which-key").register({
         t = { "<cmd>ConflictMarkerThemselves<cr>",            "Keep Themselves (Bottom)" },
     },
     d = { "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>", "Preview Diagnostic" },
-    D = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",    "Show all Diagnostics" },
-    h = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
+    D = { "<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>",     "Show all Diagnostics" },
+    H = { "<cmd>Telescope help_tags<cr>",                     "VIM Help" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     J = { "f,ls<cr><esc>",                                    "Newline at next comma" },
     l = { "Show Location List" },
     L = { "Close Location List" },
-    m = { "add Mark" },
+    m = {
+        name = "Marks",
+        a = {                                                 "Add Mark (by Letter)" },
+        d = {                                                 "Clear Marks on Line" },
+        D = {                                                 "Clear ALL Marks" },
+        m = {                                                 "Set Quick Mark" },
+        p = {                                                 "Preview Mark" },
+        s = { "<cmd>BookmarksListAll<cr>",                    "Show All Bookmarks" },
+    },
     q = { "Show Quickfix" },
     Q = { "Close Quickfix" },
     f = {
