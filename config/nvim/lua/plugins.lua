@@ -389,7 +389,7 @@ local startup = function(use)
         "hrsh7th/nvim-cmp",
         as = "cmp",
         opt = true,
-        event='InsertEnter', 
+        event='InsertEnter',
         requires = {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
@@ -400,7 +400,13 @@ local startup = function(use)
             --'honza/vim-snippets',
             'hrsh7th/vim-vsnip',
             'hrsh7th/vim-vsnip-integ',
-            'rafamadriz/friendly-snippets'
+            'rafamadriz/friendly-snippets',
+            {
+                'David-Kunz/cmp-npm',
+                config = function ()
+                    require('cmp-npm').setup({})
+                end
+            }
         },
         config = function()
             local cmp = require('cmp')
@@ -436,12 +442,13 @@ local startup = function(use)
                     vim.fn["vsnip#anonymous"](args.body)
                 end},
                 sources = {
-                    {name = "nvim_lua"},
-                    {name = 'nvim_lsp'},
-                    {name = "vsnip"},
-                    {name = "path"},
-                    {name = "calc"},
-                    {name = 'buffer', keyword_length = 2},
+                    { name = "nvim_lua" },
+                    { name = 'nvim_lsp' },
+                    { name = "npm", keyword_length = 3 },
+                    { name = "vsnip" },
+                    { name = "path" },
+                    { name = "calc" },
+                    { name = 'buffer', keyword_length = 2 },
                 },
                 completion = {completeopt = 'menu,menuone,noinsert'}
             }

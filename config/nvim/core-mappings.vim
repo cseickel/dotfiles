@@ -12,6 +12,9 @@ tnoremap <silent> <C-\> <c-\><c-n>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+noremap <tab> <cmd>tabnext<cr>
+noremap <s-tab> <cmd>tabprev<cr>
+
 " Change word the cursor is on
 nmap <space> ciw
 
