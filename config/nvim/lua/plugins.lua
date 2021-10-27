@@ -11,7 +11,8 @@ local startup = function(use)
         end
     }
 
-    use { 'kyazdani42/nvim-tree.lua',
+    --use { 'kyazdani42/nvim-tree.lua',
+    use { '~/repos/nvim-tree.lua',
         opt = true,
         cmd = "NvimTree*",
         config = function()
@@ -75,7 +76,7 @@ local startup = function(use)
                 auto_close = true,
                 update_cwd = true,
                 update_focused_file = {
-                    enable = true
+                    enable = false
                 },
                 diagnostics = {
                     enable = true,
@@ -95,6 +96,7 @@ local startup = function(use)
                             { key = "<BS>",          cb = tree_cb("dir_up")},
                             { key = "<",             cb = tree_cb("prev_sibling")},
                             { key = ">",             cb = tree_cb("next_sibling")},
+                            { key = "b",             cb = tree_cb("toggle_open_buffers_only") },
                             { key = "h",             cb = tree_cb("toggle_dotfiles") },
                             { key = "i",             cb = tree_cb("toggle_ignored") },
                             { key = "R",             cb = tree_cb("refresh") },
@@ -426,7 +428,8 @@ local startup = function(use)
                             path = "[Path]",
                             spell = "[Spell]",
                             calc = "[Calc]",
-                            emoji = "[Emoji]"
+                            emoji = "[Emoji]",
+                            npm = "[npm]"
                         })[entry.source.name]
                         return vim_item
                     end
@@ -822,7 +825,7 @@ local startup = function(use)
         end
     }
 
-    use 'dstein64/nvim-scrollview'
+    --use 'dstein64/nvim-scrollview'
     use 'cseickel/dwm.vim'
 
     --use {
@@ -902,6 +905,7 @@ local startup = function(use)
     use {
         'chentau/marks.nvim',
         config = function ()
+            vim.cmd("highlight link MarkSignNumHL none")
             require'marks'.setup {
                 -- whether to map keybinds or not. default true
                 default_mappings = false,
@@ -959,16 +963,28 @@ local startup = function(use)
     --        ]])
     --    end
     --}
+    use { 'el-iot/buffer-tree-explorer',
+        config = function ()
+            vim.cmd([[
+                let g:buffer_tree_explorer_compress=1
+                highlight TreePath ctermfg=242
+                highlight TreeFile ctermfg=white
+                highlight TreeWindowFile cterm=bold ctermfg=white
+                highlight TreeBranch ctermfg=green
+                hi link TreeFile NvimTreeOpenedFile
+            ]])
+        end
+    }
 end
 
 return require('packer').startup({
     startup,
-    config = {
-        display = {
-          open_fn = function()
-            return require('packer.util').float({ border = 'single' })
-          end
-        }
-    }
+    --config = {
+    --    display = {
+    --      open_fn = function()
+    --        return require('packer.util').float({ border = 'single' })
+    --      end
+    --    }
+    --}
 })
 

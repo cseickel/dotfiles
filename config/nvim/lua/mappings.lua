@@ -6,20 +6,10 @@ presets.operators["v"] = nil
 
 
 local focus_tree = function()
-    local cmd = "NvimTreeFindFile"
-    require('packer').loader('nvim-tree.lua')
     if vim.fn.expand("%") == "" then
-        cmd = "NvimTreeOpen"
-    end
-    if require('nvim-tree.view').win_open() then
-        vim.cmd(cmd)
+        vim.cmd("NvimTreeOpen")
     else
-        vim.cmd(cmd)
-        vim.cmd("setlocal winhighlight=Normal:NvimTreeNormal,NormalNC:NvimTreeNormalNC")
-        vim.cmd("setlocal cursorline")
-        --local lib = require('nvim-tree.lib')
-        --local folder = vim.fn.getcwd()
-        --lib.change_dir(folder)
+        vim.cmd("NvimTreeFindFile")
     end
 end
 
@@ -111,8 +101,8 @@ end
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
     [","] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
-    ["="] = { "Format Document" },
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",             "Code actions" },
+    ["="] = { "<cmd>Neoformat<cr>",                           "Format Document" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     c = {
         name = "Conflict Resolution",
         b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },

@@ -64,7 +64,6 @@ function! CloseAllTools()
 endfunction
 
 
-nnoremap <silent> <C-\> :lua shadow_term_toggle()<cr>
 nnoremap <silent> <C-\> :ToggleTerm<cr>
 
 
@@ -73,7 +72,6 @@ nnoremap <silent> <C-\> :ToggleTerm<cr>
 "" LSP Mappings
 "*****************************************************************************
 nnoremap <silent>       K         :lua vim.lsp.buf.hover()<cr>
-nnoremap <silent>       <leader>= :Neoformat<cr>
 
 function! InitSql()
     nnoremap <silent><buffer> <M-x> :%DB $DBUI_URL<cr>
@@ -90,7 +88,8 @@ augroup plugin_mappings_augroup
     autocmd FileType qf,Trouble silent! call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
-    "autocmd FileType qf call timer_start(20, { tid -> execute('call ReplaceQuickfix()')})
+    autocmd FileType scrollview,terminal execute("MarksToggleSigns" . bufnr('%'))
+    autocmd BufWritePre * undojoin | Neoformat
 augroup END
 
 function! Syn()

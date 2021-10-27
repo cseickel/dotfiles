@@ -62,9 +62,9 @@ set number
 set wrap linebreak breakindent
 set showbreak=\ ﬌\ 
 set signcolumn=auto:2
+set cursorline
 "
 " Tweaks to improve performance
-set nocursorline
 set updatetime=1000
 set lazyredraw
 

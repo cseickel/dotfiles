@@ -29,7 +29,7 @@ let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git att
 let g:nvim_tree_highlight_opened_files = 2
 let g:nvim_tree_icons = { "default" : "" }
 
-highlight CursorLine guibg=#363636
+highlight NvimTreeCursorLine guibg=#3a3a3a gui=bold
 highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
 highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
 highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
@@ -168,7 +168,7 @@ let g:startify_change_to_dir = 1
 let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
             \ 't:terminal', 'g:terminal', 'w:terminal']
 
-set sessionoptions=curdir,tabpages,winpos
+set sessionoptions=curdir,tabpages,winpos,buffers
 
 
 "fzf preview
@@ -263,9 +263,10 @@ highlight link NormalFloat NormalNC
 highlight TroubleNormal guibg=none ctermbg=none
 highlight TroubleText guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
-highlight LineNR guibg=None ctermbg=None
 highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
-highlight CursorLineNr ctermfg=2 guifg=#608b4e ctermbg=None guibg=None
+highlight LineNR guibg=None ctermbg=None
+highlight CursorLineNr guibg=#262626 guifg=#a8a8a8 gui=bold
+highlight CursorLine guibg=#262626
 
 
 highlight Cursor guibg=#5f87af ctermbg=67
