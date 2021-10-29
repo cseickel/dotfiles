@@ -122,7 +122,7 @@ require("which-key").register({
         a = {                                                 "Add Mark (by Letter)" },
         d = {                                                 "Clear Marks on Line" },
         D = {                                                 "Clear ALL Marks" },
-        m = {                                                 "Set Quick Mark" },
+        m = {                                                 "Set Bookmark" },
         p = {                                                 "Preview Mark" },
         s = { "<cmd>BookmarksListAll<cr>",                    "Show All Bookmarks" },
     },

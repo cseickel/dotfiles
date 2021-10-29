@@ -109,6 +109,7 @@ let g:bufExplorerShowTabBuffer=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerDisableDefaultKeyMapping=1
 
+let g:EditorConfig_max_line_indicator="fill"
 let g:sharpenup_create_mappings = 0
 let g:OmniSharp_highlighting = 0
 let g:completion_auto_change_source = 0
@@ -267,6 +268,7 @@ highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight LineNR guibg=None ctermbg=None
 highlight CursorLineNr guibg=#262626 guifg=#a8a8a8 gui=bold
 highlight CursorLine guibg=#262626
+highlight ColorColumn guibg=#262626
 
 
 highlight Cursor guibg=#5f87af ctermbg=67

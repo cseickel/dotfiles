@@ -11,7 +11,15 @@ local startup = function(use)
         end
     }
 
-    --use { 'kyazdani42/nvim-tree.lua',
+    use 'editorconfig/editorconfig-vim'
+
+    use {
+        'rcarriga/nvim-notify',
+        config = function ()
+            vim.notify = require('notify')
+        end
+    }
+
     use { '~/repos/nvim-tree.lua',
         opt = true,
         cmd = "NvimTree*",
@@ -239,8 +247,6 @@ local startup = function(use)
 
     use {
         'mfussenegger/nvim-dap',
-        opt = true,
-        keys = { "<F5>", "<F10>", "<F11>", "<F12>", "<leader>b" },
         requires = { 'rcarriga/nvim-dap-ui' },
         config = function ()
             vim.cmd([[
@@ -458,6 +464,8 @@ local startup = function(use)
         end
     }
 
+    use 'github/copilot.vim'
+
     use {
         'onsails/lspkind-nvim',
         opt = true,
@@ -670,6 +678,7 @@ local startup = function(use)
                 --section_separators = {'', ''},
                 --section_separators = {'', ''},
                 --component_separators = {'', ''},
+                component_separators = { '', '' }
               },
               sections = {
                 lualine_a = { {
@@ -721,8 +730,9 @@ local startup = function(use)
                         end
                     }
                 },
-                lualine_z = { {
-                        'location',
+                lualine_z = {
+                    {
+                        '%3l/%L%  %{LineNoIndicator()} %2c',
                         fmt = function(data)
                             local winwidth = vim.fn.winwidth(0)
                             local filelength = string.len(vim.fn.expand("%:t"))
@@ -733,7 +743,7 @@ local startup = function(use)
                                 return data
                             end
                         end
-                    }
+                    },
                 },
               },
               inactive_sections = {
@@ -920,6 +930,7 @@ local startup = function(use)
                 -- while lower values may cause performance penalties. default 150.
                 refresh_interval = 250,
                 mappings = {
+                    set = ",ma",
                     set_bookmark0 = ",mm",
                     delete_line = ",md",
                     delete_buf = ",mD",
@@ -963,18 +974,6 @@ local startup = function(use)
     --        ]])
     --    end
     --}
-    use { 'el-iot/buffer-tree-explorer',
-        config = function ()
-            vim.cmd([[
-                let g:buffer_tree_explorer_compress=1
-                highlight TreePath ctermfg=242
-                highlight TreeFile ctermfg=white
-                highlight TreeWindowFile cterm=bold ctermfg=white
-                highlight TreeBranch ctermfg=green
-                hi link TreeFile NvimTreeOpenedFile
-            ]])
-        end
-    }
 end
 
 return require('packer').startup({
