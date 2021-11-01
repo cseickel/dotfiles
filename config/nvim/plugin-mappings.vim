@@ -85,6 +85,12 @@ function! Highlight_Symbol() abort
     endif
 endfunction
 
+function! UpdateNvimTreeBuffers()
+    lua require('nvim-tree').refresh()
+    lua require('nvim-tree.lib').redraw()
+    lua require('nvim-tree').find_file()
+endfunction
+
 augroup plugin_mappings_augroup
     autocmd!
     autocmd CursorHold * silent! call Highlight_Symbol()
@@ -95,6 +101,7 @@ augroup plugin_mappings_augroup
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
     autocmd FileType scrollview,terminal execute("MarksToggleSigns" . bufnr('%'))
+    autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers()
     "autocmd BufWritePre * undojoin | Neoformat
 augroup END
 
