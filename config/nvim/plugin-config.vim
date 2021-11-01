@@ -18,7 +18,6 @@ colorscheme nvcode "<-- this one is best with tree-sitter
 let g:webdevicons_enable_startify = 1
 
 let g:nvim_tree_gitignore = 0
-let g:nvim_tree_hide_dotfiles = 0
 let g:nvim_tree_show_icons = {
             \ 'git': 0,
             \ 'folders': 1,

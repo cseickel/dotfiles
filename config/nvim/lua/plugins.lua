@@ -1,6 +1,6 @@
 local startup = function(use)
     vim = vim
-    use {'lewis6991/impatient.nvim', rocks = 'mpack'}
+    --use {'lewis6991/impatient.nvim', rocks = 'mpack'}
 
     use 'dstein64/vim-startuptime'
 
@@ -80,7 +80,7 @@ local startup = function(use)
                 end
             end
             local lib = require('nvim-tree.lib')
-            require("nvim-tree").setup({
+            local opt = {
                 auto_close = true,
                 update_cwd = true,
                 update_focused_file = {
@@ -127,7 +127,8 @@ local startup = function(use)
                         }
                     }
                 }
-            })
+            }
+            require("nvim-tree").setup(opt)
         end
     }
 
@@ -836,7 +837,7 @@ local startup = function(use)
     }
 
     --use 'dstein64/nvim-scrollview'
-    use 'cseickel/dwm.vim'
+    use '~/repos/dwm.vim'
 
     --use {
     --    'ms-jpq/coq_nvim',
