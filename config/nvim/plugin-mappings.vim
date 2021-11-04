@@ -1,5 +1,4 @@
-nnoremap <silent> <C-t> :tabnew<cr><bar>:Startify<cr>
-nnoremap <M-t> :TabooRename 
+nnoremap <silent> <M-t> :tabnew<cr><bar>:Startify<cr>
 
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
 
@@ -23,6 +22,9 @@ nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
 imap <c-p> <plug>EasyClipInsertModePaste
 cmap <c-p> <plug>EasyClipCommandModePaste
+
+imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+let g:copilot_no_tab_map = v:true
 
 
 function! ToggleWindowZoom(clear_decorations) abort

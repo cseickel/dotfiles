@@ -32,6 +32,12 @@ nnoremap <M-3> :b#<cr>
 inoremap <M-3> <Esc>:b#<cr>
 tnoremap <M-3> <c-\><c-n>:b#<cr>
 
+" Mimic insert mode mappings
+nnoremap <C-d> <<
+nnoremap <C-t> >>
+vnoremap <C-d> <
+vnoremap <C-t> >
+
 " Quick edits from normal/visual mode
 "nnoremap <silent> <tab>     >>
 "nnoremap <silent> <S-tab>   <<
@@ -243,6 +249,51 @@ function! RecycleTerminal()
     let b:term_tab_owner = page_handle
 endfunction
 
+function! ComparePaths(item1, item2)
+    if a:item1.path < a:item2.path
+        return 1
+    endif
+    if a:item1.path > a:item2.path
+        return -1
+    endif
+    if a:item1.name < a:item2.name
+        return -1
+    endif
+    if a:item1.name > a:item2.name
+        return 1
+    endif
+    return 0
+endfunction
+
+function! NextBufferByName(direction) abort
+    let buffers = []
+    let current = { "path": expand("%:p:h"), "name": expand("%:t") }
+    let page_handle = nvim_get_current_tabpage()
+    for buf in nvim_list_bufs()
+        if nvim_buf_is_valid(buf) && nvim_buf_is_loaded(buf)
+            let ft = nvim_buf_get_option(buf, "filetype")
+            let name = nvim_buf_get_name(buf)
+            if len(name) > 0 && ft != "NvimTree"
+                let object = { "path": expand("#" . buf . ":p:h"), "name": expand("#" . buf . ":p:t"),  "buf": buf }
+                call add(buffers, object)
+            endif
+        endif
+    endfor
+    let sorted = sort(buffers, function("ComparePaths"))
+    for i in range(len(sorted))
+        if sorted[i].path == current.path && sorted[i].name == current.name
+            if a:direction > 0 && i < len(sorted) - 1
+                execute(":b" . sorted[i + 1].buf)
+            endif
+            if a:direction < 0 && i > 0
+                execute(":b" . sorted[i - 1].buf)
+            endif
+        endif
+    endfor
+endfunction
+
+nnoremap <silent> ; :call NextBufferByName(-1)<cr>
+nnoremap <silent> ' :call NextBufferByName(1)<cr>
 nnoremap <silent> <leader>S :call SaveTerminal()<cr>
 nnoremap <silent> <leader>s :call OpenSavedTerminal()<cr>
 nnoremap <silent> <leader>t :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>

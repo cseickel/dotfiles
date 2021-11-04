@@ -34,7 +34,7 @@ RUN cd /home/$UNAME \
 ARG CACHE_BREAKER=""
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
-        python3 python-pip nodejs npm clang prettier git-delta github-cli \
+        python3 python-pip nodejs npm clang eslint_d prettier git-delta github-cli \
         tmux bat fzf kitty-terminfo neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \

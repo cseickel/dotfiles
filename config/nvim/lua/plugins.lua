@@ -13,12 +13,13 @@ local startup = function(use)
 
     use 'editorconfig/editorconfig-vim'
 
-    use {
-        'rcarriga/nvim-notify',
-        config = function ()
-            vim.notify = require('notify')
-        end
-    }
+    -- This is really nice, but there are too many errors I don't want to see
+    --use {
+    --    'rcarriga/nvim-notify',
+    --    config = function ()
+    --        vim.notify = require('notify')
+    --    end
+    --}
 
     use { '~/repos/nvim-tree.lua',
         opt = true,
@@ -82,7 +83,7 @@ local startup = function(use)
             local lib = require('nvim-tree.lib')
             local opt = {
                 auto_close = true,
-                update_cwd = true,
+                update_cwd = false,
                 update_focused_file = {
                     enable = false
                 },
@@ -329,7 +330,10 @@ local startup = function(use)
         'williamboman/nvim-lsp-installer',
         requires = {
             'ray-x/lsp_signature.nvim',
-            'neovim/nvim-lspconfig'
+            'neovim/nvim-lspconfig',
+            'jose-elias-alvarez/nvim-lsp-ts-utils',
+            'jose-elias-alvarez/null-ls.nvim',
+            'nvim-lua/plenary.nvim'
         },
         config = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -361,16 +365,72 @@ local startup = function(use)
                 --  ]], false)
                 --
             end
-            local opts = {
-                capabilities = capabilities,
-                on_attach = lsp_attach
-            }
+
+            local nvim_lsp = require("lspconfig")
+
+            -- enable null-ls integration (optional)
+            require("null-ls").config {}
+            require("lspconfig")["null-ls"].setup {}
+
+            -- make sure to only run this once!
+            local tsserver_on_attach = function(client, bufnr)
+                -- disable tsserver formatting if you plan on formatting via null-ls
+                client.resolved_capabilities.document_formatting = false
+                client.resolved_capabilities.document_range_formatting = false
+
+                local ts_utils = require("nvim-lsp-ts-utils")
+
+                -- defaults
+                ts_utils.setup {
+                    enable_import_on_completion = true,
+                    -- eslint
+                    eslint_enable_code_actions = true,
+                    eslint_enable_disable_comments = true,
+                    eslint_bin = "eslint_d",
+                    eslint_enable_diagnostics = false,
+                    eslint_opts = {},
+
+                    -- formatting
+                    enable_formatting = true,
+                    formatter = "prettier",
+                    formatter_opts = {},
+
+                    -- update imports on file move
+                    update_imports_on_move = true,
+                    require_confirmation_on_move = false,
+                    watch_dir = nil,
+
+                    -- filter diagnostics
+                    filter_out_diagnostics_by_severity = {},
+                    filter_out_diagnostics_by_code = {},
+                }
+
+                -- required to fix code action ranges and filter diagnostics
+                ts_utils.setup_client(client)
+
+                -- no default maps, so you may want to define some here
+                local opts = { silent = true }
+                vim.api.nvim_buf_set_keymap(bufnr, "n", ",go", ":TSLspOrganize<CR>", opts)
+                vim.api.nvim_buf_set_keymap(bufnr, "n", ",gR", ":TSLspRenameFile<CR>", opts)
+                vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
+            end
 
             local lsp_installer = require("nvim-lsp-installer")
             lsp_installer.on_server_ready(function(server)
-                server:setup(opts)
-                vim.cmd [[ do User LspAttachBuffers ]]
+                if server.name == "tsserver" then
+                    server:setup({
+                        capabilities = capabilities,
+                        on_attach = tsserver_on_attach
+                    })
+                else
+                    server:setup({
+                        capabilities = capabilities,
+                        on_attach = lsp_attach
+                    })
+                    vim.cmd [[ do User LspAttachBuffers ]]
+                end
             end)
+
         end,
         run = function()
             vim.cmd('LspInstall angularls')
@@ -442,7 +502,7 @@ local startup = function(use)
                     end
                 },
                 mapping = {
-                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.close(),
