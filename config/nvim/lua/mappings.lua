@@ -100,7 +100,7 @@ end
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
-    [","] = { "<cmd>BufExplorer<cr>",                         "Show Buffers" },
+    [","] = { "<cmd>NvimTreeBuffers<cr>",                     "Show Buffers Tree" },
     ["="] = { "<cmd>Neoformat<cr>",                           "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
     c = {

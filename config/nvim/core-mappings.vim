@@ -282,18 +282,33 @@ function! NextBufferByName(direction) abort
     let sorted = sort(buffers, function("ComparePaths"))
     for i in range(len(sorted))
         if sorted[i].path == current.path && sorted[i].name == current.name
-            if a:direction > 0 && i < len(sorted) - 1
-                execute(":b" . sorted[i + 1].buf)
+            if a:direction > 0
+                let index = i + 1
             endif
-            if a:direction < 0 && i > 0
-                execute(":b" . sorted[i - 1].buf)
+            if a:direction < 0
+                let index = i - 1
             endif
+            if index < 0
+                let index = len(sorted) - 1
+            else
+                if index > len(sorted) - 1
+                    let index = 0
+                endif
+            endif
+            execute(":b" . sorted[index].buf)
+            break
         endif
     endfor
 endfunction
 
-nnoremap <silent> ; :call NextBufferByName(-1)<cr>
-nnoremap <silent> ' :call NextBufferByName(1)<cr>
+function! DeleteBuffer() abort
+    call NextBufferByName(-1)
+    bd#
+endfunction
+
+nnoremap <silent> ;         :call NextBufferByName(-1)<cr>
+nnoremap <silent> '         :call NextBufferByName(1)<cr>
+nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 nnoremap <silent> <leader>S :call SaveTerminal()<cr>
 nnoremap <silent> <leader>s :call OpenSavedTerminal()<cr>
 nnoremap <silent> <leader>t :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>

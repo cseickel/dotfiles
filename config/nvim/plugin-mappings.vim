@@ -2,17 +2,8 @@ nnoremap <silent> <M-t> :tabnew<cr><bar>:Startify<cr>
 
 let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
 
-function! BufferDelete() abort
-    if winnr('$') > 1
-        bd
-        call DWM_Focus()
-    else
-        bd
-    endif
-endfunction 
 nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
-nmap     <silent> <M-q>     :call BufferDelete()<cr>
 "nmap     <silent> <         <Plug>DWMShrinkMaster
 "nmap     <silent> >         <Plug>DWMGrowMaster
 nmap     <silent> <C-h>     <Plug>DWMFocus
@@ -87,11 +78,6 @@ function! Highlight_Symbol() abort
     endif
 endfunction
 
-function! UpdateNvimTreeBuffers()
-    lua require('nvim-tree').refresh()
-    lua require('nvim-tree.lib').redraw()
-    lua require('nvim-tree').find_file()
-endfunction
 
 augroup plugin_mappings_augroup
     autocmd!
@@ -103,7 +89,6 @@ augroup plugin_mappings_augroup
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
     autocmd FileType scrollview,terminal execute("MarksToggleSigns" . bufnr('%'))
-    autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers()
     "autocmd BufWritePre * undojoin | Neoformat
 augroup END
 

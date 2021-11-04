@@ -85,7 +85,8 @@ local startup = function(use)
                 auto_close = true,
                 update_cwd = false,
                 update_focused_file = {
-                    enable = false
+                    enable = true,
+                    update_cwd = true
                 },
                 diagnostics = {
                     enable = true,
@@ -130,6 +131,19 @@ local startup = function(use)
                 }
             }
             require("nvim-tree").setup(opt)
+            vim.cmd([[
+                function! UpdateNvimTreeBuffers(timerId) abort
+                    lua require('nvim-tree').refresh()
+                    lua require('nvim-tree.lib').redraw()
+                    lua require('nvim-tree').find_file()
+                endfunction
+
+                augroup nvim_tree_autocmds
+                    autocmd!
+                    autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers(0)
+                    autocmd BufDelete * silent! call timer_start(10, 'UpdateNvimTreeBuffers')
+                augroup END
+            ]])
         end
     }
 
@@ -139,7 +153,6 @@ local startup = function(use)
     use 'kristijanhusak/vim-dadbod-completion'
 
     use 'antoinemadec/FixCursorHold.nvim'
-    use 'jlanzarotta/bufexplorer'
     use 'tpope/vim-repeat'
     use 'tpope/vim-eunuch'
     use 'tpope/vim-surround'
