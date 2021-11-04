@@ -14,8 +14,8 @@ local focus_tree = function()
 end
 
 require("which-key").register({
-    [";"] = { "<cmd>bprev<cr>",                        "Previous Buffer" },
-    ["'"] = { "<cmd>bnext<cr>",                        "Next Buffer" },
+    [";"] = { "Previous Buffer" },
+    ["'"] = { "Next Buffer" },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
     k = { "Focus window ABOVE" },
