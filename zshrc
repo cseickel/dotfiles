@@ -137,8 +137,8 @@ alias p="tmux attach -t primary"
 alias s="tmux attach -t secondary"
 alias t="~/start-arch-linux-docker.sh"
 
-alias cdk="pass show RWJF >> /dev/null && aws-vault exec RWJF --no-session -- cdk"
-alias aws="pass show RWJF >> /dev/null && aws-vault exec RWJF -- aws"
+alias cdk="pass show cseickel-cli >> /dev/null && aws-vault exec cseickel-cli --no-session -- cdk"
+alias aws="pass show cseickel-cli >> /dev/null && aws"
 
 alias add="git add"
 alias checkout='git checkout'

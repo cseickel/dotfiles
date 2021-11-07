@@ -132,17 +132,17 @@ local startup = function(use)
             }
             require("nvim-tree").setup(opt)
             vim.cmd([[
-                function! UpdateNvimTreeBuffers(timerId) abort
-                    lua require('nvim-tree').refresh()
-                    lua require('nvim-tree.lib').redraw()
-                    lua require('nvim-tree').find_file()
-                endfunction
+            function! UpdateNvimTreeBuffers(timerId) abort
+            lua require('nvim-tree').refresh()
+            lua require('nvim-tree.lib').redraw()
+            lua require('nvim-tree').find_file()
+            endfunction
 
-                augroup nvim_tree_autocmds
-                    autocmd!
-                    autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers(0)
-                    autocmd BufDelete * silent! call timer_start(10, 'UpdateNvimTreeBuffers')
-                augroup END
+            augroup nvim_tree_autocmds
+            autocmd!
+            autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers(0)
+            autocmd BufDelete * silent! call timer_start(10, 'UpdateNvimTreeBuffers')
+            augroup END
             ]])
         end
     }
@@ -201,11 +201,11 @@ local startup = function(use)
                     delete       = {hl = 'GitGutterDelete', text = '▁'},
                     topdelete    = {hl = 'GitGutterDelete', text = '▔'},
                     changedelete = {hl = 'GitGutterChangeDelete', text = '┻'},
-                  },
-                  watch_gitdir = {
+                },
+                watch_gitdir = {
                     interval = 3000,
                     follow_files = true
-                  }
+                }
             })
         end
     }
@@ -265,64 +265,76 @@ local startup = function(use)
         requires = { 'rcarriga/nvim-dap-ui' },
         config = function ()
             vim.cmd([[
-                nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
-                nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
-                nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
-                nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
-                nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+            nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+            nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+            nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+            nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+            nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
             ]])
             require("dapui").setup({
-              icons = {
-                expanded = "⯆",
-                collapsed = "⯈",
-                circular = "↺"
-              },
-              mappings = {
-                -- Use a table to apply multiple mappings
-                expand = {"<CR>", "<2-LeftMouse>"},
-                open = "o",
-                remove = "d",
-                edit = "e",
-              },
-              sidebar = {
-                elements = {
-                  -- You can change the order of elements in the sidebar
-                  "scopes",
-                  "stacks",
-                  "watches"
+                icons = {
+                    expanded = "⯆",
+                    collapsed = "⯈",
+                    circular = "↺"
                 },
-                size = 40,
-                position = "left" -- Can be "left" or "right"
-              },
-              tray = {
-                elements = {
-                  "repl"
+                mappings = {
+                    -- Use a table to apply multiple mappings
+                    expand = {"<CR>", "<2-LeftMouse>"},
+                    open = "o",
+                    remove = "d",
+                    edit = "e",
                 },
-                size = 10,
-                position = "bottom" -- Can be "bottom" or "top"
-              },
-              floating = {
-                max_height = nil, -- These can be integers or a float between 0 and 1.
-                max_width = nil   -- Floats will be treated as percentage of your screen.
-              }
+                sidebar = {
+                    elements = {
+                        -- You can change the order of elements in the sidebar
+                        "scopes",
+                        "stacks",
+                        "watches"
+                    },
+                    size = 40,
+                    position = "left" -- Can be "left" or "right"
+                },
+                tray = {
+                    elements = {
+                        "repl"
+                    },
+                    size = 10,
+                    position = "bottom" -- Can be "bottom" or "top"
+                },
+                floating = {
+                    max_height = nil, -- These can be integers or a float between 0 and 1.
+                    max_width = nil   -- Floats will be treated as percentage of your screen.
+                }
             })
 
             local dap = require('dap')
             dap.adapters.netcoredbg = {
-              type = 'executable',
-              command = '/usr/bin/netcoredbg',
-              args = {'--interpreter=vscode'}
+                type = 'executable',
+                command = '/usr/bin/netcoredbg',
+                args = {'--interpreter=vscode'}
             }
 
             dap.configurations.cs = {
-              {
-                type = "netcoredbg",
-                name = "launch - netcoredbg",
-                request = "launch",
-                program = function()
-                    return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Debug/netcoreapp3.1/', 'file')
-                end,
-              },
+                {
+                    type = "netcoredbg",
+                    name = "launch - netcoredbg",
+                    request = "launch",
+                    program = function()
+                        local cwd = vim.fn.getcwd()
+                        local d = vim.fn.fnamemodify(cwd, ":t")
+                        return vim.fn.input('Path to dll: ', cwd .. '/bin/Debug/netcoreapp3.1/' .. d .. '.dll', 'file')
+                    end,
+                },
+                {
+                    type = "netcoredbg",
+                    name = "attach - netcoredbg",
+                    request = "attach",
+                    processId = function()
+                        local pid = require('dap.utils').pick_process()
+                        vim.fn.setenv('NETCOREDBG_ATTACH_PID', pid)
+                        return pid
+                    end,
+                },
             }
         end
     }
@@ -333,12 +345,6 @@ local startup = function(use)
     use { 'norcalli/nvim-colorizer.lua', config = function() require'colorizer'.setup() end }
     use 'christianchiarulli/nvcode-color-schemes.vim'
 
-    use {
-        'https://gitlab.com/yorickpeterse/nvim-dd.git',
-        config = function ()
-            require('dd').setup({ timeout = 200 })
-        end
-    }
     use {
         'williamboman/nvim-lsp-installer',
         requires = {
@@ -448,7 +454,6 @@ local startup = function(use)
         run = function()
             vim.cmd('LspInstall angularls')
             vim.cmd('LspInstall bashls')
-            vim.cmd('LspInstall omnisharp')
             vim.cmd('LspInstall cssls')
             vim.cmd('LspInstall dockerls')
             vim.cmd('LspInstall gopls')
@@ -456,14 +461,14 @@ local startup = function(use)
             vim.cmd('LspInstall html')
             vim.cmd('LspInstall jdtls')
             vim.cmd('LspInstall jsonls')
-            vim.cmd('LspInstall sumneko_lua')
+            vim.cmd('LspInstall omnisharp')
             vim.cmd('LspInstall pylsp')
-            vim.cmd('LspInstall sqlls')
+            vim.cmd('LspInstall sumneko_lua')
             vim.cmd('LspInstall tailwindcss')
             vim.cmd('LspInstall tsserver')
+            vim.cmd('LspInstall yamlls')
             vim.cmd('lspinstall vimls')
             vim.cmd('lspinstall xml')
-            vim.cmd('LspInstall yamlls')
         end
     }
 
@@ -582,97 +587,105 @@ local startup = function(use)
         requires = {
             'nvim-telescope/telescope-fzy-native.nvim',
             'jvgrootveld/telescope-zoxide',
+            "nvim-telescope/telescope-project.nvim"
         },
         config = function ()
             local quickfix_width = function()
                 return math.min(vim.o.columns - 2, 180)
             end
-            require('telescope').setup{
-              defaults = {
-                vimgrep_arguments = {
-                  'rg',
-                  '--color=never',
-                  '--no-heading',
-                  '--with-filename',
-                  '--line-number',
-                  '--column',
-                  '--smart-case'
-                },
-                mappings = {
-                  i = {
-                        ["<Esc>"] = require('telescope.actions').close,
-                        ["<C-b>"] = function()
-                            vim.cmd("close!")
-                            require('telescope.builtin').file_browser()
-                        end,
-                        ["<C-d>"] = function ()
-                            vim.cmd("close!")
-                            require('telescope').extensions.zoxide.list()
-                        end,
-                        ["<C-f>"] = function()
-                            vim.cmd("close!")
-                            require('telescope.builtin').current_buffer_fuzzy_find()
-                        end,
-                        ["<C-g>"] = function()
-                            vim.cmd("close!")
-                            require('telescope.builtin').live_grep()
-                        end,
-                        ["<C-o>"] = function()
-                            vim.cmd("close!")
-                            require('telescope.builtin').find_files()
-                        end,
-                        ["<C-r>"] = function()
-                            vim.cmd("close!")
-                            require('telescope.builtin').oldfiles()
-                        end,
+            require('telescope').setup({
+                defaults = {
+                    vimgrep_arguments = {
+                        'rg',
+                        '--color=never',
+                        '--no-heading',
+                        '--with-filename',
+                        '--line-number',
+                        '--column',
+                        '--smart-case'
+                    },
+                    mappings = {
+                        i = {
+                            ["<Esc>"] = require('telescope.actions').close,
+                            ["<C-b>"] = function()
+                                vim.cmd("close!")
+                                require('telescope.builtin').file_browser()
+                            end,
+                            ["<C-d>"] = function ()
+                                vim.cmd("close!")
+                                require('telescope').extensions.zoxide.list()
+                            end,
+                            ["<C-f>"] = function()
+                                vim.cmd("close!")
+                                require('telescope.builtin').current_buffer_fuzzy_find()
+                            end,
+                            ["<C-g>"] = function()
+                                vim.cmd("close!")
+                                require('telescope.builtin').live_grep()
+                            end,
+                            ["<C-o>"] = function()
+                                vim.cmd("close!")
+                                require('telescope.builtin').find_files()
+                            end,
+                            ["<C-r>"] = function()
+                                vim.cmd("close!")
+                                require('telescope.builtin').oldfiles()
+                            end,
+                        }
+                    },
+                    pickers = {
+                        lsp_code_actions = {
+                            theme = "cursor"
+                        },
+                        find_files = {
+                            hidden = true
+                        },
+                    },
+                    prompt_prefix = "🔍 ",
+                    selection_caret = " ",
+                    entry_prefix = "  ",
+                    initial_mode = "insert",
+                    selection_strategy = "reset",
+                    sorting_strategy = "ascending",
+                    layout_strategy = "horizontal",
+                    layout_config = {
+                        prompt_position = "top",
+                        horizontal = {
+                            width = { padding = 10 },
+                            height = { padding = 0.1 },
+                            preview_width = 0.5,
+                        },
+                        vertical = {
+                            width = { padding = 0.05 },
+                            height = { padding = 1 },
+                            preview_height = 0.5,
+                        }
+                    },
+                    extensions = {
+                        project = {
+                            hidden_files = true,
+                            display_type = "full",
+                        }
                     }
-                },
-                pickers = {
-                    lsp_code_actions = {
-                        theme = "cursor"
-                    },
-                    find_files = {
-                        hidden = true
-                    },
-                },
-                prompt_prefix = "🔍 ",
-                selection_caret = " ",
-                entry_prefix = "  ",
-                initial_mode = "insert",
-                selection_strategy = "reset",
-                sorting_strategy = "ascending",
-                layout_strategy = "horizontal",
-                layout_config = {
-                  prompt_position = "top",
-                  horizontal = {
-                    width = { padding = 10 },
-                    height = { padding = 0.1 },
-                    preview_width = 0.5,
-                  },
-                  vertical = {
-                    width = { padding = 0.05 },
-                    height = { padding = 1 },
-                    preview_height = 0.5,
-                  }
-                },
-              }
-            }
+                }
+            })
             require('telescope').load_extension('fzy_native')
             require'telescope'.load_extension('zoxide')
             require("telescope._extensions.zoxide.config").setup({
-              mappings = {
-                default = {
-                  after_action = function(selection)
-                    vim.cmd([[
-                        func! OpenFileFinder(timer)
+                mappings = {
+                    default = {
+                        after_action = function(selection)
+                            vim.cmd([[
+                            func! OpenFileFinder(timer)
                             lua require('telescope.builtin').find_files()
-                        endfunc
-                        call timer_start(1, "OpenFileFinder", {'repeat': 1})
-                        ]])
-                  end
+                            endfunc
+                            call timer_start(1, "OpenFileFinder", {'repeat': 1})
+                            ]])
+                        end
+                    }
                 }
-              }
             })
+            require('telescope').load_extension('project')
         end
     }
 
@@ -689,31 +702,31 @@ local startup = function(use)
         keys = "<C-\\>",
         config = function()
             require("toggleterm").setup{
-              open_mapping = [[<c-\>]],
-              hide_numbers = true, -- hide the number column in toggleterm buffers
-              shade_filetypes = {},
-              shade_terminals = true,
-              start_in_insert = true,
-              direction = 'float',
-              persist_size = false,
+                open_mapping = [[<c-\>]],
+                hide_numbers = true, -- hide the number column in toggleterm buffers
+                shade_filetypes = {},
+                shade_terminals = true,
+                start_in_insert = true,
+                direction = 'float',
+                persist_size = false,
 
-              close_on_exit = true, -- close the terminal window when the process exits
-              shell = vim.o.shell, -- change the default shell
-              -- This field is only relevant if direction is set to 'float'
-              float_opts = {
-                border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" },
-                winblend = 0,
-                highlights = {
-                  border = "VertSplit",
-                  background = "Normal",
-                },
-                height = function ()
-                    return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
-                end,
-                width = function ()
-                    return math.ceil(math.min(vim.o.columns, math.max(181, vim.o.columns - 30)))
-                end
-              }
+                close_on_exit = true, -- close the terminal window when the process exits
+                shell = vim.o.shell, -- change the default shell
+                -- This field is only relevant if direction is set to 'float'
+                float_opts = {
+                    border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" },
+                    winblend = 0,
+                    highlights = {
+                        border = "VertSplit",
+                        background = "Normal",
+                    },
+                    height = function ()
+                        return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
+                    end,
+                    width = function ()
+                        return math.ceil(math.min(vim.o.columns, math.max(181, vim.o.columns - 30)))
+                    end
+                }
             }
         end
     }
@@ -745,17 +758,17 @@ local startup = function(use)
                 symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
             }
             require'lualine'.setup {
-              options = {
-                icons_enabled = true,
-                theme = require('lualine-theme'),
-                --component_separators = {'|', '|'},
-                --section_separators = {'', ''},
-                --section_separators = {'', ''},
-                --component_separators = {'', ''},
-                component_separators = { '', '' }
-              },
-              sections = {
-                lualine_a = { {
+                options = {
+                    icons_enabled = true,
+                    theme = require('lualine-theme'),
+                    --component_separators = {'|', '|'},
+                    --section_separators = {'', ''},
+                    --section_separators = {'', ''},
+                    --component_separators = {'', ''},
+                    component_separators = { '', '' }
+                },
+                sections = {
+                    lualine_a = { {
                         'mode',
                         fmt = function(data)
                             local winwidth = vim.fn.winwidth(0)
@@ -768,8 +781,8 @@ local startup = function(use)
                             end
                         end
                     }
-                },
-                lualine_b = { {
+                    },
+                    lualine_b = { {
                         'filetype',
                         fmt = function(data)
                             local winwidth = vim.fn.winwidth(0)
@@ -782,15 +795,15 @@ local startup = function(use)
                             end
                         end
                     }
-                },
-                lualine_c = { {
+                    },
+                    lualine_c = { {
                         'filename',
                         path = 1,
                         shorting_target = 40
                     }
-                },
-                lualine_x = { diag_config },
-                lualine_y = { {
+                    },
+                    lualine_x = { diag_config },
+                    lualine_y = { {
                         'branch',
                         fmt = function(data)
                             local winwidth = vim.fn.winwidth(0)
@@ -803,91 +816,91 @@ local startup = function(use)
                             end
                         end
                     }
-                },
-                lualine_z = {
-                    {
-                        '%3l/%L%  %{LineNoIndicator()} %2c',
-                        fmt = function(data)
-                            local winwidth = vim.fn.winwidth(0)
-                            local filelength = string.len(vim.fn.expand("%:t"))
-                            local maxlength = (winwidth - filelength - 26)
-                            if maxlength < 9 then
-                                return nil
-                            else
-                                return data
+                    },
+                    lualine_z = {
+                        {
+                            '%3l/%L%  %{LineNoIndicator()} %2c',
+                            fmt = function(data)
+                                local winwidth = vim.fn.winwidth(0)
+                                local filelength = string.len(vim.fn.expand("%:t"))
+                                local maxlength = (winwidth - filelength - 26)
+                                if maxlength < 9 then
+                                    return nil
+                                else
+                                    return data
+                                end
                             end
-                        end
+                        },
                     },
                 },
-              },
-              inactive_sections = {
-                lualine_a = {},
-                lualine_b = { 'filetype'},
-                lualine_c = { { 'filename', path = 1 } },
-                lualine_x = { diag_config },
-                lualine_y = { '"WIN #" .. vim.api.nvim_win_get_number(0)' },
-                lualine_z = {}
-              },
-             -- tabline = {
-             --       lualine_a = {},
-             --       lualine_b = { 'branch' },
-             --       lualine_c = {},
-             --       lualine_x = { require'tabline'.tabline_tabs },
-             --       lualine_y = {},
-             --       lualine_z = {},
-             -- },
-              extensions = { 'nvim-tree', 'quickfix', 'fzf' }
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = { 'filetype'},
+                    lualine_c = { { 'filename', path = 1 } },
+                    lualine_x = { diag_config },
+                    lualine_y = { '"WIN #" .. vim.api.nvim_win_get_number(0)' },
+                    lualine_z = {}
+                },
+                -- tabline = {
+                --       lualine_a = {},
+                --       lualine_b = { 'branch' },
+                --       lualine_c = {},
+                --       lualine_x = { require'tabline'.tabline_tabs },
+                --       lualine_y = {},
+                --       lualine_z = {},
+                -- },
+                extensions = { 'nvim-tree', 'quickfix', 'fzf' }
             }
         end
     }
-   -- use {
-   --     'noib3/cokeline.nvim',
-   --     config = function ()
-   --         local get_hex = require('cokeline/utils').get_hex
+    -- use {
+    --     'noib3/cokeline.nvim',
+    --     config = function ()
+    --         local get_hex = require('cokeline/utils').get_hex
 
-   --         require('cokeline').setup({
-   --           hide_when_one_buffer = false,
-   --           default_hl = {
-   --             focused = {
-   --               fg = get_hex('TabLineSel', 'fg'),
-   --               bg = get_hex('TabLineSel', 'bg'),
-   --               style = 'Bold'
-   --             },
-   --             unfocused = {
-   --               fg = get_hex('TabLine', 'fg'),
-   --               bg = get_hex('TabLine', 'bg'),
-   --             },
-   --           },
+    --         require('cokeline').setup({
+    --           hide_when_one_buffer = false,
+    --           default_hl = {
+    --             focused = {
+    --               fg = get_hex('TabLineSel', 'fg'),
+    --               bg = get_hex('TabLineSel', 'bg'),
+    --               style = 'Bold'
+    --             },
+    --             unfocused = {
+    --               fg = get_hex('TabLine', 'fg'),
+    --               bg = get_hex('TabLine', 'bg'),
+    --             },
+    --           },
 
-   --           components = {
-   --             {
-   --               text = function(buffer) return ' ' .. buffer.devicon.icon end,
-   --               hl = {
-   --                 fg = function(buffer) return buffer.devicon.color end,
-   --               },
-   --             },
-   --             {
-   --               text = function(buffer) return buffer.filename end,
-   --               hl = {
-   --                 fg = function(buffer)
-   --                   if buffer.lsp.errors ~= 0 then
-   --                     return get_hex('LspDiagnosticsSignError', 'fg')
-   --                   end
-   --                   if buffer.lsp.warnings ~= 0 then
-   --                     return get_hex('LspDiagnosticsSignWarning', 'fg')
-   --                   end
-   --                 end,
-   --               },
-   --             },
-   --             {
-   --               text = ' ▕',
-   --               delete_buffer_on_left_click = true,
-   --             },
-   --           },
-   --         })
+    --           components = {
+    --             {
+    --               text = function(buffer) return ' ' .. buffer.devicon.icon end,
+    --               hl = {
+    --                 fg = function(buffer) return buffer.devicon.color end,
+    --               },
+    --             },
+    --             {
+    --               text = function(buffer) return buffer.filename end,
+    --               hl = {
+    --                 fg = function(buffer)
+    --                   if buffer.lsp.errors ~= 0 then
+    --                     return get_hex('LspDiagnosticsSignError', 'fg')
+    --                   end
+    --                   if buffer.lsp.warnings ~= 0 then
+    --                     return get_hex('LspDiagnosticsSignWarning', 'fg')
+    --                   end
+    --                 end,
+    --               },
+    --             },
+    --             {
+    --               text = ' ▕',
+    --               delete_buffer_on_left_click = true,
+    --             },
+    --           },
+    --         })
 
-   --     end
-   -- }
+    --     end
+    -- }
     use 'gcmt/taboo.vim'
 
     use 'ryanoasis/vim-devicons'
@@ -895,8 +908,8 @@ local startup = function(use)
         'lukas-reineke/indent-blankline.nvim',
         config = function ()
             vim.cmd([[
-                highlight IndentBlanklineChar guifg=#303030
-                highlight IndentBlanklineContextChar guifg=#585858
+            highlight IndentBlanklineChar guifg=#303030
+            highlight IndentBlanklineContextChar guifg=#585858
             ]])
             require("indent_blankline").setup({
                 char = '▏',
@@ -925,28 +938,28 @@ local startup = function(use)
     --    }
     --}
 
-   -- use {
-   --     'GustavoKatel/sidebar.nvim',
-   -- --     branch = "dev",
-   --     rocks = {'luatz'},
-   --     config = function ()
-   --         require('sidebar-nvim').setup({
-   --             datetime = {
-   --                 format = "%a %b %d, %H:%M",
-   --                 clocks = {
-   --                     { tz = "UTC" },
-   --                     { tz = "America/New_York" }
-   --                 }
-   --             },
-   --             side = "right",
-   --             docker = {
-   --                 show_all = false
-   --             },
-   --             initial_width = 40,
-   --             sections = { "datetime", "git-status", "lsp-diagnostics" }
-   --         })
-   --     end
-   -- }
+    -- use {
+    --     'GustavoKatel/sidebar.nvim',
+    -- --     branch = "dev",
+    --     rocks = {'luatz'},
+    --     config = function ()
+    --         require('sidebar-nvim').setup({
+    --             datetime = {
+    --                 format = "%a %b %d, %H:%M",
+    --                 clocks = {
+    --                     { tz = "UTC" },
+    --                     { tz = "America/New_York" }
+    --                 }
+    --             },
+    --             side = "right",
+    --             docker = {
+    --                 show_all = false
+    --             },
+    --             initial_width = 40,
+    --             sections = { "datetime", "git-status", "lsp-diagnostics" }
+    --         })
+    --     end
+    -- }
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
@@ -1048,6 +1061,7 @@ local startup = function(use)
     --        ]])
     --    end
     --}
+
 end
 
 return require('packer').startup({

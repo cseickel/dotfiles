@@ -98,6 +98,19 @@ local showType = function ()
     require("telescope.builtin").lsp_type_definitions(getQuickfixOptions())
 end
 
+local findFile = function ()
+    local cwd = vim.fn.getcwd()
+    local project_dir = cwd
+    local match = cwd:match("/invest%-apps/([%w%s%.%-%_]+)")
+    if match then
+        project_dir = "~/invest-apps/" .. match
+    end
+    if cwd:find("/.dotfiles/config", 0,  true) then
+        project_dir = "~/.dotfiles/config"
+    end
+    require("telescope.builtin").find_files({cwd=project_dir})
+end
+
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
     [","] = { "<cmd>NvimTreeBuffers<cr>",                     "Show Buffers Tree" },
@@ -130,12 +143,11 @@ require("which-key").register({
     Q = { "Close Quickfix" },
     f = {
         name = "File...", -- optional group name
-        b = { "<cmd>Telescope file_browser<cr>",              "File Browser" },
+        b = { "<cmd>Telescope file_browser",                  "File Browser" },
         d = { "<cmd>Telescope zoxide list<cr>",               "Directory picker (zoxide)" },
         f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Find in this file" },
         g = { "<cmd>Telescope live_grep<cr>",                 "Grep" },
-        o = { "<cmd>Telescope find_files<cr>",                "Open File" },
-        r = { "<cmd>Telescope oldfiles<cr>",                  "Recent Files" },
+        o = { findFile,                                       "Open File" },
     },
     w = {
         name = "Switch to window...",
