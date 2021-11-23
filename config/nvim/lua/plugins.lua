@@ -133,15 +133,15 @@ local startup = function(use)
             require("nvim-tree").setup(opt)
             vim.cmd([[
             function! UpdateNvimTreeBuffers(timerId) abort
-            lua require('nvim-tree').refresh()
-            lua require('nvim-tree.lib').redraw()
-            lua require('nvim-tree').find_file()
+                lua require('nvim-tree').refresh()
+                lua require('nvim-tree.lib').redraw()
+                lua require('nvim-tree').find_file()
             endfunction
 
             augroup nvim_tree_autocmds
-            autocmd!
-            autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers(0)
-            autocmd BufDelete * silent! call timer_start(10, 'UpdateNvimTreeBuffers')
+                autocmd!
+                autocmd BufWinEnter * silent! call UpdateNvimTreeBuffers(0)
+                autocmd BufDelete * silent! call timer_start(10, 'UpdateNvimTreeBuffers')
             augroup END
             ]])
         end
@@ -352,7 +352,9 @@ local startup = function(use)
             'neovim/nvim-lspconfig',
             'jose-elias-alvarez/nvim-lsp-ts-utils',
             'jose-elias-alvarez/null-ls.nvim',
-            'nvim-lua/plenary.nvim'
+            'nvim-lua/plenary.nvim',
+            'b0o/schemastore.nvim'
+
         },
         config = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -389,7 +391,16 @@ local startup = function(use)
 
             -- enable null-ls integration (optional)
             require("null-ls").config {}
-            require("lspconfig")["null-ls"].setup {}
+            nvim_lsp["null-ls"].setup {}
+
+            nvim_lsp.jsonls.setup {
+              settings = {
+                json = {
+                  schemas = require'schemastore'.json.schemas(),
+                },
+              },
+            }
+
 
             -- make sure to only run this once!
             local tsserver_on_attach = function(client, bufnr)
@@ -1008,6 +1019,15 @@ local startup = function(use)
                 default_mappings = false,
                 -- which builtin marks to show. default {}
                 builtin_marks = { "[", "]", "<", ">", "^" },
+                excluded_filetypes = {
+                    'terminal',
+                    'NvimTree',
+                    'quickfix',
+                    'help',
+                    'startify',
+                    'packer',
+                    'lsp-installer'
+                },
                 -- whether movements cycle back to the beginning/end of buffer. default true
                 cyclic = true,
                 -- whether the shada file is updated after modifying uppercase marks. default false

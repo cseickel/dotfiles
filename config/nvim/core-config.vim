@@ -71,7 +71,6 @@ set lazyredraw
 let $EDITOR="nvr --remote-wait -cc '0wincmd w'"
 function! EnterTerminal()
   setlocal nonumber norelativenumber autowriteall modifiable noruler
-  "setlocal ft=terminal
   "setlocal winfixheight
   "setlocal noshowmode
   "setlocal laststatus=0
@@ -149,6 +148,7 @@ endfunction
 function! InitTerminal()
   setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
   setlocal autowriteall modifiable
+  set filetype=terminal
 endfunction
 
 augroup core_autocmd

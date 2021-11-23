@@ -34,5 +34,5 @@ exe 'cd ' . g:owd
 
 augroup init
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile profile=true
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync profile=true
 augroup END

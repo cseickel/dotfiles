@@ -98,7 +98,7 @@ local showType = function ()
     require("telescope.builtin").lsp_type_definitions(getQuickfixOptions())
 end
 
-local findFile = function ()
+local getProjectRoot = function()
     local cwd = vim.fn.getcwd()
     local project_dir = cwd
     local match = cwd:match("/invest%-apps/([%w%s%.%-%_]+)")
@@ -108,7 +108,15 @@ local findFile = function ()
     if cwd:find("/.dotfiles/config", 0,  true) then
         project_dir = "~/.dotfiles/config"
     end
-    require("telescope.builtin").find_files({cwd=project_dir})
+    return project_dir
+end
+
+local findFile = function ()
+    require("telescope.builtin").find_files({cwd=getProjectRoot()})
+end
+
+local grepProject = function ()
+    require("telescope.builtin").live_grep({cwd=getProjectRoot()})
 end
 
 require("which-key").register({
@@ -143,10 +151,10 @@ require("which-key").register({
     Q = { "Close Quickfix" },
     f = {
         name = "File...", -- optional group name
-        b = { "<cmd>Telescope file_browser",                  "File Browser" },
+        b = { "<cmd>Telescope file_browser<cr>",                  "File Browser" },
         d = { "<cmd>Telescope zoxide list<cr>",               "Directory picker (zoxide)" },
         f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Find in this file" },
-        g = { "<cmd>Telescope live_grep<cr>",                 "Grep" },
+        g = { grepProject,                                    "Grep" },
         o = { findFile,                                       "Open File" },
     },
     w = {
@@ -162,7 +170,7 @@ require("which-key").register({
         ["9"] = { "Switch to window 9"},
         ["0"] = { "Switch to window 10"},
     },
-    g = {
+g = {
         name = "Go to...",
         --d = { "<cmd>lua vim.lsp.buf.definition()<cr>",        "Go to Definition"},
         --i = { "<cmd>lua vim.lsp.buf.implementation()<cr>",    "Go to Implementation"},

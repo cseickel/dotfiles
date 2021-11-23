@@ -146,17 +146,10 @@ function! CustomStartifyBeforeSave() abort
 endfunction
 
 " Startify
-let g:startify_commands = [
-            \ { 't': ['Open Terminal', 'call RecycleTerminal()'] },
-            \ { 'b': ['Browse Files', 'Telescope file_browser'] },
-            \ { 'o': ['Open Files', 'Telescope find_files'] },
-            \ ]
-
 let g:startify_lists = [
-            \ { 'header': ['   Commands'],       'type': 'commands' },
             \ { 'header': ['   Hidden Buffers'], 'type': function("s:getHiddenBuffers") },
             \ { 'header': ['   Sessions'],       'type': 'sessions' },
-            \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
+            \ { 'header': ['   MRU '. g:owd], 'type': 'dir' },
             \ ]
 let g:startify_session_delete_buffers = 1
 let g:startify_session_autoload = 1
