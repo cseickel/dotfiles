@@ -32,11 +32,7 @@ nnoremap <M-3> :b#<cr>
 inoremap <M-3> <Esc>:b#<cr>
 tnoremap <M-3> <c-\><c-n>:b#<cr>
 
-" Mimic insert mode mappings
-nnoremap <C-d> <<
-nnoremap <C-t> >>
-vnoremap <C-d> <
-vnoremap <C-t> >
+nnoremap <C-t> :tabnew<cr>
 
 " Quick edits from normal/visual mode
 "nnoremap <silent> <tab>     >>
@@ -306,8 +302,8 @@ function! DeleteBuffer() abort
     bd#
 endfunction
 
-nnoremap <silent> ;         :call NextBufferByName(-1)<cr>
-nnoremap <silent> '         :call NextBufferByName(1)<cr>
+"nnoremap <silent> ;         :call NextBufferByName(-1)<cr>
+"nnoremap <silent> '         :call NextBufferByName(1)<cr>
 nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 nnoremap <silent> <leader>S :call SaveTerminal()<cr>
 nnoremap <silent> <leader>s :call OpenSavedTerminal()<cr>

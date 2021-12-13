@@ -14,8 +14,9 @@ local focus_tree = function()
 end
 
 require("which-key").register({
-    [";"] = { "Previous Buffer" },
-    ["'"] = { "Next Buffer" },
+    [";"] = { "<cmd>NvimTreeEditPrevFile<cr>",           "Previous Buffer" },
+    ["'"] = { "<cmd>NvimTreeEditNextFile<cr>",           "Next Buffer" },
+    [",,"] = { "<cmd>HopChar2<cr>",                                "Hop 2 Char" },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
     k = { "Focus window ABOVE" },
@@ -23,23 +24,22 @@ require("which-key").register({
     H = { "Start of Line" },
     L = { "End of Line" },
     K = { "Show documentation"},
-    s = { "Lightspeed Search Forward" },
-    S = { "Lightspeed Search Backward" },
     ["\\"] = { focus_tree,                                    "Open  Tree" },
     ["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
     ["["] = {
         name = "Previous...",
-        ["[["] = { "Previous Mark" },
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
         l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
+        m = {                                                 "Previous Mark" },
         q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
         x = { "<cmd>ConflictMarkerPrevHunk<cr>",              "Previous Conflict" }
     },
     ["]"] = {
         name = "Next...",
-        ["]]"] = { "Next Mark" },
         d = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Next Diagnostic" },
         l = { "<cmd>lnext<cr>",                               "Next Location List" },
+        r = {                                                 "Next Mark" },
+        m = {                                                 "Previous Mark" },
         q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
         x = { "<cmd>ConflictMarkerNextHunk<cr>",              "Next Conflict" }
     },
@@ -121,9 +121,9 @@ end
 
 require("which-key").register({
     ["."] = { "Set Working Directory from current file" },
-    [","] = { "<cmd>NvimTreeBuffers<cr>",                     "Show Buffers Tree" },
     ["="] = { "<cmd>Neoformat<cr>",                           "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
+    b = { "<cmd>NvimTreeBuffers<cr>",                         "Show Buffers Tree" },
     c = {
         name = "Conflict Resolution",
         b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },

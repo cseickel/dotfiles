@@ -22,8 +22,8 @@ local startup = function(use)
     --}
 
     use { '~/repos/nvim-tree.lua',
-        opt = true,
-        cmd = "NvimTree*",
+        --opt = true,
+        --cmd = "NvimTree*",
         config = function()
             local tree_cb = require'nvim-tree.config'.nvim_tree_callback
             function _G.open_nvim_tree_selection(targetWindow)
@@ -81,6 +81,13 @@ local startup = function(use)
                 end
             end
             local lib = require('nvim-tree.lib')
+            _G.nvim_tree_toggle_all = function ()
+                local pops = require('nvim-tree.populate')
+                local state = not pops.config.filter_dotfiles
+                pops.config.filter_ignored = state
+                pops.config.filter_dotfiles = state
+                lib.refresh_tree()
+            end
             local opt = {
                 auto_close = true,
                 update_cwd = false,
@@ -104,11 +111,8 @@ local startup = function(use)
                             { key = "<C-t>",         cb = tree_cb("tabnew")},
                             { key = ".",             cb = tree_cb("cd")},
                             { key = "<BS>",          cb = tree_cb("dir_up")},
-                            { key = "<",             cb = tree_cb("prev_sibling")},
-                            { key = ">",             cb = tree_cb("next_sibling")},
                             { key = "b",             cb = tree_cb("toggle_open_buffers_only") },
-                            { key = "h",             cb = tree_cb("toggle_dotfiles") },
-                            { key = "i",             cb = tree_cb("toggle_ignored") },
+                            { key = "h",             cb = "<cmd>lua _G.nvim_tree_toggle_all()<cr>"},
                             { key = "R",             cb = tree_cb("refresh") },
                             { key = "a",             cb = tree_cb("create")},
                             { key = "d",             cb = tree_cb("remove")},
@@ -161,32 +165,32 @@ local startup = function(use)
 
     use 'dkarter/bullets.vim'
     use 'Darazaki/indent-o-matic'
-    use { 
-        'ggandor/lightspeed.nvim',
-        config = function ()
-            vim.cmd([[ highlight LightspeedOneCharMatch gui=Bold,Underline guifg=#ffaf00 ]])
-        end
-    }
-    --use {
-    --  'phaazon/hop.nvim',
-    --  as = 'hop',
-    --  config = function()
-    --    -- you can configure Hop the way you like here; see :h hop-config
-    --    require'hop'.setup()
-    --  end
-    --}
-    --use {
-    --    'rhysd/clever-f.vim',
-    --    setup = function()
-    --        vim.cmd([[
-    --            let g:clever_f_smart_case=1
-    --            let g:clever_f_show_prompt=1
-    --            let g:clever_f_fix_key_direction=1
-    --            let g:clever_f_chars_match_any_signs=";"
-    --            highlight CleverFDefaultLabel gui=Bold,Underline guifg=#ffaf00
-    --        ]])
+    --use { 
+    --    'ggandor/lightspeed.nvim',
+    --    config = function ()
+    --        vim.cmd([[ highlight LightspeedOneCharMatch gui=Bold,Underline guifg=#ffaf00 ]])
     --    end
     --}
+    use {
+      'phaazon/hop.nvim',
+      as = 'hop',
+      config = function()
+        -- you can configure Hop the way you like here; see :h hop-config
+        require'hop'.setup()
+      end
+    }
+    use {
+        'rhysd/clever-f.vim',
+        setup = function()
+            vim.cmd([[
+                let g:clever_f_smart_case=1
+                let g:clever_f_show_prompt=1
+                let g:clever_f_fix_key_direction=1
+                let g:clever_f_chars_match_any_signs=";"
+                highlight CleverFDefaultLabel gui=Bold,Underline guifg=#ffaf00
+            ]])
+        end
+    }
     --use 'airblade/vim-gitgutter'
     use {
         'lewis6991/gitsigns.nvim',
@@ -762,7 +766,7 @@ local startup = function(use)
                 'diagnostics',
                 -- table of diagnostic sources, available sources:
                 -- nvim_lsp, coc, ale, vim_lsp
-                sources = { 'nvim_lsp' },
+                sources = { 'nvim_diagnostic' },
                 -- displays diagnostics from defined severity
                 sections = {'error', 'warn', 'info', 'hint'},
                 -- all colors are in format #rrggbb
@@ -1031,7 +1035,7 @@ local startup = function(use)
                 -- whether movements cycle back to the beginning/end of buffer. default true
                 cyclic = true,
                 -- whether the shada file is updated after modifying uppercase marks. default false
-                force_write_shada = true,
+                force_write_shada = false,
                 -- how often (in ms) to redraw signs/recompute mark positions.
                 -- higher values will have better performance but may cause visual lag,
                 -- while lower values may cause performance penalties. default 150.
@@ -1041,8 +1045,8 @@ local startup = function(use)
                     set_bookmark0 = ",mm",
                     delete_line = ",md",
                     delete_buf = ",mD",
-                    next_bookmark0 = "]]",
-                    prev_bookmark0 = "[[",
+                    next_bookmark0 = "]m",
+                    prev_bookmark0 = "[m",
                     preview = ",mp",
                 },
                 bookmark_0 = {

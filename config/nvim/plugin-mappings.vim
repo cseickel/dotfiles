@@ -117,3 +117,4 @@ function! LineNoIndicator() abort
 
   return g:line_no_indicator_chars[l:index]
 endfunction
+

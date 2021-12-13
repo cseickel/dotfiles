@@ -138,7 +138,7 @@ alias s="tmux attach -t secondary"
 alias t="~/start-arch-linux-docker.sh"
 
 alias cdk="pass show cseickel-cli >> /dev/null && aws-vault exec admin --no-session -- cdk"
-alias aws="pass show cseickel-cli >> /dev/null && aws"
+alias aws="pass show cseickel-cli >> /dev/null && aws-vault exec admin -- aws"
 
 alias add="git add"
 alias checkout='git checkout'
