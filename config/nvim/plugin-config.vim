@@ -199,6 +199,9 @@ let g:vimade = { "fadelevel": 0.77 }
 "set fillchars+=vert:▕
 set fillchars+=vert:█
 highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
+highlight clear FloatBorder
+highlight link FloatBorder VertSplit
+
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
 " nvcode overrides from dark+
 highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic

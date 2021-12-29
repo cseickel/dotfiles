@@ -9,7 +9,6 @@ vim.fn.sign_define("LspDiagnosticsSignInformation",
     {text = " ", texthl = "LspDiagnosticsSignInformation"})
 vim.fn.sign_define("LspDiagnosticsSignHint",
     {text = "", texthl = "LspDiagnosticsSignHint"})
-vim.lsp.diagnostic.show_line_diagnostics({ border = 'single' })
 
 vim.lsp.handlers["textDocument/hover"] =
   vim.lsp.with(vim.lsp.handlers.hover, {
