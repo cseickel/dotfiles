@@ -947,6 +947,7 @@ highlight IndentBlanklineContextChar guifg=#585858
    "~/repos/neo-tree.nvim",
     requires = { 
       "MunifTanjim/nui.nvim",
+      'nvim-lua/plenary.nvim',
       'kyazdani42/nvim-web-devicons',
     },
     config = function ()
