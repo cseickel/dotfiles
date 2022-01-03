@@ -944,12 +944,35 @@ highlight IndentBlanklineContextChar guifg=#585858
   --use 'dstein64/nvim-scrollview'
   use '~/repos/dwm.vim'
   use {
-    '~/repos/neo-tree.nvim',
-    requires = { "MunifTanjim/nui.nvim" },
+   "~/repos/neo-tree.nvim",
+    requires = { 
+      "MunifTanjim/nui.nvim",
+      'kyazdani42/nvim-web-devicons',
+    },
     config = function ()
       require("neo-tree").setup({
         popup_border_style = "NC",
         filesystem = {
+          window = {
+            mappings = {
+              ["o"] = "open_and_clear_filter",
+              ["D"] = "show_debug_info"
+            },
+          },
+          commands = {
+            open_and_clear_filter = function (state)
+              local node = state.tree:get_node()
+              if node and node.type == "file" then
+                local file_path = node:get_id()
+                -- resuse built-in commands to open and clear filter
+                local cmds = require("neo-tree.sources.filesystem.commands")
+                cmds.open(state)
+                cmds.clear_filter(state)
+                -- reveal the selected file without focusing the tree
+                require("neo-tree.sources.filesystem").navigate(state.path, file_path)
+              end
+            end,
+          },
           components = {
             test = function(config, node, state)
               return {

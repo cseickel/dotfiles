@@ -5,18 +5,10 @@ local presets = require("which-key.plugins.presets")
 presets.operators["v"] = nil
 
 
-local focus_tree = function()
-    if vim.fn.expand("%") == "" then
-        vim.cmd("NvimTreeOpen")
-    else
-        vim.cmd("NvimTreeFindFile")
-    end
-end
-
 require("which-key").register({
     [";"] = { "<cmd>NvimTreeEditPrevFile<cr>",           "Previous Buffer" },
     ["'"] = { "<cmd>NvimTreeEditNextFile<cr>",           "Next Buffer" },
-    [",,"] = { "<cmd>HopChar2<cr>",                                "Hop 2 Char" },
+    [",,"] = { "<cmd>HopChar2<cr>",                      "Hop 2 Char" },
     h = { "Focus window to the LEFT" },
     j = { "Focus window BELOW" },
     k = { "Focus window ABOVE" },
@@ -24,8 +16,8 @@ require("which-key").register({
     H = { "Start of Line" },
     L = { "End of Line" },
     K = { "Show documentation"},
-    ["\\"] = { require("neo-tree").focus,                     "Open  Tree" },
-    ["|"] = { "<cmd>NvimTreeClose<cr>",                       "Close Tree" },
+    ["\\"] = { "<cmd>NeoTreeReveal<cr>",                     "Open  Tree" },
+    ["|"] = { "<cmd>NeoTreeClose<cr>",                       "Close Tree" },
     ["["] = {
         name = "Previous...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
