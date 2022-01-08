@@ -352,7 +352,7 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
   use {
     'williamboman/nvim-lsp-installer',
     requires = {
-      'ray-x/lsp_signature.nvim',
+      {'ray-x/lsp_signature.nvim', commit="be39dacc17d51531f9e3a50f88de0a45683c6634" },
       'neovim/nvim-lspconfig',
       'jose-elias-alvarez/nvim-lsp-ts-utils',
       'jose-elias-alvarez/null-ls.nvim',
@@ -709,7 +709,9 @@ call timer_start(1, "OpenFileFinder", {'repeat': 1})
   }
 
   use {
-    'folke/which-key.nvim',
+    --'folke/which-key.nvim',
+    'zeertzjq/which-key.nvim',
+    branch = 'patch-1',
     config = function ()
       require("which-key").setup()
     end
@@ -749,6 +751,8 @@ call timer_start(1, "OpenFileFinder", {'repeat': 1})
       }
     end
   }
+
+  use { 'ThePrimeagen/harpoon' }
   --use 'abecodes/tabout.nvim'
   use {
     'vuki656/package-info.nvim',
@@ -952,12 +956,23 @@ highlight IndentBlanklineContextChar guifg=#585858
     },
     config = function ()
       require("neo-tree").setup({
-        popup_border_style = "NC",
         filesystem = {
           window = {
+            position = "left",
+            popup = {
+              size = function(state)
+                local root_name = state.path
+                local root_len = string.len(root_name) + 8
+                return {
+                  width = math.max(root_len + 8, 60),
+                  height = "80%"
+                }
+              end
+            },
             mappings = {
               ["o"] = "open_and_clear_filter",
-              ["D"] = "show_debug_info"
+              ["D"] = "show_debug_info",
+              ["C"] = "close_node"
             },
           },
           commands = {
@@ -973,6 +988,18 @@ highlight IndentBlanklineContextChar guifg=#585858
                 require("neo-tree.sources.filesystem").navigate(state.path, file_path)
               end
             end,
+            rename = function(state)
+              local cc = require("neo-tree.sources.common.commands")
+              local fs = require("neo-tree.sources.filesystem")
+              cc.rename(state, function(original_path, new_path)
+                -- This is where you would do something like fix references to the file
+                -- with an LSP server.
+                -- <YOUR CODE HERE>
+                print("Renamed " .. original_path .. " to " .. new_path)
+                -- Don't forget to call fs.refresh() after you're done.
+                fs.refresh()
+              end)
+            end
           },
           components = {
             test = function(config, node, state)
@@ -983,46 +1010,16 @@ highlight IndentBlanklineContextChar guifg=#585858
             end,
           },
           renderers = { }
+        },
+        buffers = {
+          window = {
+            position = "float"
+          }
         }
       })
     end
   }
 
-  --use {
-  --    'ms-jpq/coq_nvim',
-  --    branch = "coq",
-  --    run = "vim.cmd('COQdeps')",
-  --    config = function ()
-  --        --require('coq').setup()
-  --    end,
-  --    requires = {
-  --        { 'ms-jpq/coq.artifacts', branch = "artifacts" },
-  --        { 'ms-jpq/coq.thirdparty', branch = "3p" }
-  --    }
-  --}
-
-  -- use {
-  --     'GustavoKatel/sidebar.nvim',
-  -- --     branch = "dev",
-  --     rocks = {'luatz'},
-  --     config = function ()
-  --         require('sidebar-nvim').setup({
-  --             datetime = {
-  --                 format = "%a %b %d, %H:%M",
-  --                 clocks = {
-  --                     { tz = "UTC" },
-  --                     { tz = "America/New_York" }
-  --                 }
-  --             },
-  --             side = "right",
-  --             docker = {
-  --                 show_all = false
-  --             },
-  --             initial_width = 40,
-  --             sections = { "datetime", "git-status", "lsp-diagnostics" }
-  --         })
-  --     end
-  -- }
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
@@ -1062,81 +1059,15 @@ highlight IndentBlanklineContextChar guifg=#585858
     end
   }
 
-  use {
-    'chentau/marks.nvim',
-    config = function ()
-      vim.cmd("highlight link MarkSignNumHL none")
-      require'marks'.setup {
-        -- whether to map keybinds or not. default true
-        default_mappings = false,
-        -- which builtin marks to show. default {}
-        builtin_marks = { "[", "]", "<", ">", "^" },
-        excluded_filetypes = {
-          'terminal',
-          'NvimTree',
-          'neo-tree',
-          'quickfix',
-          'help',
-          'startify',
-          'packer',
-          'lsp-installer'
-        },
-        -- whether movements cycle back to the beginning/end of buffer. default true
-        cyclic = true,
-        -- whether the shada file is updated after modifying uppercase marks. default false
-        force_write_shada = false,
-        -- how often (in ms) to redraw signs/recompute mark positions.
-        -- higher values will have better performance but may cause visual lag,
-        -- while lower values may cause performance penalties. default 150.
-        refresh_interval = 250,
-        mappings = {
-          set = ",ma",
-          set_bookmark0 = ",mm",
-          delete_line = ",md",
-          delete_buf = ",mD",
-          next_bookmark0 = "]m",
-          prev_bookmark0 = "[m",
-          preview = ",mp",
-        },
-        bookmark_0 = {
-          sign = "⚑",
-          virt_text = "<-- Mark"
-        },
-      }
-    end
-  }
-  --use {
-  --    'MattesGroeger/vim-bookmarks',
-  --    config = function ()
-  --        vim.cmd([[
-  --            let g:bookmark_no_default_key_mappings = 1
-  --            let g:bookmark_save_per_working_dir = 0
-  --            let g:bookmark_auto_save = 1
-  --            let g:bookmark_center = 1
-  --            " Finds the Git super-project directory.
-  --            function! g:BMWorkDirFileLocation()
-  --                let filename = '.vim-bookmarks'
-  --                let location = ''
-  --                if isdirectory('.git')
-  --                    " Current work dir is git's work tree
-  --                    let location = getcwd().'/.git'
-  --                else
-  --                    " Look upwards (at parents) for a directory named '.git'
-  --                    let location = finddir('.git', '.;')
-  --                endif
-  --                if len(location) > 0
-  --                    return location.'/'.filename
-  --                else
-  --                    return getcwd().'/.'.filename
-  --                endif
-  --            endfunction
-
-  --        ]])
-  --    end
-  --}
 
   use {
     'thalesmello/vim-textobj-methodcall',
+    requires = {
+      { 'kana/vim-textobj-user' }
+    }
+  }
+  use {
+    'Julian/vim-textobj-variable-segment',
     requires = {
       { 'kana/vim-textobj-user' }
     }

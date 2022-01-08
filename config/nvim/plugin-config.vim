@@ -239,10 +239,6 @@ hi LspReferenceText cterm=underline gui=bold guibg=#404040
 hi LspReferenceRead cterm=underline gui=bold guibg=#404040
 hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
 
-hi LspDiagnosticsSignWarning none
-hi LspDiagnosticsSignInformation none
-hi LspDiagnosticsSignError none
-hi LspDiagnosticsSignHint none
 hi LspDiagnosticsVirtualTextError none
 hi LspDiagnosticsVirtualTextWarning none
 hi LspDiagnosticsVirtualTextInformation none

@@ -88,7 +88,6 @@ augroup plugin_mappings_augroup
     autocmd FileType qf,Trouble silent! call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
-    autocmd FileType scrollview,terminal execute("MarksToggleSigns" . bufnr('%'))
     "autocmd BufWritePre * undojoin | Neoformat
 augroup END
 
