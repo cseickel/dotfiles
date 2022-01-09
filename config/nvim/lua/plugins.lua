@@ -391,7 +391,7 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
         --
       end
 
-      local nvim_lsp = require("lspconfig")
+      local lspconfig = require("lspconfig")
 
       local null_ls = require("null-ls")
       null_ls.setup({
@@ -401,7 +401,7 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
           null_ls.builtins.formatting.prettier -- prettier, eslint, eslint_d, or prettierd
         },
       })
-      nvim_lsp.jsonls.setup {
+      lspconfig.jsonls.setup {
         settings = {
           json = {
             schemas = require'schemastore'.json.schemas(),
@@ -459,6 +459,18 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
           server:setup({
             capabilities = capabilities,
             on_attach = tsserver_on_attach
+          })
+        elseif server.name == "lua" then
+          server:setup({
+            capabilities = capabilities,
+            on_attach = lsp_attach,
+            settings = {
+              Lua = {
+                diagnostics = {
+                  globals = { 'vim' }
+                }
+              }
+            }
           })
         else
           server:setup({
@@ -960,19 +972,19 @@ highlight IndentBlanklineContextChar guifg=#585858
           window = {
             position = "left",
             popup = {
+              position = { col = "100%", row = "2" },
               size = function(state)
-                local root_name = state.path
-                local root_len = string.len(root_name) + 8
+                local root_name = vim.fn.fnamemodify(state.path, ":~")
+                local root_len = string.len(root_name) + 4
                 return {
-                  width = math.max(root_len + 8, 60),
-                  height = "80%"
+                  width = math.max(root_len, 50),
+                  height = vim.o.lines - 6
                 }
               end
             },
             mappings = {
               ["o"] = "open_and_clear_filter",
               ["D"] = "show_debug_info",
-              ["C"] = "close_node"
             },
           },
           commands = {

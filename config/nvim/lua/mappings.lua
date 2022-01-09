@@ -169,7 +169,7 @@ require("which-key").register({
         ["9"] = { "Switch to window 9"},
         ["0"] = { "Switch to window 10"},
     },
-g = {
+    g = {
         name = "Go to...",
         --d = { "<cmd>lua vim.lsp.buf.definition()<cr>",        "Go to Definition"},
         --i = { "<cmd>lua vim.lsp.buf.implementation()<cr>",    "Go to Implementation"},
@@ -182,8 +182,7 @@ g = {
     },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
-    S = { "Save Terminal (yank)" },
-    s = { "Open Saved Terminal (paste)" },
+    s = { "<cmd>NeoTreeFloat git_status<cr>",                 "Show Git Status" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },
     z = { ":call ToggleWindowZoom(0)<cr>",                     "Zoom Window (toggle)" },
