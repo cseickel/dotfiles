@@ -968,6 +968,37 @@ highlight IndentBlanklineContextChar guifg=#585858
     },
     config = function ()
       require("neo-tree").setup({
+        event_handlers = {
+          {
+            event = "before_render",
+            handler = function (state)
+              local utils = require("neo-tree.utils")
+              state.git_status_lookup = utils.get_git_status()
+              state.diagnostics_lookup = utils.get_diagnostic_counts()
+            end
+          },
+          {
+            event = "file_opened",
+            handler = function(state, file_path)
+              --auto close
+              require("neo-tree").close(state.name)
+            end
+          },
+          {
+            event = "rename",
+            handler = function(state, old_file_path, new_file_path)
+              -- fix references to file
+            end
+          },
+          {
+            event = "move",
+            handler = function(state, old_file_path, new_file_path)
+              -- fix references to file
+            end
+          },
+        }
+      })
+      require("neo-tree").setup({
         filesystem = {
           window = {
             position = "left",
