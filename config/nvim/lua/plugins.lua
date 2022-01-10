@@ -179,18 +179,7 @@ local startup = function(use)
       require'hop'.setup()
     end
   }
-  use {
-    'rhysd/clever-f.vim',
-    setup = function()
-      vim.cmd([[
-let g:clever_f_smart_case=1
-let g:clever_f_show_prompt=1
-let g:clever_f_fix_key_direction=1
-let g:clever_f_chars_match_any_signs=";"
-highlight CleverFDefaultLabel gui=Bold,Underline guifg=#ffaf00
-]])
-    end
-  }
+
   --use 'airblade/vim-gitgutter'
   use {
     'lewis6991/gitsigns.nvim',
@@ -1015,10 +1004,13 @@ highlight IndentBlanklineContextChar guifg=#585858
             },
             mappings = {
               ["o"] = "open_and_clear_filter",
-              ["D"] = "show_debug_info",
+              ["q"] = "close_window"
             },
           },
           commands = {
+            close_window = function(state)
+              require("neo-tree").close(state.name)
+            end,
             open_and_clear_filter = function (state)
               local node = state.tree:get_node()
               if node and node.type == "file" then
@@ -1031,32 +1023,13 @@ highlight IndentBlanklineContextChar guifg=#585858
                 require("neo-tree.sources.filesystem").navigate(state.path, file_path)
               end
             end,
-            rename = function(state)
-              local cc = require("neo-tree.sources.common.commands")
-              local fs = require("neo-tree.sources.filesystem")
-              cc.rename(state, function(original_path, new_path)
-                -- This is where you would do something like fix references to the file
-                -- with an LSP server.
-                -- <YOUR CODE HERE>
-                print("Renamed " .. original_path .. " to " .. new_path)
-                -- Don't forget to call fs.refresh() after you're done.
-                fs.refresh()
-              end)
-            end
-          },
-          components = {
-            test = function(config, node, state)
-              return {
-                text = config.text .. " " .. node.name,
-                highlight = "SpecialChar"
-              }
-            end,
           },
         },
         buffers = {
           window = {
-            position = "float"
-          }
+            position = "right"
+          },
+          show_unloaded = true,
         }
       })
     end
