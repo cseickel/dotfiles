@@ -1052,7 +1052,6 @@ highlight IndentBlanklineContextChar guifg=#585858
               }
             end,
           },
-          renderers = { }
         },
         buffers = {
           window = {
