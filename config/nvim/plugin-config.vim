@@ -14,6 +14,7 @@ endif
 "colorscheme dark_plus
 colorscheme nvcode "<-- this one is best with tree-sitter
 
+" let g:oscyank_term = 'default' " or 'tmux' or 'screen', 'kitty', 'default'
 " IndentLine
 let g:webdevicons_enable_startify = 1
 
@@ -78,14 +79,7 @@ let g:scrollview_column=1
 
 
 " clipboard settings
-set clipboard=unnamed
-let g:EasyClipAutoFormat=0
-let g:EasyClipAlwaysMoveCursorToEndOfPaste=1
-let g:EasyClipPreserveCursorPositionAfterYank=1
-let g:EasyClipShareYanks=0
-let g:EasyClipYankHistorySize=0
-let g:EasyClipUseSubstituteDefaults=0
-let g:EasyClipUsePasteToggleDefaults = 0
+set clipboard=unnamedplus
 
 
 " vim-closetag config

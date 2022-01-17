@@ -21,6 +21,13 @@ nmap <space> ciw
 " Make Y consistent with C and D
 nnoremap Y y$
 
+" Create "move" aka "cut" commands
+nnoremap m d
+xnoremap m d
+
+nnoremap mm dd
+nnoremap M D
+
 " Reselect pasted text
 nnoremap gp `[v`]
 

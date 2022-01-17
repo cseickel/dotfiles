@@ -11,7 +11,7 @@ require("which-key").register({
     [",p"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Harpoon Add File" },
     [",,"] = { "<cmd>HopChar2<cr>",                      "Hop 2 Char" },
     g = {
-        name = "Go to Harppon...",
+        name = "Go to Harpoon...",
         ["1"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", "File 1" },
         ["2"] = { "<cmd>lua require('harpoon.ui').nav_file(2)<cr>", "File 2" },
         ["3"] = { "<cmd>lua require('harpoon.ui').nav_file(3)<cr>", "File 3" },
@@ -31,7 +31,7 @@ require("which-key").register({
     L = { "End of Line" },
     K = { "Show documentation"},
     ["\\"] = { "<cmd>NeoTreeReveal<cr>",                     "Open  Tree" },
-    ["|"] = { "<cmd>NeoTreeClose<cr>",                       "Close Tree" },
+    ["|"] = { "<cmd>NeoTreeFloat<cr>",                       "Float Tree" },
     ["["] = {
         name = "Previous...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },

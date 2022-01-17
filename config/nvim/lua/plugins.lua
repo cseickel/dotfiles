@@ -1,9 +1,123 @@
 local startup = function(use)
   vim = vim
+
   --use {'lewis6991/impatient.nvim', rocks = 'mpack'}
-
   use 'dstein64/vim-startuptime'
+  use {
+   --"~/repos/neo-tree.nvim",
+   "nvim-neo-tree/neo-tree.nvim",
+   branch = "v1.x",
+    requires = {
+      "MunifTanjim/nui.nvim",
+      'nvim-lua/plenary.nvim',
+      'kyazdani42/nvim-web-devicons',
+    },
+    config = function ()
+      vim.cmd([[
+        hi link NeoTreeDirectoryName Directory
+        hi NeoTreeCursorLine gui=bold guibg=#333333
+      ]])
+      require("neo-tree").setup({
+        enable_git_status = true,
+        popup_border_style = "NC",
+        open_files_in_last_window = true,
+        log_level = "info",
+        log_to_file = false,
+        event_handlers = {
+          {
+            event = "file_opened",
+            handler = function(file_path)
+              require("neo-tree.sources.filesystem").reset_search()
+            end
+          },
+        },
+        filesystem = {
+          follow_current_file = true,
+          use_libuv_file_watcher = true,
+          window = {
+            position = "left",
+            popup = {
+              position = { col = "100%", row = "2" },
+              size = function(state)
+                local root_name = vim.fn.fnamemodify(state.path, ":~")
+                local root_len = string.len(root_name) + 4
+                return {
+                  width = math.max(root_len, 50),
+                  height = vim.o.lines - 6
+                }
+              end
+            },
+            mappings = {
+              ["o"] = "open_and_clear_filter",
+              ["q"] = "close_window"
+            },
+          },
+          commands = {
+            close_window = function(state)
+              require("neo-tree").close(state.name)
+            end,
+            open_and_clear_filter = function (state)
+              local node = state.tree:get_node()
+              if node and node.type == "file" then
+                local file_path = node:get_id()
+                -- resuse built-in commands to open and clear filter
+                local cmds = require("neo-tree.sources.filesystem.commands")
+                cmds.open(state)
+                cmds.clear_filter(state)
+                -- reveal the selected file without focusing the tree
+                require("neo-tree.sources.filesystem").navigate(state.path, file_path)
+              end
+            end,
+          },
+          renderers = {
+          --  directory = {
+          --    {"icon"},
+          --    {"name", use_git_status_colors = false},
+          --    {"diagnostics"},
+          --    {"git_status"},
+          --  },
+           -- file = {
+           --   {"icon"},
+           --   {"name", use_git_status_colors = false},
+           --   {"symlink_target", highlight = "Comment"},
+           --   {"diagnostics"},
+           --   {"git_status"},
+           -- }
+          }
+        },
+        buffers = {
+          window = {
+            position = "right"
+          },
+          show_unloaded = true,
+        }
+      })
+    end
+  }
 
+  --This is good if you use multiple windows in tmux, but my screen is too small
+  --use({
+  --  "aserowy/tmux.nvim",
+  --  config = function()
+  --    require("tmux").setup({
+  --      -- overwrite default configuration
+  --      -- here, e.g. to enable default bindings
+  --      copy_sync = {
+  --        -- enables copy sync and overwrites all register actions to
+  --        -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
+  --        enable = true,
+  --      },
+  --      navigation = {
+  --        -- enables default keybindings (C-hjkl) for normal mode
+  --        enable_default_keybindings = true,
+  --      },
+  --      resize = {
+  --        -- enables default keybindings (A-hjkl) for normal mode
+  --        enable_default_keybindings = true,
+  --      }
+  --    })
+  --  end
+  --})
   use {
     'kyazdani42/nvim-web-devicons',
     config = function ()
@@ -248,7 +362,8 @@ local startup = function(use)
   use 'rhysd/conflict-marker.vim'
   use 'nanotee/zoxide.vim'
 
-  use 'svermeulen/vim-easyclip'
+  use 'svermeulen/vim-cutlass'
+  use 'ojroques/vim-oscyank'
   use 'alvan/vim-closetag'
   use 'tmsvg/pear-tree'
   use 'sbdchd/neoformat'
@@ -385,9 +500,10 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
       local null_ls = require("null-ls")
       null_ls.setup({
         sources = {
-          null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
-          null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
-          null_ls.builtins.formatting.prettier -- prettier, eslint, eslint_d, or prettierd
+          --null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
+          --null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
+          null_ls.builtins.formatting.prettier,
+          null_ls.builtins.formatting.stylua -- prettier, eslint, eslint_d, or prettierd
         },
       })
       lspconfig.jsonls.setup {
@@ -710,9 +826,8 @@ call timer_start(1, "OpenFileFinder", {'repeat': 1})
   }
 
   use {
-    --'folke/which-key.nvim',
-    'zeertzjq/which-key.nvim',
-    branch = 'patch-1',
+    'folke/which-key.nvim',
+    --'zeertzjq/which-key.nvim',
     config = function ()
       require("which-key").setup()
     end
@@ -948,93 +1063,6 @@ highlight IndentBlanklineContextChar guifg=#585858
 
   --use 'dstein64/nvim-scrollview'
   use '~/repos/dwm.vim'
-  use {
-   "~/repos/neo-tree.nvim",
-    requires = { 
-      "MunifTanjim/nui.nvim",
-      'nvim-lua/plenary.nvim',
-      'kyazdani42/nvim-web-devicons',
-    },
-    config = function ()
-      require("neo-tree").setup({
-        event_handlers = {
-          {
-            event = "before_render",
-            handler = function (state)
-              local utils = require("neo-tree.utils")
-              state.git_status_lookup = utils.get_git_status()
-              state.diagnostics_lookup = utils.get_diagnostic_counts()
-            end
-          },
-          {
-            event = "file_opened",
-            handler = function(state, file_path)
-              --auto close
-              require("neo-tree").close(state.name)
-            end
-          },
-          {
-            event = "rename",
-            handler = function(state, old_file_path, new_file_path)
-              -- fix references to file
-            end
-          },
-          {
-            event = "move",
-            handler = function(state, old_file_path, new_file_path)
-              -- fix references to file
-            end
-          },
-        }
-      })
-      require("neo-tree").setup({
-        filesystem = {
-          window = {
-            position = "left",
-            popup = {
-              position = { col = "100%", row = "2" },
-              size = function(state)
-                local root_name = vim.fn.fnamemodify(state.path, ":~")
-                local root_len = string.len(root_name) + 4
-                return {
-                  width = math.max(root_len, 50),
-                  height = vim.o.lines - 6
-                }
-              end
-            },
-            mappings = {
-              ["o"] = "open_and_clear_filter",
-              ["q"] = "close_window"
-            },
-          },
-          commands = {
-            close_window = function(state)
-              require("neo-tree").close(state.name)
-            end,
-            open_and_clear_filter = function (state)
-              local node = state.tree:get_node()
-              if node and node.type == "file" then
-                local file_path = node:get_id()
-                -- resuse built-in commands to open and clear filter
-                local cmds = require("neo-tree.sources.filesystem.commands")
-                cmds.open(state)
-                cmds.clear_filter(state)
-                -- reveal the selected file without focusing the tree
-                require("neo-tree.sources.filesystem").navigate(state.path, file_path)
-              end
-            end,
-          },
-        },
-        buffers = {
-          window = {
-            position = "right"
-          },
-          show_unloaded = true,
-        }
-      })
-    end
-  }
-
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',

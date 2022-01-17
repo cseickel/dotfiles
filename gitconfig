@@ -22,6 +22,6 @@
     file-decoration-style = bold cyan ul
     hunk-header-decoration-style = blue box
 [commit]
-	gpgSign = true
+	gpgsign = true
 [tag]
 	gpgSign = true
