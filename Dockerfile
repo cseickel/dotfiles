@@ -40,7 +40,7 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
         aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
         ripgrep docker docker-compose aws-vault pass \
         ncdu glances nnn-nerd mssql-tools jq zoxide-git lazydocker \
-	code-server netcoredbg \
+        fd stylua code-server netcoredbg \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
