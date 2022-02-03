@@ -137,7 +137,7 @@ alias p="tmux attach -t primary"
 alias s="tmux attach -t secondary"
 alias t="~/start-arch-linux-docker.sh"
 
-alias cdk="pass show cseickel-cli >> /dev/null && aws-vault exec admin --no-session -- cdk"
+alias cdk="pass show cseickel-cli >> /dev/null && aws-vault exec admin --no-session -- npm run cdk"
 alias aws="pass show cseickel-cli >> /dev/null && aws-vault exec admin -- aws"
 
 alias add="git add"
@@ -173,6 +173,7 @@ function fn_reset_branch() {
 }
 alias reset-branch="fn_reset_branch"
 alias rebase-dev="git fetch && git rebase origin/dev"
+alias rebase-main="git fetch && git rebase origin/main"
 
 function fn_docker_stop() {
     id=$(docker container ls | fzf | awk '{print $1;}')

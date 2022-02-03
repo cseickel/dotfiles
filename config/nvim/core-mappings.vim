@@ -26,13 +26,19 @@ nnoremap m d
 xnoremap m d
 
 nnoremap mm dd
-nnoremap M D
+nnoremap X D
+
+" Paste over selection without changing the default register
+vnoremap p "_dp
 
 " Reselect pasted text
 nnoremap gp `[v`]
 
 "" Map leader to ,
 let mapleader=","
+
+" recreate mark command
+nnoremap <leader>m m
 
 " Switch to previous buffer
 nnoremap <M-3> :b#<cr>
@@ -150,10 +156,10 @@ nnoremap <silent> k <C-w>k
 nnoremap <silent> l <C-w>l
 
 " just easier to easier to type than the top row
-nnoremap <silent> H ^
-vnoremap <silent> H ^
-nnoremap <silent> L g_
-vnoremap <silent> L g_
+nnoremap <silent> ; ^
+vnoremap <silent> ; ^
+nnoremap <silent> ' g_
+vnoremap <silent> ' g_
 
 function! SmartWindowResize(orientation, direction) abort
     if a:orientation == "v"

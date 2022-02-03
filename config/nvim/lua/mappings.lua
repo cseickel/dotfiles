@@ -6,8 +6,8 @@ presets.operators["v"] = nil
 
 
 require("which-key").register({
-    [";"] = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>",    "Previous Harpoon" },
-    ["'"] = { "<cmd>lua require('harpoon.ui').nav_next()<cr>",    "Next Harpoon" },
+    [";"] = { "Start of Line" },
+    ["'"] = { "End of Line" },
     [",p"] = { "<cmd>lua require('harpoon.mark').add_file()<cr>", "Harpoon Add File" },
     [",,"] = { "<cmd>HopChar2<cr>",                      "Hop 2 Char" },
     g = {
@@ -35,17 +35,16 @@ require("which-key").register({
     ["["] = {
         name = "Previous...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
+        h = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>", "Previous Harpoon" },
         l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
-        m = {                                                 "Previous Mark" },
         q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
         x = { "<cmd>ConflictMarkerPrevHunk<cr>",              "Previous Conflict" }
     },
     ["]"] = {
         name = "Next...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>",  "Next Diagnostic" },
+        h = { "<cmd>lua require('harpoon.ui').nav_next()<cr>", "Next Harpoon" },
         l = { "<cmd>lnext<cr>",                               "Next Location List" },
-        r = {                                                 "Next Mark" },
-        m = {                                                 "Previous Mark" },
         q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
         x = { "<cmd>ConflictMarkerNextHunk<cr>",              "Next Conflict" }
     },
@@ -126,6 +125,7 @@ local grepProject = function ()
 end
 
 require("which-key").register({
+  ["<leader>"] = {
     ["."] = { "Set Working Directory from current file" },
     ["="] = { "<cmd>Neoformat<cr>",                           "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
@@ -144,8 +144,6 @@ require("which-key").register({
     J = { "f,ls<cr><esc>",                                    "Newline at next comma" },
     l = { "Show Location List" },
     L = { "Close Location List" },
-    m = { "m",                                                "Mark" },
-    M = { "M",                                                "Mark" },
     q = { "Show Quickfix" },
     Q = { "Close Quickfix" },
     f = {
@@ -155,19 +153,6 @@ require("which-key").register({
         f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Find in this file" },
         g = { grepProject,                                    "Grep" },
         o = { findFile,                                       "Open File" },
-    },
-    w = {
-        name = "Switch to window...",
-        ["1"] = { "Switch to window 1"},
-        ["2"] = { "Switch to window 2"},
-        ["3"] = { "Switch to window 3"},
-        ["4"] = { "Switch to window 4"},
-        ["5"] = { "Switch to window 5"},
-        ["6"] = { "Switch to window 6"},
-        ["7"] = { "Switch to window 7"},
-        ["8"] = { "Switch to window 8"},
-        ["9"] = { "Switch to window 9"},
-        ["0"] = { "Switch to window 10"},
     },
     g = {
         name = "Go to...",
@@ -187,5 +172,19 @@ require("which-key").register({
     T = { "Close Terminal" },
     z = { ":call ToggleWindowZoom(0)<cr>",                     "Zoom Window (toggle)" },
     Z = { ":call ToggleWindowZoom(1)<cr>",                     "Zoom Window in Copy Mode (no decorations)" },
-}, { prefix = "<leader>" })
+    w = {
+        name = "Switch to window...",
+        ["1"] = { "Switch to window 1"},
+        ["2"] = { "Switch to window 2"},
+        ["3"] = { "Switch to window 3"},
+        ["4"] = { "Switch to window 4"},
+        ["5"] = { "Switch to window 5"},
+        ["6"] = { "Switch to window 6"},
+        ["7"] = { "Switch to window 7"},
+        ["8"] = { "Switch to window 8"},
+        ["9"] = { "Switch to window 9"},
+        ["0"] = { "Switch to window 10"},
+    },
+  }
+})
 

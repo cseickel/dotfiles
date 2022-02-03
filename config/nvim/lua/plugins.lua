@@ -3,10 +3,12 @@ local startup = function(use)
 
   --use {'lewis6991/impatient.nvim', rocks = 'mpack'}
   use 'dstein64/vim-startuptime'
+  --use 'airblade/vim-rooter'
+  use "nyngwang/NeoRoot.lua"
   use {
-   --"~/repos/neo-tree.nvim",
-   "nvim-neo-tree/neo-tree.nvim",
-   branch = "v1.x",
+    "~/repos/neo-tree.nvim",
+    --"nvim-neo-tree/neo-tree.nvim",
+    --branch = "v1.x",
     requires = {
       "MunifTanjim/nui.nvim",
       'nvim-lua/plenary.nvim',
@@ -14,26 +16,30 @@ local startup = function(use)
     },
     config = function ()
       vim.cmd([[
-        hi link NeoTreeDirectoryName Directory
-        hi NeoTreeCursorLine gui=bold guibg=#333333
+     "hi link NeoTreeDirectoryName Directory
+      hi NeoTreeCursorLine gui=bold guibg=#333333
       ]])
-      require("neo-tree").setup({
-        enable_git_status = true,
-        popup_border_style = "NC",
-        open_files_in_last_window = true,
-        log_level = "info",
-        log_to_file = false,
-        event_handlers = {
-          {
-            event = "file_opened",
-            handler = function(file_path)
-              require("neo-tree.sources.filesystem").reset_search()
-            end
-          },
-        },
+
+      local config = {
+        --log_level = "trace",
+        --log_to_file = true,
+        --  enable_git_status = true,
+        --  enable_diagnostics = true,
+        --  event_handlers = {
+        --    {
+        --      event = "file_opened",
+        --      handler = function(file_path)
+        --        require("neo-tree.sources.filesystem").reset_search()
+        --      end
+        --    },
+        --  },
         filesystem = {
           follow_current_file = true,
           use_libuv_file_watcher = true,
+          bind_to_cwd = true,
+          find_args = {
+            "--exclude", ".git"
+          },
           window = {
             position = "left",
             popup = {
@@ -48,52 +54,77 @@ local startup = function(use)
               end
             },
             mappings = {
-              ["o"] = "open_and_clear_filter",
-              ["q"] = "close_window"
+              ["q"] = "close_window",
+              ["S"] = "none"
             },
           },
           commands = {
             close_window = function(state)
               require("neo-tree").close(state.name)
             end,
-            open_and_clear_filter = function (state)
-              local node = state.tree:get_node()
-              if node and node.type == "file" then
-                local file_path = node:get_id()
-                -- resuse built-in commands to open and clear filter
-                local cmds = require("neo-tree.sources.filesystem.commands")
-                cmds.open(state)
-                cmds.clear_filter(state)
-                -- reveal the selected file without focusing the tree
-                require("neo-tree.sources.filesystem").navigate(state.path, file_path)
+          },
+          components = {
+            harpoon_index = function(config, node, state)
+              local Marked = require("harpoon.mark")
+              local path = node:get_id()
+              local succuss, index = pcall(Marked.get_index_of, path)
+              if succuss and index and index > 0 then
+                return {
+                  text = string.format(" ⥤ %d", index),
+                  highlight = config.highlight or "NeoTreeDirectoryIcon",
+                }
+              else
+                return {}
               end
+            end,
+            trailing_slash = function ()
+              return {
+                text = "/",
+                highlight = "NeoTreeDirectoryName",
+              }
             end,
           },
           renderers = {
-          --  directory = {
+            directory = {
+              {"icon"},
+              {"name", use_git_status_colors = false},
+              {"trailing_slash"},
+              {"harpoon_index"},
+              {"diagnostics"},
+              {"git_status"},
+            },
+          --  file = {
+          --    {
+          --      "indent",
+          --      with_markers = true,
+          --      highlight = "NeoTreeDimText"
+          --    },
           --    {"icon"},
-          --    {"name", use_git_status_colors = false},
+          --    {"name", use_git_status_colors = true},
+          --    {"harpoon_index"},
           --    {"diagnostics"},
-          --    {"git_status"},
-          --  },
-           -- file = {
-           --   {"icon"},
-           --   {"name", use_git_status_colors = false},
-           --   {"symlink_target", highlight = "Comment"},
-           --   {"diagnostics"},
-           --   {"git_status"},
-           -- }
+          --    {"git_status", highlight = "NeoTreeDimText"},
+          --  }
           }
         },
-        buffers = {
-          window = {
-            position = "right"
-          },
-          show_unloaded = true,
-        }
-      })
+        --  git_status = {
+        --    window = {
+        --      position = "right"
+        --    },
+        --  },
+        --  buffers = {
+        --    window = {
+        --      position = "right"
+        --    },
+        --    show_unloaded = true,
+        -- }
+      }
+      require("neo-tree").setup(config)
     end
+
   }
+
+  use "alec-gibson/nvim-tetris"
 
   --This is good if you use multiple windows in tmux, but my screen is too small
   --use({
@@ -278,7 +309,6 @@ local startup = function(use)
 
 
   use 'dkarter/bullets.vim'
-  use 'Darazaki/indent-o-matic'
   --use { 
   --    'ggandor/lightspeed.nvim',
   --    config = function ()
@@ -565,14 +595,21 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
             capabilities = capabilities,
             on_attach = tsserver_on_attach
           })
-        elseif server.name == "lua" then
+        elseif server.name == "sumneko_lua" then
           server:setup({
             capabilities = capabilities,
             on_attach = lsp_attach,
             settings = {
               Lua = {
                 diagnostics = {
-                  globals = { 'vim' }
+                  globals = { 
+                    'vim',
+                    "describe",
+                    "it",
+                    "before_each",
+                    "after_each",
+                    "pending",
+                  },
                 }
               }
             }
@@ -716,7 +753,6 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
     end
   }
 
-  use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use {
     'nvim-telescope/telescope.nvim',
@@ -1065,6 +1101,7 @@ highlight IndentBlanklineContextChar guifg=#585858
   use '~/repos/dwm.vim'
   use {
     'nvim-treesitter/nvim-treesitter',
+    commit = '668de0951a36ef17016074f1120b6aacbe6c4515',
     run = ':TSUpdate',
     config = function()
       require'nvim-treesitter.configs'.setup {

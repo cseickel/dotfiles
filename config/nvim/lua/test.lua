@@ -1,23 +1,23 @@
-local cb = function(...)
-  print(...)
-end
+local utils = require("neo-tree.utils")
 
-    local watch_file
-    local w = vim.loop.new_fs_event()
-    local function on_change(err, fname, status)
-      -- Do work...
-      print(fname, vim.inspect(status))
-      -- Debounce: stop/start.
-    end
+local base = {
+  window = {
+    mappings = {
+      ["/"] = "hi"
+    }
+  }
+}
 
-    function watch_file(fname)
-      local fullpath = vim.fn.fnamemodify(fname, ':p')
-      w:start(
-        fullpath,
-        { watch_entry = false, stat = false, recursive = false },
-        vim.schedule_wrap(function(...)
-          on_change(...)
-        end))
-    end
+local over = {
+  window = {
+    mappings = {
+      ["/"] = nil
+    }
+  }
+}
+print(vim.inspect(over))
 
-    watch_file("~")
+
+local merged = vim.deepcopy(base, over)
+
+print(vim.inspect(merged))
