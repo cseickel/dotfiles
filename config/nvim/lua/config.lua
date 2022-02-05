@@ -73,4 +73,3 @@ vim.lsp.handlers["textDocument/hover"] =
 --    use_lsp_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
 --}
 
-vim.cmd'au BufEnter * NeoRoot'

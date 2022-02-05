@@ -61,7 +61,7 @@ set ruler
 set number
 set wrap linebreak breakindent
 set showbreak=\ ﬌\ 
-set signcolumn=auto:2
+set signcolumn=auto:1-2
 set cursorline
 "
 " Tweaks to improve performance

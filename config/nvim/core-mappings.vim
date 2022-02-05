@@ -29,7 +29,7 @@ nnoremap mm dd
 nnoremap X D
 
 " Paste over selection without changing the default register
-vnoremap p "_dp
+vnoremap p "_dP
 
 " Reselect pasted text
 nnoremap gp `[v`]

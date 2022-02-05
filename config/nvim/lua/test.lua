@@ -1,23 +1,18 @@
-local utils = require("neo-tree.utils")
-
-local base = {
-  window = {
-    mappings = {
-      ["/"] = "hi"
-    }
+      local config = {
+        filesystem = {
+          window = {
+            position = "left",
+          },
+        }
+      }
+require("neo-tree").setup({
+  close_floats_on_escape_key = false,
+  filesystem = {
+    window = {
+      mappings = {
+        ["q"] = "close_window",
+      },
+    },
   }
-}
+})
 
-local over = {
-  window = {
-    mappings = {
-      ["/"] = nil
-    }
-  }
-}
-print(vim.inspect(over))
-
-
-local merged = vim.deepcopy(base, over)
-
-print(vim.inspect(merged))

@@ -4,7 +4,7 @@ local startup = function(use)
   --use {'lewis6991/impatient.nvim', rocks = 'mpack'}
   use 'dstein64/vim-startuptime'
   --use 'airblade/vim-rooter'
-  use "nyngwang/NeoRoot.lua"
+  use "dstein64/nvim-scrollview"
   use {
     "~/repos/neo-tree.nvim",
     --"nvim-neo-tree/neo-tree.nvim",
@@ -15,12 +15,15 @@ local startup = function(use)
       'kyazdani42/nvim-web-devicons',
     },
     config = function ()
+      -- See ":help neo-tree-highlights" for a list of available highlight groups
       vim.cmd([[
-     "hi link NeoTreeDirectoryName Directory
+      hi link NeoTreeDirectoryName Directory
+      hi link NeoTreeDirectoryIcon NeoTreeDirectoryName
       hi NeoTreeCursorLine gui=bold guibg=#333333
       ]])
 
       local config = {
+        close_floats_on_escape_key = false,
         --log_level = "trace",
         --log_to_file = true,
         --  enable_git_status = true,
@@ -35,7 +38,7 @@ local startup = function(use)
         --  },
         filesystem = {
           follow_current_file = true,
-          use_libuv_file_watcher = true,
+          use_libuv_file_watcher = false,
           bind_to_cwd = true,
           find_args = {
             "--exclude", ".git"
@@ -55,13 +58,9 @@ local startup = function(use)
             },
             mappings = {
               ["q"] = "close_window",
-              ["S"] = "none"
             },
           },
           commands = {
-            close_window = function(state)
-              require("neo-tree").close(state.name)
-            end,
           },
           components = {
             harpoon_index = function(config, node, state)
@@ -77,47 +76,71 @@ local startup = function(use)
                 return {}
               end
             end,
-            trailing_slash = function ()
-              return {
-                text = "/",
-                highlight = "NeoTreeDirectoryName",
-              }
-            end,
+            --icon = function(config, node, state)
+            --  local icon = config.default or " "
+            --  local padding = config.padding or " "
+            --  local highlight = config.highlight or highlights.FILE_ICON
+
+            --  if node.type == "directory" then
+            --    highlight = highlights.DIRECTORY_ICON
+            --    if node:is_expanded() then
+            --      icon = config.folder_open or "-"
+            --    else
+            --      icon = config.folder_closed or "+"
+            --    end
+            --  elseif node.type == "file" then
+            --    local success, web_devicons = pcall(require, "nvim-web-devicons")
+            --    if success then
+            --      local devicon, hl = web_devicons.get_icon(node.name, node.ext)
+            --      icon = devicon or icon
+            --      highlight = hl or highlight
+            --    end
+            --  end
+
+            --  return {
+            --    text = icon .. padding,
+            --    highlight = highlight,
+            --  }
+            --end,
           },
           renderers = {
-            directory = {
-              {"icon"},
-              {"name", use_git_status_colors = false},
-              {"trailing_slash"},
-              {"harpoon_index"},
-              {"diagnostics"},
-              {"git_status"},
-            },
-          --  file = {
-          --    {
-          --      "indent",
-          --      with_markers = true,
-          --      highlight = "NeoTreeDimText"
-          --    },
-          --    {"icon"},
-          --    {"name", use_git_status_colors = true},
-          --    {"harpoon_index"},
-          --    {"diagnostics"},
-          --    {"git_status", highlight = "NeoTreeDimText"},
-          --  }
+            --directory = {
+            --  {"icon"},
+            --  {"name", use_git_status_colors = false},
+            --  {
+            --    text = "/",
+            --    highlight = "NeoTreeDirectoryName",
+            --  },
+            --  {"harpoon_index"},
+            --  {"diagnostics"},
+            --  {"git_status"},
+            --},
+              file = {
+                {"icon"},
+                {"name", use_git_status_colors = true},
+                {"harpoon_index"},
+                {"diagnostics"},
+                {"git_status", highlight = "NeoTreeDimText"},
+              }
           }
         },
-        --  git_status = {
-        --    window = {
-        --      position = "right"
-        --    },
-        --  },
-        --  buffers = {
-        --    window = {
-        --      position = "right"
-        --    },
-        --    show_unloaded = true,
-        -- }
+        git_status = {
+          window = {
+            position = "right",
+            mappings = {
+              ["q"] = "close_window",
+            },
+          },
+        },
+        buffers = {
+          window = {
+            position = "right",
+            mappings = {
+              ["q"] = "close_window",
+            },
+          },
+          show_unloaded = true,
+       }
       }
       require("neo-tree").setup(config)
     end

@@ -73,7 +73,7 @@ hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bol
 let g:dwm_master_pane_width = 90
 let g:dwm_map_keys=0
 
-let g:scrollview_current_only=1
+"let g:scrollview_current_only=1
 let g:scrollview_winblend=60
 let g:scrollview_column=1
 

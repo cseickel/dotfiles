@@ -30,8 +30,8 @@ require("which-key").register({
     H = { "Start of Line" },
     L = { "End of Line" },
     K = { "Show documentation"},
-    ["\\"] = { "<cmd>NeoTreeReveal<cr>",                     "Open  Tree" },
-    ["|"] = { "<cmd>NeoTreeFloat<cr>",                       "Float Tree" },
+    ["\\"] = { "<cmd>NeoTreeRevealInSplitToggle<cr>",               "Open Tree in Current Window" },
+    ["|"] = { "<cmd>NeoTreeRevealToggle<cr>",                       "Open Tree in Sidebar" },
     ["["] = {
         name = "Previous...",
         d = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",  "Previous Diagnostic" },
