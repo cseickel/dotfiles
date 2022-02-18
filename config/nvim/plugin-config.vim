@@ -132,9 +132,9 @@ function! CustomStartifyBeforeSave() abort
         else
             " close drawer and tool windows
             let l:ft = nvim_buf_get_option(nvim_win_get_buf(win), "ft")
-            if l:ft =~ "tree" || l:ft == "fern" || l:ft == "Trouble"
-                call nvim_win_close(win, 1)
-            endif
+           " if l:ft =~ "tree" || l:ft == "fern" || l:ft == "Trouble"
+           "     call nvim_win_close(win, 1)
+           " endif
         endif
     endfor
 endfunction
@@ -155,7 +155,7 @@ let g:startify_change_to_dir = 1
 let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
             \ 't:terminal', 'g:terminal', 'w:terminal']
 
-set sessionoptions=curdir,tabpages,winpos,buffers
+set sessionoptions=curdir,tabpages,winpos,winsize
 
 
 "fzf preview

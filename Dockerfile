@@ -16,7 +16,6 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
     && useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && sudo reflector -p https -c us --score 20 --connection-timeout 1 --sort rate --save /etc/pacman.d/mirrorlist \
-    && pacman-key --refresh-keys \
     && wget https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem \
         -o /usr/share/ca-certificates/trust-source/rds-combined-ca-bundle.pem \
     && update-ca-trust

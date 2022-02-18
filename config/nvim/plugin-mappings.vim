@@ -11,8 +11,8 @@ nmap     <silent> <C-j>     <Plug>DWMMoveDown
 nmap     <silent> <C-k>     <Plug>DWMMoveUp
 nmap     <silent> <C-l>     <Plug>DWMMoveRight
 
-imap <c-p> <plug>EasyClipInsertModePaste
-cmap <c-p> <plug>EasyClipCommandModePaste
+imap <c-p> <C-o>p
+cmap <c-p> <C-r>0
 
 imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
 let g:copilot_no_tab_map = v:true

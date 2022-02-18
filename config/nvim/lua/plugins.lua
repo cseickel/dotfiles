@@ -5,6 +5,35 @@ local startup = function(use)
   use 'dstein64/vim-startuptime'
   --use 'airblade/vim-rooter'
   use "dstein64/nvim-scrollview"
+
+  --use {
+  --  'folke/which-key.nvim',
+  --  --'zeertzjq/which-key.nvim',
+  --  config = function ()
+  --    require("which-key").setup()
+  --  end
+  --}
+  use {
+    'mrjones2014/legendary.nvim',
+    requires = {
+      "folke/which-key.nvim",
+      'stevearc/dressing.nvim'
+    },
+    config = function ()
+    --  require("which-key").setup()
+    --  require('dressing').setup()
+      require('legendary').setup({
+        include_builtins = false,
+      })
+    end
+  }
+
+  use {
+    'rmagatti/auto-session',
+    config = function()
+      require('auto-session').setup({})
+    end
+  }
   use {
     "~/repos/neo-tree.nvim",
     --"nvim-neo-tree/neo-tree.nvim",
@@ -23,9 +52,12 @@ local startup = function(use)
       ]])
 
       local config = {
-        close_floats_on_escape_key = false,
-        --log_level = "trace",
-        --log_to_file = true,
+        close_if_last_window = true,
+        close_floats_on_escape_key = true,
+        git_status_async = true,
+        log_level = "trace",
+        log_to_file = true,
+        open_files_in_last_window = true,
         --  enable_git_status = true,
         --  enable_diagnostics = true,
         --  event_handlers = {
@@ -36,10 +68,31 @@ local startup = function(use)
         --      end
         --    },
         --  },
+        default_component_configs = {
+          indent = {
+            with_markers = true,
+            padding = 0
+          },
+          icon = {
+            folder_closed = "",
+            folder_open = "",
+            folder_empty = "ﰊ",
+            default = "*",
+          },
+          name = {
+            trailing_slash = true,
+          },
+        },
         filesystem = {
+          hijack_netrw_behavior = "open_split",
           follow_current_file = true,
-          use_libuv_file_watcher = false,
+          use_libuv_file_watcher = true,
           bind_to_cwd = true,
+          filters = {
+            respect_gitignore = true,
+            --gitignore_source = "git status",
+            gitignore_source = "git check-ignore",
+          },
           find_args = {
             "--exclude", ".git"
           },
@@ -57,7 +110,10 @@ local startup = function(use)
               end
             },
             mappings = {
+              ["f"] = "fuzzy_finder",
+              ["/"] = "none",
               ["q"] = "close_window",
+              ["D"] = "show_debug_info",
             },
           },
           commands = {
@@ -103,26 +159,26 @@ local startup = function(use)
             --  }
             --end,
           },
-          renderers = {
-            --directory = {
-            --  {"icon"},
-            --  {"name", use_git_status_colors = false},
-            --  {
-            --    text = "/",
-            --    highlight = "NeoTreeDirectoryName",
-            --  },
-            --  {"harpoon_index"},
-            --  {"diagnostics"},
-            --  {"git_status"},
-            --},
-              file = {
-                {"icon"},
-                {"name", use_git_status_colors = true},
-                {"harpoon_index"},
-                {"diagnostics"},
-                {"git_status", highlight = "NeoTreeDimText"},
-              }
-          }
+          --renderers = {
+          --  directory = {
+          --    {"icon"},
+          --    {"name", use_git_status_colors = false},
+          --    {
+          --      text = "/",
+          --      highlight = "NeoTreeDirectoryName",
+          --    },
+          --    {"harpoon_index"},
+          --    {"diagnostics"},
+          --    {"git_status"},
+          --  },
+          --  file = {
+          --    {"icon"},
+          --    {"name", use_git_status_colors = true},
+          --    {"harpoon_index"},
+          --    {"diagnostics"},
+          --    {"git_status", highlight = "NeoTreeDimText"},
+          --  }
+          --}
         },
         git_status = {
           window = {
@@ -142,6 +198,15 @@ local startup = function(use)
           show_unloaded = true,
        }
       }
+
+      local config2 = {
+        filesystem = {
+          window = {
+            position = "split"
+          }
+        }
+      }
+
       require("neo-tree").setup(config)
     end
 
@@ -747,7 +812,7 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
     event='InsertEnter',
     config = function()
       require('lspkind').init({
-        with_text = true,
+        mode = "symbol_text",
         preset = 'default',
         symbol_map = {
           Text = '',
@@ -884,13 +949,6 @@ call timer_start(1, "OpenFileFinder", {'repeat': 1})
     end
   }
 
-  use {
-    'folke/which-key.nvim',
-    --'zeertzjq/which-key.nvim',
-    config = function ()
-      require("which-key").setup()
-    end
-  }
 
   use {
     'akinsho/nvim-toggleterm.lua',

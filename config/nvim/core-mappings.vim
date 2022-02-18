@@ -7,6 +7,9 @@ map <silent> <C-\> <Esc>
 imap <silent> <C-\> <Esc>
 tnoremap <silent> <C-\> <c-\><c-n>
 
+" I make this mistake all the time...
+command! Qa :qa
+
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
@@ -73,9 +76,7 @@ tnoremap <silent> <M-s> <C-\><C-n>:wa<cr>
 nnoremap <silent> <M-v> <C-v>
 tnoremap <silent> <M-v> <C-v>
 
-" Control+p as universal paste shortcut in all modes
-nmap <silent> <C-p> p
-vmap <silent> <C-p> p
+" Control+p as paste shortcut in insert modes
 imap <silent> <C-p> <Esc>pa
 tmap <silent> <C-p> <c-\>pa
 

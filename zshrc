@@ -265,3 +265,6 @@ function work-on-issue() {
 #if [[ -n $SSH_CONNECTION ]] ; then
 #    [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session }
 #fi
+#
+#export GIT_DIR="$HOME/bare.git"
+#export GIT_WORK_TREE="$HOME"
