@@ -55,7 +55,7 @@ local startup = function(use)
         close_if_last_window = true,
         close_floats_on_escape_key = true,
         git_status_async = true,
-        log_level = "trace",
+        log_level = "debug",
         log_to_file = true,
         open_files_in_last_window = true,
         --  enable_git_status = true,
@@ -112,6 +112,7 @@ local startup = function(use)
             mappings = {
               ["f"] = "fuzzy_finder",
               ["/"] = "none",
+              ["o"] = "open",
               ["q"] = "close_window",
               ["D"] = "show_debug_info",
             },
@@ -159,7 +160,7 @@ local startup = function(use)
             --  }
             --end,
           },
-          --renderers = {
+          renderers = {
           --  directory = {
           --    {"icon"},
           --    {"name", use_git_status_colors = false},
@@ -171,14 +172,14 @@ local startup = function(use)
           --    {"diagnostics"},
           --    {"git_status"},
           --  },
-          --  file = {
-          --    {"icon"},
-          --    {"name", use_git_status_colors = true},
-          --    {"harpoon_index"},
-          --    {"diagnostics"},
-          --    {"git_status", highlight = "NeoTreeDimText"},
-          --  }
-          --}
+            file = {
+              {"icon"},
+              {"name", use_git_status_colors = true},
+              {"harpoon_index"},
+              {"diagnostics"},
+              {"git_status", highlight = "NeoTreeDimText"},
+            }
+          }
         },
         git_status = {
           window = {
@@ -488,14 +489,20 @@ local startup = function(use)
 
   use {
     'mfussenegger/nvim-dap',
-    requires = { 'rcarriga/nvim-dap-ui' },
+    requires = {
+      'rcarriga/nvim-dap-ui',
+      'theHamsta/nvim-dap-virtual-text',
+    },
     config = function ()
       vim.cmd([[
 nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+nnoremap <silent> <F8> :lua require'dapui'.toggle()<CR>
 nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
 nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
 nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>B :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <M-k> <Cmd>lua require("dapui").eval()<CR>
+vnoremap <silent> <M-k> <Cmd>lua require("dapui").eval()<CR>
 ]])
       require("dapui").setup({
         icons = {
@@ -514,24 +521,25 @@ nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
           elements = {
             -- You can change the order of elements in the sidebar
             "scopes",
-            "stacks",
-            "watches"
+            --"watches"
           },
           size = 40,
           position = "left" -- Can be "left" or "right"
         },
-        tray = {
-          elements = {
-            "repl"
-          },
-          size = 10,
-          position = "bottom" -- Can be "bottom" or "top"
-        },
+        --tray = {
+        --  elements = {
+        --    "repl"
+        --  },
+        --  size = 10,
+        --  position = "bottom" -- Can be "bottom" or "top"
+        --},
         floating = {
           max_height = nil, -- These can be integers or a float between 0 and 1.
           max_width = nil   -- Floats will be treated as percentage of your screen.
         }
       })
+
+      require("nvim-dap-virtual-text").setup()
 
       local dap = require('dap')
       dap.adapters.netcoredbg = {

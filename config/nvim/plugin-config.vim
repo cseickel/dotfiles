@@ -253,6 +253,7 @@ highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight LineNR guibg=None ctermbg=None
 highlight CursorLineNr guibg=#262626 guifg=#a8a8a8 gui=bold
 highlight CursorLine guibg=#262626
+highlight debugPc guibg=#5f0000 gui=bold
 highlight ColorColumn guibg=#262626
 
 

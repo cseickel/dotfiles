@@ -3,7 +3,7 @@ FROM archlinux:base-devel
 ENV \
     UID="1000" \
     GID="1000" \
-    UNAME="arch" \
+    UNAME="cseickel" \
     SHELL="/bin/zsh" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
@@ -20,11 +20,10 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
         -o /usr/share/ca-certificates/trust-source/rds-combined-ca-bundle.pem \
     && update-ca-trust
 
-USER arch
-WORKDIR /home/arch
+USER cseickel
+WORKDIR /home/cseickel/
 
-RUN cd /home/$UNAME \
-    && git clone https://aur.archlinux.org/yay.git \
+RUN git clone https://aur.archlinux.org/yay.git \
     && cd yay \
     && makepkg -si --noprogressbar --noconfirm \
     && cd .. \
@@ -35,15 +34,17 @@ RUN cd /home/$UNAME \
 ARG CACHE_BREAKER=""
 
 RUN yay -Syu --noprogressbar --noconfirm --needed \
-        python3 python-pip nodejs npm clang eslint_d prettier git-delta github-cli \
-        tmux bat fzf kitty-terminfo neovim-nightly-bin neovim-remote nvim-packer-git \
+        python3 python-pip nodejs-lts-fermium npm clang \
+        eslint_d prettier stylua git-delta github-cli \
+        tmux bat fzf fd ripgrep kitty-terminfo \
+        neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-        aspnet-runtime-3.1 dotnet-sdk-3.1 aws-cli-v2-bin aws-session-manager-plugin \
-        ripgrep docker docker-compose aws-vault pass \
-        ncdu glances nnn-nerd mssql-tools jq zoxide-git lazydocker \
-        fd stylua code-server netcoredbg \
+        aspnet-runtime-3.1 dotnet-sdk-3.1 netcoredbg mssql-tools \
+        aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
+        docker docker-compose lazydocker \
+        ncdu glances nnn-nerd jq zoxide-git \
     && sudo pip --disable-pip-version-check install pynvim \
-    && sudo npm install -g @angular/cli aws-cdk neovim ng wip \
+    && sudo npm install -g neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
 
 # I don't know why I have to set this again, but I do...
@@ -55,7 +56,4 @@ RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
 #    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
 #      && sudo sysctl --system
 
-ENV TERM="xterm-256color" \
-    PORT=8888
-
-CMD [ "/usr/bin/code-server", "--auth",  "none" ]
+ENV TERM="xterm-256color"
