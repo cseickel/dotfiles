@@ -1,0 +1,47 @@
+return function()
+  local cmp = require('cmp')
+  cmp.setup {
+    formatting = {
+      format = function(entry, vim_item)
+        -- fancy icons and a name of kind
+        vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+        -- set a name for each source
+        vim_item.menu = ({
+          buffer = "[Buffer]",
+          nvim_lsp = "[LSP]",
+          vsnip = "[VSnip]",
+          nvim_lua = "[Lua]",
+          cmp_tabnine = "[TabNine]",
+          look = "[Look]",
+          path = "[Path]",
+          spell = "[Spell]",
+          calc = "[Calc]",
+          emoji = "[Emoji]",
+          npm = "[npm]"
+        })[entry.source.name]
+        return vim_item
+      end
+    },
+    mapping = {
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
+    snippet = {expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end},
+    sources = {
+      { name = "nvim_lua" },
+      { name = 'nvim_lsp' },
+      { name = "npm", keyword_length = 3 },
+      { name = "vsnip" },
+      { name = "path" },
+      { name = "calc" },
+      { name = 'buffer', keyword_length = 2 },
+    },
+    completion = {completeopt = 'menu,menuone,noinsert'}
+  }
+end
+
