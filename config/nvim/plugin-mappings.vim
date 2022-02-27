@@ -1,7 +1,5 @@
 nnoremap <silent> <M-t> :tabnew<cr><bar>:Startify<cr>
 
-let $EDITOR="nvr --remote-wait -cc 'call DWM_New()'"
-
 nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
 nmap     <silent> <C-q>     <Plug>DWMClose
 "nmap     <silent> <         <Plug>DWMShrinkMaster

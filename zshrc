@@ -127,7 +127,8 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-alias edit="nvr -cc 'call DWM_New()'"
+export EDITOR="nvr --remote-tab-silent"
+alias edit="$EDITOR"
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'

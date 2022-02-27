@@ -49,9 +49,10 @@ local mine = function ()
         gitignore_source = "git check-ignore",
       },
       find_command = "find",
-      find_args = {
-        "--exclude", ".git"
-      },
+      --find_args = {
+      --  "--exclude", ".git",
+      --},
+      find_by_full_path_words = true,
       window = {
         position = "left",
         popup = {
@@ -298,4 +299,4 @@ hi link NeoTreeDirectoryIcon NeoTreeDirectoryName
   vim.cmd([[nnoremap \ :NeoTreeReveal<cr>]])
 end
 
-return quickstart
+return mine
