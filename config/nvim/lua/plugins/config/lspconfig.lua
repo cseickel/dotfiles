@@ -120,6 +120,7 @@ return function()
         on_attach = lsp_attach,
         settings = {
           Lua = {
+            version = 'LuaJIT',
             diagnostics = {
               globals = {
                 'vim',

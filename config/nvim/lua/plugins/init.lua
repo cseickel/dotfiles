@@ -11,6 +11,7 @@ local startup = function(use)
   vim = vim
 
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
+  use '~/repos/plenary.nvim'
   use 'dstein64/vim-startuptime'
   use "dstein64/nvim-scrollview"
 
@@ -33,7 +34,7 @@ local startup = function(use)
     --branch = "v1.x",
     requires = {
       "MunifTanjim/nui.nvim",
-      'nvim-lua/plenary.nvim',
+      --'nvim-lua/plenary.nvim',
       'kyazdani42/nvim-web-devicons',
     },
     config = c("neo-tree")
@@ -84,9 +85,9 @@ local startup = function(use)
   --use 'airblade/vim-gitgutter'
   use {
     'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
+    --requires = {
+      --'nvim-lua/plenary.nvim'
+    --},
     config = c("gitsigns")
   }
 
@@ -165,7 +166,7 @@ local startup = function(use)
       'neovim/nvim-lspconfig',
       'jose-elias-alvarez/nvim-lsp-ts-utils',
       'jose-elias-alvarez/null-ls.nvim',
-      'nvim-lua/plenary.nvim',
+      --'nvim-lua/plenary.nvim',
       'b0o/schemastore.nvim'
     },
     config = c("lspconfig")
@@ -223,7 +224,6 @@ local startup = function(use)
     config = c("lspkind-nvim")
   }
 
-  use 'nvim-lua/plenary.nvim'
   use {
     'nvim-telescope/telescope.nvim',
     requires = {

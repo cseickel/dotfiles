@@ -1,10 +1,9 @@
 local Job = require("plenary.job")
 
 Job:new({
-  command = "fzf",
-  args = {"--no-sort", "--filter", "l"},
-  env = { FZF_DEFAULT_COMMAND=""},
-  write = "lua",
+  command = "find",
+  args = {"/", "-iname", "e"},
+  maximum_results = 10,
   on_start = function ()
     print("start")
   end,
@@ -17,5 +16,5 @@ Job:new({
   on_exit = function(_, code, _)
     print("exit", code)
   end,
-}):sync()
+}):start()
 

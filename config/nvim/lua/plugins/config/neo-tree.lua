@@ -13,6 +13,7 @@ local mine = function ()
     log_level = "debug",
     log_to_file = true,
     open_files_in_last_window = true,
+    popup_border_style = "single", -- "double", "none", "rounded", "shadow", "single" or "solid"
     --  enable_git_status = true,
     --  enable_diagnostics = true,
     --  event_handlers = {
@@ -47,6 +48,9 @@ local mine = function ()
         respect_gitignore = true,
         --gitignore_source = "git status",
         gitignore_source = "git check-ignore",
+        exclude_items = {
+          "plugins", "test.lua", "gitconfig"
+        }
       },
       find_command = "find",
       --find_args = {
