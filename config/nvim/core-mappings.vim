@@ -157,10 +157,10 @@ nnoremap <silent> k <C-w>k
 nnoremap <silent> l <C-w>l
 
 " just easier to easier to type than the top row
-nnoremap <silent> ; ^
-vnoremap <silent> ; ^
-nnoremap <silent> ' g_
-vnoremap <silent> ' g_
+nnoremap <silent> H ^
+vnoremap <silent> H ^
+nnoremap <silent> L g_
+vnoremap <silent> L g_
 
 function! SmartWindowResize(orientation, direction) abort
     if a:orientation == "v"
