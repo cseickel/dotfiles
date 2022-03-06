@@ -45,11 +45,17 @@ local mine = function ()
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
       filters = {
+        show_hidden = false,
         respect_gitignore = true,
         --gitignore_source = "git status",
         gitignore_source = "git check-ignore",
         exclude_items = {
           "plugins", "test.lua", "gitconfig"
+        },
+        show_filtered = {
+          exclude = true,
+          gitignore = true,
+          hidden = true
         }
       },
       find_command = "find",

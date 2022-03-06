@@ -80,8 +80,11 @@ local startup = function(use)
   use 'tpope/vim-surround'
   use { 'wellle/targets.vim' }
   use 'dkarter/bullets.vim'
-  use { 'phaazon/hop.nvim', config = c("hop") }
-
+  use {
+    'phaazon/hop.nvim',
+    --branch = 'v1',
+    config = c("hop")
+  }
   --use 'airblade/vim-gitgutter'
   use {
     'lewis6991/gitsigns.nvim',

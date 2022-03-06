@@ -83,6 +83,7 @@ local mappings = {
   [";"] = {"<Plug>(buffer-history-back)",               "Previous Buffer"},
   ["'"] = {"<Plug>(buffer-history-forward)",            "Next Buffer"},
   [",,"] = { "<cmd>HopChar2<cr>",                      "Hop 2 Char" },
+  [",,"] = { "<cmd>HopChar2<cr>", mode = "v",          "Hop 2 Char" },
   g = {
       name = "Go to Harpoon...",
       ["1"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", "File 1" },
