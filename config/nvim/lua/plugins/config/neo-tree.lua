@@ -12,7 +12,7 @@ local mine = function ()
     git_status_async = true,
     log_level = "debug",
     log_to_file = true,
-    open_files_in_last_window = true,
+    open_files_in_last_window = false,
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
     --  enable_git_status = true,
     --  enable_diagnostics = true,
@@ -58,10 +58,10 @@ local mine = function ()
           hidden = true
         }
       },
-      find_command = "find",
-      --find_args = {
-      --  "--exclude", ".git",
-      --},
+      find_command = "fd",
+      find_args = {
+        "--exclude", ".git",
+      },
       find_by_full_path_words = true,
       window = {
         position = "left",

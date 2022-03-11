@@ -39,7 +39,7 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
         tmux bat fzf fd ripgrep kitty-terminfo \
         neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-        aspnet-runtime-3.1 dotnet-sdk-3.1 netcoredbg mssql-tools \
+        aspnet-runtime-3.1 dotnet-sdk-3.1 netcoredbg mssql-tools maven \
         aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
         docker docker-compose lazydocker \
         ncdu glances nnn-nerd jq zoxide-git \
