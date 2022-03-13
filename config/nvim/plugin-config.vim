@@ -102,6 +102,8 @@ let g:bufExplorerShowTabBuffer=1
 let g:bufExplorerSortBy='fullpath'
 let g:bufExplorerDisableDefaultKeyMapping=1
 
+let g:BufSurfIgnore = 'Neo-tree filesystem .*'
+
 let g:EditorConfig_max_line_indicator="fill"
 let g:sharpenup_create_mappings = 0
 let g:OmniSharp_highlighting = 0

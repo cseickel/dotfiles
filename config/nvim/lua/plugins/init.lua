@@ -14,7 +14,7 @@ local startup = function(use)
   use '~/repos/plenary.nvim'
   use 'dstein64/vim-startuptime'
   use "dstein64/nvim-scrollview"
-  use "dhruvasagar/vim-buffer-history"
+  use "ton/vim-bufsurf"
 
   use { 'folke/which-key.nvim', config = c("which-key") }
   use {

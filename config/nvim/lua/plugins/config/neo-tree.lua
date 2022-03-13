@@ -1,10 +1,26 @@
 local mine = function ()
   -- See ":help neo-tree-highlights" for a list of available highlight groups
   vim.cmd([[
+  let g:neo_tree_remove_legacy_commands = 1
   hi link NeoTreeDirectoryName Directory
   hi link NeoTreeDirectoryIcon NeoTreeDirectoryName
   hi NeoTreeCursorLine gui=bold guibg=#333333
   ]])
+
+  local harpoon_index = function(config, node, state)
+    local Marked = require("harpoon.mark")
+    local path = node:get_id()
+    local succuss, index = pcall(Marked.get_index_of, path)
+    if succuss and index and index > 0 then
+      return {
+        text = string.format(" ⥤ %d", index),
+        highlight = config.highlight or "NeoTreeDirectoryIcon",
+      }
+    else
+      return {}
+    end
+  end
+
 
   local config = {
     close_if_last_window = true,
@@ -14,6 +30,7 @@ local mine = function ()
     log_to_file = true,
     open_files_in_last_window = false,
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
+    remove_legacy_commands = true,
     --  enable_git_status = true,
     --  enable_diagnostics = true,
     --  event_handlers = {
@@ -41,7 +58,7 @@ local mine = function ()
     },
     filesystem = {
       hijack_netrw_behavior = "open_split",
-      follow_current_file = true,
+      follow_current_file = false,
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
       filters = {
@@ -87,45 +104,7 @@ local mine = function ()
       commands = {
       },
       components = {
-        harpoon_index = function(config, node, state)
-          local Marked = require("harpoon.mark")
-          local path = node:get_id()
-          local succuss, index = pcall(Marked.get_index_of, path)
-          if succuss and index and index > 0 then
-            return {
-              text = string.format(" ⥤ %d", index),
-              highlight = config.highlight or "NeoTreeDirectoryIcon",
-            }
-          else
-            return {}
-          end
-        end,
-        --icon = function(config, node, state)
-        --  local icon = config.default or " "
-        --  local padding = config.padding or " "
-        --  local highlight = config.highlight or highlights.FILE_ICON
-
-        --  if node.type == "directory" then
-        --    highlight = highlights.DIRECTORY_ICON
-        --    if node:is_expanded() then
-        --      icon = config.folder_open or "-"
-        --    else
-        --      icon = config.folder_closed or "+"
-        --    end
-        --  elseif node.type == "file" then
-        --    local success, web_devicons = pcall(require, "nvim-web-devicons")
-        --    if success then
-        --      local devicon, hl = web_devicons.get_icon(node.name, node.ext)
-        --      icon = devicon or icon
-        --      highlight = hl or highlight
-        --    end
-        --  end
-
-        --  return {
-        --    text = icon .. padding,
-        --    highlight = highlight,
-        --  }
-        --end,
+        harpoon_index = harpoon_index,
       },
       renderers = {
         --  directory = {
@@ -164,6 +143,19 @@ local mine = function ()
         },
       },
       show_unloaded = true,
+      components = {
+        harpoon_index = harpoon_index,
+      },
+      renderers = {
+        file = {
+          {"icon"},
+          {"name", use_git_status_colors = true},
+          {"harpoon_index"},
+          {"bufnr"},
+          {"diagnostics"},
+          {"git_status", highlight = "NeoTreeDimText"},
+        }
+      }
     }
   }
 
