@@ -235,14 +235,14 @@ hi LspReferenceText cterm=underline gui=bold guibg=#404040
 hi LspReferenceRead cterm=underline gui=bold guibg=#404040
 hi LspReferenceWrite cterm=underline gui=bold guibg=#404040
 
-hi LspDiagnosticsVirtualTextError none
-hi LspDiagnosticsVirtualTextWarning none
-hi LspDiagnosticsVirtualTextInformation none
-hi LspDiagnosticsVirtualTextHint none
-hi LspDiagnosticsDefaultWarning guifg=#d7d700 gui=Italic
-hi LspDiagnosticsDefaultInformation guifg=#87d7ff gui=Italic
-hi LspDiagnosticsDefaultHint guifg=#ffffd7 gui=Italic
-hi LspDiagnosticsDefaultError guifg=#d70000 gui=Italic,Bold
+hi DiagnosticVirtualTextError none
+hi DiagnosticVirtualTextWarn none
+hi DiagnosticVirtualTextInfo none
+hi DiagnosticVirtualTextHint none
+hi DiagnosticDefaultWarn guifg=#d7d700 gui=Italic
+hi DiagnosticDefaultInfo guifg=#87d7ff gui=Italic
+hi DiagnosticDefaultHint guifg=#ffffd7 gui=Italic
+hi DiagnosticDefaultError guifg=#d70000 gui=Italic,Bold
 hi link vimUserFunc none
 
 hi Normal guibg=#1c1c1c
