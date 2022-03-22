@@ -56,7 +56,7 @@ abbreviate teh the
 ""*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
-syntax enable
+"syntax enable
 set ruler
 set number
 set wrap linebreak breakindent

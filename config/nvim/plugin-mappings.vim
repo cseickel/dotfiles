@@ -1,14 +1,5 @@
 nnoremap <silent> <M-t> :tabnew<cr><bar>:Startify<cr>
 
-nnoremap <silent> <C-n>     :call DWM_New()<bar>Startify<cr>
-nmap     <silent> <C-q>     <Plug>DWMClose
-"nmap     <silent> <         <Plug>DWMShrinkMaster
-"nmap     <silent> >         <Plug>DWMGrowMaster
-nmap     <silent> <C-h>     <Plug>DWMFocus
-nmap     <silent> <C-j>     <Plug>DWMMoveDown
-nmap     <silent> <C-k>     <Plug>DWMMoveUp
-nmap     <silent> <C-l>     <Plug>DWMMoveRight
-
 imap <c-p> <C-o>p
 cmap <c-p> <C-r>0
 

@@ -25,34 +25,27 @@ local mine = function ()
     close_floats_on_escape_key = true,
     git_status_async = true,
     log_level = "debug",
-    log_to_file = true,
+    log_to_file = false,
     open_files_in_last_window = false,
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
-    remove_legacy_commands = true,
-    --  enable_git_status = true,
-    --  enable_diagnostics = true,
-    --  event_handlers = {
-    --    {
-    --      event = "file_opened",
-    --      handler = function(file_path)
-    --        require("neo-tree.sources.filesystem").reset_search()
-    --      end
-    --    },
-    --  },
     default_component_configs = {
       indent = {
         with_markers = true,
+        with_arrows = true,
         padding = 0
       },
-      icon = {
-        folder_closed = "",
-        folder_open = "",
-        folder_empty = "ﰊ",
-        default = "*",
-      },
+      --icon = {
+      --  folder_closed = "",
+      --  folder_open = "",
+      --  folder_empty = "ﰊ",
+      --  default = "*",
+      --},
       name = {
         trailing_slash = true,
       },
+    },
+    nesting_rules = {
+      ts = { ".d.ts", "js", "css", "html", "scss" }
     },
     filesystem = {
       hijack_netrw_behavior = "open_split",
@@ -64,14 +57,6 @@ local mine = function ()
         respect_gitignore = true,
         --gitignore_source = "git status",
         gitignore_source = "git check-ignore",
-        exclude_items = {
-          "plugins", "test.lua", "gitconfig"
-        },
-        show_filtered = {
-          exclude = true,
-          gitignore = true,
-          hidden = true
-        }
       },
       find_command = "fd",
       find_args = {
@@ -350,4 +335,4 @@ local wookayin = function ()
   }
 end
 
-return wookayin
+return mine

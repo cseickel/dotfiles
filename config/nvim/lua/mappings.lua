@@ -79,11 +79,15 @@ local grepProject = function ()
   require("telescope.builtin").live_grep({cwd=getProjectRoot()})
 end
 
+vim.cmd [[
+  onoremap ,, <cmd>lua require("hop").hint_char2({inclusive_jump=true})<cr>
+  vnoremap ,, <cmd>lua require("hop").hint_char2({inclusive_jump=true})<cr>
+  nnoremap ,, <cmd>HopChar2<cr>
+]]
 local mappings = {
   [";"] = {"<Plug>(buf-surf-back)",               "Previous Buffer"},
   ["'"] = {"<Plug>(buf-surf-forward)",            "Next Buffer"},
-  [",,"] = { "<cmd>HopChar2<cr>",                      "Hop 2 Char" },
-  [",,"] = { "<cmd>HopChar2<cr>", mode = "v",          "Hop 2 Char" },
+  [",,"] = { "Hop 2 Char" },
   g = {
       name = "Go to Harpoon...",
       ["1"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", "File 1" },
@@ -142,8 +146,6 @@ local mappings = {
     H = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Harpoon Menu" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     J = { "f,ls<cr><esc>",                                    "Newline at next comma" },
-    l = { "Show Location List" },
-    L = { "Close Location List" },
     q = { "Show Quickfix" },
     Q = { "Close Quickfix" },
     f = {

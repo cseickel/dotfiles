@@ -16,6 +16,8 @@ local startup = function(use)
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
 
+  use "kassio/neoterm"
+
   use { 'folke/which-key.nvim', config = c("which-key") }
   use {
     'mrjones2014/legendary.nvim',
