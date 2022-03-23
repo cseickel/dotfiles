@@ -153,9 +153,11 @@ endfunction
 
 augroup core_autocmd
   autocmd!
-  autocmd FileType gitcommit,gitrebase,gitconfig,fern,bufexplorer set bufhidden=delete
+  autocmd FileType gitcommit,gitrebase,gitconfig,gitrebase,git set bufhidden=delete
+  autocmd FileType go set noexpandtab
   autocmd FileType javascript,typescript,html,lua call TwoSpaceIndent()
   autocmd FileType dockerfile,yml call TwoSpaceIndent()
+  autocmd FileType cs call FourSpaceIndent()
   autocmd TermOpen * call InitTerminal()
   autocmd TermEnter * call InitTerminal()
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
