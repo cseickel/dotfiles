@@ -52,11 +52,9 @@ local mine = function ()
       follow_current_file = false,
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
-      filters = {
-        show_hidden = false,
-        respect_gitignore = true,
-        --gitignore_source = "git status",
-        gitignore_source = "git check-ignore",
+      filtered_items = {
+        hide_dotfiles = true,
+        hide_gitignored = true,
       },
       find_command = "fd",
       find_args = {
@@ -140,14 +138,6 @@ local mine = function ()
           {"diagnostics"},
           {"git_status", highlight = "NeoTreeDimText"},
         }
-      }
-    }
-  }
-
-  local config2 = {
-    filesystem = {
-      window = {
-        position = "split"
       }
     }
   }
