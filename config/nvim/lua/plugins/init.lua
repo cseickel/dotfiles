@@ -3,7 +3,7 @@ local function c(name)
   if succuss and func then
     return func
   else
-    return "require('" .. name .. "').setup()"
+    return "require('" .. name .. "').setup({})"
   end
 end
 
@@ -17,6 +17,11 @@ local startup = function(use)
   use "ton/vim-bufsurf"
 
   use "kassio/neoterm"
+  use {
+    'm-demare/hlargs.nvim',
+    requires = { 'nvim-treesitter/nvim-treesitter' },
+    config = c("hlargs")
+  }
 
   use { 'folke/which-key.nvim', config = c("which-key") }
   use {
@@ -273,7 +278,6 @@ local startup = function(use)
   --use '~/repos/dwm.vim'
   use {
     'nvim-treesitter/nvim-treesitter',
-    commit = '668de0951a36ef17016074f1120b6aacbe6c4515',
     run = ':TSUpdate',
     config = c("nvim-treesitter")
   }

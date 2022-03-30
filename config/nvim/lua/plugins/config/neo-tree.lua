@@ -24,9 +24,11 @@ local mine = function ()
     close_if_last_window = true,
     close_floats_on_escape_key = true,
     git_status_async = true,
-    log_level = "debug",
-    log_to_file = false,
+    enable_git_status = true,
+    log_level = "trace",
+    log_to_file = true,
     open_files_in_last_window = false,
+    sort_case_insensitive = true,
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
     default_component_configs = {
       indent = {
@@ -44,11 +46,25 @@ local mine = function ()
         trailing_slash = true,
       },
     },
+    event_handlers = {
+      {
+        event = "neo_tree_buffer_enter",
+        handler = function()
+          vim.cmd 'highlight! Cursor blend=100'
+        end
+      },
+      {
+        event = "neo_tree_buffer_leave",
+        handler = function()
+          vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
+        end
+      }
+    },
     nesting_rules = {
       ts = { ".d.ts", "js", "css", "html", "scss" }
     },
     filesystem = {
-      hijack_netrw_behavior = "open_split",
+      hijack_netrw_behavior = "open_current",
       follow_current_file = false,
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
@@ -82,6 +98,20 @@ local mine = function ()
           --["o"] = "open",
           ["q"] = "close_window",
           ["D"] = "show_debug_info",
+        ["J"] = function(state)
+          local tree = state.tree
+          local node = tree:get_node()
+          local siblings = tree:get_nodes(node:get_parent_id())
+          local renderer = require('neo-tree.ui.renderer')
+          renderer.focus_node(state, siblings[#siblings]:get_id())
+        end,
+        ["K"] = function(state)
+          local tree = state.tree
+          local node = tree:get_node()
+          local siblings = tree:get_nodes(node:get_parent_id())
+          local renderer = require('neo-tree.ui.renderer')
+          renderer.focus_node(state, siblings[1]:get_id())
+        end
         },
       },
       commands = {
@@ -89,26 +119,43 @@ local mine = function ()
       components = {
         harpoon_index = harpoon_index,
       },
-      renderers = {
-        --  directory = {
-        --    {"icon"},
-        --    {"name", use_git_status_colors = false},
-        --    {
-        --      text = "/",
-        --      highlight = "NeoTreeDirectoryName",
-        --    },
-        --    {"harpoon_index"},
-        --    {"diagnostics"},
-        --    {"git_status"},
-        --  },
-        file = {
-          {"icon"},
-          {"name", use_git_status_colors = true},
-          {"harpoon_index"},
-          {"diagnostics"},
-          {"git_status", highlight = "NeoTreeDimText"},
-        }
-      }
+      --renderers = {
+      --  --  directory = {
+      --  --    {"icon"},
+      --  --    {"name", use_git_status_colors = false},
+      --  --    {
+      --  --      text = "/",
+      --  --      highlight = "NeoTreeDirectoryName",
+      --  --    },
+      --  --    {"harpoon_index"},
+      --  --    {"diagnostics"},
+      --  --    {"git_status"},
+      --  --  },
+      --  file = {
+      --    { "indent" },
+      --    { "icon" },
+      --    {
+      --      "container",
+      --      width = "100%",
+      --      content = {
+      --        {
+      --          "name",
+      --          use_git_status_colors = true,
+      --          zindex = 10
+      --        },
+      --        -- {
+      --        --   "symlink_target",
+      --        --   zindex = 10,
+      --        --   highlight = "NeoTreeSymbolicLinkTarget",
+      --        -- },
+      --        { "clipboard", zindex = 10 },
+      --        { "harpoon_index", zindex = 10 },
+      --        { "diagnostics", errors_only = true, zindex = 20, align = "right" },
+      --        { "git_status", zindex = 20, align = "right" },
+      --      },
+      --    },
+      --  },
+      --},
     },
     git_status = {
       window = {
@@ -133,6 +180,7 @@ local mine = function ()
         file = {
           {"icon"},
           {"name", use_git_status_colors = true},
+          {"clipboard"},
           {"harpoon_index"},
           {"bufnr"},
           {"diagnostics"},
@@ -270,59 +318,184 @@ end
 local clean = function ()
 end
 
-local wookayin = function ()
-    -- https://github.com/nvim-neo-tree/neo-tree.nvim#quickstart
-  require('neo-tree').setup {
-    filesystem = {
-      hijack_netrw_behavior = "open_current",
-      window = {
-        width = 30,
-
-        mappings = {
-          ["r"] = "refresh",
-          ["R"] = "rename",
-        },
-      },
-
-      -- This is a useful feature to turn on,
-      -- but should be disabled for a workaround until #111 is fixed
-      follow_current_file = false,
-      use_libuv_file_watcher = false,
-
-      -- Append trailing slashes on directories (#112)
-      components = {
-        trailing_slash = function ()
-          return {
-            text = "/",
-            highlight = "NeoTreeDirectoryIcon",
-          }
-        end,
-      },
-      renderers = {
-        directory = {
-          {"icon"},
-          {"name", use_git_status_colors = false},
-          {"trailing_slash"},
-          {"diagnostics"},
-          {"git_status"},
-        }
-      },
-    },
-
-    -- Layout (see #130)
+local issue = function ()
+  local config = {
+    close_if_last_window = true,
+    popup_border_style = 'rounded',
+    use_popups_for_input = true,
+    enable_git_status = true,
+    enable_diagnostics = false,
     default_component_configs = {
       indent = {
-        with_markers = true,
-        indent_marker = "│",
-        last_indent_marker = "└",
         indent_size = 2,
-        padding = 0, -- extra padding on the left hand side
+        padding = 0,
+        with_markers = true,
+        indent_marker = '│',
+        last_indent_marker = '└',
+        highlight = 'NeoTreeIndentMarker',
       },
       icon = {
-        default = "",
+        folder_closed = ' ',
+        folder_open = ' ',
+        folder_empty = '',
+        default = '',
+      },
+      name = {
+        trailing_slash = false,
+        use_git_status_colors = true,
+      },
+      git_status = {
+        symbols = {
+          -- Change type
+          added = '+',
+          deleted = '',
+          modified = '',
+          renamed = '➜',
+          -- Status type
+          untracked = '',
+          ignored = '',
+          unstaged = '',
+          staged = '✓',
+          conflict = '',
+        },
+      },
+    },
+    renderers = {
+      directory = {
+        { 'indent' },
+        { 'icon' },
+        { 'current_filter' },
+        { 'name' },
+        {
+          'symlink_target',
+          highlight = 'NeoTreeSymbolicLinkTarget',
+        },
+        { 'clipboard' },
+        { 'git_status' },
+      },
+      file = {
+        { 'indent' },
+        { 'icon' },
+        {
+          'name',
+          use_git_status_colors = true,
+        },
+        {
+          'symlink_target',
+          highlight = 'NeoTreeSymbolicLinkTarget',
+        },
+        { 'bufnr' },
+        { 'clipboard' },
+        { 'git_status' },
+      },
+    },
+    window = {
+      position = 'right',
+      width = 40,
+      mappings = {
+        ['o'] = 'open',
+        ['<cr>'] = 'open',
+        ['S'] = 'open_split',
+        ['s'] = 'open_vsplit',
+        ['R'] = 'refresh',
+        ['a'] = 'add',
+        ['d'] = 'delete',
+        ['r'] = 'rename',
+        ['c'] = 'copy_to_clipboard',
+        ['x'] = 'cut_to_clipboard',
+        ['p'] = 'paste_from_clipboard',
+        ['q'] = 'close_window',
+
+        ['<bs>'] = 'none',
+        ['.'] = 'none',
+        ['m'] = 'none',
+      },
+    },
+    filesystem = {
+      window = {
+        mappings = {
+          ['H'] = 'toggle_hidden',
+          ['I'] = 'toggle_gitignore',
+          ['C'] = 'close_node',
+          ['z'] = 'close_all_nodes',
+          ['<C-x>'] = 'clear_filter',
+          ['f'] = 'filter_on_submit',
+          ['/'] = 'fuzzy_finder',
+          ['h'] = 'navigate_up',
+          ['l'] = 'set_root',
+        },
+      },
+      filtered_items = {
+        visible = false,
+        hide_dotfiles = false,
+        hide_gitignored = false,
+        hide_by_name = {
+          '.DS_Store',
+          'thumbs.db',
+        },
+        never_show = {
+          '.DS_Store',
+          'thumbs.db',
+        },
+      },
+      follow_current_file = true,
+      hijack_netrw_behavior = 'open_default',
+      use_libuv_file_watcher = true,
+    },
+    buffers = {
+      show_unloaded = true,
+      window = {
+        mappings = {
+          ['d'] = 'buffer_delete',
+        },
+      },
+    },
+    git_status = {
+      window = {
+        mappings = {
+          ['A'] = 'git_add_all',
+          ['u'] = 'git_unstage_file',
+          ['a'] = 'git_add_file',
+          ['d'] = 'git_revert_file',
+          ['gc'] = 'git_commit',
+          ['gp'] = 'git_push',
+        },
       },
     },
   }
+
+  vim.cmd [[
+    let g:neo_tree_remove_legacy_commands = 1
+    nnoremap <silent> <C-p> <cmd>Neotree toggle reveal<cr>
+    nnoremap <silent> <C-b> <cmd>Neotree toggle reveal float buffers<cr>
+    nnoremap <silent> <C-g> <cmd>Neotree toggle reveal float git_status<cr>
+  ]]
+
+  require('neo-tree').setup(config)
+end
+
+local example = function ()
+  
+  require('neo-tree').setup({
+    window = {
+      mappings = {
+        ["J"] = function(state)
+          local tree = state.tree
+          local node = tree:get_node()
+          local siblings = tree:get_nodes(node:get_parent_id())
+          local renderer = require('neo-tree.ui.renderer')
+          renderer.focus_node(state, siblings[#siblings]:get_id())
+        end,
+        ["K"] = function(state)
+          local tree = state.tree
+          local node = tree:get_node()
+          local siblings = tree:get_nodes(node:get_parent_id())
+          local renderer = require('neo-tree.ui.renderer')
+          renderer.focus_node(state, siblings[1]:get_id())
+        end
+      }
+    }
+  })
 end
 
 return mine

@@ -80,14 +80,14 @@ local grepProject = function ()
 end
 
 vim.cmd [[
-  noremap ,> <cmd>lua require("hop").hint_char2({inclusive_jump=true})<cr>
-  noremap ,< <cmd>lua require("hop").hint_char2({inclusive_jump=false})<cr>
+  noremap ,, <cmd>lua require("hop").hint_char2({inclusive_jump=false})<cr>
+  noremap ,. <cmd>lua require("hop").hint_char2({inclusive_jump=true})<cr>
 ]]
 local mappings = {
   [";"] = {"<Plug>(buf-surf-back)",               "Previous Buffer"},
   ["'"] = {"<Plug>(buf-surf-forward)",            "Next Buffer"},
-  [",>"] = { "Hop AFTER 2Char" },
-  [",<"] = { "Hop BEFORE 2Char" },
+  [",,"] = { "Hop Char 2" },
+  [",."] = { "Hop AFTER Char 2" },
   g = {
       name = "Go to Harpoon...",
       ["1"] = { "<cmd>lua require('harpoon.ui').nav_file(1)<cr>", "File 1" },
