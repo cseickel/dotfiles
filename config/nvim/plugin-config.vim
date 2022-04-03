@@ -18,28 +18,6 @@ colorscheme nvcode "<-- this one is best with tree-sitter
 " IndentLine
 let g:webdevicons_enable_startify = 1
 
-let g:nvim_tree_gitignore = 1
-let g:nvim_tree_show_icons = {
-            \ 'git': 0,
-            \ 'folders': 1,
-            \ 'files': 1,
-            \ 'folder_arrows': 0,
-            \}
-let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
-let g:nvim_tree_highlight_opened_files = 2
-let g:nvim_tree_icons = { "default" : "" }
-
-highlight NvimTreeCursorLine guibg=#3a3a3a gui=bold
-highlight NvimTreeOpenedFile guifg=#d7af5f gui=bold
-highlight NvimTreeNormal guibg=#202020 guifg=#cbcbcb
-highlight NvimTreeNormalNC guibg=#262626 guifg=#cbcbcb
-highlight NvimTreeIndentMarker guifg=#404040
-highlight NvimTreeGitMerge guifg=#ff5900 gui=Bold,Italic
-highlight NvimTreeGitStaged guifg=none gui=Italic
-highlight NvimTreeGitDirty guifg=none gui=Italic
-highlight NvimTreeGitNew guifg=none gui=Italic
-highlight NvimTreeSpecialFile ctermfg=none guifg=none gui=Bold
-
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''
 let g:conflict_marker_enable_mappings = 0
@@ -95,12 +73,6 @@ let g:closetag_regions = {
 let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag,
 let g:closetag_close_shortcut = '<leader>>'
-
-
-let g:bufExplorerShowRelativePath=1
-let g:bufExplorerShowTabBuffer=1
-let g:bufExplorerSortBy='fullpath'
-let g:bufExplorerDisableDefaultKeyMapping=1
 
 let g:BufSurfIgnore = 'Neo-tree filesystem .*'
 
@@ -275,12 +247,6 @@ highlight link Operator Conditional
 highlight link OperLambda Conditional
 highlight link Modifier Conditional
 highlight link LinqKeyword Conditional
-
-highlight SidebarNvimNormal ctermfg=249 guifg=#abb2bf 
-highlight link SidebarNvimGitStatusFileName SidebarNvimNormal
-highlight link SidebarNvimLspDiagnosticsMessage SidebarNvimNormal
-highlight link SidebarNvimDockerContainerName SidebarNvimNormal
-highlight link SidebarNvimDatetimeClockValue SidebarNvimNormal
 
 " Colors for nvim-cmp completion menu
 " gray
