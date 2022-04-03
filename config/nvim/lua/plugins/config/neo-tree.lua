@@ -36,6 +36,22 @@ local mine = function ()
         with_arrows = true,
         padding = 0
       },
+      git_status = {
+        --symbols = {
+        --  -- Change type
+        --  added     = "",
+        --  deleted   = "✖",
+        --  modified  = "",
+        --  renamed   = "",
+        --  -- Status type
+        --  untracked = "",
+        --  ignored   = "",
+        --  unstaged  = "",
+        --  staged    = "",
+        --  conflict  = "",
+        --},
+        --symbols =false
+      },
       --icon = {
       --  folder_closed = "",
       --  folder_open = "",
@@ -65,7 +81,7 @@ local mine = function ()
     },
     filesystem = {
       hijack_netrw_behavior = "open_current",
-      follow_current_file = false,
+      follow_current_file = true,
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
       filtered_items = {
@@ -176,17 +192,6 @@ local mine = function ()
       components = {
         harpoon_index = harpoon_index,
       },
-      renderers = {
-        file = {
-          {"icon"},
-          {"name", use_git_status_colors = true},
-          {"clipboard"},
-          {"harpoon_index"},
-          {"bufnr"},
-          {"diagnostics"},
-          {"git_status", highlight = "NeoTreeDimText"},
-        }
-      }
     }
   }
 
@@ -319,159 +324,60 @@ local clean = function ()
 end
 
 local issue = function ()
-  local config = {
-    close_if_last_window = true,
-    popup_border_style = 'rounded',
-    use_popups_for_input = true,
-    enable_git_status = true,
-    enable_diagnostics = false,
-    default_component_configs = {
-      indent = {
-        indent_size = 2,
-        padding = 0,
-        with_markers = true,
-        indent_marker = '│',
-        last_indent_marker = '└',
-        highlight = 'NeoTreeIndentMarker',
-      },
-      icon = {
-        folder_closed = ' ',
-        folder_open = ' ',
-        folder_empty = '',
-        default = '',
-      },
-      name = {
-        trailing_slash = false,
-        use_git_status_colors = true,
-      },
-      git_status = {
-        symbols = {
-          -- Change type
-          added = '+',
-          deleted = '',
-          modified = '',
-          renamed = '➜',
-          -- Status type
-          untracked = '',
-          ignored = '',
-          unstaged = '',
-          staged = '✓',
-          conflict = '',
-        },
-      },
+require("neo-tree").setup({
+  use_popups_for_input = false,
+  -- popup_border_style = "rounded",
+  default_component_configs = {
+    indent_size = 1,
+    name = {
+      trailing_slash = true,
     },
-    renderers = {
-      directory = {
-        { 'indent' },
-        { 'icon' },
-        { 'current_filter' },
-        { 'name' },
-        {
-          'symlink_target',
-          highlight = 'NeoTreeSymbolicLinkTarget',
-        },
-        { 'clipboard' },
-        { 'git_status' },
-      },
-      file = {
-        { 'indent' },
-        { 'icon' },
-        {
-          'name',
-          use_git_status_colors = true,
-        },
-        {
-          'symlink_target',
-          highlight = 'NeoTreeSymbolicLinkTarget',
-        },
-        { 'bufnr' },
-        { 'clipboard' },
-        { 'git_status' },
-      },
+  },
+  window = {
+    position = "float",
+    width = "30%",
+    popup = {
+      position = { col = "100%", row = "2" },
+      size = function(state)
+        local root_name = vim.fn.fnamemodify(state.path, ":~")
+        local root_len = string.len(root_name) + 4
+        return {
+          width = math.max(root_len, 50),
+          height = vim.o.lines - 6,
+        }
+      end,
     },
-    window = {
-      position = 'right',
-      width = 40,
-      mappings = {
-        ['o'] = 'open',
-        ['<cr>'] = 'open',
-        ['S'] = 'open_split',
-        ['s'] = 'open_vsplit',
-        ['R'] = 'refresh',
-        ['a'] = 'add',
-        ['d'] = 'delete',
-        ['r'] = 'rename',
-        ['c'] = 'copy_to_clipboard',
-        ['x'] = 'cut_to_clipboard',
-        ['p'] = 'paste_from_clipboard',
-        ['q'] = 'close_window',
-
-        ['<bs>'] = 'none',
-        ['.'] = 'none',
-        ['m'] = 'none',
-      },
+  },
+  filesystem = {
+    hijack_netrw_behavior = "open_current",
+    use_libuv_file_watcher = true,
+    filtered_items = {
+      hide_dotfiles = false,
+      never_show = { ".git" },
     },
-    filesystem = {
-      window = {
-        mappings = {
-          ['H'] = 'toggle_hidden',
-          ['I'] = 'toggle_gitignore',
-          ['C'] = 'close_node',
-          ['z'] = 'close_all_nodes',
-          ['<C-x>'] = 'clear_filter',
-          ['f'] = 'filter_on_submit',
-          ['/'] = 'fuzzy_finder',
-          ['h'] = 'navigate_up',
-          ['l'] = 'set_root',
-        },
-      },
-      filtered_items = {
-        visible = false,
-        hide_dotfiles = false,
-        hide_gitignored = false,
-        hide_by_name = {
-          '.DS_Store',
-          'thumbs.db',
-        },
-        never_show = {
-          '.DS_Store',
-          'thumbs.db',
-        },
-      },
-      follow_current_file = true,
-      hijack_netrw_behavior = 'open_default',
-      use_libuv_file_watcher = true,
+  },
+  event_handlers = {
+    {
+      -- auto close
+      event = "file_opened",
+      handler = function(file_path)
+        require("neo-tree").close_all()
+      end,
     },
-    buffers = {
-      show_unloaded = true,
-      window = {
-        mappings = {
-          ['d'] = 'buffer_delete',
-        },
-      },
+    {
+      -- show netrw hijacked buffer in buffer list
+      event = "neo_tree_buffer_enter",
+      handler = function()
+        vim.schedule(function()
+          local position = vim.api.nvim_buf_get_var(0, "neo_tree_position")
+          if position == "current" then
+            vim.cmd("setlocal buflisted")
+          end
+        end)
+      end,
     },
-    git_status = {
-      window = {
-        mappings = {
-          ['A'] = 'git_add_all',
-          ['u'] = 'git_unstage_file',
-          ['a'] = 'git_add_file',
-          ['d'] = 'git_revert_file',
-          ['gc'] = 'git_commit',
-          ['gp'] = 'git_push',
-        },
-      },
-    },
-  }
-
-  vim.cmd [[
-    let g:neo_tree_remove_legacy_commands = 1
-    nnoremap <silent> <C-p> <cmd>Neotree toggle reveal<cr>
-    nnoremap <silent> <C-b> <cmd>Neotree toggle reveal float buffers<cr>
-    nnoremap <silent> <C-g> <cmd>Neotree toggle reveal float git_status<cr>
-  ]]
-
-  require('neo-tree').setup(config)
+  },
+})
 end
 
 local example = function ()

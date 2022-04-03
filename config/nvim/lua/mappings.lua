@@ -193,4 +193,3 @@ local mappings = {
   }
 }
 require("which-key").register(mappings)
-require('legendary').bind_whichkey(mappings, {})

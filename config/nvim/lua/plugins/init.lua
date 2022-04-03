@@ -11,27 +11,27 @@ local startup = function(use)
   vim = vim
 
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
-  use '~/repos/plenary.nvim'
+  use 'nvim-lua/plenary.nvim'
   use 'dstein64/vim-startuptime'
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
 
   use "kassio/neoterm"
-  use {
-    'm-demare/hlargs.nvim',
-    requires = { 'nvim-treesitter/nvim-treesitter' },
-    config = c("hlargs")
-  }
+  --use {
+  --  'm-demare/hlargs.nvim',
+  --  requires = { 'nvim-treesitter/nvim-treesitter' },
+  --  config = c("hlargs")
+  --}
 
   use { 'folke/which-key.nvim', config = c("which-key") }
-  use {
-    'mrjones2014/legendary.nvim',
-    requires = {
-      "folke/which-key.nvim",
-      'stevearc/dressing.nvim'
-    },
-    config = c("legendary")
-  }
+  --use {
+  --  'mrjones2014/legendary.nvim',
+  --  requires = {
+  --    "folke/which-key.nvim",
+  --    'stevearc/dressing.nvim'
+  --  },
+  --  config = c("legendary")
+  --}
 
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
@@ -41,7 +41,7 @@ local startup = function(use)
     --branch = "v1.x",
     requires = {
       "MunifTanjim/nui.nvim",
-      --'nvim-lua/plenary.nvim',
+      'nvim-lua/plenary.nvim',
       'kyazdani42/nvim-web-devicons',
     },
     config = c("neo-tree")
@@ -85,6 +85,7 @@ local startup = function(use)
   use 'tpope/vim-repeat'
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
   use { 'wellle/targets.vim' }
   use 'dkarter/bullets.vim'
   use {
