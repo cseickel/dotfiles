@@ -15,7 +15,8 @@ local startup = function(use)
   use 'dstein64/vim-startuptime'
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
-
+  use 'fedepujol/move.nvim'
+ 
   use "kassio/neoterm"
   --use {
   --  'm-demare/hlargs.nvim',
@@ -43,6 +44,13 @@ local startup = function(use)
       "MunifTanjim/nui.nvim",
       'nvim-lua/plenary.nvim',
       'kyazdani42/nvim-web-devicons',
+      {
+        -- only needed if you want to use the "open_window_picker" command
+        's1n7ax/nvim-window-picker',
+        config = function()
+          require'window-picker'.setup()
+        end,
+      }
     },
     config = c("neo-tree")
   }
@@ -204,7 +212,6 @@ local startup = function(use)
 
   use {
     "hrsh7th/nvim-cmp",
-    as = "cmp",
     opt = true,
     event='InsertEnter',
     requires = {
@@ -221,12 +228,27 @@ local startup = function(use)
       {
         'David-Kunz/cmp-npm',
         config = c('cmp-npm')
-      }
+      },
     },
     config = c("nvim-cmp")
   }
 
   use 'github/copilot.vim'
+
+  --use {
+  --  "zbirenbaum/copilot.lua",
+  --  event = "InsertEnter",
+  --  config = function ()
+  --    vim.schedule(function() require("copilot") end)
+  --  end,
+  --}
+
+  --use {
+  --  "zbirenbaum/copilot-cmp",
+  --  event = "InsertEnter",
+  --  after = {"copilot.lua", "nvim-cmp"},
+  --}
+
 
   use {
     'onsails/lspkind-nvim',
