@@ -17,7 +17,6 @@ local startup = function(use)
   use "ton/vim-bufsurf"
   use 'fedepujol/move.nvim'
  
-  use "kassio/neoterm"
   --use {
   --  'm-demare/hlargs.nvim',
   --  requires = { 'nvim-treesitter/nvim-treesitter' },

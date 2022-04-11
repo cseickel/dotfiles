@@ -5,17 +5,6 @@ local mine = function ()
   hi NeoTreeCursorLine gui=bold guibg=#333333
   ]])
 
-  vim.diagnostic.config({
-    virtual_text = false,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-    severity_sort = true,
-  })
-
-  vim.o.updatetime = 250
-  vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-
   local harpoon_index = function(config, node, state)
     local Marked = require("harpoon.mark")
     local path = node:get_id()
@@ -41,7 +30,6 @@ local mine = function ()
     open_files_in_last_window = false,
     sort_case_insensitive = true,
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
-    resize_timer_interval = 50,
     default_component_configs = {
       indent = {
         with_markers = true,
@@ -86,38 +74,22 @@ local mine = function ()
         handler = function()
           vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
         end
-      }
+      },
+      {
+        event = "file_opened",
+        handler = function(state)
+          require("neo-tree").close_all("filesystem")
+        end
+      },
     },
     nesting_rules = {
       ts = { ".d.ts", "js", "css", "html", "scss" }
     },
     window = {
-      mappings = {
-        w = function (state)
-          local node = state.tree:get_node()
-          local success, picker = pcall(require, "window-picker")
-          if not success then
-            print("You'll need to install window-picker to use this command: https://github.com/s1n7ax/nvim-window-picker")
-            return
-          end
-          local picked_window_id = picker.pick_window()
-          if picked_window_id then
-            vim.api.nvim_set_current_win(picked_window_id)
-            vim.cmd("edit " .. vim.fn.fnameescape(node.path))
-          end
-        end,
-        ["T"] = function (state)
-          local renderer = require("neo-tree.ui.renderer")
-          local log = require("neo-tree.log")
-          log.info("Starting test")
-          local i = 0
-          while i < 100 do
-            i = i + 1
-            renderer.get_expanded_nodes(state.tree)
-          end
-          log.info("Finished test")
-        end
-      }
+      mapping_options = {
+        noremap = true,
+        nowait = true,
+      },
     },
     filesystem = {
       async_directory_scan = false,
@@ -151,88 +123,66 @@ local mine = function ()
           end
         },
         mappings = {
-          --["f"] = "fuzzy_finder",
-          --["/"] = "none",
-          --["o"] = "open",
-          ["q"] = "close_window",
-          ["D"] = "show_debug_info",
-        ["J"] = function(state)
-          local tree = state.tree
-          local node = tree:get_node()
-          local siblings = tree:get_nodes(node:get_parent_id())
-          local renderer = require('neo-tree.ui.renderer')
-          renderer.focus_node(state, siblings[#siblings]:get_id())
-        end,
-        ["K"] = function(state)
-          local tree = state.tree
-          local node = tree:get_node()
-          local siblings = tree:get_nodes(node:get_parent_id())
-          local renderer = require('neo-tree.ui.renderer')
-          renderer.focus_node(state, siblings[1]:get_id())
-        end
+          ["H"] = "close_node",
+          ["J"] = function(state)
+            local tree = state.tree
+            local node = tree:get_node()
+            if node.type ~="directory" then
+              node = state.tree:get_node(node:get_parent_id())
+            end
+            local siblings = tree:get_nodes(node:get_parent_id())
+            for i, item in ipairs(siblings) do
+              if item == node then
+                if i < #siblings then
+                  local target = siblings[i + 1]
+                  local renderer = require('neo-tree.ui.renderer')
+                  renderer.focus_node(state, target:get_id())
+                end
+                return
+              end
+            end
+          end,
+          ["K"] = function(state)
+            local tree = state.tree
+            local node = tree:get_node()
+            if node.type ~="directory" then
+              node = state.tree:get_node(node:get_parent_id())
+            end
+            local siblings = tree:get_nodes(node:get_parent_id())
+            for i, item in ipairs(siblings) do
+              if item == node then
+                if i > 1 then
+                  local target = siblings[i - 1]
+                  local renderer = require('neo-tree.ui.renderer')
+                  renderer.focus_node(state, target:get_id())
+                end
+                return
+              end
+            end
+          end,
+          ["L"] = function (state)
+            local utils = require("neo-tree.utils")
+            local node = state.tree:get_node()
+            if utils.is_expandable(node) then
+              if not node:is_expanded() then
+                require("neo-tree.sources.filesystem").toggle_directory(state, node)
+              end
+              local children = state.tree:get_nodes(node:get_id())
+              if children and #children > 0 then
+                local first_child = children[1]
+                require("neo-tree.ui.renderer").focus_node(state, first_child:get_id())
+              end
+            end
+          end,
+          ["<space>"] = function (state)
+            local node = state.tree:get_node()
+            if require("neo-tree.utils").is_expandable(node) then
+              state.commands["toggle_directory"](state)
+            else
+              state.commands["close_node"](state)
+            end
+          end
         },
-      },
-      commands = {
-      },
-      components = {
-        harpoon_index = harpoon_index,
-      },
-      --renderers = {
-      --  --  directory = {
-      --  --    {"icon"},
-      --  --    {"name", use_git_status_colors = false},
-      --  --    {
-      --  --      text = "/",
-      --  --      highlight = "NeoTreeDirectoryName",
-      --  --    },
-      --  --    {"harpoon_index"},
-      --  --    {"diagnostics"},
-      --  --    {"git_status"},
-      --  --  },
-      --  file = {
-      --    { "indent" },
-      --    { "icon" },
-      --    {
-      --      "container",
-      --      width = "100%",
-      --      content = {
-      --        {
-      --          "name",
-      --          use_git_status_colors = true,
-      --          zindex = 10
-      --        },
-      --        -- {
-      --        --   "symlink_target",
-      --        --   zindex = 10,
-      --        --   highlight = "NeoTreeSymbolicLinkTarget",
-      --        -- },
-      --        { "clipboard", zindex = 10 },
-      --        { "harpoon_index", zindex = 10 },
-      --        { "diagnostics", errors_only = true, zindex = 20, align = "right" },
-      --        { "git_status", zindex = 20, align = "right" },
-      --      },
-      --    },
-      --  },
-      --},
-    },
-    git_status = {
-      window = {
-        position = "right",
-        mappings = {
-          ["q"] = "close_window",
-        },
-      },
-    },
-    buffers = {
-      window = {
-        position = "right",
-        mappings = {
-          ["q"] = "close_window",
-        },
-      },
-      show_unloaded = true,
-      components = {
-        harpoon_index = harpoon_index,
       },
     }
   }
@@ -540,8 +490,14 @@ end
 local example = function ()
   
   require('neo-tree').setup({
+    close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+    popup_border_style = "rounded",
+    enable_git_status = false,
+    enable_diagnostics = false,
     filesystem = {
-      async_directory_scan = false
+      async_directory_scan = "naver",
+      use_libuv_file_watcher = false,
+
     },
   })
 end
