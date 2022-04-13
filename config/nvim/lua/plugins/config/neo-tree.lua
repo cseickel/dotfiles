@@ -101,6 +101,9 @@ local mine = function ()
         visible = true,
         hide_dotfiles = true,
         hide_gitignored = true,
+        hide_by_pattern = {
+          "*custom.lua"
+        }
       },
       find_command = "fd",
       find_args = {
