@@ -98,7 +98,7 @@ local mine = function ()
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
       filtered_items = {
-        visible = true,
+        visible = false,
         hide_dotfiles = true,
         hide_gitignored = true,
         hide_by_pattern = {
@@ -126,44 +126,8 @@ local mine = function ()
           end
         },
         mappings = {
-          ["H"] = "close_node",
-          ["J"] = function(state)
-            local tree = state.tree
-            local node = tree:get_node()
-            if node.type ~="directory" then
-              node = state.tree:get_node(node:get_parent_id())
-            end
-            local siblings = tree:get_nodes(node:get_parent_id())
-            for i, item in ipairs(siblings) do
-              if item == node then
-                if i < #siblings then
-                  local target = siblings[i + 1]
-                  local renderer = require('neo-tree.ui.renderer')
-                  renderer.focus_node(state, target:get_id())
-                end
-                return
-              end
-            end
-          end,
-          ["K"] = function(state)
-            local tree = state.tree
-            local node = tree:get_node()
-            if node.type ~="directory" then
-              node = state.tree:get_node(node:get_parent_id())
-            end
-            local siblings = tree:get_nodes(node:get_parent_id())
-            for i, item in ipairs(siblings) do
-              if item == node then
-                if i > 1 then
-                  local target = siblings[i - 1]
-                  local renderer = require('neo-tree.ui.renderer')
-                  renderer.focus_node(state, target:get_id())
-                end
-                return
-              end
-            end
-          end,
-          ["L"] = function (state)
+          ["K"] = "close_node",
+          ["J"] = function (state)
             local utils = require("neo-tree.utils")
             local node = state.tree:get_node()
             if utils.is_expandable(node) then
