@@ -22,18 +22,19 @@ return function()
         return vim_item
       end
     },
-    mapping = {
+    mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
+    }),
     snippet = {expand = function(args)
       vim.fn["vsnip#anonymous"](args.body)
     end},
     sources = {
-      { name = "nvim_lua" },
+      --{ name = "copilot"},
+      --{ name = "nvim_lua" },
       { name = 'nvim_lsp' },
       { name = "npm", keyword_length = 3 },
       { name = "vsnip" },

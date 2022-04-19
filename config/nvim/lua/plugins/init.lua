@@ -36,9 +36,9 @@ local startup = function(use)
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
   use {
-    "~/repos/neo-tree.nvim",
-    --"nvim-neo-tree/neo-tree.nvim",
-    --branch = "v1.x",
+    --"~/repos/neo-tree.nvim",
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
     requires = {
       "MunifTanjim/nui.nvim",
       'nvim-lua/plenary.nvim',
@@ -233,7 +233,19 @@ local startup = function(use)
   }
 
   use 'github/copilot.vim'
-
+  --use {
+  --  "zbirenbaum/copilot-cmp",
+  --  after = {"copilot.lua", "nvim-cmp"},
+  --}
+  --use{
+  --  "zbirenbaum/copilot.lua",
+  --  event = {"VimEnter"},
+  --  config = function()
+  --    vim.defer_fn(function()
+  --      require("copilot").setup()
+  --    end, 100)
+  --  end,
+  --}
   --use {
   --  "zbirenbaum/copilot.lua",
   --  event = "InsertEnter",
