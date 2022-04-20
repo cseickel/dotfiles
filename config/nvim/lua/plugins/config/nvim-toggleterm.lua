@@ -14,16 +14,17 @@ return function()
     float_opts = {
       border = { " ", "▁", " ", "▏", " ", "▔", " ", "▕" },
       winblend = 0,
-      highlights = {
-        border = "VertSplit",
-        background = "Normal",
-      },
       height = function ()
         return  math.ceil(math.min(vim.o.lines, math.max(20, vim.o.lines - 10)))
       end,
       width = function ()
         return math.ceil(math.min(vim.o.columns, math.max(181, vim.o.columns - 30)))
       end
-    }
+    },
+    highlights = {
+      FloatBorder = {
+        link="VertSplit"
+      },
+    },
   }
 end
