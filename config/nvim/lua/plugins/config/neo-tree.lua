@@ -31,6 +31,9 @@ local mine = function ()
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
     use_popups_for_input = true,
     default_component_configs = {
+      container = {
+        --enable_character_fade = false
+      },
       indent = {
         with_markers = true,
         with_arrows = true,
@@ -90,11 +93,8 @@ local mine = function ()
         noremap = true,
         nowait = true,
       },
-    },
-    renderers = {
-      file = {
-        {"name"},
-        { "harpoon_index"}
+      mappings = {
+        ["a"] = { "add", config = { show_path = "relative" }}
       }
     },
     filesystem = {
@@ -154,7 +154,9 @@ local mine = function ()
             else
               state.commands["close_node"](state)
             end
-          end
+          end,
+          ["S"] = "split_with_window_picker",
+          ["s"] = "vsplit_with_window_picker",
         },
       },
     }
@@ -501,22 +503,19 @@ end
 
 local example = function ()
   
-  require('neo-tree').setup({
-    close_floats_on_escape_key = true,
-    --Yoc
-    window = {
-      mappings = {
-        ["q"] = "close_window",
-      },
-    },
-    filesystem = {
+    require("neo-tree").setup({
       window = {
         mappings = {
-          ["q"] = "close_window",
+          ["a"] = {
+            "add",
+            nowait = true,
+            config = {
+              show_path = "none" -- "none", "relative", "absolute"
+            }
+          },
         }
-      },
-    }
-  })
+      }
+    })
 end
 
 return mine

@@ -16,7 +16,13 @@ local startup = function(use)
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
   use 'fedepujol/move.nvim'
- 
+
+  -- show diagnostics with virtual text in upper right hand corner
+  use {
+    'Mofiqul/trld.nvim',
+    config = c('trld')
+  }
+
   --use {
   --  'm-demare/hlargs.nvim',
   --  requires = { 'nvim-treesitter/nvim-treesitter' },
@@ -36,9 +42,9 @@ local startup = function(use)
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
   use {
-    --"~/repos/neo-tree.nvim",
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
+    "~/repos/neo-tree.nvim",
+    --"nvim-neo-tree/neo-tree.nvim",
+    --branch = "v2.x",
     requires = {
       "MunifTanjim/nui.nvim",
       'nvim-lua/plenary.nvim',

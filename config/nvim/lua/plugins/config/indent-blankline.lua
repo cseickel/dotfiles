@@ -10,6 +10,6 @@ return function ()
     space_char_blank_line = " ",
     show_current_context = true,
     buftype_exclude = { "terminal" },
-    filetype_exclude = { "NvimTree", "neo-tree", "help", "startify", "packer", "lsp-installer"}
+    filetype_exclude = { "NvimTree", "neo-tree", "neo-tree-popup", "help", "startify", "packer", "lsp-installer"}
   })
 end
