@@ -4,6 +4,12 @@ local mine = function ()
   "let g:neo_tree_remove_legacy_commands = 1
   hi NeoTreeCursorLine gui=bold guibg=#333333
   ]])
+  vim.cmd[[
+    augroup FugitiveRefreshNeotree
+      autocmd!
+      autocmd User FugitiveChanged lua require("neo-tree.sources.manager").refresh("filesystem")
+    augroup END
+  ]]
 
   local harpoon_index = function(config, node, state)
     local Marked = require("harpoon.mark")
@@ -99,7 +105,7 @@ local mine = function ()
     },
     filesystem = {
       async_directory_scan = true,
-      --hijack_netrw_behavior = "open_current",
+      hijack_netrw_behavior = "disabled",
       follow_current_file = true,
       use_libuv_file_watcher = true,
       bind_to_cwd = true,
@@ -504,15 +510,10 @@ end
 local example = function ()
   
     require("neo-tree").setup({
-      window = {
-        mappings = {
-          ["a"] = {
-            "add",
-            nowait = true,
-            config = {
-              show_path = "none" -- "none", "relative", "absolute"
-            }
-          },
+      filesystem = {
+        filtered_items = {
+          force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
+          show_hidden_count = false, -- when true, the number of hidden items in each folder will be shown as the last entry
         }
       }
     })

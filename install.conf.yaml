@@ -19,6 +19,7 @@
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
+    ~/bin/gpg-for-fugitive.sh: bin/gpg-for-fugitive.sh
     ~/.config/nvim:
       glob: true
       path: config/nvim/*

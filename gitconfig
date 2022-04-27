@@ -23,5 +23,7 @@
     hunk-header-decoration-style = blue box
 [commit]
 	gpgsign = true
+[gpg]
+    program = /home/cseickel/bin/gpg-for-fugitive.sh
 [tag]
 	gpgSign = true
