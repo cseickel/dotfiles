@@ -319,5 +319,6 @@ endfunction
 "nnoremap <silent> ;         :call NextBufferByName(-1)<cr>
 "nnoremap <silent> '         :call NextBufferByName(1)<cr>
 nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
+nnoremap <silent> <C-\>     :call RecycleTerminal()<cr>
 nnoremap <silent> <leader>t :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
 nnoremap <silent> <leader>T :call CloseTerminal()<cr>

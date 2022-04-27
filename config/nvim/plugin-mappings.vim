@@ -46,8 +46,6 @@ function! CloseAllTools()
 endfunction
 
 
-nnoremap <silent> <C-\> :ToggleTerm<cr>
-
 
 
 "*****************************************************************************
@@ -106,4 +104,12 @@ function! LineNoIndicator() abort
 
   return g:line_no_indicator_chars[l:index]
 endfunction
+
+
+function! DeleteBuffer() abort
+    BufSurfBack
+    bd#
+endfunction
+
+nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 

@@ -316,12 +316,12 @@ local startup = function(use)
   }
 
 
-  use {
-    'akinsho/nvim-toggleterm.lua',
-    opt = true,
-    keys = "<C-\\>",
-    config = c("nvim-toggleterm")
-  }
+  --use {
+  --  'akinsho/nvim-toggleterm.lua',
+  --  opt = true,
+  --  keys = "<C-\\>",
+  --  config = c("nvim-toggleterm")
+  --}
 
   use { 'ThePrimeagen/harpoon' }
   --use 'abecodes/tabout.nvim'
