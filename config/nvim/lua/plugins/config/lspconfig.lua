@@ -1,5 +1,5 @@
 return function()
-  require("nvim-lsp-installer").setup()
+  require("nvim-lsp-installer").setup {}
 
   vim.fn.sign_define("DiagnosticSignError",
     {text = "", texthl = "DiagnosticSignError"})
@@ -107,6 +107,8 @@ return function()
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",go", ":TSLspOrganize<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gR", ":TSLspRenameFile<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
+
+    lsp_attach()
   end
 
   --lspconfig.setup ({
@@ -138,6 +140,22 @@ return function()
       }
     }
   })
+
+  local other_servers = {
+    "omnisharp",
+    "gopls",
+    "graphql",
+    "yamlls",
+    "html",
+    --"tailwindcss",
+    --"angularls"
+  }
+  for _, server in ipairs(other_servers) do
+    lspconfig[server].setup({
+      capabilities = capabilities,
+      on_attach = lsp_attach,
+    })
+  end
 
   vim.cmd [[ do User LspAttachBuffers ]]
 

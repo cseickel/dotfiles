@@ -240,6 +240,10 @@ endfunction
 
 
 function! RecycleTerminal()
+    if &buftype == "terminal"
+        b#
+        return
+    endif
     let page_handle = nvim_get_current_tabpage()
     for buf in nvim_list_bufs()
         if nvim_buf_is_valid(buf) && nvim_buf_is_loaded(buf)

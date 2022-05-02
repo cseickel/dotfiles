@@ -216,16 +216,13 @@ local startup = function(use)
   use 'christianchiarulli/nvcode-color-schemes.vim'
 
   use {
-    'williamboman/nvim-lsp-installer',
+    'neovim/nvim-lspconfig',
     requires = {
-      {
-        'ray-x/lsp_signature.nvim',
-        --commit="be39dacc17d51531f9e3a50f88de0a45683c6634"
-      },
-      'neovim/nvim-lspconfig',
+      'williamboman/nvim-lsp-installer',
       'jose-elias-alvarez/nvim-lsp-ts-utils',
       'jose-elias-alvarez/null-ls.nvim',
-      --'nvim-lua/plenary.nvim',
+      'ray-x/lsp_signature.nvim',
+      'nvim-lua/plenary.nvim',
       'b0o/schemastore.nvim'
     },
     config = c("lspconfig")
