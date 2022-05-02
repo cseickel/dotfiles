@@ -1,4 +1,6 @@
 return function()
+  require("nvim-lsp-installer").setup()
+
   vim.fn.sign_define("DiagnosticSignError",
     {text = "", texthl = "DiagnosticSignError"})
   vim.fn.sign_define("DiagnosticSignWarn",
@@ -107,40 +109,36 @@ return function()
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
   end
 
-  local lsp_installer = require("nvim-lsp-installer")
-  lsp_installer.on_server_ready(function(server)
-    if server.name == "tsserver" then
-      server:setup({
-        capabilities = capabilities,
-        on_attach = tsserver_on_attach
-      })
-    elseif server.name == "sumneko_lua" then
-      server:setup({
-        capabilities = capabilities,
-        on_attach = lsp_attach,
-        settings = {
-          Lua = {
-            version = 'LuaJIT',
-            diagnostics = {
-              globals = {
-                'vim',
-                "describe",
-                "it",
-                "before_each",
-                "after_each",
-                "pending",
-              },
-            }
-          }
+  --lspconfig.setup ({
+  --  capabilities = capabilities,
+  --  on_attach = lsp_attach
+  --})
+
+  lspconfig.tsserver.setup({
+    capabilities = capabilities,
+    on_attach = tsserver_on_attach
+  })
+
+  lspconfig.sumneko_lua.setup({
+    capabilities = capabilities,
+    on_attach = lsp_attach,
+    settings = {
+      Lua = {
+        version = 'LuaJIT',
+        diagnostics = {
+          globals = {
+            'vim',
+            "describe",
+            "it",
+            "before_each",
+            "after_each",
+            "pending",
+          },
         }
-      })
-    else
-      server:setup({
-        capabilities = capabilities,
-        on_attach = lsp_attach
-      })
-      vim.cmd [[ do User LspAttachBuffers ]]
-    end
-  end)
+      }
+    }
+  })
+
+  vim.cmd [[ do User LspAttachBuffers ]]
 
 end

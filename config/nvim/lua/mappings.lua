@@ -132,7 +132,7 @@ local mappings = {
     ["."] = { "Set Working Directory from current file" },
     ["="] = { "<cmd>Neoformat<cr>",                           "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>",           "Code actions" },
-    b = { "<cmd>Neotree focus buffers right<cr>",             "Show Buffers Tree" },
+    b = { "<cmd>Neotree reveal buffers current<cr>",          "Show Buffers Tree" },
     c = {
         name = "Conflict Resolution",
         b = { "<cmd>ConflictMarkerBoth<cr>",                  "Keep Both" },
@@ -172,7 +172,7 @@ local mappings = {
     p = { "<cmd>Gitsigns preview_hunk<cr>",                   "Preview Hunk" },
     r = { "<cmd>Gitsigns reset_hunk<cr>",                     "Reset Hunk" },
     R = { "<cmd>Gitsigns reset_buffer<cr>",                   "Reset Buffer" },
-    s = { "<cmd>Neotree float git_status<cr>",                "Show Git Status" },
+    s = { "<cmd>Neotree reveal git_status current<cr>",       "Show Git Status" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },
     z = { ":call ToggleWindowZoom(0)<cr>",                     "Zoom Window (toggle)" },
@@ -193,3 +193,12 @@ local mappings = {
   }
 }
 require("which-key").register(mappings)
+
+_G.test_symbols = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.lsp.buf_request_all(bufnr, "textDocument/documentSymbol", {}, function(...)
+    print(vim.inspect(...))
+  end)
+end
+
+vim.api.nvim_set_keymap("n", ",S", "<cmd>lua _G.test_symbols()<cr>", {noremap = true, silent = true})

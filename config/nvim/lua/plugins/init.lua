@@ -15,6 +15,12 @@ local startup = function(use)
   use 'dstein64/vim-startuptime'
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
+  use {
+    'rcarriga/nvim-notify',
+    config = function()
+      --vim.notify = require('notify')
+    end
+  }
 
   use {
     "nvim-treesitter/playground",
@@ -147,8 +153,6 @@ local startup = function(use)
   }
 
   use {'kevinhwang91/nvim-bqf', ft = 'qf'}
-  use { 'junegunn/fzf', dir = '~/.fzf', run = './install --all' }
-  use 'junegunn/fzf.vim'
   use { 'sindrets/diffview.nvim', opt = true, cmd = 'DiffviewOpen',
     config = function()
       local cb = require'diffview.config'.diffview_callback
@@ -206,7 +210,7 @@ local startup = function(use)
     config = c("nvim-dap")
   }
 
-  use 'mhinz/vim-startify'
+  --use 'mhinz/vim-startify'
 
   use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
   use 'christianchiarulli/nvcode-color-schemes.vim'
@@ -323,7 +327,7 @@ local startup = function(use)
   --  config = c("nvim-toggleterm")
   --}
 
-  use { 'ThePrimeagen/harpoon' }
+  --use { 'ThePrimeagen/harpoon' }
   --use 'abecodes/tabout.nvim'
   use {
     'vuki656/package-info.nvim',
