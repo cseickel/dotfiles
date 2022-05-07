@@ -25,48 +25,16 @@ local mine = function ()
     end
   end
 
-  local next_git_modified = function(state, reverse)
-    local utils = require("neo-tree.utils")
-    local node = state.tree:get_node()
-    local current_path = node:get_id()
-    local g = state.git_status_lookup
-    local paths = utils.get_keys(g, true)
-    if reverse then
-      paths = utils.reverse_list(paths)
-    end
-
-    for _, path in ipairs(paths) do
-      local passed
-      if #g[path] > 1 then -- skipping over directories
-        if not reverse and path > current_path then
-          passed = true
-        elseif reverse and path < current_path then
-          passed = true
-        end
-      end
-
-      if passed then
-        local status = g[path]
-        if status:match("M") or status:match("A") then
-          local existing = state.tree:get_node(path)
-          if existing then
-            require("neo-tree.ui.renderer").focus_node(state, path)
-          else
-            require("neo-tree.sources.filesystem").navigate(state, state.path, path)
-          end
-          return
-        end
-      end
-    end
-  end
 
   local config = {
     close_if_last_window = true,
     close_floats_on_escape_key = true,
+    enable_diagnostics = true,
+    enable_git_status = false,
     git_status_async = true,
-    enable_git_status = true,
     enable_refresh_on_write = true,
-    log_level = "trace",
+    --use_default_mappings = false,
+    log_level = "debug",
     log_to_file = true,
     open_files_in_last_window = true,
     sort_case_insensitive = true,
@@ -136,21 +104,16 @@ local mine = function ()
         nowait = true,
       },
       mappings = {
-        ["a"] = { "add", config = { show_path = "relative" }},
-        ["[g"] = function(state)
-          next_git_modified(state, true)
-        end,
-        ["]g"] = function(state)
-          next_git_modified(state, false)
-        end
+        --["[g"] = "prev_git_modified",
+        --["]g"] = "next_git_modified",
       }
     },
     filesystem = {
       async_directory_scan = true,
-      hijack_netrw_behavior = "disabled",
-      follow_current_file = true,
+      hijack_netrw_behavior = "open_current",
+      follow_current_file = false,
       group_empty_dirs = true,
-      use_libuv_file_watcher = true,
+      use_libuv_file_watcher = false,
       bind_to_cwd = true,
       filtered_items = {
         visible = false,

@@ -60,28 +60,12 @@ local startup = function(use)
     config = c('trld')
   }
 
-  --use {
-  --  'm-demare/hlargs.nvim',
-  --  requires = { 'nvim-treesitter/nvim-treesitter' },
-  --  config = c("hlargs")
-  --}
-
   use { 'folke/which-key.nvim', config = c("which-key") }
-  --use {
-  --  'mrjones2014/legendary.nvim',
-  --  requires = {
-  --    "folke/which-key.nvim",
-  --    'stevearc/dressing.nvim'
-  --  },
-  --  config = c("legendary")
-  --}
 
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
   use {
     "~/repos/neo-tree.nvim",
-    --"nvim-neo-tree/neo-tree.nvim",
-    --branch = "v2.x",
     requires = {
       "MunifTanjim/nui.nvim",
       'nvim-lua/plenary.nvim',

@@ -144,17 +144,17 @@ nnoremap <silent> <leader>w9 :9wincmd w <cr>
 nnoremap <silent> <leader>w0 :10wincmd w <cr>
 
 " window movement
-nnoremap <silent> <C-h> <C-w>H
-nnoremap <silent> <C-j> <C-w>x<C-w>j
-nnoremap <silent> <C-k> <C-w>k<C-w>x
-nnoremap <silent> <C-l> <C-w>K
+nnoremap <silent> <M-h> <C-w>H
+nnoremap <silent> <M-j> <C-w>x<C-w>j
+nnoremap <silent> <M-k> <C-w>k<C-w>x
+nnoremap <silent> <M-l> <C-w>L
 nnoremap <silent> <leader>z :execute "-1tabedit % | " . line(".") <cr>
 
 " window navigation
-nnoremap <silent> h <C-w>h
-nnoremap <silent> j <C-w>j
-nnoremap <silent> k <C-w>k
-nnoremap <silent> l <C-w>l
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-j> <C-w>j
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-l> <C-w>l
 
 " just easier to easier to type than the top row
 nnoremap <silent> H ^
@@ -316,12 +316,10 @@ function! NextBufferByName(direction) abort
 endfunction
 
 function! DeleteBuffer() abort
-    call NextBufferByName(-1)
+    b#
     bd#
 endfunction
 
-"nnoremap <silent> ;         :call NextBufferByName(-1)<cr>
-"nnoremap <silent> '         :call NextBufferByName(1)<cr>
 nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 nnoremap <silent> <C-\>     :call RecycleTerminal()<cr>
 nnoremap <silent> <leader>t :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
