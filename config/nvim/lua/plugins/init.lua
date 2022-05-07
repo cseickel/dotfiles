@@ -11,192 +11,160 @@ local startup = function(use)
   vim = vim
 
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
-  use 'nvim-lua/plenary.nvim'
-  use 'dstein64/vim-startuptime'
+  --use 'nvim-lua/plenary.nvim'
+  --use 'dstein64/vim-startuptime'
   use "dstein64/nvim-scrollview"
-  use "ton/vim-bufsurf"
-  use {
-    'rcarriga/nvim-notify',
-    config = function()
-      --vim.notify = require('notify')
-    end
-  }
+  --use "ton/vim-bufsurf"
+  --use {
+  --  'rcarriga/nvim-notify',
+  --  config = function()
+  --    --vim.notify = require('notify')
+  --  end
+  --}
 
-  use {
-    "nvim-treesitter/playground",
-    event = "BufRead",
-  }
-  use {
-    "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
-    config = c("nvim-ts-autotag")
-  }
-  use {
-    "romgrk/nvim-treesitter-context",
-    config = function()
-      vim.cmd[[hi TreesitterContext guibg=#383838 gui=italic,bold,underline]]
-      require("treesitter-context").setup{
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        throttle = true, -- Throttles plugin updates (may improve performance)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-          -- For all filetypes
-          -- Note that setting an entry here replaces all other patterns for this entry.
-          -- By setting the 'default' entry below, you can control which nodes you want to
-          -- appear in the context window.
-          default = {
-            'class',
-            'function',
-            'method',
-          },
-        },
-      }
-    end
-  }
-
-  -- show diagnostics with virtual text in upper right hand corner
-  use {
-    'Mofiqul/trld.nvim',
-    config = c('trld')
-  }
+  ---- show diagnostics with virtual text in upper right hand corner
+  --use {
+  --  'Mofiqul/trld.nvim',
+  --  config = c('trld')
+  --}
 
   use { 'folke/which-key.nvim', config = c("which-key") }
 
-  use { 'rmagatti/auto-session', config = c("auto-session") }
+  --use { 'rmagatti/auto-session', config = c("auto-session") }
 
-  use {
-    "~/repos/neo-tree.nvim",
-    requires = {
-      "MunifTanjim/nui.nvim",
-      'nvim-lua/plenary.nvim',
-      'kyazdani42/nvim-web-devicons',
-      {
-        -- only needed if you want to use the "open_window_picker" command
-        's1n7ax/nvim-window-picker',
-        config = function()
-          require'window-picker'.setup()
-        end,
-      }
-    },
-    config = c("neo-tree")
-  }
+  --use {
+  --  "~/repos/neo-tree.nvim",
+  --  requires = {
+  --    "MunifTanjim/nui.nvim",
+  --    'nvim-lua/plenary.nvim',
+  --    'kyazdani42/nvim-web-devicons',
+  --    {
+  --      -- only needed if you want to use the "open_window_picker" command
+  --      's1n7ax/nvim-window-picker',
+  --      config = function()
+  --        require'window-picker'.setup()
+  --      end,
+  --    }
+  --  },
+  --  config = c("neo-tree")
+  --}
 
-  use "alec-gibson/nvim-tetris"
+  --use "alec-gibson/nvim-tetris"
 
-  --This is good if you use multiple windows in tmux, but my screen is too small
-  --use({
-  --  "aserowy/tmux.nvim",
+  ----This is good if you use multiple windows in tmux, but my screen is too small
+  ----use({
+  ----  "aserowy/tmux.nvim",
+  ----  config = function()
+  ----    require("tmux").setup({
+  ----      -- overwrite default configuration
+  ----      -- here, e.g. to enable default bindings
+  ----      copy_sync = {
+  ----        -- enables copy sync and overwrites all register actions to
+  ----        -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
+  ----        enable = true,
+  ----      },
+  ----      navigation = {
+  ----        -- enables default keybindings (C-hjkl) for normal mode
+  ----        enable_default_keybindings = true,
+  ----      },
+  ----      resize = {
+  ----        -- enables default keybindings (A-hjkl) for normal mode
+  ----        enable_default_keybindings = true,
+  ----      }
+  ----    })
+  ----  end
+  ----})
+
+  --use { 'kyazdani42/nvim-web-devicons', config = c("nvim-web-devicons") }
+  --use 'editorconfig/editorconfig-vim'
+  ----
+  ---- SQL Interface
+  --use 'tpope/vim-dadbod'
+  --use 'kristijanhusak/vim-dadbod-ui'
+  --use 'kristijanhusak/vim-dadbod-completion'
+
+  --use 'antoinemadec/FixCursorHold.nvim'
+  --use 'tpope/vim-repeat'
+  --use 'tpope/vim-eunuch'
+  --use 'tpope/vim-surround'
+  --use 'tpope/vim-fugitive'
+  --use { 'wellle/targets.vim' }
+  --use 'dkarter/bullets.vim'
+  --use {
+  --  'phaazon/hop.nvim',
+  --  --branch = 'v1',
+  --  config = c("hop")
+  --}
+  ----use 'airblade/vim-gitgutter'
+  --use {
+  --  'lewis6991/gitsigns.nvim',
+  --  --requires = {
+  --    --'nvim-lua/plenary.nvim'
+  --  --},
+  --  config = c("gitsigns")
+  --}
+
+  --use {'kevinhwang91/nvim-bqf', ft = 'qf'}
+  --use { 'sindrets/diffview.nvim', opt = true, cmd = 'DiffviewOpen',
   --  config = function()
-  --    require("tmux").setup({
-  --      -- overwrite default configuration
-  --      -- here, e.g. to enable default bindings
-  --      copy_sync = {
-  --        -- enables copy sync and overwrites all register actions to
-  --        -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
-  --        enable = true,
+  --    local cb = require'diffview.config'.diffview_callback
+  --    require'diffview'.setup {
+  --      diff_binaries = false,    -- Show diffs for binaries
+  --      file_panel = {
+  --        width = 40,
+  --        use_icons = true        -- Requires nvim-web-devicons
   --      },
-  --      navigation = {
-  --        -- enables default keybindings (C-hjkl) for normal mode
-  --        enable_default_keybindings = true,
-  --      },
-  --      resize = {
-  --        -- enables default keybindings (A-hjkl) for normal mode
-  --        enable_default_keybindings = true,
+  --      key_bindings = {
+  --        disable_defaults = false,                   -- Disable the default key bindings
+  --        -- The `view` bindings are active in the diff buffers, only when the current
+  --        -- tabpage is a Diffview.
+  --        view = {
+  --          ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
+  --          ["<down>"]        = cb("next_entry"),
+  --          ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
+  --          ["<up>"]          = cb("prev_entry"),
+  --          ["\\"]            = cb("focus_files"),        -- Bring focus to the files panel
+  --          ["|"]             = cb("toggle_files"),       -- Toggle the files panel.
+  --        },
+  --        file_panel = {
+  --          ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
+  --          ["<down>"]        = cb("next_entry"),
+  --          ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
+  --          ["<up>"]          = cb("prev_entry"),
+  --          ["<cr>"]          = cb("select_entry"),       -- Open the diff for the selected entry.
+  --          ["<2-LeftMouse>"] = cb("select_entry"),
+  --          ["<space>"]       = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
+  --          ["a"]             = cb("stage_all"),          -- Stage all entries.
+  --          ["A"]             = cb("unstage_all"),        -- Unstage all entries.
+  --          ["R"]             = cb("refresh_files"),      -- Update stats and entries in the file list.
+  --          ["\\"]            = cb("focus_files"),        -- Bring focus to the files panel
+  --          ["|"]             = cb("toggle_files"),       -- Toggle the files panel.
+  --        }
   --      }
-  --    })
+  --    }
   --  end
-  --})
+  --}
+  --use 'rhysd/conflict-marker.vim'
+  --use 'nanotee/zoxide.vim'
 
-  use { 'kyazdani42/nvim-web-devicons', config = c("nvim-web-devicons") }
-  use 'editorconfig/editorconfig-vim'
-  --
-  -- SQL Interface
-  use 'tpope/vim-dadbod'
-  use 'kristijanhusak/vim-dadbod-ui'
-  use 'kristijanhusak/vim-dadbod-completion'
+  --use 'svermeulen/vim-cutlass'
+  --use 'ojroques/vim-oscyank'
+  --use 'alvan/vim-closetag'
+  --use 'tmsvg/pear-tree'
+  --use 'sbdchd/neoformat'
 
-  use 'antoinemadec/FixCursorHold.nvim'
-  use 'tpope/vim-repeat'
-  use 'tpope/vim-eunuch'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-fugitive'
-  use { 'wellle/targets.vim' }
-  use 'dkarter/bullets.vim'
-  use {
-    'phaazon/hop.nvim',
-    --branch = 'v1',
-    config = c("hop")
-  }
-  --use 'airblade/vim-gitgutter'
-  use {
-    'lewis6991/gitsigns.nvim',
-    --requires = {
-      --'nvim-lua/plenary.nvim'
-    --},
-    config = c("gitsigns")
-  }
+  --use {
+  --  'mfussenegger/nvim-dap',
+  --  requires = {
+  --    'rcarriga/nvim-dap-ui',
+  --    'theHamsta/nvim-dap-virtual-text',
+  --  },
+  --  config = c("nvim-dap")
+  --}
 
-  use {'kevinhwang91/nvim-bqf', ft = 'qf'}
-  use { 'sindrets/diffview.nvim', opt = true, cmd = 'DiffviewOpen',
-    config = function()
-      local cb = require'diffview.config'.diffview_callback
-      require'diffview'.setup {
-        diff_binaries = false,    -- Show diffs for binaries
-        file_panel = {
-          width = 40,
-          use_icons = true        -- Requires nvim-web-devicons
-        },
-        key_bindings = {
-          disable_defaults = false,                   -- Disable the default key bindings
-          -- The `view` bindings are active in the diff buffers, only when the current
-          -- tabpage is a Diffview.
-          view = {
-            ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
-            ["<down>"]        = cb("next_entry"),
-            ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
-            ["<up>"]          = cb("prev_entry"),
-            ["\\"]            = cb("focus_files"),        -- Bring focus to the files panel
-            ["|"]             = cb("toggle_files"),       -- Toggle the files panel.
-          },
-          file_panel = {
-            ["j"]             = cb("next_entry"),         -- Bring the cursor to the next file entry
-            ["<down>"]        = cb("next_entry"),
-            ["k"]             = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
-            ["<up>"]          = cb("prev_entry"),
-            ["<cr>"]          = cb("select_entry"),       -- Open the diff for the selected entry.
-            ["<2-LeftMouse>"] = cb("select_entry"),
-            ["<space>"]       = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
-            ["a"]             = cb("stage_all"),          -- Stage all entries.
-            ["A"]             = cb("unstage_all"),        -- Unstage all entries.
-            ["R"]             = cb("refresh_files"),      -- Update stats and entries in the file list.
-            ["\\"]            = cb("focus_files"),        -- Bring focus to the files panel
-            ["|"]             = cb("toggle_files"),       -- Toggle the files panel.
-          }
-        }
-      }
-    end
-  }
-  use 'rhysd/conflict-marker.vim'
-  use 'nanotee/zoxide.vim'
+  ----use 'mhinz/vim-startify'
 
-  use 'svermeulen/vim-cutlass'
-  use 'ojroques/vim-oscyank'
-  use 'alvan/vim-closetag'
-  use 'tmsvg/pear-tree'
-  use 'sbdchd/neoformat'
-
-  use {
-    'mfussenegger/nvim-dap',
-    requires = {
-      'rcarriga/nvim-dap-ui',
-      'theHamsta/nvim-dap-virtual-text',
-    },
-    config = c("nvim-dap")
-  }
-
-  --use 'mhinz/vim-startify'
-
-  use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
+  --use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
   use 'christianchiarulli/nvcode-color-schemes.vim'
 
   use {
@@ -231,113 +199,107 @@ local startup = function(use)
     --end
   }
 
-  use {
-    "hrsh7th/nvim-cmp",
-    opt = true,
-    event='InsertEnter',
-    requires = {
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-nvim-lsp",
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-calc',
-      --'SirVer/ultisnips',
-      --'honza/vim-snippets',
-      'hrsh7th/vim-vsnip',
-      'hrsh7th/vim-vsnip-integ',
-      'rafamadriz/friendly-snippets',
-      {
-        'David-Kunz/cmp-npm',
-        config = c('cmp-npm')
-      },
-    },
-    config = c("nvim-cmp")
-  }
-
-  use 'github/copilot.vim'
   --use {
-  --  "zbirenbaum/copilot-cmp",
-  --  after = {"copilot.lua", "nvim-cmp"},
-  --}
-  --use{
-  --  "zbirenbaum/copilot.lua",
-  --  event = {"VimEnter"},
-  --  config = function()
-  --    vim.defer_fn(function()
-  --      require("copilot").setup()
-  --    end, 100)
-  --  end,
-  --}
-  --use {
-  --  "zbirenbaum/copilot.lua",
-  --  event = "InsertEnter",
-  --  config = function ()
-  --    vim.schedule(function() require("copilot") end)
-  --  end,
-  --}
-
-  --use {
-  --  "zbirenbaum/copilot-cmp",
-  --  event = "InsertEnter",
-  --  after = {"copilot.lua", "nvim-cmp"},
-  --}
-
-
-  use {
-    'onsails/lspkind-nvim',
-    opt = true,
-    event='InsertEnter',
-    config = c("lspkind-nvim")
-  }
-
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {
-      'nvim-telescope/telescope-fzy-native.nvim',
-      'jvgrootveld/telescope-zoxide',
-      "nvim-telescope/telescope-project.nvim"
-    },
-    config = c("telescope")
-  }
-
-
-  --use {
-  --  'akinsho/nvim-toggleterm.lua',
+  --  "hrsh7th/nvim-cmp",
   --  opt = true,
-  --  keys = "<C-\\>",
-  --  config = c("nvim-toggleterm")
+  --  event='InsertEnter',
+  --  requires = {
+  --    "hrsh7th/cmp-buffer",
+  --    "hrsh7th/cmp-nvim-lsp",
+  --    'hrsh7th/cmp-nvim-lua',
+  --    'hrsh7th/cmp-path',
+  --    'hrsh7th/cmp-calc',
+  --    --'SirVer/ultisnips',
+  --    --'honza/vim-snippets',
+  --    'hrsh7th/vim-vsnip',
+  --    'hrsh7th/vim-vsnip-integ',
+  --    'rafamadriz/friendly-snippets',
+  --    {
+  --      'David-Kunz/cmp-npm',
+  --      config = c('cmp-npm')
+  --    },
+  --  },
+  --  config = c("nvim-cmp")
   --}
 
-  --use { 'ThePrimeagen/harpoon' }
-  --use 'abecodes/tabout.nvim'
-  use {
-    'vuki656/package-info.nvim',
-    requires = { "MunifTanjim/nui.nvim" },
-    config = c('package-info')
-  }
+  --use 'github/copilot.vim'
+  ----use {
+  ----  "zbirenbaum/copilot-cmp",
+  ----  after = {"copilot.lua", "nvim-cmp"},
+  ----}
+  ----use{
+  ----  "zbirenbaum/copilot.lua",
+  ----  event = {"VimEnter"},
+  ----  config = function()
+  ----    vim.defer_fn(function()
+  ----      require("copilot").setup()
+  ----    end, 100)
+  ----  end,
+  ----}
+  ----use {
+  ----  "zbirenbaum/copilot.lua",
+  ----  event = "InsertEnter",
+  ----  config = function ()
+  ----    vim.schedule(function() require("copilot") end)
+  ----  end,
+  ----}
+
+  ----use {
+  ----  "zbirenbaum/copilot-cmp",
+  ----  event = "InsertEnter",
+  ----  after = {"copilot.lua", "nvim-cmp"},
+  ----}
 
 
-  -- UI Stuff
-  use 'psliwka/vim-smoothie'
-  use {
-    'nvim-lualine/lualine.nvim',
-    config = c("lualine")
-  }
-  use 'gcmt/taboo.vim'
+  --use {
+  --  'onsails/lspkind-nvim',
+  --  opt = true,
+  --  event='InsertEnter',
+  --  config = c("lspkind-nvim")
+  --}
 
-  use 'ryanoasis/vim-devicons'
-  use {
-    'lukas-reineke/indent-blankline.nvim',
-    config = c("indent-blankline")
-  }
+  --use {
+  --  'nvim-telescope/telescope.nvim',
+  --  requires = {
+  --    'nvim-telescope/telescope-fzy-native.nvim',
+  --    'jvgrootveld/telescope-zoxide',
+  --    "nvim-telescope/telescope-project.nvim"
+  --  },
+  --  config = c("telescope")
+  --}
 
-  --use '~/repos/dwm.vim'
+
+  --use {
+  --  'vuki656/package-info.nvim',
+  --  requires = { "MunifTanjim/nui.nvim" },
+  --  config = c('package-info')
+  --}
+
+
+  ---- UI Stuff
+  --use 'psliwka/vim-smoothie'
+  --use {
+  --  'nvim-lualine/lualine.nvim',
+  --  config = c("lualine")
+  --}
+  --use 'gcmt/taboo.vim'
+
+  --use 'ryanoasis/vim-devicons'
+  --use {
+  --  'lukas-reineke/indent-blankline.nvim',
+  --  config = c("indent-blankline")
+  --}
+
+
+--------------------------------------------------------------------------------
+-- TREESITTER RELATED PLUGINS
+--------------------------------------------------------------------------------
+
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     config = c("nvim-treesitter")
   }
-
 
   use {
     'thalesmello/vim-textobj-methodcall',
@@ -345,11 +307,46 @@ local startup = function(use)
       { 'kana/vim-textobj-user' }
     }
   }
+
   use {
     'Julian/vim-textobj-variable-segment',
     requires = {
       { 'kana/vim-textobj-user' }
     }
+  }
+
+  use {
+    "nvim-treesitter/playground",
+    event = "BufRead",
+  }
+
+  use {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    config = c("nvim-ts-autotag")
+  }
+
+  use {
+    "romgrk/nvim-treesitter-context",
+    config = function()
+      vim.cmd[[hi TreesitterContext guibg=#383838 gui=italic,bold,underline]]
+      require("treesitter-context").setup{
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        throttle = true, -- Throttles plugin updates (may improve performance)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+          -- For all filetypes
+          -- Note that setting an entry here replaces all other patterns for this entry.
+          -- By setting the 'default' entry below, you can control which nodes you want to
+          -- appear in the context window.
+          default = {
+            'class',
+            'function',
+            'method',
+          },
+        },
+      }
+    end
   }
 end
 
