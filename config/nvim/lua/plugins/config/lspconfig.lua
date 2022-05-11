@@ -33,8 +33,13 @@ return function()
     sources = {
       --null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
       --null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
-      null_ls.builtins.formatting.prettier,
-      null_ls.builtins.formatting.stylua -- prettier, eslint, eslint_d, or prettierd
+      null_ls.builtins.formatting.stylua, -- prettier, eslint, eslint_d, or prettierd
+      null_ls.builtins.formatting.trim_newlines,
+      null_ls.builtins.formatting.trim_whitespace,
+      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.formatting.prettier.with({
+        filetypes = { "html", "css", "yaml", "markdown", "json" },
+      }),
     },
   })
   lspconfig.jsonls.setup {

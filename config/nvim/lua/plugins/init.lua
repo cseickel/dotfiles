@@ -24,10 +24,10 @@ local startup = function(use)
     end
   }
 
-  use {
-    "nvim-treesitter/playground",
-    event = "BufRead",
-  }
+  --use {
+  --  "nvim-treesitter/playground",
+  --  event = "BufRead",
+  --}
   use {
     "windwp/nvim-ts-autotag",
     event = "InsertEnter",
@@ -62,21 +62,7 @@ local startup = function(use)
     config = c('trld')
   }
 
-  --use {
-  --  'm-demare/hlargs.nvim',
-  --  requires = { 'nvim-treesitter/nvim-treesitter' },
-  --  config = c("hlargs")
-  --}
-
   use { 'folke/which-key.nvim', config = c("which-key") }
-  --use {
-  --  'mrjones2014/legendary.nvim',
-  --  requires = {
-  --    "folke/which-key.nvim",
-  --    'stevearc/dressing.nvim'
-  --  },
-  --  config = c("legendary")
-  --}
 
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
@@ -98,8 +84,6 @@ local startup = function(use)
     },
     config = c("neo-tree")
   }
-
-  use "alec-gibson/nvim-tetris"
 
   --This is good if you use multiple windows in tmux, but my screen is too small
   --use({
@@ -145,12 +129,12 @@ local startup = function(use)
     --branch = 'v1',
     config = c("hop")
   }
-  --use 'airblade/vim-gitgutter'
+
   use {
     'lewis6991/gitsigns.nvim',
-    --requires = {
-      --'nvim-lua/plenary.nvim'
-    --},
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
     config = c("gitsigns")
   }
 
@@ -200,8 +184,8 @@ local startup = function(use)
   use 'svermeulen/vim-cutlass'
   use 'ojroques/vim-oscyank'
   use 'alvan/vim-closetag'
-  use 'tmsvg/pear-tree'
-  use 'sbdchd/neoformat'
+  --use 'tmsvg/pear-tree'
+  --use 'sbdchd/neoformat'
 
   use {
     'mfussenegger/nvim-dap',
@@ -211,8 +195,6 @@ local startup = function(use)
     },
     config = c("nvim-dap")
   }
-
-  --use 'mhinz/vim-startify'
 
   use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
   use 'christianchiarulli/nvcode-color-schemes.vim'
@@ -259,13 +241,10 @@ local startup = function(use)
       'hrsh7th/cmp-nvim-lua',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-calc',
-      --'SirVer/ultisnips',
-      --'honza/vim-snippets',
       'hrsh7th/vim-vsnip',
       'hrsh7th/vim-vsnip-integ',
       'rafamadriz/friendly-snippets',
       "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       {
@@ -277,33 +256,6 @@ local startup = function(use)
   }
 
   use 'github/copilot.vim'
-  --use {
-  --  "zbirenbaum/copilot-cmp",
-  --  after = {"copilot.lua", "nvim-cmp"},
-  --}
-  --use{
-  --  "zbirenbaum/copilot.lua",
-  --  event = {"VimEnter"},
-  --  config = function()
-  --    vim.defer_fn(function()
-  --      require("copilot").setup()
-  --    end, 100)
-  --  end,
-  --}
-  --use {
-  --  "zbirenbaum/copilot.lua",
-  --  event = "InsertEnter",
-  --  config = function ()
-  --    vim.schedule(function() require("copilot") end)
-  --  end,
-  --}
-
-  --use {
-  --  "zbirenbaum/copilot-cmp",
-  --  event = "InsertEnter",
-  --  after = {"copilot.lua", "nvim-cmp"},
-  --}
-
 
   use {
     'onsails/lspkind-nvim',
@@ -322,16 +274,6 @@ local startup = function(use)
     config = c("telescope")
   }
 
-
-  --use {
-  --  'akinsho/nvim-toggleterm.lua',
-  --  opt = true,
-  --  keys = "<C-\\>",
-  --  config = c("nvim-toggleterm")
-  --}
-
-  --use { 'ThePrimeagen/harpoon' }
-  --use 'abecodes/tabout.nvim'
   use {
     'vuki656/package-info.nvim',
     requires = { "MunifTanjim/nui.nvim" },
@@ -347,7 +289,6 @@ local startup = function(use)
   }
   use 'gcmt/taboo.vim'
 
-  use 'ryanoasis/vim-devicons'
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = c("indent-blankline")
