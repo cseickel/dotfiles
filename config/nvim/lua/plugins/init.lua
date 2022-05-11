@@ -9,6 +9,8 @@ end
 
 local startup = function(use)
   vim = vim
+  -- Packer can manage itself
+  use 'wbthomason/packer.nvim'
 
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
   use 'nvim-lua/plenary.nvim'
@@ -221,7 +223,7 @@ local startup = function(use)
       'williamboman/nvim-lsp-installer',
       'jose-elias-alvarez/nvim-lsp-ts-utils',
       'jose-elias-alvarez/null-ls.nvim',
-      'ray-x/lsp_signature.nvim',
+      --'ray-x/lsp_signature.nvim',
       'nvim-lua/plenary.nvim',
       'b0o/schemastore.nvim'
     },
@@ -262,6 +264,10 @@ local startup = function(use)
       'hrsh7th/vim-vsnip',
       'hrsh7th/vim-vsnip-integ',
       'rafamadriz/friendly-snippets',
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp-document-symbol",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       {
         'David-Kunz/cmp-npm',
         config = c('cmp-npm')

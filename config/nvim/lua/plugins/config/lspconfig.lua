@@ -26,26 +26,6 @@ return function()
     }
   }
 
-  local function lsp_attach()
-    require('lsp_signature').on_attach({
-      bind = true,
-      handler_opts = {
-        border = "single"
-      },
-      hint_enable = false,
-      hint_prefix = " ",
-      floating_window = true,
-      toggle_key = "<M-x>"
-    })
-    --vim.cmd([[
-    --  augroup lsp_au
-    --  autocmd! * <buffer>
-    --  autocmd CursorHoldI <buffer> lua vim.lsp.buf.signature_help()
-    --  augroup END
-    --  ]], false)
-    --
-  end
-
   local lspconfig = require("lspconfig")
 
   local null_ls = require("null-ls")
@@ -107,13 +87,10 @@ return function()
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",go", ":TSLspOrganize<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gR", ":TSLspRenameFile<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
-
-    lsp_attach()
   end
 
   --lspconfig.setup ({
   --  capabilities = capabilities,
-  --  on_attach = lsp_attach
   --})
 
   lspconfig.tsserver.setup({
@@ -123,7 +100,6 @@ return function()
 
   lspconfig.sumneko_lua.setup({
     capabilities = capabilities,
-    on_attach = lsp_attach,
     settings = {
       Lua = {
         version = 'LuaJIT',
@@ -153,7 +129,6 @@ return function()
   for _, server in ipairs(other_servers) do
     lspconfig[server].setup({
       capabilities = capabilities,
-      on_attach = lsp_attach,
     })
   end
 

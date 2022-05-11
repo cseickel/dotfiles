@@ -4,7 +4,7 @@ return function()
     formatting = {
       format = function(entry, vim_item)
         -- fancy icons and a name of kind
-        vim_item.kind = require("lspkind").presets.default[vim_item.kind] .. " " .. vim_item.kind
+        vim_item.kind = require("lspkind").presets.default[vim_item.kind]-- .. " " .. vim_item.kind
         -- set a name for each source
         vim_item.menu = ({
           buffer = "[Buffer]",
@@ -41,8 +41,29 @@ return function()
       { name = "path" },
       { name = "calc" },
       { name = 'buffer', keyword_length = 2 },
+      { name = "nvim_lsp_signature_help" },
     },
-    completion = {completeopt = 'menu,menuone,noinsert'}
+    completion = {
+      completeopt = 'menu,menuone,noinsert',
+      --keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
+      --keyword_length = 1,
+    }
   }
+
+  --cmp.setup.cmdline("/", {
+  --    mapping = cmp.mapping.preset.cmdline(),
+  --    sources = {
+  --        { name = "buffer" },
+  --    },
+  --})
+
+  --cmp.setup.cmdline(":", {
+  --    mapping = cmp.mapping.preset.cmdline(),
+  --    sources = cmp.config.sources({
+  --        { name = "path" },
+  --    }, {
+  --        { name = "cmdline" },
+  --    }),
+  --})
 end
 
