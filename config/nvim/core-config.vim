@@ -155,7 +155,7 @@ augroup core_autocmd
   autocmd!
   autocmd FileType gitcommit,gitrebase,gitconfig,gitrebase,git set bufhidden=delete
   autocmd FileType go set noexpandtab
-  autocmd FileType javascript,typescript,html,lua call TwoSpaceIndent()
+  autocmd FileType javascript,typescript,typescriptreact,html,lua call TwoSpaceIndent()
   autocmd FileType dockerfile,yml call TwoSpaceIndent()
   autocmd FileType cs call FourSpaceIndent()
   autocmd TermOpen * call InitTerminal()
