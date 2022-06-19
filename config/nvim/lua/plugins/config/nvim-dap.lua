@@ -8,7 +8,6 @@ return function ()
   nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
   nnoremap <silent> <leader>B :lua require'dap'.toggle_breakpoint()<CR>
   nnoremap <silent> <M-k> <Cmd>lua require("dapui").eval()<CR>
-  vnoremap <silent> <M-k> <Cmd>lua require("dapui").eval()<CR>
   ]])
   require("dapui").setup({
     icons = {
@@ -23,26 +22,24 @@ return function ()
       remove = "d",
       edit = "e",
     },
-    sidebar = {
-      elements = {
-        -- You can change the order of elements in the sidebar
-        "scopes",
-        --"watches"
+    layouts = {
+      {
+        elements = {
+          -- You can change the order of elements in the sidebar
+          "scopes",
+          --"watches"
+        },
+        size = 50,
+        position = "left" -- Can be "left" or "right"
       },
-      size = 40,
-      position = "left" -- Can be "left" or "right"
+      {
+        elements = {
+          "repl"
+        },
+        size = 10,
+        position = "bottom" -- Can be "bottom" or "top"
+      },
     },
-    --tray = {
-    --  elements = {
-    --    "repl"
-    --  },
-    --  size = 10,
-    --  position = "bottom" -- Can be "bottom" or "top"
-    --},
-    floating = {
-      max_height = nil, -- These can be integers or a float between 0 and 1.
-      max_width = nil   -- Floats will be treated as percentage of your screen.
-    }
   })
 
   require("nvim-dap-virtual-text").setup()

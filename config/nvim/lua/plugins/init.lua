@@ -67,7 +67,7 @@ local startup = function(use)
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
   use {
-    "~/repos/neo-tree.nvim",
+    "/home/cseickel/repos/neo-tree.nvim",
     --"nvim-neo-tree/neo-tree.nvim",
     --branch = "v2.x",
     requires = {
@@ -191,6 +191,7 @@ local startup = function(use)
     'mfussenegger/nvim-dap',
     requires = {
       'rcarriga/nvim-dap-ui',
+      'rcarriga/cmp-dap',
       'theHamsta/nvim-dap-virtual-text',
     },
     config = c("nvim-dap")

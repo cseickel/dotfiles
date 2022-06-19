@@ -1,6 +1,10 @@
 return function()
   local cmp = require('cmp')
   cmp.setup {
+    enabled = function ()
+      return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        or require("cmp_dap").is_dap_buffer()
+    end,
     formatting = {
       format = function(entry, vim_item)
         -- fancy icons and a name of kind
@@ -17,7 +21,8 @@ return function()
           spell = "[Spell]",
           calc = "[Calc]",
           emoji = "[Emoji]",
-          npm = "[npm]"
+          npm = "[npm]",
+          dap = "[DAP]",
         })[entry.source.name]
         return vim_item
       end
@@ -35,9 +40,10 @@ return function()
     sources = {
       --{ name = "copilot"},
       --{ name = "nvim_lua" },
-      { name = 'nvim_lsp' },
+      { name = 'nvim_lsp', keyword_length = 1 },
+      { name = 'dap' },
       { name = "npm", keyword_length = 3 },
-      { name = "vsnip" },
+      { name = "vsnip", keyword_length = 1 },
       { name = "path" },
       { name = "calc" },
       { name = 'buffer', keyword_length = 2 },
