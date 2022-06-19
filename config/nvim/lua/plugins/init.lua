@@ -232,6 +232,12 @@ local startup = function(use)
     --end
   }
 
+  --use {
+  --  'kevinhwang91/nvim-ufo',
+  --  requires = 'kevinhwang91/promise-async',
+  --  config = c("nvim-ufo")
+  --}
+
   use {
     "hrsh7th/nvim-cmp",
     opt = true,
@@ -295,7 +301,6 @@ local startup = function(use)
     config = c("indent-blankline")
   }
 
-  --use '~/repos/dwm.vim'
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',

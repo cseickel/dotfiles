@@ -25,6 +25,13 @@ return function()
       'additionalTextEdits',
     }
   }
+  -- for nvim-ufo
+  vim.wo.foldlevel = 99 -- feel free to decrease the value
+  vim.wo.foldenable = true
+  capabilities.textDocument.foldingRange = {
+      dynamicRegistration = false,
+      lineFoldingOnly = true
+  }
 
   local lspconfig = require("lspconfig")
 

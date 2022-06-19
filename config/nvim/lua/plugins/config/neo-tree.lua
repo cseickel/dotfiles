@@ -4,10 +4,16 @@ local mine = function ()
   "let g:neo_tree_remove_legacy_commands = 1
   hi NeoTreeCursorLine gui=bold guibg=#333333
   ]])
+
+  vim.cmd([[
+    hi NeoTreeNormal guibg=#000
+    hi NeoTreeNormalNC guibg=#000
+  ]])
   vim.cmd[[
-    augroup FugitiveRefreshNeotree
+    augroup NEOTREE_AUGROUP
       autocmd!
       autocmd User FugitiveChanged lua require("neo-tree.sources.manager").refresh("filesystem")
+      au VimEnter * lua vim.defer_fn(function() vim.cmd("Neotree show left") end, 10)
     augroup END
   ]]
 
@@ -136,13 +142,25 @@ local mine = function ()
         nowait = true,
       },
       mappings = {
+        ["/"] = "noop",
+        ["g/"] = "fuzzy_finder",
         ["a"] = { "add", config = { show_path = "relative" }},
         ["[g"] = function(state)
           next_git_modified(state, true)
         end,
         ["]g"] = function(state)
           next_git_modified(state, false)
-        end
+        end,
+        ["Y"] = function(state)
+          local node = state.tree:get_node()
+          vim.fn.setreg('*', node.name, 'c')
+        end,
+        ["<C-y>"] = function(state)
+          local node = state.tree:get_node()
+          local full_path = node.path
+          local relative_path = full_path:sub(#state.path + 2)
+          vim.fn.setreg('*', relative_path, 'c')
+        end,
       }
     },
     filesystem = {
@@ -304,6 +322,16 @@ local quickstart = function ()
             ["m"] = "move", -- takes text input for destination
             ["q"] = "close_window",
             ["R"] = "refresh",
+            ["Y"] = function(state)
+              local node = state.tree:get_node()
+              vim.fn.setreg('"', node.name, 'c')
+            end,
+            ["<C-y>"] = function(state)
+              local node = state.tree:get_node()
+              local full_path = node.path
+              local relative_path = full_path:sub(#state.path)
+              vim.fn.setreg('"', relative_path, 'c')
+            end,
           }
         },
         nesting_rules = {},
@@ -369,6 +397,17 @@ local quickstart = function ()
       })
 
   vim.cmd([[nnoremap \ :NeoTreeReveal<cr>]])
+
+  if vim.g.neo_tree_timer then
+    pcall(vim.g.neo_tree_timer.close, vim.g.neo_tree_timer)
+  end
+  -- Create a timer handle (implementation detail: uv_timer_t).
+  local timer = vim.loop.new_timer()
+  -- Waits 60 seconds, then repeats every 10 seconds until timer:close().
+  timer:start(60 * 1000, 10 * 1000, function()
+    require("neo-tree.events").fire_event("git_event")
+  end)
+  vim.g.neo_tree_timer = timer
 end
 
 local clean = function ()
@@ -554,6 +593,17 @@ end
 local example = function ()
   
     require("neo-tree").setup({
+      event_handlers = {
+        before_render = function (items)
+          local root = items[1]
+          local spacer = {
+            type = "message",
+            name = "",
+          }
+          table.insert(root.children, spacer, 1)
+          
+        end
+      },
       git_status_async = true,
       -- These options are for people with VERY large git repos
       git_status_async_options = {

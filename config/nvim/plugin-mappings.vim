@@ -112,4 +112,3 @@ function! DeleteBuffer() abort
 endfunction
 
 nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
-
