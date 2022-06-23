@@ -39,12 +39,16 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
         tmux bat fzf fd ripgrep kitty-terminfo \
         neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-        aspnet-runtime-3.1 dotnet-sdk-3.1 netcoredbg mssql-tools maven \
+         mssql-tools maven \
         aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
         docker docker-compose lazydocker \
         ncdu glances nnn-nerd jq zoxide-git \
     && sudo pip --disable-pip-version-check install pynvim \
     && sudo npm install -g neovim ng wip \
+    && yay -Scc --noprogressbar --noconfirm
+
+RUN yay -Syu --noprogressbar --noconfirm --needed \
+        dotnet-sdk-bin netcoredbg \
     && yay -Scc --noprogressbar --noconfirm
 
 # I don't know why I have to set this again, but I do...

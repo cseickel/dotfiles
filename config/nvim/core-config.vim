@@ -100,7 +100,24 @@ set tm=500
 set nobackup
 set nowb
 set noswapfile
+if has("persistent_undo")
+  let target_path = stdpath('data') . '/.undodir'
 
+  " create the directory and any parent directories
+  " if the location does not exist.
+  if !isdirectory(target_path)
+    call mkdir(target_path, "p", 0700)
+  endif
+
+  let &undodir=target_path
+  set undofile
+endif
+
+"test
+"*****************************************************************************
+" => Keybindings
+" *****************************************************************************
+"
 
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
