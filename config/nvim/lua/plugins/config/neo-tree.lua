@@ -67,13 +67,13 @@ local mine = function ()
   end
 
   local config = {
-    close_if_last_window = true,
+    close_if_last_window = false,
     close_floats_on_escape_key = true,
     git_status_async = true,
     enable_git_status = true,
     enable_refresh_on_write = true,
     log_level = "trace",
-    log_to_file = true,
+    log_to_file = false,
     open_files_in_last_window = true,
     sort_case_insensitive = true,
     popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
@@ -126,12 +126,6 @@ local mine = function ()
           vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
         end
       },
-      {
-        event = "file_opened",
-        handler = function(state)
-          require("neo-tree").close_all("filesystem")
-        end
-      },
     },
     nesting_rules = {
       ts = { ".d.ts", "js", "css", "html", "scss" }
@@ -142,8 +136,6 @@ local mine = function ()
         nowait = true,
       },
       mappings = {
-        ["/"] = "noop",
-        ["g/"] = "fuzzy_finder",
         ["a"] = { "add", config = { show_path = "relative" }},
         ["[g"] = function(state)
           next_git_modified(state, true)
@@ -165,7 +157,7 @@ local mine = function ()
     },
     filesystem = {
       async_directory_scan = true,
-      hijack_netrw_behavior = "disabled",
+      hijack_netrw_behavior = "open_current",
       follow_current_file = true,
       group_empty_dirs = true,
       use_libuv_file_watcher = true,
@@ -175,9 +167,7 @@ local mine = function ()
         show_hidden_count = true,
         hide_dotfiles = true,
         hide_gitignored = true,
-        hide_by_pattern = {
-          "*custom.lua"
-        }
+        hide_by_pattern = { }
       },
       find_command = "fd",
       find_args = {
