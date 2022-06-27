@@ -5,75 +5,6 @@
 local presets = require("which-key.plugins.presets")
 presets.operators["v"] = nil
 
-
-local diagSplitState = {}
----Determines if the window exists and is valid.
----@param state table The current state of the plugin.
----@return boolean True if the window exists and is valid, false otherwise.
-local window_exists = function(state)
-  local window_exists
-  local winid = state.winid or 0
-  local bufnr = state.bufnr or 0
-
-  if winid < 1 then
-    window_exists = false
-  else
-    window_exists = vim.api.nvim_win_is_valid(winid)
-      and vim.api.nvim_win_get_number(winid) > 0
-      and vim.api.nvim_win_get_buf(winid) == bufnr
-  end
-
-  if not window_exists then
-    if bufnr > 0 and vim.api.nvim_buf_is_valid(bufnr) then
-      local success, err = pcall(vim.api.nvim_buf_delete, bufnr, { force = true })
-      if not success and err:match("E523") then
-        vim.schedule_wrap(function()
-          vim.api.nvim_buf_delete(bufnr, { force = true })
-        end)()
-      end
-    end
-    state.winid = nil
-    state.bufnr = nil
-  end
-  return window_exists
-end
-
-local showDiagInNewSplit = function ()
-  local NuiSplit = require("nui.split")
-  local linenr = vim.api.nvim_win_get_cursor(0)[1]
-  local diag = vim.diagnostic.get(0, { lnum = linenr - 1 })
-  if #diag == 0 then
-    return
-  end
-
-  local lines = {}
-  for _, d in ipairs(diag) do
-    for line in d.message:gmatch("([^\n]*)\n?") do
-      table.insert(lines, line)
-    end
-  end
-
-  if window_exists(diagSplitState) then
-    vim.api.nvim_win_set_height(diagSplitState.winid, #lines)
-  else
-    local win_options = {
-      position = "bottom",
-      relative = "win",
-      size = #lines,
-      buf_options = {
-        swapfile = false,
-        undolevels = -1,
-      },
-    }
-    local win = NuiSplit(win_options)
-    win:mount()
-    diagSplitState.winid = win.winid
-    diagSplitState.bufnr = win.bufnr
-  end
-
-  vim.api.nvim_buf_set_lines(diagSplitState.bufnr, 0, -1, true, lines)
-end
-
 local showSymbolFinder = function ()
   local preview_width = vim.o.columns - 20 - 65
   if preview_width < 80 then
@@ -198,7 +129,7 @@ local mappings = {
     },
     d = { "<cmd>lua vim.diagnostic.open_float()<cr>",         "Preview Diagnostic" },
    -- D = { "<cmd>lua vim.diagnostic.setqflist()<cr>",          "Show all Diagnostics" },
-    D = { showDiagInNewSplit,                                 "Show Line Diagnostics in Split" },
+    D = { "<cmd>lua require('diagnostic-window').show()<cr>","Show Line Diagnostics in Split" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     J = { "f,ls<cr><esc>",                                    "Newline at next comma" },
     q = { "Show Quickfix" },

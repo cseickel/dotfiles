@@ -66,6 +66,7 @@ local startup = function(use)
 
   use { 'rmagatti/auto-session', config = c("auto-session") }
 
+  use { "/home/cseickel/repos/diagnostic-window.nvim/" }
   use {
     "/home/cseickel/repos/neo-tree.nvim",
     --"nvim-neo-tree/neo-tree.nvim",
