@@ -43,8 +43,6 @@ return function()
           -- You can use the capture groups defined in textobjects.scm
           ["af"] = "@function.outer",
           ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
           ["ab"] = "@block.outer",
           ["ib"] = "@block.inner",
         },

@@ -99,21 +99,19 @@ local mappings = {
   ["|"] = { "<cmd>Neotree reveal<cr>",                      "Open Tree in Sidebar" },
   ["["] = {
       name = "Previous...",
+      c = { "<cmd>ConflictMarkerPrevHunk<cr>",              "Previous Conflict" },
       d = { "<cmd>lua vim.diagnostic.goto_prev()<cr>",      "Previous Diagnostic" },
       g = { "<cmd>Gitsigns prev_hunk<cr>",                  "Previous Git Hunk" },
-      h = { "<cmd>lua require('harpoon.ui').nav_prev()<cr>","Previous Harpoon" },
       l = { "<cmd>lprevious<cr>",                           "Previous Location List" },
       q = { "<cmd>cprevious<cr>",                           "Previous Quickfix" },
-      x = { "<cmd>ConflictMarkerPrevHunk<cr>",              "Previous Conflict" }
   },
   ["]"] = {
       name = "Next...",
+      c = { "<cmd>ConflictMarkerNextHunk<cr>",              "Next Conflict" },
       d = { "<cmd>lua vim.diagnostic.goto_next()<cr>",      "Next Diagnostic" },
       g = { "<cmd>Gitsigns next_hunk<cr>",                  "Next Git Hunk" },
-      h = { "<cmd>lua require('harpoon.ui').nav_next()<cr>","Next Harpoon" },
       l = { "<cmd>lnext<cr>",                               "Next Location List" },
       q = { "<cmd>cnext<cr>",                               "Next Quickfix" },
-      x = { "<cmd>ConflictMarkerNextHunk<cr>",              "Next Conflict" }
   },
   ["<leader>"] = {
     ["."] = { "Set Working Directory from current file" },

@@ -57,7 +57,7 @@ return function()
     },
   }
 
-
+  --local navic = require("nvim-navic")
   -- make sure to only run this once!
   local tsserver_on_attach = function(client, bufnr)
     -- disable tsserver formatting if you plan on formatting via null-ls
@@ -99,6 +99,8 @@ return function()
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",go", ":TSLspOrganize<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gR", ":TSLspRenameFile<CR>", opts)
     vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
+
+    --navic.attach(client, bufnr)
   end
 
   --lspconfig.setup ({
@@ -141,6 +143,7 @@ return function()
   for _, server in ipairs(other_servers) do
     lspconfig[server].setup({
       capabilities = capabilities,
+      --on_attach = navic.attach
     })
   end
 

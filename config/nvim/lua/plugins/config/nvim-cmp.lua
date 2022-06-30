@@ -50,10 +50,11 @@ return function()
       { name = "nvim_lsp_signature_help" },
     },
     completion = {
-      completeopt = 'menu,menuone,noinsert',
+      completeopt = 'menu,menuone,noinsert,preview',
       --keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
       --keyword_length = 1,
-    }
+    },
+    preselect = cmp.PreselectMode.None,
   }
 
   --cmp.setup.cmdline("/", {
