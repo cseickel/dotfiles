@@ -28,7 +28,7 @@ lua    require('plugins')
 source plugin-config.vim
 lua    require('mappings')
 source plugin-mappings.vim
-
+lua    require('winbar')
 exe 'cd ' . g:owd
 
 augroup init

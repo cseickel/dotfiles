@@ -4,7 +4,7 @@
 "*****************************************************************************"
 filetype plugin indent on
 set autoread
-set showtabline=2
+set showtabline=1
 set nocompatible
 set wildmenu
 set wildmode=longest,list
@@ -128,7 +128,7 @@ endif
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 "" Status bar
-set laststatus=2
+set laststatus=3
 
 "" Use modeline overrides
 set modeline

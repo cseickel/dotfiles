@@ -55,7 +55,7 @@ local startup = function(use)
   --    }
   --  end
   --}
-  --use { "SmiteshP/nvim-navic", config = c("nvim-navic") }
+  use { "SmiteshP/nvim-navic", config = c("nvim-navic") }
 
   use { 'folke/which-key.nvim', config = c("which-key") }
 
