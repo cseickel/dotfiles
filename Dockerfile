@@ -29,17 +29,15 @@ RUN git clone https://aur.archlinux.org/yay.git \
     && cd .. \
     && rm -Rf yay
 
-# The following lines can be run repeatedly to update everything
-# just CACHE_BREAKER to todays date or something similar and rebuild
-ARG CACHE_BREAKER=""
-
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         python3 python-pip nodejs-lts-fermium npm clang \
         eslint_d prettier stylua git-delta github-cli \
         tmux bat fzf fd ripgrep kitty-terminfo \
         neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-         mssql-tools maven \
+        dotnet-host-bin dotnet-sdk-3.1-bin aspnet-runtime-3.1-bin \
+       # dotnet-runtime-bin netcoredbg \
+        mssql-tools maven \
         aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
         docker docker-compose lazydocker \
         ncdu glances nnn-nerd jq zoxide-git \
@@ -47,8 +45,8 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
     && sudo npm install -g neovim ng wip \
     && yay -Scc --noprogressbar --noconfirm
 
-RUN yay -Syu --noprogressbar --noconfirm --needed \
-        dotnet-sdk-bin netcoredbg \
+# netcoredbg has conflicts when it's part of the block above
+RUN yay -Syu --noprogressbar --noconfirm --needed netcoredbg \
     && yay -Scc --noprogressbar --noconfirm
 
 # I don't know why I have to set this again, but I do...

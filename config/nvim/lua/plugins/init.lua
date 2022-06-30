@@ -56,12 +56,6 @@ local startup = function(use)
     end
   }
 
-  -- show diagnostics with virtual text in upper right hand corner
-  use {
-    'Mofiqul/trld.nvim',
-    config = c('trld')
-  }
-
   use { 'folke/which-key.nvim', config = c("which-key") }
 
   use { 'rmagatti/auto-session', config = c("auto-session") }
@@ -198,7 +192,12 @@ local startup = function(use)
     config = c("nvim-dap")
   }
 
-  use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
+  --use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
+  use {
+    'rrethy/vim-hexokinase',
+    run = 'make hexokinase',
+  }
+
   use 'christianchiarulli/nvcode-color-schemes.vim'
 
   use {
@@ -302,6 +301,7 @@ local startup = function(use)
     config = c("indent-blankline")
   }
 
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',

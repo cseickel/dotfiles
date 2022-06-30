@@ -13,7 +13,6 @@ local mine = function ()
     augroup NEOTREE_AUGROUP
       autocmd!
       autocmd User FugitiveChanged lua require("neo-tree.sources.manager").refresh("filesystem")
-      au VimEnter * lua vim.defer_fn(function() vim.cmd("Neotree show left") end, 10)
     augroup END
   ]]
 
@@ -128,7 +127,7 @@ local mine = function ()
       },
     },
     nesting_rules = {
-      ts = { ".d.ts", "js", "css", "html", "scss" }
+      --ts = { ".d.ts", "js", "css", "html", "scss" }
     },
     window = {
       mapping_options = {
@@ -142,16 +141,6 @@ local mine = function ()
         end,
         ["]g"] = function(state)
           next_git_modified(state, false)
-        end,
-        ["Y"] = function(state)
-          local node = state.tree:get_node()
-          vim.fn.setreg('*', node.name, 'c')
-        end,
-        ["<C-y>"] = function(state)
-          local node = state.tree:get_node()
-          local full_path = node.path
-          local relative_path = full_path:sub(#state.path + 2)
-          vim.fn.setreg('*', relative_path, 'c')
         end,
       }
     },
@@ -173,6 +162,7 @@ local mine = function ()
       find_args = {
         fd = {
           "--exclude", ".git",
+          "--exclude", "node_modules",
         }
       },
       find_by_full_path_words = true,

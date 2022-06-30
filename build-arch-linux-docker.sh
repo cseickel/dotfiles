@@ -1,6 +1,6 @@
 #/bin/bash
 TODAY=$(date +"%Y-%m-%d")
-docker build . --no-cache \
-    --build-arg CACHE_BREAKER=$TODAY \
-    -t cseickel/arch-linux
+docker build . -t cseickel/arch-linux
 docker tag cseickel/arch-linux "cseickel/arch-linux:$TODAY"
+docker push "cseickel/arch-linux:$TODAY"
+docker push cseickel/arch-linux

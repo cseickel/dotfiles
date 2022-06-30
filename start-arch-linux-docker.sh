@@ -7,6 +7,10 @@ if [ ! "$TMUX" ]; then
         EXISTING=$(docker run --rm -d -it \
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v ~/:/home/$USER \
+            -v /tmp/.X11-unix:/tmp/.X11-unix \
+            -e DISPLAY=$DISPLAY \
+            -h $HOSTNAME \
+            -v $HOME/.Xauthority:/home/$USER/.Xauthority \
             -e HOME="/home/$USER" \
             --network host \
             --name arch-linux-tmux \
