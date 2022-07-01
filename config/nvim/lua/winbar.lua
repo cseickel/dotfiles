@@ -1,7 +1,7 @@
 local M = {}
 
 
-M.winbar_filetype_exclude = {
+local winbar_filetype_exclude = {
   "help",
   "startify",
   "dashboard",
@@ -23,28 +23,45 @@ local function isempty(s)
   return s == nil or s == ""
 end
 
+local should_skip = function(true_for_terminals)
+  if vim.tbl_contains(winbar_filetype_exclude, vim.bo.filetype) then
+    return true
+  end
 
-M.get_filename = function()
+  local buftype = vim.bo.buftype
+  if true_for_terminals and buftype == "terminal" then
+    return false
+  end
+  -- all other buftypes are not real files
+  return not isempty(buftype)
+end
+
+local get_filename = function()
   local filename = vim.fn.expand "%:t"
-  local extension = vim.fn.expand "%:e"
+  local file_icon = ""
+  local hl_group = "WinBarModified"
 
-  if not isempty(filename) then
-    local file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
+  if isempty(filename) then
+    return ""
+  end
+
+  local _, modified = pcall(vim.api.nvim_buf_get_option, 0, "modified")
+  if not modified then
+    local extension = vim.fn.expand "%:e"
+    local file_icon_color = "#ffffff"
+    file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
       filename,
       extension,
       { default = true }
     )
-
-    local hl_group = "FileIconColor" .. extension
-
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
     if isempty(file_icon) then
       file_icon = ""
-      file_icon_color = ""
     end
-
-    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinBarFile#" .. filename .. "%*"
+    hl_group = "FileIconColor" .. extension
+    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
   end
+
+  return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinBarFile#" .. filename .. "%*"
 end
 
 M.get_location = function()
@@ -75,39 +92,20 @@ M.get_location = function()
   end
 end
 
-local excludes = function()
-  if vim.tbl_contains(M.winbar_filetype_exclude, vim.bo.filetype) then
-    vim.opt_local.winbar = nil
-    return true
-  end
-  return false
-end
-
-M.get_winbar = function()
-  local value = ""
-  if not excludes() then
-    value = M.get_filename()
-    local _, modified = pcall(vim.api.nvim_buf_get_option, 0, "modified")
-    if modified then
-      value = value .. " %#WinBarModified#%*"
-    end
-    value = value .. "%#WinBarLocation#%{v:lua.winbar.get_location()}%*"
-  end
-
-  local status_ok, _ = pcall(vim.api.nvim_set_option_value, "winbar", value, { scope = "local" })
-  if not status_ok then
-    return
+local set_winbar = function()
+  if should_skip() then
+    vim.wo.winbar = nil
+  else
+    vim.wo.winbar = get_filename() .. "%#WinBarLocation#%{v:lua.winbar.get_location()}%*"
   end
 end
 
-_G.winbar = M
 
 local id = vim.api.nvim_create_augroup("MyWinBar", { clear = true })
-vim.api.nvim_create_autocmd({ "BufWinEnter", "BufFilePost", "BufWritePost", "BufModifiedSet" }, {
-  group = id,
-  callback = function()
-    require("winbar").get_winbar()
-  end,
-})
+vim.api.nvim_create_autocmd(
+  { "BufWinEnter", "BufFilePost", "BufWritePost","BufModifiedSet"},
+  { group = id, callback = set_winbar }
+)
 
+_G.winbar = M
 return M

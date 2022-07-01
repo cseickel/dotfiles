@@ -231,9 +231,9 @@ highlight debugPc guibg=#5f0000 gui=bold
 highlight ColorColumn guibg=#262626
 highlight Title ctermfg=79 guifg=#4ec9b0 gui=bold
 
-highlight WinBar guibg=#1c1c1c guifg=#AAAAAA gui=bold
-highlight WinBarNC guibg=#262626 guifg=#888888 gui=bold
-highlight WinBarLocation guifg=#888888 gui=none
+highlight WinBar guibg=#1c1c1c guifg=#BBBBBB gui=bold
+highlight WinBarNC guibg=#262626 guifg=#BBBBBB gui=bold
+highlight WinBarLocation guifg=#888888 gui=bold
 highlight WinBarModified guifg=#d7d787
 
 highlight Cursor guibg=#5f87af ctermbg=67
