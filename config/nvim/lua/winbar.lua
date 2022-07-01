@@ -69,15 +69,12 @@ local get_filename = function(location_highlight)
 end
 
 local is_current = function()
-  if vim.api.nvim_win_get_var(0, "is_current") == 1 then
-    return true
-  else
+  local winid = vim.g.actual_curwin
+  if isempty(winid) then
     return false
+  else
+    return winid == tostring(vim.api.nvim_get_current_win())
   end
-  --local winid = vim.fn.win_getid()
-  --local cur = tostring(vim.api.nvim_get_current_win())
-  --print(vim.inspect(winid) .. " " .. vim.inspect(cur))
-  --return winid == cur
 end
 
 M.get_location = function()
@@ -104,14 +101,25 @@ M.get_location = function()
   return result
 end
 
-local set_winbar = function(is_current)
+M.get_mode = function ()
+  if not is_current() then
+    return ""
+  end
+  -- if you don't have lualine, you can pull this function from:
+  -- https://github.com/nvim-lualine/lualine.nvim/blob/master/lua/lualine/utils/mode.lua
+  local mode = require("lualine.utils.mode").get_mode()
+  return "%#Mode" .. mode:sub(1, 1) .. "# " .. mode .. " %*"
+
+end
+
+local set_winbar = function()
   if should_skip(true) then
     vim.wo.winbar = nil
   else
     if vim.bo.buftype == "terminal" then
-      vim.wo.winbar = get_filename()
+      vim.wo.winbar = "%{%v:lua.winbar.get_mode()%}" .. get_filename()
     else
-      vim.wo.winbar = get_filename() .. "%#WinBarLocation#%{v:lua.winbar.get_location()}%*"
+      vim.wo.winbar = "%{%v:lua.winbar.get_mode()%}" .. get_filename() .. "%#WinBarLocation#%{v:lua.winbar.get_location()}"
     end
   end
 end
@@ -122,18 +130,21 @@ vim.api.nvim_create_autocmd(
   { "BufWinEnter", "BufFilePost", "BufWritePost","BufModifiedSet"},
   { group = id, callback = set_winbar }
 )
-vim.api.nvim_create_autocmd(
-  { "WinEnter" },
-  { group = id, callback = function ()
-    vim.api.nvim_win_set_var(0, "is_current", 1)
-  end }
-)
-vim.api.nvim_create_autocmd(
-  { "WinLeave" },
-  { group = id, callback = function ()
-    vim.api.nvim_win_set_var(0, "is_current", 0)
-  end }
-)
+
+vim.cmd [[
+  highlight WinBar           guifg=#BBBBBB gui=bold
+  highlight WinBarLocation   guifg=#888888 gui=bold
+  highlight WinBarNC         guifg=#888888 gui=bold
+  highlight WinBarModified   guifg=#d7d787
+
+
+  highlight ModeC guibg=#dddddd guifg=#101010 gui=bold
+  highlight ModeI guibg=#ffff5f guifg=#353535 gui=bold
+  highlight ModeT guibg=#95e454 guifg=#353535 gui=bold
+  highlight ModeN guibg=#8ac6f2 guifg=#353535 gui=bold
+  highlight ModeV guibg=#c586c0 guifg=#353535 gui=bold
+  highlight ModeR guibg=#f44747 guifg=#353535 gui=bold
+]]
 
 _G.winbar = M
 return M
