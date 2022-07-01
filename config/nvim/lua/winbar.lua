@@ -61,10 +61,18 @@ local get_filename = function()
     vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
   end
 
+  if vim.bo.buftype == "terminal" then
+    filename = "TERMINAL #" .. vim.api.nvim_buf_get_number(0)
+  end
+
   return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinBarFile#" .. filename .. "%*"
 end
 
 M.get_location = function()
+  if vim.bo.buftype == "terminal" then
+    return  "  " .. vim.b.term_title
+  end
+
   local winid = vim.g.actual_curwin
   if not isempty(winid) then
     local active = winid == tostring(vim.api.nvim_get_current_win())
@@ -93,7 +101,7 @@ M.get_location = function()
 end
 
 local set_winbar = function()
-  if should_skip() then
+  if should_skip(true) then
     vim.wo.winbar = nil
   else
     vim.wo.winbar = get_filename() .. "%#WinBarLocation#%{v:lua.winbar.get_location()}%*"
