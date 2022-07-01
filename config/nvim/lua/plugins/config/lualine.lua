@@ -17,6 +17,7 @@ return function ()
       --section_separators = {'', ''},
       --section_separators = {'', ''},
       --component_separators = {'', ''},
+      section_separators = {'', ''},
       component_separators = { '', '' }
     },
     sections = {
@@ -34,25 +35,30 @@ return function ()
         end
       }
       },
-      lualine_b = { {
-        'filetype',
-        fmt = function(data)
-          local winwidth = vim.fn.winwidth(0)
-          local filelength = string.len(vim.fn.expand("%:t"))
-          local maxlength = (winwidth - filelength - 44)
-          if maxlength < 3 then
-            return nil
-          else
-            return data:sub(1, maxlength)
-          end
-        end
-      }
+      lualine_b = { 
+        --{
+        --  'filetype',
+        --  fmt = function(data)
+        --    local winwidth = vim.fn.winwidth(0)
+        --    local filelength = string.len(vim.fn.expand("%:t"))
+        --    local maxlength = (winwidth - filelength - 44)
+        --    if maxlength < 3 then
+        --      return nil
+        --    else
+        --      return data:sub(1, maxlength)
+        --    end
+        --  end
+        --},
+        {
+          '%{fnamemodify(getcwd(), ":~")}/',
+        },
       },
-      lualine_c = { {
-        'filename',
-        path = 1,
-        shorting_target = 40
-      }
+      lualine_c = {
+        {
+          'filename',
+          path = 1,
+          shorting_target = 40
+        }
       },
       lualine_x = { diag_config },
       lualine_y = { {
@@ -85,14 +91,14 @@ return function ()
         },
       },
     },
-    inactive_sections = {
-      lualine_a = {},
-      lualine_b = { 'filetype'},
-      lualine_c = { { 'filename', path = 1 } },
-      lualine_x = { diag_config },
-      lualine_y = { '"WIN #" .. vim.api.nvim_win_get_number(0)' },
-      lualine_z = {}
-    },
+    --inactive_sections = {
+    --  lualine_a = {},
+    --  lualine_b = { 'filetype'},
+    --  lualine_c = { { 'filename', path = 1 } },
+    --  lualine_x = { diag_config },
+    --  lualine_y = { '"WIN #" .. vim.api.nvim_win_get_number(0)' },
+    --  lualine_z = {}
+    --},
     -- tabline = {
     --       lualine_a = {},
     --       lualine_b = { 'branch' },
@@ -101,6 +107,6 @@ return function ()
     --       lualine_y = {},
     --       lualine_z = {},
     -- },
-    extensions = { 'nvim-tree', 'quickfix', 'fzf' }
+    --extensions = { 'nvim-tree', 'quickfix', 'fzf' }
   }
 end

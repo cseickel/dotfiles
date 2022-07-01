@@ -217,7 +217,7 @@ M.get_winbar = function()
       if isempty(buftype) then
         return "%{%v:lua.winbar.get_mode()%}%{%v:lua.winbar.get_filename()%}%<%{%v:lua.winbar.get_location()%}%=%{%v:lua.winbar.get_diag()%}"
       else
-        return "%<%q%h %f %#WinBarLocation#%=%-14.(%l/%L, %c%) %P%*"
+        return "%h %f"
       end
     end
   end
