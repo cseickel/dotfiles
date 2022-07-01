@@ -36,75 +36,83 @@ local should_skip = function(true_for_terminals)
   return not isempty(buftype)
 end
 
-local get_filename = function()
-  local filename = vim.fn.expand "%:t"
-  local file_icon = ""
-  local hl_group = "WinBarModified"
-
-  if isempty(filename) then
-    return ""
+local function get_icon()
+  if vim.bo.modified == 1 then
+    return "", "WinBarModified"
   end
 
-  local _, modified = pcall(vim.api.nvim_buf_get_option, 0, "modified")
-  if not modified then
-    local extension = vim.fn.expand "%:e"
-    local file_icon_color = "#ffffff"
-    file_icon, file_icon_color = require("nvim-web-devicons").get_icon_color(
-      filename,
-      extension,
-      { default = true }
-    )
-    if isempty(file_icon) then
-      file_icon = ""
-    end
-    hl_group = "FileIconColor" .. extension
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
+  local filename, extension
+  if vim.bo.filetype == "terminal" then
+    filename = "terminal"
+    extension = "terminal"
+  else
+    filename = vim.fn.expand("%:t")
+    extension = vim.fn.expand("%:e")
   end
+  return require("nvim-web-devicons").get_icon( filename, extension)
+end
 
+local get_filename = function(location_highlight)
+  local filename
   if vim.bo.buftype == "terminal" then
-    filename = "TERMINAL #%n %#WinBarLocation# %{b:term_title}%*"
+    filename = " #TERMINAL #%n %#WinBarLocation# %{b:term_title}%*"
+  else
+    filename = " %t"
   end
 
-  return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinBarFile#" .. filename .. "%*"
+  local has_icon, file_icon, hl_group = pcall(get_icon)
+  if has_icon then
+    return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. filename
+  else
+    return filename
+  end
+end
+
+local is_current = function()
+  if vim.api.nvim_win_get_var(0, "is_current") == 1 then
+    return true
+  else
+    return false
+  end
+  --local winid = vim.fn.win_getid()
+  --local cur = tostring(vim.api.nvim_get_current_win())
+  --print(vim.inspect(winid) .. " " .. vim.inspect(cur))
+  --return winid == cur
 end
 
 M.get_location = function()
-  if vim.bo.buftype == "terminal" then
-    return  ""
-  end
-
-  local winid = vim.g.actual_curwin
-  if not isempty(winid) then
-    local active = winid == tostring(vim.api.nvim_get_current_win())
-    if not active then
+  local success, result = pcall(function ()
+    if not is_current() then
       return ""
     end
-  end
-  local status_gps_ok, gps = pcall(require, "nvim-navic")
-  if not status_gps_ok then
-    return ""
-  end
-  if not gps.is_available() then
-    return ""
-  end
+    local provider = require("nvim-navic")
+    if not provider.is_available() then
+      return ""
+    end
 
-  local status_ok, gps_location = pcall(gps.get_location, {})
-  if not status_ok or gps_location == "error" then
-    return ""
-  end
+    local location = provider.get_location({})
+    if not isempty(location) and location ~= "error" then
+      return "  " .. location
+    else
+      return ""
+    end
+  end)
 
-  if not isempty(gps_location) then
-    return "  " .. gps_location
-  else
+  if not success then
     return ""
   end
+  return result
 end
 
-local set_winbar = function()
+local set_winbar = function(is_current)
   if should_skip(true) then
     vim.wo.winbar = nil
   else
-    vim.wo.winbar = get_filename() .. "%#WinBarLocation#%{v:lua.winbar.get_location()}%*"
+    if vim.bo.buftype == "terminal" then
+      vim.wo.winbar = get_filename()
+    else
+      vim.wo.winbar = get_filename() .. "%#WinBarLocation#%{v:lua.winbar.get_location()}%*"
+    end
   end
 end
 
@@ -113,6 +121,18 @@ local id = vim.api.nvim_create_augroup("MyWinBar", { clear = true })
 vim.api.nvim_create_autocmd(
   { "BufWinEnter", "BufFilePost", "BufWritePost","BufModifiedSet"},
   { group = id, callback = set_winbar }
+)
+vim.api.nvim_create_autocmd(
+  { "WinEnter" },
+  { group = id, callback = function ()
+    vim.api.nvim_win_set_var(0, "is_current", 1)
+  end }
+)
+vim.api.nvim_create_autocmd(
+  { "WinLeave" },
+  { group = id, callback = function ()
+    vim.api.nvim_win_set_var(0, "is_current", 0)
+  end }
 )
 
 _G.winbar = M

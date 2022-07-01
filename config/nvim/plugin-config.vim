@@ -51,7 +51,7 @@ hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bol
 let g:dwm_master_pane_width = 90
 let g:dwm_map_keys=0
 
-"let g:scrollview_current_only=1
+let g:scrollview_current_only=1
 let g:scrollview_winblend=60
 let g:scrollview_column=1
 
@@ -251,9 +251,9 @@ highlight debugPc guibg=#5f0000 gui=bold
 highlight ColorColumn guibg=#262626
 highlight Title ctermfg=79 guifg=#4ec9b0 gui=bold
 
-highlight WinBar guibg=#1c1c1c guifg=#BBBBBB gui=bold
-highlight WinBarNC guibg=#1c1c1c guifg=#888888 gui=bold
-highlight WinBarLocation guifg=#888888 gui=bold
+highlight WinBar           guifg=#BBBBBB gui=bold
+highlight WinBarLocation   guifg=#888888 gui=bold
+highlight WinBarNC         guifg=#888888 gui=bold
 highlight WinBarModified guifg=#d7d787
 
 highlight Cursor guibg=#5f87af ctermbg=67
