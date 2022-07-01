@@ -112,6 +112,7 @@ if has("persistent_undo")
   let &undodir=target_path
   set undofile
 endif
+set shada='100,<1000,s100,h
 
 "test
 "*****************************************************************************
@@ -168,15 +169,36 @@ function! InitTerminal()
   set filetype=terminal
 endfunction
 
+function! WinLeave()
+  if &filetype != "neo-tree"
+    setlocal nocursorline
+  endif
+endfunction
+
 augroup core_autocmd
   autocmd!
-  autocmd FileType gitcommit,gitrebase,gitconfig,gitrebase,git set bufhidden=delete
+  autocmd FileType gitcommit,gitrebase,gitconfig,gitrebase,git,tmp set bufhidden=delete
   autocmd FileType go set noexpandtab
   autocmd FileType javascript,typescript,typescriptreact,html,lua call TwoSpaceIndent()
-  autocmd FileType dockerfile,yml call TwoSpaceIndent()
+  autocmd FileType dockerfile,yml,vim call TwoSpaceIndent()
   autocmd FileType cs call FourSpaceIndent()
   autocmd TermOpen * call InitTerminal()
   autocmd TermEnter * call InitTerminal()
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
   autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
+
+  autocmd VimEnter * setlocal cursorline
+  autocmd WinEnter * setlocal cursorline
+  autocmd BufWinEnter * setlocal cursorline
+  autocmd WinLeave * call WinLeave()
+
+  "autocmd VimEnter * setlocal cursorcolumn
+  "autocmd WinEnter * setlocal cursorcolumn
+  "autocmd BufWinEnter * setlocal cursorcolumn
+  "autocmd WinLeave * setlocal nocursorcolumn
+  
+  "To share clipboard between instances
+  autocmd TextYankPost,FocusGained,FocusLost *
+                \ if exists(':rshada') | rshada | wshada | endif
+augroup end
 augroup END

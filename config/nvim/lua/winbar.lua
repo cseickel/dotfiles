@@ -62,7 +62,7 @@ local get_filename = function()
   end
 
   if vim.bo.buftype == "terminal" then
-    filename = "TERMINAL #" .. vim.api.nvim_buf_get_number(0)
+    filename = "TERMINAL #%n %#WinBarLocation# %{b:term_title}%*"
   end
 
   return " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*" .. " " .. "%#WinBarFile#" .. filename .. "%*"
@@ -70,7 +70,7 @@ end
 
 M.get_location = function()
   if vim.bo.buftype == "terminal" then
-    return  "  " .. vim.b.term_title
+    return  ""
   end
 
   local winid = vim.g.actual_curwin

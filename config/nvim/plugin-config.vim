@@ -161,14 +161,34 @@ let g:vimade = { "fadelevel": 0.77 }
 
 
 " Style vertical split bar
-"set fillchars+=vert:▏
-"set fillchars+=vert:▍
-"set fillchars+=vert:▉
-"set fillchars+=vert:▕
-set fillchars+=vert:█
-highlight VertSplit gui=None cterm=None guifg=#444444 ctermfg=238 guibg=#222222
+"set fillchars+=vert:█
+set fillchars+=horiz:─
+set fillchars+=horizup:┴
+set fillchars+=horizdown:┬
+set fillchars+=vert:│
+set fillchars+=vertleft:┤
+set fillchars+=vertright:├
+set fillchars+=verthoriz:┼
+					
+set fillchars=horiz:━
+set fillchars+=horizup:┻
+set fillchars+=horizdown:┳
+set fillchars+=vert:┃
+set fillchars+=vertleft:┫
+set fillchars+=vertright:┣
+set fillchars+=verthoriz:╋
+
+"set fillchars=horiz:═
+"set fillchars+=horizup:╩
+"set fillchars+=horizdown:╦
+"set fillchars+=vert:║
+"set fillchars+=vertleft:╣
+"set fillchars+=vertright:╠
+"set fillchars+=verthoriz:╬
+
+highlight WinSeparator guifg=#444444
 highlight clear FloatBorder
-highlight link FloatBorder VertSplit
+highlight link FloatBorder WinSeparator
 
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
 " nvcode overrides from dark+
@@ -218,21 +238,21 @@ hi DiagnosticDefaultError guifg=#d70000 gui=Italic,Bold
 hi link vimUserFunc none
 
 hi Normal guibg=#1c1c1c
-highlight NormalNC guibg=#262626
+highlight clear NormalNC" guibg=#262626
 highlight link NormalFloat NormalNC
 highlight TroubleNormal guibg=none ctermbg=none
 highlight TroubleText guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
 highlight SignColumn ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight LineNR guibg=None ctermbg=None
-highlight CursorLineNr guibg=#262626 guifg=#a8a8a8 gui=bold
+highlight CursorLineNr guibg=#262626 guifg=#b2b2b2 gui=bold
 highlight CursorLine guibg=#262626
 highlight debugPc guibg=#5f0000 gui=bold
 highlight ColorColumn guibg=#262626
 highlight Title ctermfg=79 guifg=#4ec9b0 gui=bold
 
 highlight WinBar guibg=#1c1c1c guifg=#BBBBBB gui=bold
-highlight WinBarNC guibg=#262626 guifg=#BBBBBB gui=bold
+highlight WinBarNC guibg=#1c1c1c guifg=#888888 gui=bold
 highlight WinBarLocation guifg=#888888 gui=bold
 highlight WinBarModified guifg=#d7d787
 
