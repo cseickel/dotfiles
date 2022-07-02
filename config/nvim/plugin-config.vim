@@ -16,7 +16,6 @@ colorscheme nvcode "<-- this one is best with tree-sitter
 
 " let g:oscyank_term = 'default' " or 'tmux' or 'screen', 'kitty', 'default'
 " IndentLine
-let g:webdevicons_enable_startify = 1
 
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''
@@ -47,10 +46,6 @@ hi TabLineSel guifg=#73cef4 ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=B
 hi TabModified guifg=#d7d787 ctermfg=186 guibg=#444444 ctermbg=238 gui=NONE cterm=NONE
 hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
 
-" dwm tiling window manager
-let g:dwm_master_pane_width = 90
-let g:dwm_map_keys=0
-
 let g:scrollview_current_only=1
 let g:scrollview_winblend=60
 let g:scrollview_column=1
@@ -80,55 +75,6 @@ let g:EditorConfig_max_line_indicator="fill"
 let g:sharpenup_create_mappings = 0
 let g:OmniSharp_highlighting = 0
 let g:completion_auto_change_source = 0
-
-" colorizer
-"let g:Hexokinase_highlighters = ['foregroundfull']
-function! s:sortBufferInfo(leftArg, rightArg)
-  if a:leftArg['name'] == a:rightArg['name']
-    return 0
-  elseif a:leftArg['name'] < a:rightArg['name']
-    return -1
-  else
-    return 1
-  endif
-endfunction
-function! s:getHiddenBuffers()
-    let buffers = filter(getbufinfo({'buflisted': 1}), 'len(v:val.windows) < 1 && get(v:val, "name", "") > ""')
-    call sort(buffers, function('s:sortBufferInfo'))
-    return map(buffers, '{"cmd": "b" . v:val.bufnr, "line": fnamemodify(v:val.name, ":~:.")}')
-endfunction
-
-function! CustomStartifyBeforeSave() abort
-    for win in nvim_list_wins()
-        " close floating windows
-        if nvim_win_get_config(win).relative > ""
-            call nvim_win_close(win, 1)
-        else
-            " close drawer and tool windows
-            let l:ft = nvim_buf_get_option(nvim_win_get_buf(win), "ft")
-           " if l:ft =~ "tree" || l:ft == "fern" || l:ft == "Trouble"
-           "     call nvim_win_close(win, 1)
-           " endif
-        endif
-    endfor
-endfunction
-
-" Startify
-let g:startify_lists = [
-            \ { 'header': ['   Hidden Buffers'], 'type': function("s:getHiddenBuffers") },
-            \ { 'header': ['   Sessions'],       'type': 'sessions' },
-            \ { 'header': ['   MRU '. g:owd], 'type': 'dir' },
-            \ ]
-let g:startify_session_delete_buffers = 1
-let g:startify_session_autoload = 1
-let g:startify_session_persistence = 1
-let g:startify_session_before_save = ['call CustomStartifyBeforeSave()']
-let g:startify_fortune_use_unicode = 1
-let g:startify_change_cmd = 'tcd'
-let g:startify_change_to_dir = 1
-let g:startify_session_savevars = ['g:Taboo_tabs', 't:taboo_tab_name',
-            \ 't:terminal', 'g:terminal', 'w:terminal']
-
 set sessionoptions=curdir,tabpages,winpos,winsize
 
 
@@ -215,11 +161,6 @@ highlight GitGutterChangeDeleteLine cterm=NONE gui=NONE guibg=None ctermbg=None
 highlight CmpItemAbbr guifg=#949494
 
 highlight TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
-
-highlight StartifyFile ctermfg=6 guifg=#4ec9b0 cterm=NONE gui=NONE
-highlight StartifyBracket ctermfg=0 guifg=#1e1e1e cterm=NONE gui=NONE
-highlight StartifySlash ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
-highlight StartifyPath ctermfg=0 guifg=#505050 cterm=NONE gui=NONE
 
 hi TroubleText none
 hi LspTroubleText guibg=none ctermbg=none ctermfg=244 guifg=#abb2bf
