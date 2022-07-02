@@ -276,8 +276,7 @@ local startup = function(use)
     'nvim-telescope/telescope.nvim',
     requires = {
       'nvim-telescope/telescope-fzy-native.nvim',
-      'jvgrootveld/telescope-zoxide',
-      "nvim-telescope/telescope-project.nvim"
+      --'jvgrootveld/telescope-zoxide',
     },
     config = c("telescope")
   }
@@ -292,6 +291,7 @@ local startup = function(use)
   -- UI Stuff
   use 'psliwka/vim-smoothie'
   use 'gcmt/taboo.vim'
+  use "itchyny/vim-gitbranch" -- for statusline
 
   use {
     'lukas-reineke/indent-blankline.nvim',

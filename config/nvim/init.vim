@@ -16,10 +16,10 @@ let g:loaded_2html_plugin = 1
 let g:loaded_logiPat = 1
 let g:loaded_rrhelper = 1
 
-"let g:loaded_netrw = 1
-"let g:loaded_netrwPlugin = 1
-"let g:loaded_netrwSettings = 1
-"let g:loaded_netrwFileHandlers = 1
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
 
 source core-config.vim
 source core-mappings.vim
@@ -28,7 +28,7 @@ lua    require('plugins')
 source plugin-config.vim
 lua    require('mappings')
 source plugin-mappings.vim
-lua    require('winbar')
+lua    require('status')
 exe 'cd ' . g:owd
 
 augroup init

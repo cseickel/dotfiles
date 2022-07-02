@@ -79,20 +79,19 @@ return function ()
     }
   })
   require('telescope').load_extension('fzy_native')
-  require'telescope'.load_extension('zoxide')
-  require("telescope._extensions.zoxide.config").setup({
-    mappings = {
-      default = {
-        after_action = function(selection)
-          vim.cmd([[
-          func! OpenFileFinder(timer)
-            lua require('telescope.builtin').find_files()
-          endfunc
-          call timer_start(1, "OpenFileFinder", {'repeat': 1})
-          ]])
-        end
-      }
-    }
-  })
-  require('telescope').load_extension('project')
+  --require'telescope'.load_extension('zoxide')
+  --require("telescope._extensions.zoxide.config").setup({
+  --  mappings = {
+  --    default = {
+  --      after_action = function(selection)
+  --        vim.cmd([[
+  --        func! OpenFileFinder(timer)
+  --          lua require('telescope.builtin').find_files()
+  --        endfunc
+  --        call timer_start(1, "OpenFileFinder", {'repeat': 1})
+  --        ]])
+  --      end
+  --    }
+  --  }
+  --})
 end
