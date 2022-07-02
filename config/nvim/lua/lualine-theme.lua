@@ -29,8 +29,12 @@ return {
         },
         y = {
             fg = colors.purple_182,
+            bg = colors.gray_darkest
+        },
+        z = {
+            fg = colors.gray_light,
             bg = colors.gray_dark
-        }
+        },
     },
     command = {
         a = {
@@ -40,7 +44,11 @@ return {
         c = {
             fg = colors.command, gui = 'bold',
             bg = colors.gray_darkest
-        }
+        },
+        z = {
+            fg = colors.gray_light,
+            bg = colors.gray_dark
+        },
     },
     insert = {
         a = {
@@ -50,7 +58,11 @@ return {
         c = {
             fg = colors.insert, gui = 'bold',
             bg = colors.gray_darkest
-        }
+        },
+        z = {
+            fg = colors.gray_light,
+            bg = colors.gray_dark
+        },
     },
     visual = {
         a = {
@@ -60,7 +72,11 @@ return {
         c = {
             fg = colors.visual, gui = 'bold',
             bg = colors.gray_darkest
-        }
+        },
+        z = {
+            fg = colors.gray_light,
+            bg = colors.gray_dark
+        },
     },
     replace = {
         a = {
@@ -70,7 +86,11 @@ return {
         c = {
             fg = colors.replace, gui = 'bold',
             bg = colors.gray_darkest
-        }
+        },
+        z = {
+            fg = colors.gray_light,
+            bg = colors.gray_dark
+        },
     },
     terminal = {
         a = {
@@ -80,7 +100,11 @@ return {
         c = {
             fg = colors.terminal, gui = 'bold',
             bg = colors.gray_darkest
-        }
+        },
+        z = {
+            fg = colors.gray_light,
+            bg = colors.gray_dark
+        },
     },
     inactive = {
         a = {

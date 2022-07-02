@@ -105,6 +105,13 @@ function! LineNoIndicator() abort
   return g:line_no_indicator_chars[l:index]
 endfunction
 
+" [+] if only current modified, [+3] if 3 modified including current buffer.
+" [3] if 3 modified and current not, "" if none modified.
+func! IsBuffersModified()
+    let cnt = len(filter(getbufinfo(), 'v:val.changed == 1'))
+    return cnt == 0 ? "" : ( &modified ? "[+". (cnt>1?cnt:"") ."]" : "[".cnt."]" )
+endfunc
+
 
 function! DeleteBuffer() abort
     BufSurfBack

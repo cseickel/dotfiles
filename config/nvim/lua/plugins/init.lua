@@ -291,10 +291,6 @@ local startup = function(use)
 
   -- UI Stuff
   use 'psliwka/vim-smoothie'
-  use {
-    'nvim-lualine/lualine.nvim',
-    config = c("lualine")
-  }
   use 'gcmt/taboo.vim'
 
   use {

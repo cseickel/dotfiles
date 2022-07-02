@@ -1,5 +1,19 @@
 local M = {}
 
+vim.cmd [[
+  highlight WinBar           guifg=#BBBBBB gui=bold
+  highlight WinBarNC         guifg=#888888 gui=bold
+  highlight WinBarLocation   guifg=#888888 gui=bold
+  highlight WinBarModified   guifg=#d7d787
+  highlight WinBarGitDirty   guifg=#d7afd7 gui=bold
+
+  highlight ModeC guibg=#dddddd guifg=#101010 gui=bold " COMMAND 
+  highlight ModeI guibg=#ffff5f guifg=#353535 gui=bold " INSERT  
+  highlight ModeT guibg=#95e454 guifg=#353535 gui=bold " TERMINAL
+  highlight ModeN guibg=#8ac6f2 guifg=#353535 gui=bold " NORMAL  
+  highlight ModeV guibg=#c586c0 guifg=#353535 gui=bold " VISUAL  
+  highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE 
+]]
 
 local winbar_filetype_exclude = {
   ["startify"] = true,
@@ -17,16 +31,16 @@ local winbar_filetype_exclude = {
   [""] = true,
 }
 
--- mode_map copied from: 
+-- mode_map copied from:
 -- https://github.com/nvim-lualine/lualine.nvim/blob/5113cdb32f9d9588a2b56de6d1df6e33b06a554a/lua/lualine/utils/mode.lua
 -- Copyright (c) 2020-2021 hoob3rt
 -- MIT license, see LICENSE for more details.
-mode_map = {
+local mode_map = {
   ['n']      = 'NORMAL',
   ['no']     = 'O-PENDING',
   ['nov']    = 'O-PENDING',
   ['noV']    = 'O-PENDING',
-  ['no\22'] = 'O-PENDING',
+  ['no\22']  = 'O-PENDING',
   ['niI']    = 'NORMAL',
   ['niR']    = 'NORMAL',
   ['niV']    = 'NORMAL',
@@ -35,11 +49,11 @@ mode_map = {
   ['vs']     = 'VISUAL',
   ['V']      = 'V-LINE',
   ['Vs']     = 'V-LINE',
-  ['\22']   = 'V-BLOCK',
-  ['\22s']  = 'V-BLOCK',
+  ['\22']    = 'V-BLOCK',
+  ['\22s']   = 'V-BLOCK',
   ['s']      = 'SELECT',
   ['S']      = 'S-LINE',
-  ['\19']   = 'S-BLOCK',
+  ['\19']    = 'S-BLOCK',
   ['i']      = 'INSERT',
   ['ic']     = 'INSERT',
   ['ix']     = 'INSERT',
@@ -76,23 +90,24 @@ end
 
 local icon_cache = {}
 
-M.get_icon = function()
-  if vim.bo.modified then
-    return " %#WinBarModified#%*"
-  end
+M.get_icon = function(filename, extension)
+  if not filename then
+    if vim.bo.modified then
+      return " %#WinBarModified#%*"
+    end
 
-  local filename, extension
-  if vim.bo.filetype == "terminal" then
-    filename = "terminal"
-    extension = "terminal"
-  else
-    filename = vim.fn.expand("%:t")
+    if vim.bo.filetype == "terminal" then
+      filename = "terminal"
+      extension = "terminal"
+    else
+      filename = vim.fn.expand("%:t")
+    end
   end
 
   local cached = icon_cache[filename]
   if not cached then
     if not extension then
-      extension = vim.fn.expand("%:e")
+      extension = vim.fn.fnamemodify(filename, ":e")
     end
     local file_icon, hl_group = require("nvim-web-devicons").get_icon( filename, extension)
     cached = " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*"
@@ -120,7 +135,21 @@ local is_current = function()
 end
 
 local sign_cache = {}
-local get_sign = function(severity)
+local get_sign = function(severity, icon_only)
+  if icon_only then
+    local defined = vim.fn.sign_getdefined("DiagnosticSign" .. severity)
+    if defined and defined[1] then
+      return " " .. defined[1].text
+    else
+      return " " .. severity[1]
+    end
+  end
+
+  local cached = sign_cache[severity]
+  if cached then
+    return cached
+  end
+
   local defined = vim.fn.sign_getdefined("DiagnosticSign" .. severity)
   local text, highlight
   defined = defined and defined[1]
@@ -135,7 +164,9 @@ local get_sign = function(severity)
     text = " " .. severity:sub(1, 1)
     highlight = "Diagnostic" .. severity
   end
-  return "%#" .. highlight .. "#" .. text .. "%* "
+  cached = "%#" .. highlight .. "#" .. text .. "%* "
+  sign_cache[severity] = cached
+  return cached
 end
 
 M.get_diag = function ()
@@ -163,12 +194,48 @@ M.get_diag = function ()
     return ""
   end
 
-  local cached = sign_cache[severity]
-  if not cached then
-    cached = get_sign(severity)
-    sign_cache[severity] = cached
+  return get_sign(severity)
+end
+
+M.get_diag_counts = function ()
+  local d = vim.diagnostic.get(0)
+  if #d == 0 then
+    return ""
   end
-  return cached
+
+  local grouped = {}
+  for _, diag in ipairs(d) do
+    local severity = diag.severity
+    if not grouped[severity] then
+      grouped[severity] = 0
+    end
+    grouped[severity] = grouped[severity] + 1
+  end
+  
+  local result = ""
+  local S = vim.diagnostic.severity
+  if grouped[S.ERROR] then
+    result = result .. "%#StatusLineError#" .. grouped[S.ERROR] .. get_sign("Error", true) .. " %*"
+  end
+  if grouped[S.WARN] then
+    result = result .. "%#StatusLineWarn#" .. grouped[S.WARN] .. get_sign("Warn", true) .. " %*"
+  end
+  if grouped[S.INFO] then
+    result = result .. "%#StatusLineInfo#" .. grouped[S.INFO] .. get_sign("Info", true) .. " %*"
+  end
+  if grouped[S.HINT] then
+    result = result .. "%#StatusLineHint#" .. grouped[S.HINT] .. get_sign("Hint", true) .. " %*"
+  end
+  return result
+end
+
+M.get_git_dirty = function()
+  local dirty = vim.b.gitsigns_status
+  if isempty(dirty) then
+    return ""
+  else
+    return "%#WinBarGitDirty#%* "
+  end
 end
 
 M.get_location = function()
@@ -202,7 +269,6 @@ M.get_mode = function ()
   local mode_code = vim.api.nvim_get_mode().mode
   local mode = mode_map[mode_code] or string.upper(mode_code)
   return "%#Mode" .. mode:sub(1, 1) .. "# " .. mode .. " %*"
-
 end
 
 M.get_winbar = function()
@@ -215,7 +281,12 @@ M.get_winbar = function()
       local buftype = vim.bo.buftype
       -- real files do not have buftypes
       if isempty(buftype) then
-        return "%{%v:lua.winbar.get_mode()%}%{%v:lua.winbar.get_filename()%}%<%{%v:lua.winbar.get_location()%}%=%{%v:lua.winbar.get_diag()%}"
+        return "%{%v:lua.winbar.get_mode()%}" ..
+          "%{%v:lua.winbar.get_filename()%}" ..
+          "%<%{%v:lua.winbar.get_location()%}" ..
+          "%=" ..
+          "%{%v:lua.winbar.get_diag()%}" ..
+          "%{%v:lua.winbar.get_git_dirty()%}"
       else
         return "%h %f"
       end
@@ -223,22 +294,36 @@ M.get_winbar = function()
   end
 end
 
-vim.cmd [[
-  highlight WinBar           guifg=#BBBBBB gui=bold
-  highlight WinBarNC         guifg=#888888 gui=bold
-  highlight WinBarLocation   guifg=#888888 gui=bold
-  highlight WinBarModified   guifg=#d7d787
-
-
-  highlight ModeC guibg=#dddddd guifg=#101010 gui=bold " COMMAND 
-  highlight ModeI guibg=#ffff5f guifg=#353535 gui=bold " INSERT  
-  highlight ModeT guibg=#95e454 guifg=#353535 gui=bold " TERMINAL
-  highlight ModeN guibg=#8ac6f2 guifg=#353535 gui=bold " NORMAL  
-  highlight ModeV guibg=#c586c0 guifg=#353535 gui=bold " VISUAL  
-  highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE 
-]]
+vim.cmd([[
+  highlight StatusLineOutside guibg=#3a3a3a guifg=#999999
+  highlight StatusLine        guibg=#262626 guifg=#999999
+  highlight StatusLineFile    guibg=#262626 guifg=#bbbbbb gui=bold
+  highlight StatusLineMod     guibg=#262626 guifg=#d7d787
+  highlight StatusLineError   guibg=#262626 guifg=#d7005f
+  highlight StatusLineInfo    guibg=#262626 guifg=#87d7ff
+  highlight StatusLineHint    guibg=#262626 guifg=#ffffd7
+  highlight StatusLineWarn    guibg=#262626 guifg=#d7d700
+  highlight StatusLineChanges guibg=#262626 guifg=#c586c0
+  highlight StatusLineGit     guibg=#444444 guifg=#d7afd7 gui=bold
+]])
+M.get_statusline = function()
+  local parts = {
+    "%{%v:lua.winbar.get_mode()%}",
+    "%#StatusLineGit#   %{get(b:,'gitsigns_head','')}  %*",
+    '%#StatusLineOutside# %{fnamemodify(getcwd(), ":~")}/ %*',
+    "%<",
+    "%#StatusLineFile# %f %*",
+    "%#StatusLineMod#%{IsBuffersModified()}%*",
+    "%=",
+    "%{%v:lua.winbar.get_diag_counts()%}",
+    "%#StatusLineChanges#%{get(b:,'gitsigns_status','')}  %*",
+    '%#StatusLineOutside# %3l/%L%  %{LineNoIndicator()} %2c %*',
+  }
+  return table.concat(parts)
+end
 
 _G.winbar = M
 vim.o.winbar="%{%v:lua.winbar.get_winbar()%}"
+vim.o.statusline="%{%v:lua.winbar.get_statusline()%}"
 
 return M

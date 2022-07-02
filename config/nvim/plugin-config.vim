@@ -234,7 +234,7 @@ hi DiagnosticVirtualTextHint none
 hi DiagnosticDefaultWarn guifg=#d7d700 gui=Italic
 hi DiagnosticDefaultInfo guifg=#87d7ff gui=Italic
 hi DiagnosticDefaultHint guifg=#ffffd7 gui=Italic
-hi DiagnosticDefaultError guifg=#d70000 gui=Italic,Bold
+hi DiagnosticDefaultError guifg=#d7005f gui=Italic,Bold
 hi link vimUserFunc none
 
 hi Normal guibg=#1c1c1c

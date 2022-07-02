@@ -55,7 +55,7 @@ return function ()
       },
       lualine_c = {
         {
-          'filename',
+          '%F %{IsBuffersModified()}',
           path = 1,
           shorting_target = 40
         }
