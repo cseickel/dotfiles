@@ -10,11 +10,13 @@ vim.cmd [[
   highlight WinBarLocation   guifg=#888888 gui=bold
   highlight WinBarModified   guifg=#d7d787 gui=bold
   highlight WinBarGitDirty   guifg=#d7afd7 gui=bold
+  highlight WinBarIndicator  guifg=#5fafd7 gui=bold
 
   highlight ModeC guibg=#dddddd guifg=#101010 gui=bold " COMMAND 
   highlight ModeI guibg=#ffff5f guifg=#353535 gui=bold " INSERT  
   highlight ModeT guibg=#95e454 guifg=#353535 gui=bold " TERMINAL
-  highlight ModeN guibg=#8ac6f2 guifg=#353535 gui=bold " NORMAL  
+  highlight ModeN guibg=#87d7ff guifg=#353535 gui=bold " NORMAL  
+  highlight ModeN guibg=#5fafd7 guifg=#262626 gui=bold " NORMAL  
   highlight ModeV guibg=#c586c0 guifg=#353535 gui=bold " VISUAL  
   highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE 
 
@@ -75,7 +77,7 @@ M.get_winbar = function()
       })
     else
       -- Meant for quickfix, help, etc
-      return "%h %f"
+      return "%( %h%) %f"
     end
   end
 end
@@ -150,7 +152,7 @@ end
 
 M.active_indicator = function()
   if is_current() then 
-    return "%#WinBarLocation#▔▔▔▔▔▔▔▔%*"
+    return "%#WinBarIndicator#▔▔▔▔▔▔▔▔%*"
   else
     return ""
   end
