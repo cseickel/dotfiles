@@ -114,6 +114,7 @@ return function()
 
   lspconfig.sumneko_lua.setup({
     capabilities = capabilities,
+    on_attach = navic.attach,
     settings = {
       Lua = {
         version = 'LuaJIT',
@@ -146,8 +147,6 @@ return function()
     "graphql",
     "yamlls",
     "html",
-    "sumneko_lua",
-
     --"tailwindcss",
     --"angularls"
   }

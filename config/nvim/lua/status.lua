@@ -48,13 +48,14 @@ local winbar_filetype_exclude = {
 }
 
 M.get_winbar = function()
-  if winbar_filetype_exclude[vim.bo.filetype] then
-    return ""
-  end
   -- floating window
   local cfg = vim.api.nvim_win_get_config(0)
   if cfg.relative > "" or cfg.external then
     return ""
+  end
+
+  if winbar_filetype_exclude[vim.bo.filetype] then
+    return "%{%v:lua.status.active_indicator()%}"
   end
 
   if vim.bo.buftype == "terminal" then
@@ -138,6 +139,22 @@ local mode_map = {
   ['t']      = 'TERMINAL',
 }
 
+local is_current = function()
+  local winid = vim.g.actual_curwin
+  if isempty(winid) then
+    return false
+  else
+    return winid == tostring(vim.api.nvim_get_current_win())
+  end
+end
+
+M.active_indicator = function()
+  if is_current() then 
+    return " ▔▔▔▔▔▔▔▔"
+  else
+    return ""
+  end
+end
 local icon_cache = {}
 
 M.get_icon = function(filename, extension)
@@ -172,15 +189,6 @@ M.get_filename = function()
     return icon .. " %t"
   else
     return " %t"
-  end
-end
-
-local is_current = function()
-  local winid = vim.g.actual_curwin
-  if isempty(winid) then
-    return false
-  else
-    return winid == tostring(vim.api.nvim_get_current_win())
   end
 end
 
