@@ -150,7 +150,7 @@ end
 
 M.active_indicator = function()
   if is_current() then 
-    return " ▔▔▔▔▔▔▔▔"
+    return "%#WinBarLocation#▔▔▔▔▔▔▔▔%*"
   else
     return ""
   end
