@@ -114,17 +114,15 @@ if has("persistent_undo")
 endif
 set shada='100,<1000,s100,h
 
-"test
 "*****************************************************************************
-" => Keybindings
+" => UI related settings
 " *****************************************************************************
 "
-
 " If you have vim >=8.0 or Neovim >= 0.1.5
 if (has("termguicolors"))
     set termguicolors
 endif
-
+let g:markdown_fenced_languages = ['html', 'python', 'lua', 'vim', 'typescript', 'javascript']
 " For Neovim 0.1.3 and 0.1.4
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 

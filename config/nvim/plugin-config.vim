@@ -14,7 +14,8 @@ endif
 "colorscheme dark_plus
 colorscheme nvcode "<-- this one is best with tree-sitter
 
-" let g:oscyank_term = 'default' " or 'tmux' or 'screen', 'kitty', 'default'
+let g:oscyank_term = 'default' " or 'tmux' or 'screen', 'kitty', 'default'
+
 " IndentLine
 
 " disable the default highlight group
@@ -134,7 +135,7 @@ set fillchars+=verthoriz:╋
 
 highlight WinSeparator guifg=#444444
 highlight clear FloatBorder
-highlight link FloatBorder WinSeparator
+highlight link FloatBorder guifg=#BBBBBB
 
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
 " nvcode overrides from dark+

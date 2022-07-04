@@ -111,14 +111,14 @@ vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
 noremap <C-q> :q<cr>
 inoremap <C-q> <Esc>:q<cr>
 
-" Open quickfix at bottom of all windows
-noremap <leader>q :botright copen<cr>
-" Close Quickfix
-noremap <leader>Q :cclose<cr>
+    " Open quickfix at bottom of all windows
+    noremap <leader>q :botright copen<cr>
+    " Close Quickfix
+    noremap <leader>Q :cclose<cr>
 
-" Open/close location list
-noremap <leader>l :lopen<cr>
-noremap <leader>L :lclose<cr>
+    " Open/close location list
+    noremap <leader>l :lopen<cr>
+    noremap <leader>L :lclose<cr>
 
 "" Quick folding of a block in normal mode with the 'z' key
 "nnoremap z V%zf

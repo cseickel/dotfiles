@@ -11,6 +11,7 @@ vim.cmd [[
   highlight WinBarModified   guifg=#d7d787 gui=bold
   highlight WinBarGitDirty   guifg=#d7afd7 gui=bold
   highlight WinBarIndicator  guifg=#5fafd7 gui=bold
+  highlight WinBarInactive   guibg=#3a3a3a guifg=#777777 gui=bold
 
   highlight ModeC guibg=#dddddd guifg=#101010 gui=bold " COMMAND 
   highlight ModeI guibg=#ffff5f guifg=#353535 gui=bold " INSERT  
@@ -346,7 +347,8 @@ end
 
 M.get_mode = function ()
   if not is_current() then
-    return ""
+    --return "%#WinBarInactive# Win #%{winnr()} %*"
+    return "%#WinBarInactive# win #" .. vim.fn.winnr() .. " %*"
   end
   local mode_code = vim.api.nvim_get_mode().mode
   local mode = mode_map[mode_code] or string.upper(mode_code)

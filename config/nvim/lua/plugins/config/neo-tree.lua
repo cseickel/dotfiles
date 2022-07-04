@@ -16,6 +16,7 @@ local mine = function ()
     augroup END
   ]]
 
+
   local harpoon_index = function(config, node, state)
     local Marked = require("harpoon.mark")
     local path = node:get_id()
@@ -72,7 +73,7 @@ local mine = function ()
     enable_git_status = true,
     enable_refresh_on_write = true,
     log_level = "trace",
-    log_to_file = false,
+    log_to_file = true,
     open_files_in_last_window = true,
     sort_case_insensitive = true,
     popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
@@ -136,16 +137,16 @@ local mine = function ()
       },
       mappings = {
         ["a"] = { "add", config = { show_path = "relative" }},
-        ["[g"] = function(state)
-          next_git_modified(state, true)
-        end,
-        ["]g"] = function(state)
-          next_git_modified(state, false)
-        end,
+        ["z"] = "close_all_nodes",
+        ["Z"] = "expand_all_nodes",
       }
     },
     filesystem = {
       async_directory_scan = true,
+      cwd_target = {
+        sidebar = "tab",
+        current = "tab",
+      },
       hijack_netrw_behavior = "open_current",
       follow_current_file = true,
       group_empty_dirs = true,
@@ -573,25 +574,13 @@ end
 local example = function ()
   
     require("neo-tree").setup({
-      event_handlers = {
-        before_render = function (items)
-          local root = items[1]
-          local spacer = {
-            type = "message",
-            name = "",
-          }
-          table.insert(root.children, spacer, 1)
-          
-        end
-      },
-      git_status_async = true,
-      -- These options are for people with VERY large git repos
-      git_status_async_options = {
-        batch_size = 1000, -- how many lines of git status results to process at a time
-        batch_delay = 10,  -- delay in ms between batches. Spreads out the workload to let other processes run.
-        max_lines = 100000, -- How many lines of git status results to process. Anything after this will be dropped.
-                            -- Anything before this will be used. The last items to be processed are the untracked files.
-      },
+      filesystem = {
+        filtered_items = {
+          visible = false, -- when true, they will just be displayed differently than normal items
+          force_visible_in_empty_folder = true, -- when true, hidden files will be shown if the root folder is otherwise empty
+          show_hidden_count = false, -- when true, the number of hidden items in each folder will be shown as the last entry
+        }
+      }
     })
 end
 
