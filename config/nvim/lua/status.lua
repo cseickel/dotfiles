@@ -21,7 +21,7 @@ vim.cmd [[
   highlight ModeV guibg=#c586c0 guifg=#353535 gui=bold " VISUAL  
   highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE 
 
-  highlight StatusLineGit  gui=bold guibg=#444444 guifg=#d7afd7
+  highlight StatusLineGit  gui=bold guibg=#3a3a3a guifg=#d7afd7
   highlight StatusLine              guibg=#262626 guifg=#999999
   highlight StatusLineFile gui=bold guibg=#262626 guifg=#bbbbbb
   highlight StatusLineMod           guibg=#262626 guifg=#d7d787
@@ -31,6 +31,7 @@ vim.cmd [[
   highlight StatusLineWarn          guibg=#262626 guifg=#d7d700
   highlight StatusLineChanges       guibg=#262626 guifg=#c586c0
   highlight StatusLineOutside       guibg=#3a3a3a guifg=#999999
+  highlight StatusLineTransition1   guibg=#262626 guifg=#3a3a3a
 ]]
 
 
@@ -78,23 +79,24 @@ M.get_winbar = function()
       })
     else
       -- Meant for quickfix, help, etc
-      return "%( %h%) %f"
+      return "%{%v:lua.status.get_mode()%}%( %h%) %f"
     end
   end
 end
 
 M.get_statusline = function()
   local parts = {
-    "%{%v:lua.status.get_mode()%}",
+    --"%{%v:lua.status.get_mode()%}",
     "%{%v:lua.status.get_git_branch()%}",
-    '%#StatusLineOutside# %{fnamemodify(getcwd(), ":~")}/ %*',
+    '%#StatusLineOutside#%{fnamemodify(getcwd(), ":~")}/ %*',
+    --"%#StatusLineTransition1#%*",
     "%<",
     "%#StatusLineFile# %f %*",
     "%#StatusLineMod#%{IsBuffersModified()}%*",
     "%=",
     "%{%v:lua.status.get_diag_counts()%}",
     "%{%v:lua.status.get_git_changes()%}",
-    '%#StatusLineOutside# %3l/%L c:%2c %*',
+    '%#StatusLineOutside# %3l/%L祈%3c %*',
   }
   return table.concat(parts)
 end
@@ -347,8 +349,8 @@ end
 
 M.get_mode = function ()
   if not is_current() then
-    --return "%#WinBarInactive# Win #%{winnr()} %*"
-    return "%#WinBarInactive# win #" .. vim.fn.winnr() .. " %*"
+    --return "%#WinBarInactive# win #" .. vim.fn.winnr() .. " %*"
+    return "%#WinBarInactive#  #" .. vim.fn.winnr() .. "  %*"
   end
   local mode_code = vim.api.nvim_get_mode().mode
   local mode = mode_map[mode_code] or string.upper(mode_code)

@@ -32,6 +32,27 @@ return function()
       enable = true
     }
   }
+
+  local ts_parsers = require("nvim-treesitter.parsers")
+  vim.api.nvim_create_autocmd("BufEnter", {
+    group = vim.api.nvim_create_augroup("treesitter", {clear = true}),
+    pattern = { "*" },
+    callback = function()
+      local ft = vim.bo.filetype
+      if not ft then
+        return
+      end
+      local parser = ts_parsers.filetype_to_parsername[ft]
+      if not parser then
+        return
+      end
+      local is_installed = ts_parsers.has_parser(ts_parsers.ft_to_lang(ft))
+      if not is_installed then
+        vim.cmd("TSInstall " .. parser)
+      end
+    end,
+  })
+
   require('nvim-treesitter.configs').setup {
     textobjects = {
       select = {

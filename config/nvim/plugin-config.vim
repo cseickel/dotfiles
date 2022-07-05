@@ -134,8 +134,7 @@ set fillchars+=verthoriz:╋
 "set fillchars+=verthoriz:╬
 
 highlight WinSeparator guifg=#444444
-highlight clear FloatBorder
-highlight link FloatBorder guifg=#BBBBBB
+highlight FloatBorder guifg=#888888
 
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
 " nvcode overrides from dark+
