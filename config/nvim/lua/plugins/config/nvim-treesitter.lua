@@ -15,6 +15,7 @@ return function()
       "jsonc",
       "html",
       "markdown",
+      "markdown_inline",
       "java",
       "typescript",
       "python",

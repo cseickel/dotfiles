@@ -79,15 +79,18 @@ local grepProject = function ()
   require("telescope.builtin").live_grep({cwd=getProjectRoot()})
 end
 
+local hop = require('hop')
 vim.cmd [[
-  noremap ,, <cmd>lua require("hop").hint_char2({inclusive_jump=false})<cr>
-  noremap ,. <cmd>lua require("hop").hint_char2({inclusive_jump=true})<cr>
+  noremap ,, <cmd>HopChar2<cr>
+  noremap ,. <cmd>lua require("hop").hint_char2({direction = require'hop.hint'.HintDirection.AFTER_CURSOR, hint_offset=1 })<cr>
+  noremap ,/ <cmd>HopPattern<cr>
 ]]
 local mappings = {
   [";"] = {"<Plug>(buf-surf-back)",               "Previous Buffer"},
   ["'"] = {"<Plug>(buf-surf-forward)",            "Next Buffer"},
   [",,"] = { "Hop Char 2" },
   [",."] = { "Hop AFTER Char 2" },
+  [",."] = { "Hop  Pattern" },
   h = { "Focus window to the LEFT" },
   j = { "Focus window BELOW" },
   k = { "Focus window ABOVE" },

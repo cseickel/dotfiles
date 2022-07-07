@@ -22,6 +22,7 @@ vim.cmd [[
   highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE 
 
   highlight StatusLineGit  gui=bold guibg=#3a3a3a guifg=#d7afd7
+  highlight StatusLineGit  gui=bold guibg=#3a3a3a guifg=#c586c0
   highlight StatusLine              guibg=#262626 guifg=#999999
   highlight StatusLineFile gui=bold guibg=#262626 guifg=#bbbbbb
   highlight StatusLineMod           guibg=#262626 guifg=#d7d787
@@ -87,8 +88,7 @@ end
 M.get_statusline = function()
   local parts = {
     --"%{%v:lua.status.get_mode()%}",
-    "%{%v:lua.status.get_git_branch()%}",
-    '%#StatusLineOutside#%{fnamemodify(getcwd(), ":~")}/ %*',
+    '%#StatusLineOutside# %{fnamemodify(getcwd(), ":~")}/ %*',
     --"%#StatusLineTransition1#%*",
     "%<",
     "%#StatusLineFile# %f %*",
@@ -96,6 +96,7 @@ M.get_statusline = function()
     "%=",
     "%{%v:lua.status.get_diag_counts()%}",
     "%{%v:lua.status.get_git_changes()%}",
+    "%{%v:lua.status.get_git_branch()%}",
     '%#StatusLineOutside# %3l/%L祈%3c %*',
   }
   return table.concat(parts)

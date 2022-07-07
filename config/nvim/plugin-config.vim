@@ -11,12 +11,10 @@ if (has("termguicolors"))
 endif
 
 " Theme
-"colorscheme dark_plus
-colorscheme nvcode "<-- this one is best with tree-sitter
+let g:vscode_italic_comment = 1
+colorscheme vscode
 
 let g:oscyank_term = 'default' " or 'tmux' or 'screen', 'kitty', 'default'
-
-" IndentLine
 
 " disable the default highlight group
 let g:conflict_marker_highlight_group = ''

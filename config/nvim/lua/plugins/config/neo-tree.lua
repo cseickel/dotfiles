@@ -574,11 +574,11 @@ end
 local example = function ()
   
     require("neo-tree").setup({
-      filesystem = {
-        filtered_items = {
-          visible = false, -- when true, they will just be displayed differently than normal items
-          force_visible_in_empty_folder = true, -- when true, hidden files will be shown if the root folder is otherwise empty
-          show_hidden_count = false, -- when true, the number of hidden items in each folder will be shown as the last entry
+      hide_root_node = true,
+      default_component_configs = {
+        indent = {
+          indent_size = 2,
+          padding = 3,
         }
       }
     })

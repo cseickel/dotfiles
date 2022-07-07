@@ -16,6 +16,8 @@ local startup = function(use)
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
   use 'nvim-lua/plenary.nvim'
   use 'dstein64/vim-startuptime'
+
+  use 'Mofiqul/vscode.nvim'
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
   use {
@@ -97,7 +99,7 @@ local startup = function(use)
   use 'dkarter/bullets.vim'
   use {
     'phaazon/hop.nvim',
-    --branch = 'v1',
+    branch = 'v2',
     config = c("hop")
   }
 
@@ -167,14 +169,6 @@ local startup = function(use)
     },
     config = c("nvim-dap")
   }
-
-  --use { 'norcalli/nvim-colorizer.lua', config = c('colorizer') }
-  use {
-    'rrethy/vim-hexokinase',
-    run = 'make hexokinase',
-  }
-
-  use 'christianchiarulli/nvcode-color-schemes.vim'
 
   use {
     'neovim/nvim-lspconfig',
@@ -264,6 +258,12 @@ local startup = function(use)
 
 
   -- UI Stuff
+  use {
+    'rrethy/vim-hexokinase',
+    run = 'make hexokinase',
+  }
+
+  --use 'christianchiarulli/nvcode-color-schemes.vim'
   use 'psliwka/vim-smoothie'
   use 'gcmt/taboo.vim'
   use "itchyny/vim-gitbranch" -- for statusline
@@ -281,6 +281,14 @@ local startup = function(use)
     config = c("nvim-treesitter")
   }
 
+  --use {
+  --  "ThePrimeagen/refactoring.nvim",
+  --  requires = {
+  --    {"nvim-lua/plenary.nvim"},
+  --    {"nvim-treesitter/nvim-treesitter"}
+  --  },
+  --  config = c("refactoring")
+  --}
 
   use {
     'thalesmello/vim-textobj-methodcall',
@@ -288,6 +296,7 @@ local startup = function(use)
       { 'kana/vim-textobj-user' }
     }
   }
+
   use {
     'Julian/vim-textobj-variable-segment',
     requires = {
