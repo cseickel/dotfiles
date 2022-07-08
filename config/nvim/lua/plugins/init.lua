@@ -17,7 +17,7 @@ local startup = function(use)
   use 'nvim-lua/plenary.nvim'
   use 'dstein64/vim-startuptime'
 
-  use 'Mofiqul/vscode.nvim'
+  --use 'Mofiqul/vscode.nvim'
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
   use {
@@ -263,7 +263,7 @@ local startup = function(use)
     run = 'make hexokinase',
   }
 
-  --use 'christianchiarulli/nvcode-color-schemes.vim'
+  use 'christianchiarulli/nvcode-color-schemes.vim'
   use 'psliwka/vim-smoothie'
   use 'gcmt/taboo.vim'
   use "itchyny/vim-gitbranch" -- for statusline

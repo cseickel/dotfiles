@@ -12,7 +12,7 @@ endif
 
 " Theme
 let g:vscode_italic_comment = 1
-colorscheme vscode
+colorscheme nvcode
 
 let g:oscyank_term = 'default' " or 'tmux' or 'screen', 'kitty', 'default'
 
