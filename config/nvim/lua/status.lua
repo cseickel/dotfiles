@@ -21,18 +21,19 @@ vim.cmd [[
   highlight ModeV guibg=#c586c0 guifg=#353535 gui=bold " VISUAL  
   highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE 
 
-  highlight StatusLineGit  gui=bold guibg=#3a3a3a guifg=#d7afd7
+  highlight StatusLine              guibg=#303030 guifg=#999999
   highlight StatusLineGit  gui=bold guibg=#3a3a3a guifg=#c586c0
-  highlight StatusLine              guibg=#262626 guifg=#999999
-  highlight StatusLineFile gui=bold guibg=#262626 guifg=#bbbbbb
-  highlight StatusLineMod           guibg=#262626 guifg=#d7d787
-  highlight StatusLineError         guibg=#262626 guifg=#ff0000
-  highlight StatusLineInfo          guibg=#262626 guifg=#87d7ff
-  highlight StatusLineHint          guibg=#262626 guifg=#ffffd7
-  highlight StatusLineWarn          guibg=#262626 guifg=#d7d700
-  highlight StatusLineChanges       guibg=#262626 guifg=#c586c0
+  highlight StatusLineCwd  gui=bold guibg=#3a3a3a guifg=#999999
+  highlight StatusLineFile gui=bold guibg=#303030 guifg=#bbbbbb
+  highlight StatusLineMod           guibg=#303030 guifg=#d7d787
+  highlight StatusLineError         guibg=#303030 guifg=#ff0000
+  highlight StatusLineInfo          guibg=#303030 guifg=#87d7ff
+  highlight StatusLineHint          guibg=#303030 guifg=#ffffd7
+  highlight StatusLineWarn          guibg=#303030 guifg=#d7d700
+  highlight StatusLineChanges       guibg=#303030 guifg=#c586c0
   highlight StatusLineOutside       guibg=#3a3a3a guifg=#999999
-  highlight StatusLineTransition1   guibg=#262626 guifg=#3a3a3a
+  highlight StatusLineTransition1   guibg=#303030 guifg=#1c1c1c
+  highlight StatusLineTransition2   guibg=#3a3a3a guifg=#1c1c1c
 ]]
 
 
@@ -88,14 +89,17 @@ end
 M.get_statusline = function()
   local parts = {
     --"%{%v:lua.status.get_mode()%}",
-    '%#StatusLineOutside# %{fnamemodify(getcwd(), ":~")}/ %*',
-    --"%#StatusLineTransition1#%*",
+    '%#StatusLineCwd# %{fnamemodify(getcwd(), ":~")}/%*',
+    "%#StatusLineTransition2#▕%*",
+    "%#StatusLineTransition1#▏%*",
     "%<",
-    "%#StatusLineFile# %f %*",
+    "%#StatusLineFile#%f %*",
     "%#StatusLineMod#%{IsBuffersModified()}%*",
     "%=",
     "%{%v:lua.status.get_diag_counts()%}",
     "%{%v:lua.status.get_git_changes()%}",
+    "%#StatusLineTransition1#▕%*",
+    "%#StatusLineTransition2#▏%*",
     "%{%v:lua.status.get_git_branch()%}",
     '%#StatusLineOutside# %3l/%L祈%3c %*',
   }
