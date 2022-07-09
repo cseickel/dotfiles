@@ -58,6 +58,32 @@ local showType = function ()
   require("telescope.builtin").lsp_type_definitions(getQuickfixOptions())
 end
 
+local openNeotree = function ()
+  local cmd = require("neo-tree.command")
+  local manager = require("neo-tree.sources.manager")
+  cmd.execute({
+    action = "focus",
+    source = "filesystem",
+    position = "current"
+  })
+  local tabnr = vim.api.nvim_get_current_tabpage()
+  local winid = vim.api.nvim_get_current_win()
+  local state = manager.get_state("filesystem", tabnr, winid)
+  return state
+end
+
+local findDirectory = function ()
+  local filter = require("neo-tree.sources.filesystem.lib.filter")
+  local state = openNeotree()
+  filter.show_filter(state, true, "directory")
+end
+
+local findFile = function ()
+  local filter = require("neo-tree.sources.filesystem.lib.filter")
+  local state = openNeotree()
+  filter.show_filter(state, true, true)
+end
+
 local getProjectRoot = function()
   local cwd = vim.fn.getcwd()
   local project_dir = cwd
@@ -69,10 +95,6 @@ local getProjectRoot = function()
     project_dir = "~/.dotfiles/config"
   end
   return project_dir
-end
-
-local findFile = function ()
-  require("telescope.builtin").find_files({cwd=getProjectRoot()})
 end
 
 local grepProject = function ()
@@ -137,11 +159,9 @@ local mappings = {
     Q = { "Close Quickfix" },
     f = {
         name = "File...", -- optional group name
-        b = { "<cmd>Neotree float filebrowser<cr>",           "File Browser" },
-        d = { "<cmd>Telescope zoxide list<cr>",               "Directory picker (zoxide)" },
-        f = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Find in this file" },
+        d = { findDirectory,                                  "Directory picker (neo-tree)" },
+        f = { findFile,                                       "Find File (neo-tree)" },
         g = { grepProject,                                    "Grep" },
-        o = { findFile,                                       "Open File" },
     },
     g = {
         name = "Go to...",
