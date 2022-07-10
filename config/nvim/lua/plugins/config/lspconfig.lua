@@ -25,6 +25,18 @@ return function()
       'additionalTextEdits',
     }
   }
+
+  local lspconfig = require("lspconfig")
+  local navic = require("nvim-navic")
+  lspconfig.util.default_config = vim.tbl_extend(
+    "force",
+    lspconfig.util.default_config,
+    {
+      capabilities = capabilities,
+      on_attach = navic.attach
+    }
+  )
+
   -- for nvim-ufo
   vim.wo.foldlevel = 99 -- feel free to decrease the value
   vim.wo.foldenable = true
@@ -33,7 +45,6 @@ return function()
       lineFoldingOnly = true
   }
 
-  local lspconfig = require("lspconfig")
 
   local null_ls = require("null-ls")
   null_ls.setup({
@@ -57,7 +68,6 @@ return function()
     },
   }
 
-  local navic = require("nvim-navic")
   -- make sure to only run this once!
   local tsserver_on_attach = function(client, bufnr)
     -- disable tsserver formatting if you plan on formatting via null-ls
@@ -112,35 +122,6 @@ return function()
     on_attach = tsserver_on_attach
   })
 
-  lspconfig.sumneko_lua.setup({
-    capabilities = capabilities,
-    on_attach = navic.attach,
-    settings = {
-      Lua = {
-        version = 'LuaJIT',
-        diagnostics = {
-          globals = {
-            'vim',
-            "describe",
-            "it",
-            "before_each",
-            "after_each",
-            "pending",
-          },
-        }
-      }
-    }
-  })
-
-  lspconfig.util.default_config = vim.tbl_extend(
-    "force",
-    lspconfig.util.default_config,
-    {
-      capabilities = capabilities,
-      on_attach = navic.attach
-    }
-  )
-
   local other_servers = {
     "omnisharp",
     "gopls",
@@ -158,6 +139,28 @@ return function()
       end
     })
   end
+
+  lspconfig.sumneko_lua.setup({
+    capabilities = capabilities,
+    on_attach = navic.attach,
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+        },
+        diagnostics = {
+          globals = {
+            'vim',
+            "describe",
+            "it",
+            "before_each",
+            "after_each",
+            "pending",
+          },
+        }
+      }
+    }
+  })
 
   vim.cmd [[ do User LspAttachBuffers ]]
 

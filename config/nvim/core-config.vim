@@ -146,6 +146,13 @@ set guicursor=n-v-c:block-Cursor/lCursor
             \,sm:block-iCursor
             \,a:blinkwait1000-blinkon500-blinkoff250
 
+function! NoBlink()
+  set guicursor=n-v-c:block-Cursor/lCursor
+              \,i-ci-ve:ver100-iCursor
+              \,r-cr:block-rCursor
+              \,o:hor50-Cursor/lCursor
+              \,sm:block-iCursor
+endfunction
 
 function! TwoSpaceIndent()
   setlocal shiftwidth=2

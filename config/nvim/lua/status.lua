@@ -89,7 +89,7 @@ end
 M.get_statusline = function()
   local parts = {
     --"%{%v:lua.status.get_mode()%}",
-    '%#StatusLineCwd# %{fnamemodify(getcwd(), ":~")}/%*',
+    '%#StatusLineCwd#  %{fnamemodify(getcwd(), ":~")}/%*',
     "%#StatusLineTransition2#▕%*",
     "%#StatusLineTransition1#▏%*",
     "%<",
@@ -170,7 +170,7 @@ local icon_cache = {}
 M.get_icon = function(filename, extension)
   if not filename then
     if vim.bo.modified then
-      return " %#WinBarModified#%*"
+      return " %#WinBarModified# %*"
     end
 
     if vim.bo.filetype == "terminal" then
@@ -187,7 +187,7 @@ M.get_icon = function(filename, extension)
       extension = vim.fn.fnamemodify(filename, ":e")
     end
     local file_icon, hl_group = require("nvim-web-devicons").get_icon( filename, extension)
-    cached = " " .. "%#" .. hl_group .. "#" .. file_icon .. "%*"
+    cached = " " .. "%#" .. hl_group .. "#" .. file_icon .. " %*"
     icon_cache[filename] = cached
   end
   return cached
@@ -196,9 +196,17 @@ end
 M.get_filename = function()
   local has_icon, icon = pcall(M.get_icon)
   if has_icon then
-    return icon .. " %t"
+    return icon .. "%t"
   else
     return " %t"
+  end
+end
+
+local make_two_char = function(symbol)
+  if symbol:len() == 1 then
+    return symbol .. " "
+  else
+    return symbol
   end
 end
 
@@ -222,17 +230,13 @@ local get_sign = function(severity, icon_only)
   local text, highlight
   defined = defined and defined[1]
   if defined and defined.text and defined.texthl then
-    -- for some reason it always comes padded with a space
-    if type(defined.text) == "string" and defined.text:sub(#defined.text) == " " then
-      defined.text = defined.text:sub(1, -2)
-    end
-    text = " " .. defined.text
+    text = " " .. make_two_char(defined.text)
     highlight = defined.texthl
   else
     text = " " .. severity:sub(1, 1)
     highlight = "Diagnostic" .. severity
   end
-  cached = "%#" .. highlight .. "#" .. text .. "%* "
+  cached = "%#" .. highlight .. "#" .. text .. "%*"
   sign_cache[severity] = cached
   return cached
 end
@@ -284,19 +288,19 @@ M.get_diag_counts = function ()
   local S = vim.diagnostic.severity
   if grouped[S.ERROR] then
     result = result .. "%#StatusLineError#" .. grouped[S.ERROR] ..
-      get_sign("Error", true) .. " %*"
+      get_sign("Error", true) .. "%* "
   end
   if grouped[S.WARN] then
     result = result .. "%#StatusLineWarn#" .. grouped[S.WARN] ..
-      get_sign("Warn", true) .. " %*"
+      get_sign("Warn", true) .. "%* "
   end
   if grouped[S.INFO] then
     result = result .. "%#StatusLineInfo#" .. grouped[S.INFO] ..
-      get_sign("Info", true) .. " %*"
+      get_sign("Info", true) .. "%* "
   end
   if grouped[S.HINT] then
     result = result .. "%#StatusLineHint#" .. grouped[S.HINT] ..
-      get_sign("Hint", true) .. " %*"
+      get_sign("Hint", true) .. "%* "
   end
   return result
 end
@@ -322,9 +326,9 @@ end
 M.get_git_dirty = function()
   local dirty = vim.b.gitsigns_status
   if isempty(dirty) then
-    return ""
+    return " "
   else
-    return "%#WinBarGitDirty#%* "
+    return "%#WinBarGitDirty# %*"
   end
 end
 
