@@ -236,13 +236,6 @@ local startup = function(use)
   --}
 
   use {
-    'thalesmello/vim-textobj-methodcall',
-    requires = {
-      { 'kana/vim-textobj-user' }
-    }
-  }
-
-  use {
     'Julian/vim-textobj-variable-segment',
     requires = {
       { 'kana/vim-textobj-user' }

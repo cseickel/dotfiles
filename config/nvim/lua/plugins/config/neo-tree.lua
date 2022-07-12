@@ -72,6 +72,7 @@ local mine = function ()
     git_status_async = true,
     enable_git_status = true,
     enable_refresh_on_write = true,
+    hide_root_node = false,
     log_level = "trace",
     log_to_file = true,
     open_files_in_last_window = true,
@@ -85,7 +86,7 @@ local mine = function ()
       indent = {
         with_markers = true,
         with_arrows = true,
-        padding = 0
+        padding = 2
       },
       git_status = {
         --symbols = {

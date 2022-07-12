@@ -207,7 +207,7 @@ nnoremap <silent> =     :call SmartWindowResize("v", 1)<cr>
 
 function! CloseTerminal() abort
     for win in nvim_tabpage_list_wins(0)
-        if nvim_buf_get_name(nvim_win_get_buf(win)) =~ "term://" && nvim_win_get_width(win) == &columns && nvim_win_get_height(win) < (&lines-3)
+        if nvim_buf_get_name(nvim_win_get_buf(win)) =~ "term://" && nvim_win_get_height(win) < (&lines-4)
             call nvim_win_close(win, 1)
         endif
     endfor
@@ -324,5 +324,5 @@ endfunction
 "nnoremap <silent> '         :call NextBufferByName(1)<cr>
 nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 nnoremap <silent> <C-\>     :call RecycleTerminal()<cr>
-nnoremap <silent> <leader>t :botright split<bar>resize 14<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
+nnoremap <silent> <leader>t :15split<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
 nnoremap <silent> <leader>T :call CloseTerminal()<cr>

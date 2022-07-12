@@ -205,5 +205,4 @@ augroup core_autocmd
   "To share clipboard between instances
   autocmd TextYankPost,FocusGained,FocusLost *
                 \ if exists(':rshada') | rshada | wshada | endif
-augroup end
 augroup END
