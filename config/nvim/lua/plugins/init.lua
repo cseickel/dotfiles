@@ -9,36 +9,29 @@ end
 
 
 local startup = function(use)
-  vim = vim
-  -- Packer can manage itself
-  use 'wbthomason/packer.nvim'
+  local setup = function(repo, name)
+    use { repo, config = "require('" .. name .. "').setup({})" }
+  end
 
+  local config = function(name)
+    local succuss, func = pcall(require, "plugins.config." .. name)
+    if succuss and func then
+      func(use)
+    end
+  end
+
+  use 'wbthomason/packer.nvim'
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
   use 'nvim-lua/plenary.nvim'
-  use 'dstein64/vim-startuptime'
 
-  --use 'Mofiqul/vscode.nvim'
   use "dstein64/nvim-scrollview"
   use "ton/vim-bufsurf"
-  use {
-    'rcarriga/nvim-notify',
-    config = function()
-      --vim.notify = require('notify')
-    end
-  }
+  config('nvim-ts-autotag')
+  config('nvim-navic')
+  setup('folke/which-key.nvim', "which-key")
+  setup('rmagatti/auto-session', "auto-session")
 
-  use {
-    "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
-    config = c("nvim-ts-autotag")
-  }
-  use { "SmiteshP/nvim-navic", config = c("nvim-navic") }
-
-  use { 'folke/which-key.nvim', config = c("which-key") }
-
-  use { 'rmagatti/auto-session', config = c("auto-session") }
-
-  use { "/home/cseickel/repos/diagnostic-window.nvim/" }
+  use "/home/cseickel/repos/diagnostic-window.nvim/"
   use {
     "/home/cseickel/repos/neo-tree.nvim",
     --"nvim-neo-tree/neo-tree.nvim",
@@ -59,30 +52,6 @@ local startup = function(use)
     config = c("neo-tree")
   }
 
-  --This is good if you use multiple windows in tmux, but my screen is too small
-  --use({
-  --  "aserowy/tmux.nvim",
-  --  config = function()
-  --    require("tmux").setup({
-  --      -- overwrite default configuration
-  --      -- here, e.g. to enable default bindings
-  --      copy_sync = {
-  --        -- enables copy sync and overwrites all register actions to
-  --        -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance
-  --        enable = true,
-  --      },
-  --      navigation = {
-  --        -- enables default keybindings (C-hjkl) for normal mode
-  --        enable_default_keybindings = true,
-  --      },
-  --      resize = {
-  --        -- enables default keybindings (A-hjkl) for normal mode
-  --        enable_default_keybindings = true,
-  --      }
-  --    })
-  --  end
-  --})
-
   use { 'kyazdani42/nvim-web-devicons', config = c("nvim-web-devicons") }
   use 'editorconfig/editorconfig-vim'
   --
@@ -96,7 +65,7 @@ local startup = function(use)
   use 'tpope/vim-eunuch'
   use 'tpope/vim-surround'
   use 'tpope/vim-fugitive'
-  use { 'wellle/targets.vim' }
+  use 'wellle/targets.vim'
   use 'dkarter/bullets.vim'
   use {
     'phaazon/hop.nvim',
@@ -114,13 +83,7 @@ local startup = function(use)
 
   use {'kevinhwang91/nvim-bqf', ft = 'qf'}
 
-  use {
-    'sindrets/diffview.nvim',
-    opt = true,
-    cmd = 'DiffviewOpen',
-    config = c("diffview")
-  }
-
+  config 'diffview'
   use 'rhysd/conflict-marker.vim'
   use 'nanotee/zoxide.vim'
 
@@ -153,30 +116,8 @@ local startup = function(use)
     config = c("lspconfig")
   }
 
-  use {
-    "hrsh7th/nvim-cmp",
-    opt = true,
-    event='InsertEnter',
-    requires = {
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-nvim-lsp",
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-calc',
-      'hrsh7th/vim-vsnip',
-      'hrsh7th/vim-vsnip-integ',
-      'rafamadriz/friendly-snippets',
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-nvim-lsp-document-symbol",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
-      {
-        'David-Kunz/cmp-npm',
-        config = c('cmp-npm')
-      },
-    },
-    config = c("nvim-cmp")
-  }
-
+  config 'lsp-signature'
+  config 'nvim-cmp'
   use 'github/copilot.vim'
 
   use {

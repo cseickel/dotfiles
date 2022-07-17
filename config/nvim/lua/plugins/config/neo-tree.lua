@@ -67,6 +67,10 @@ local mine = function ()
   end
 
   local config = {
+    --sources = {
+    --  "filesystem",
+    --  "example"
+    --},
     close_if_last_window = false,
     close_floats_on_escape_key = true,
     git_status_async = true,
@@ -89,19 +93,19 @@ local mine = function ()
         padding = 2
       },
       git_status = {
-        --symbols = {
-        --  -- Change type
-        --  added     = "+",
-        --  deleted   = "✖",
-        --  modified  = "*",
-        --  renamed   = "",
-        --  -- Status type
-        --  untracked = "",
-        --  ignored   = "",
-        --  unstaged  = "",
-        --  staged    = "",
-        --  conflict  = "",
-        --},
+        symbols = {
+          -- Change type
+          added     = "",
+          deleted   = "✖",
+          modified  = "",
+          renamed   = "",
+          -- Status type
+          untracked = "",
+          ignored   = "",
+          unstaged  = "",
+          staged    = "",
+          conflict  = "",
+        },
         --symbols =false
       },
       --icon = {
@@ -112,6 +116,7 @@ local mine = function ()
       --},
       name = {
         trailing_slash = true,
+        --use_git_status_colors = false,
       },
     },
     event_handlers = {
@@ -573,16 +578,14 @@ vim.cmd([[
 end
 
 local example = function ()
-  
-    require("neo-tree").setup({
-      hide_root_node = true,
-      default_component_configs = {
-        indent = {
-          indent_size = 2,
-          padding = 3,
-        }
+  require('neo-tree').setup({
+    renderers = {
+      message = {
+        { "indent", with_markers = true },
+        { "name", highlight = "NeoTreeMessage" },
       }
-    })
+    }
+  })
 end
 
 return mine

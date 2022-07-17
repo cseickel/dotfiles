@@ -28,6 +28,7 @@ local showSymbolFinder = function ()
   end
   require('telescope.builtin').lsp_document_symbols(opts)
 end
+
 local getQuickfixOptions = function()
   local width = math.min(vim.o.columns - 2, 180)
   local height = math.min(vim.o.lines - 10, 60)
@@ -112,7 +113,6 @@ local mappings = {
   ["'"] = {"<Plug>(buf-surf-forward)",            "Next Buffer"},
   [",,"] = { "Hop Char 2" },
   [",."] = { "Hop AFTER Char 2" },
-  [",."] = { "Hop  Pattern" },
   h = { "Focus window to the LEFT" },
   j = { "Focus window BELOW" },
   k = { "Focus window ABOVE" },
@@ -174,6 +174,8 @@ local mappings = {
         r = { showReferences,                                 "Find References"},
         t = { showType,                                       "Go to Type Definition"},
     },
+    l = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",    "Show LSP Diagnostic for Document" },
+    L = { "<cmd>lua vim.lsp.diagnostic.set_qflist()<cr>",   "Show LSP Diagnostic for Workspace" },
     n = { "<cmd>lua vim.lsp.buf.rename()<cr>",                "Rename symbol" },
     ["?"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>",    "Show signature help" },
     p = { "<cmd>Gitsigns preview_hunk<cr>",                   "Preview Hunk" },

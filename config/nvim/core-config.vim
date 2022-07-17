@@ -137,7 +137,7 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+"set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 set guicursor=n-v-c:block-Cursor/lCursor
             \,i-ci-ve:ver100-iCursor
@@ -174,6 +174,14 @@ function! InitTerminal()
   set filetype=terminal
 endfunction
 
+function VimEnter()
+  setlocal cursorline
+  "To share clipboard between instances
+  if exists(':rshada') 
+    autocmd TextYankPost,FocusGained,FocusLost * rshada | wshada
+  endif
+endfunction
+
 function! WinLeave()
   if &filetype != "neo-tree"
     setlocal nocursorline
@@ -192,17 +200,9 @@ augroup core_autocmd
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
   autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
-  autocmd VimEnter * setlocal cursorline
-  autocmd WinEnter * setlocal cursorline
+  autocmd VimEnter    * call VimEnter()
+  autocmd WinEnter    * setlocal cursorline
   autocmd BufWinEnter * setlocal cursorline
-  autocmd WinLeave * call WinLeave()
+  autocmd WinLeave    * call WinLeave()
 
-  "autocmd VimEnter * setlocal cursorcolumn
-  "autocmd WinEnter * setlocal cursorcolumn
-  "autocmd BufWinEnter * setlocal cursorcolumn
-  "autocmd WinLeave * setlocal nocursorcolumn
-  
-  "To share clipboard between instances
-  autocmd TextYankPost,FocusGained,FocusLost *
-                \ if exists(':rshada') | rshada | wshada | endif
 augroup END

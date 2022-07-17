@@ -1,4 +1,4 @@
-return function()
+local config = function()
   local cb = require'diffview.config'.diffview_callback
   require'diffview'.setup {
     diff_binaries = false,    -- Show diffs for binaries
@@ -33,5 +33,14 @@ return function()
         ["|"]             = cb("toggle_files"),       -- Toggle the files panel.
       }
     }
+  }
+end
+
+return function(use)
+  use {
+    'sindrets/diffview.nvim',
+    opt = true,
+    cmd = 'DiffviewOpen',
+    config = config
   }
 end

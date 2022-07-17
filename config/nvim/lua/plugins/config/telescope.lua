@@ -15,7 +15,7 @@ return function ()
       },
       mappings = {
         i = {
-          ["<Esc>"] = require('telescope.actions').close,
+          --["<Esc>"] = require('telescope.actions').close,
           ["<C-b>"] = function()
             vim.cmd("close!")
             require('telescope.builtin').file_browser()
