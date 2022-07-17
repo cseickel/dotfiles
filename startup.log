@@ -1,0 +1,129 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.016  000.016: --- NVIM STARTING ---
+000.127  000.111: event init
+000.222  000.095: early init
+001.662  001.441: locale set
+001.696  000.034: init first window
+002.044  000.348: inits 1
+002.060  000.015: window checked
+002.062  000.002: parsing arguments
+002.609  000.547: init lua interpreter
+002.766  000.157: expanding arguments
+002.842  000.076: inits 2
+003.097  000.255: init highlight
+003.100  000.003: waiting for UI
+004.609  001.509: done waiting for UI
+004.660  000.051: init screen for UI
+004.687  000.028: init default mappings
+004.718  000.030: init default autocommands
+008.792  000.120  000.120: sourcing /usr/share/nvim/runtime/ftplugin.vim
+009.518  000.058  000.058: sourcing /usr/share/nvim/runtime/indent.vim
+009.691  000.027  000.027: sourcing /usr/share/nvim/archlinux.vim
+009.697  000.096  000.068: sourcing /etc/xdg/nvim/sysinit.vim
+014.460  000.127  000.127: sourcing /usr/share/nvim/runtime/filetype.lua
+023.496  000.025  000.025: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/diagnostic-window.nvim/ftdetect/diagmsg.vim
+023.912  000.019  000.019: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-fugitive/ftdetect/fugitive.vim
+024.590  010.066  010.022: sourcing /usr/share/nvim/runtime/filetype.vim
+025.011  000.019  000.019: sourcing /usr/share/nvim/runtime/ftplugin.vim
+025.370  000.015  000.015: sourcing /usr/share/nvim/runtime/indent.vim
+025.975  016.074  005.847: sourcing core-config.vim
+026.305  000.286  000.286: sourcing core-mappings.vim
+050.003  000.984  000.984: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvcode-color-schemes.vim/colors/nvcode.vim
+050.387  001.571  000.587: sourcing plugin-config.vim
+052.554  000.524  000.524: sourcing plugin-mappings.vim
+054.270  044.490  026.036: sourcing /home/cseickel/.config/nvim/init.vim
+054.288  004.808: sourcing vimrc file(s)
+054.967  000.115  000.115: sourcing /usr/share/nvim/runtime/syntax/synload.vim
+055.070  000.716  000.601: sourcing /usr/share/nvim/runtime/syntax/syntax.vim
+057.629  000.038  000.038: sourcing /usr/share/nvim/runtime/plugin/gzip.vim
+057.692  000.020  000.020: sourcing /usr/share/nvim/runtime/plugin/health.vim
+058.018  000.300  000.300: sourcing /usr/share/nvim/runtime/plugin/man.vim
+058.701  000.198  000.198: sourcing /usr/share/nvim/runtime/pack/dist/opt/matchit/plugin/matchit.vim
+058.835  000.785  000.587: sourcing /usr/share/nvim/runtime/plugin/matchit.vim
+059.014  000.150  000.150: sourcing /usr/share/nvim/runtime/plugin/matchparen.vim
+059.066  000.023  000.023: sourcing /usr/share/nvim/runtime/plugin/netrwPlugin.vim
+059.264  000.015  000.015: sourcing /home/cseickel/.local/share/nvim/rplugin.vim
+059.273  000.180  000.165: sourcing /usr/share/nvim/runtime/plugin/rplugin.vim
+059.582  000.283  000.283: sourcing /usr/share/nvim/runtime/plugin/shada.vim
+059.666  000.043  000.043: sourcing /usr/share/nvim/runtime/plugin/spellfile.vim
+059.718  000.023  000.023: sourcing /usr/share/nvim/runtime/plugin/tarPlugin.vim
+059.783  000.018  000.018: sourcing /usr/share/nvim/runtime/plugin/tohtml.vim
+059.834  000.025  000.025: sourcing /usr/share/nvim/runtime/plugin/tutor.vim
+059.882  000.022  000.022: sourcing /usr/share/nvim/runtime/plugin/zipPlugin.vim
+060.790  000.761  000.761: sourcing /usr/share/vim/vimfiles/plugin/fzf.vim
+061.213  000.343  000.343: sourcing /usr/share/vim/vimfiles/plugin/redact_pass.vim
+115.059  053.686  053.686: sourcing /home/cseickel/.config/nvim/plugin/packer_compiled.lua
+115.486  003.780: loading rtp plugins
+116.792  000.161  000.161: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim/plugin/fix_cursorhold_nvim.vim
+117.216  000.251  000.251: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/auto-session/plugin/auto-session.vim
+118.329  000.940  000.940: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/bullets.vim/plugin/bullets.vim
+118.868  000.319  000.319: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/conflict-marker.vim/plugin/conflict_marker.vim
+119.893  000.517  000.517: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim
+119.945  000.876  000.359: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/copilot.vim/plugin/copilot.vim
+120.150  000.017  000.017: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/diagnostic-window.nvim/plugin/diagnostic-window.vim
+120.689  000.371  000.371: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/editorconfig-vim/plugin/editorconfig.vim
+121.148  000.198  000.198: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/hop.nvim/plugin/hop.vim
+121.670  000.323  000.323: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim/plugin/indent_blankline.vim
+122.025  000.102  000.102: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/neo-tree.nvim/plugin/neo-tree.vim
+122.428  000.074  000.074: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-dap/plugin/dap.lua
+122.743  000.130  000.130: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer/plugin/nvim-lsp-installer.vim
+123.028  000.084  000.084: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-lspconfig/plugin/lspconfig.vim
+124.670  001.448  001.448: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-scrollview/plugin/scrollview.vim
+125.743  000.823  000.823: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-treesitter/plugin/nvim-treesitter.lua
+126.821  000.929  000.929: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects/plugin/nvim-treesitter-textobjects.vim
+127.057  000.047  000.047: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/nvim-web-devicons/plugin/nvim-web-devicons.vim
+127.618  000.250  000.250: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/playground/plugin/nvim-treesitter-playground.lua
+127.802  000.043  000.043: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/plenary.nvim/plugin/plenary.vim
+128.278  000.286  000.286: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/taboo.vim/plugin/taboo.vim
+128.672  000.215  000.215: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/targets.vim/plugin/targets.vim
+129.212  000.268  000.268: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/telescope.nvim/plugin/telescope.lua
+129.576  000.232  000.232: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-bufsurf/plugin/bufsurf.vim
+130.080  000.310  000.310: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-closetag/plugin/closetag.vim
+130.602  000.048  000.048: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-cutlass/autoload/cutlass.vim
+131.832  001.578  001.530: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-cutlass/plugin/cutlass.vim
+132.190  000.174  000.174: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-dadbod/plugin/dadbod.vim
+132.445  000.088  000.088: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-dadbod-completion/plugin/vim_dadbod_completion.vim
+132.946  000.335  000.335: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-dadbod-ui/plugin/db_ui.vim
+133.675  000.554  000.554: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-eunuch/plugin/eunuch.vim
+135.013  001.141  001.141: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-fugitive/plugin/fugitive.vim
+135.313  000.109  000.109: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-gitbranch/plugin/gitbranch.vim
+135.931  000.048  000.048: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-hexokinase/autoload/hexokinase/v2.vim
+136.113  000.624  000.576: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-hexokinase/plugin/hexokinase.vim
+136.425  000.140  000.140: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-oscyank/plugin/oscyank.vim
+137.201  000.552  000.552: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-smoothie/plugin/smoothie.vim
+137.743  000.364  000.364: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-surround/plugin/surround.vim
+138.712  000.365  000.365: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-textobj-user/autoload/textobj/user.vim
+140.073  002.071  001.706: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-textobj-variable-segment/plugin/textobj/variable-segment.vim
+140.315  000.022  000.022: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/which-key.nvim/plugin/which-key.vim
+140.579  000.107  000.107: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/zoxide.vim/plugin/zoxide.vim
+140.858  008.819: loading packages
+141.058  000.024  000.024: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-dadbod-completion/after/plugin/vim_dadbod_completion.vim
+143.669  002.515  002.515: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/cmp-dap/after/plugin/cmp_dap.lua
+144.361  000.529  000.529: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-dadbod-completion/after/plugin/vim_dadbod_completion.lua
+144.367  000.440: loading after plugins
+144.395  000.028: inits 3
+147.273  002.878: reading ShaDa
+148.624  001.351: opening buffers
+158.485  000.103  000.103: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/conflict-marker.vim/autoload/conflict_marker/detect.vim
+159.058  000.066  000.066: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-gitbranch/autoload/gitbranch.vim
+159.168  010.375: BufEnter autocommands
+159.173  000.005: editing files in windows
+207.880  000.312  000.312: sourcing /usr/share/nvim/runtime/ftplugin/vim.vim
+210.479  000.154  000.154: sourcing /usr/share/nvim/runtime/indent/vim.vim
+215.117  000.848  000.848: sourcing /usr/share/nvim/runtime/syntax/lua.vim
+215.742  003.940  003.092: sourcing /usr/share/nvim/runtime/syntax/vim.vim
+218.130  002.288  002.288: sourcing /usr/share/nvim/runtime/syntax/vim/generated.vim
+248.217  000.097  000.097: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-hexokinase/autoload/hexokinase/v2/scraper.vim
+248.667  000.097  000.097: sourcing /home/cseickel/.local/share/nvim/site/pack/packer/start/vim-hexokinase/autoload/hexokinase/utils.vim
+262.931  000.625  000.625: sourcing /usr/share/nvim/runtime/autoload/provider/clipboard.vim
+264.302  063.625  056.113: sourcing /home/cseickel/.local/share/nvim/sessions/%home%cseickel%dotfiles.vim
+266.202  043.405: VimEnter autocommands
+266.209  000.007: UIEnter autocommands
+266.213  000.004: before starting main loop
+300.450  034.237: first screen update
+300.457  000.008: --- NVIM STARTED ---

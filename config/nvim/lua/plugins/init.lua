@@ -81,7 +81,7 @@ local startup = function(use)
     config = c("gitsigns")
   }
 
-  use {'kevinhwang91/nvim-bqf', ft = 'qf'}
+  --use {'kevinhwang91/nvim-bqf', ft = 'qf'}
 
   config 'diffview'
   use 'rhysd/conflict-marker.vim'
