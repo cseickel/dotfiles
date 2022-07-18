@@ -12,7 +12,7 @@ syn match qfWarning /  .*$/ contained
 syn match qfInfo /  .*$/ contained
 syn match qfNote /  .*$/ contained
 
-hi def link qfFileName Comment
+hi def link qfFileName Directory
 hi def link qfFileNameHead WinBar
 hi def link qfSeparatorLeft Delimiter
 hi def link qfSeparatorRight Delimiter
