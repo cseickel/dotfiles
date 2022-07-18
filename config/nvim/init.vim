@@ -26,6 +26,7 @@ source core-mappings.vim
 lua    require('impatient')
 lua    require('plugins')
 source plugin-config.vim
+lua    require('quickfix')
 lua    require('mappings')
 source plugin-mappings.vim
 lua    require('status')
