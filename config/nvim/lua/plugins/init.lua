@@ -40,6 +40,7 @@ local startup = function(use)
       "MunifTanjim/nui.nvim",
       'nvim-lua/plenary.nvim',
       'kyazdani42/nvim-web-devicons',
+      'mrbjarksen/neo-tree-diagnostics.nvim',
       "/home/cseickel/repos/example-source",
       {
         -- only needed if you want to use the "open_window_picker" command

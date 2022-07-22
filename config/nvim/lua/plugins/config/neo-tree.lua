@@ -67,22 +67,28 @@ local mine = function ()
   end
 
   local config = {
-    --sources = {
-    --  "filesystem",
-    --  "example"
-    --},
+    sources = {
+      "filesystem",
+      "buffers",
+      "git_status",
+      "diagnostics",
+    },
     close_if_last_window = false,
     close_floats_on_escape_key = true,
     git_status_async = true,
     enable_git_status = true,
     enable_refresh_on_write = true,
     hide_root_node = true,
+    retain_hidden_root_indent = true,
     log_level = "trace",
     log_to_file = true,
     open_files_in_last_window = true,
     sort_case_insensitive = true,
     popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
     use_popups_for_input = true,
+    source_selector = {
+      winbar = true
+    },
     default_component_configs = {
       container = {
         --enable_character_fade = false
