@@ -159,7 +159,7 @@ local mappings = {
       l = { "<cmd>lua vim.diagnostic.setloclist()<cr>",         "Set Location List (Diagnostics for Document)" },
       q = { "<cmd>lua vim.diagnostic.setqflist()<cr>",          "Set Quickfix List (Diagnostics for Workspace)" },
     },
-   -- D = { "<cmd>lua vim.diagnostic.setqflist()<cr>",          "Show all Diagnostics" },
+    D = { "<cmd>Neotree diagnostics reveal bottom<cr>",       "Show all Diagnostics" },
     j = { showSymbolFinder,                                   "Jump to Method, Class, etc"},
     J = { "f,ls<cr><esc>",                                    "Newline at next comma" },
     q = { "Show Quickfix" },
