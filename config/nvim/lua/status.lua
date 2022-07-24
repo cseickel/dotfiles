@@ -53,11 +53,32 @@ local winbar_filetype_exclude = {
   ["toggleterm"] = true,
 }
 
+M.get_neo_tree_context = function()
+  local context = require("neo-tree.ui.selector").get_scrolled_off_node_text()
+  if isempty(context) then
+    return M.active_indicator()
+  else
+    return context
+  end
+  --local source = vim.b.neo_tree_source
+  --if not isempty(source) then
+  --  local label = require("neo-tree").config.source_selector.tab_labels[source]
+  --  if not isempty(label) then
+  --    return label
+  --  end
+  --end
+  --return ""
+end
+
 M.get_winbar = function()
   -- floating window
   local cfg = vim.api.nvim_win_get_config(0)
   if cfg.relative > "" or cfg.external then
     return ""
+  end
+
+  if vim.bo.filetype == "neo-tree" then
+    return "%{%v:lua.status.get_neo_tree_context()%}"
   end
 
   if winbar_filetype_exclude[vim.bo.filetype] then
@@ -159,7 +180,7 @@ local is_current = function()
 end
 
 M.active_indicator = function()
-  if is_current() then 
+  if is_current() then
     return "%#WinBarIndicator#▔▔▔▔▔▔▔▔%*"
   else
     return ""

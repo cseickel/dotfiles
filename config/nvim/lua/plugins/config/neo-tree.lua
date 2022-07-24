@@ -17,54 +17,6 @@ local mine = function ()
   ]]
 
 
-  local harpoon_index = function(config, node, state)
-    local Marked = require("harpoon.mark")
-    local path = node:get_id()
-    local succuss, index = pcall(Marked.get_index_of, path)
-    if succuss and index and index > 0 then
-      return {
-        text = string.format(" ⥤ %d", index),
-        highlight = config.highlight or "NeoTreeDirectoryIcon",
-      }
-    else
-      return {}
-    end
-  end
-
-  local next_git_modified = function(state, reverse)
-    local utils = require("neo-tree.utils")
-    local node = state.tree:get_node()
-    local current_path = node:get_id()
-    local g = state.git_status_lookup
-    local paths = utils.get_keys(g, true)
-    if reverse then
-      paths = utils.reverse_list(paths)
-    end
-
-    for _, path in ipairs(paths) do
-      local passed
-      if #g[path] > 1 then -- skipping over directories
-        if not reverse and path > current_path then
-          passed = true
-        elseif reverse and path < current_path then
-          passed = true
-        end
-      end
-
-      if passed then
-        local status = g[path]
-        if status:match("M") or status:match("A") then
-          local existing = state.tree:get_node(path)
-          if existing then
-            require("neo-tree.ui.renderer").focus_node(state, path)
-          else
-            require("neo-tree.sources.filesystem").navigate(state, state.path, path)
-          end
-          return
-        end
-      end
-    end
-  end
 
   local config = {
     sources = {
@@ -73,12 +25,13 @@ local mine = function ()
       "git_status",
       "diagnostics",
     },
+    add_blank_line_at_top = false,
     close_if_last_window = false,
     close_floats_on_escape_key = true,
     git_status_async = true,
     enable_git_status = true,
     enable_refresh_on_write = true,
-    hide_root_node = true,
+    hide_root_node = false,
     retain_hidden_root_indent = true,
     log_level = "trace",
     log_to_file = true,
@@ -86,9 +39,6 @@ local mine = function ()
     sort_case_insensitive = true,
     popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
     use_popups_for_input = true,
-    source_selector = {
-      winbar = true
-    },
     default_component_configs = {
       container = {
         --enable_character_fade = false
@@ -153,6 +103,51 @@ local mine = function ()
         ["z"] = "close_all_nodes",
         ["Z"] = "expand_all_nodes",
       }
+    },
+    diagnostics = {
+      follow_behavior = { -- Behavior when `follow_current_file` is true
+        always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
+        expand_followed = true, -- Ensure the node of the followed file is expanded
+        collapse_others = false, -- Ensure other nodes are collapsed
+      },
+      components = {
+        linenr = function(config, node)
+          local lnum = tostring(node.extra.diag_struct.lnum + 1)
+          local pad = string.rep(" ", 4 - #lnum)
+          return {
+            {
+              text = pad .. lnum,
+              highlight = "LineNr",
+            },
+            {
+              text = "▕ ",
+              highlight = "NeoTreeDimText",
+            }
+          }
+        end
+      },
+      renderers = {
+        file = {
+          { "indent" },
+          { "icon" },
+          { "grouped_path" },
+          { "name", highlight = "NeoTreeFileNameOpened" },
+          --{ "diagnostic_count", show_when_none = true },
+          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Error", right_padding = 0 },
+          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Warn", right_padding = 0 },
+          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Info", right_padding = 0 },
+          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Hint", right_padding = 0 },
+          { "clipboard" },
+        },
+        diagnostic = {
+          { "indent" },
+          { "icon" },
+          { "linenr" },
+          { "name" },
+          --{ "source" },
+          --{ "code" },
+        },
+      },
     },
     filesystem = {
       async_directory_scan = true,

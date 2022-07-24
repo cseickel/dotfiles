@@ -15,6 +15,9 @@ return function()
       -- Use a sharp border with `FloatBorder` highlights
       border = "single",
     })
+  vim.diagnostic.config({
+    update_in_insert = false,
+  })
 
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true

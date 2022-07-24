@@ -117,6 +117,30 @@ local startup = function(use)
     config = c("lspconfig")
   }
 
+  --use({
+  --  "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --  config = function()
+  --    require("lsp_lines").setup()
+  --    -- Disable virtual_text since it's redundant due to lsp_lines.
+  --    vim.diagnostic.config({
+  --      virtual_text = false,
+  --    })
+
+  --    vim.api.nvim_create_autocmd('InsertEnter', {
+  --      callback = function()
+  --        vim.diagnostic.hide()
+  --      end,
+  --    })
+
+  --    vim.api.nvim_create_autocmd('ModeChanged', {
+  --      pattern = 'i:*',
+  --      callback = function()
+  --        vim.schedule(vim.diagnostic.show)
+  --      end,
+  --    })
+  --  end
+  --})
+
   config 'lsp-signature'
   config 'nvim-cmp'
   use 'github/copilot.vim'
