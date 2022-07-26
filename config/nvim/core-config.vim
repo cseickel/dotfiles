@@ -172,9 +172,12 @@ function! InitTerminal()
   setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
   setlocal autowriteall modifiable
   set filetype=terminal
+  let g:last_terminal_job_id = b:terminal_job_id
+  let g:last_terminal_winid = nvim_get_current_win()
+  let g:last_terminal_bufid = nvim_get_current_buf()
 endfunction
 
-function VimEnter()
+function! VimEnter()
   setlocal cursorline
   "To share clipboard between instances
   if exists(':rshada') 
@@ -206,3 +209,10 @@ augroup core_autocmd
   autocmd WinLeave    * call WinLeave()
 
 augroup END
+
+function! SendToLastTerminal(args)
+  call chansend(g:last_terminal_job_id, a:args . "\<cr>")
+  call win_execute(g:last_terminal_winid, 'normal! G')
+endfunction
+
+command! -nargs=? T call SendToLastTerminal("<args>")

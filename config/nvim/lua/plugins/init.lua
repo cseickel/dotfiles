@@ -89,7 +89,8 @@ local startup = function(use)
   use 'nanotee/zoxide.vim'
 
   use 'svermeulen/vim-cutlass'
-  use 'ojroques/vim-oscyank'
+  --use 'ojroques/vim-oscyank'
+  config 'nvim-osc52'
   use 'alvan/vim-closetag'
   --use 'tmsvg/pear-tree'
   --use 'sbdchd/neoformat'
