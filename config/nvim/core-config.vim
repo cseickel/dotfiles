@@ -168,15 +168,6 @@ function! FourSpaceIndent()
     setlocal expandtab
 endfunction
 
-function! InitTerminal()
-  setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
-  setlocal autowriteall modifiable
-  set filetype=terminal
-  let g:last_terminal_job_id = b:terminal_job_id
-  let g:last_terminal_winid = nvim_get_current_win()
-  let g:last_terminal_bufid = nvim_get_current_buf()
-endfunction
-
 function! VimEnter()
   setlocal cursorline
   "To share clipboard between instances
@@ -189,6 +180,15 @@ function! WinLeave()
   if &filetype != "neo-tree"
     setlocal nocursorline
   endif
+endfunction
+
+function! InitTerminal()
+  setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
+  setlocal autowriteall modifiable
+  set filetype=terminal
+  let g:last_terminal_job_id = b:terminal_job_id
+  let g:last_terminal_winid = nvim_get_current_win()
+  let g:last_terminal_bufid = nvim_get_current_buf()
 endfunction
 
 augroup core_autocmd
@@ -211,7 +211,20 @@ augroup core_autocmd
 augroup END
 
 function! SendToLastTerminal(args)
-  call chansend(g:last_terminal_job_id, a:args . "\<cr>")
+  if !exists("g:last_terminal_job_id") || !exists("g:last_terminal_winid")
+    echo "No terminal found"
+    return
+  endif
+  let cmd = a:args
+  if len(a:args) == 0
+    let cmd = g:last_terminal_cmd
+  endif
+  if len(cmd) == 0
+    echo "No command found"
+    return
+  endif
+  let g:last_terminal_cmd = cmd
+  call chansend(g:last_terminal_job_id, cmd . "\<cr>")
   call win_execute(g:last_terminal_winid, 'normal! G')
 endfunction
 
