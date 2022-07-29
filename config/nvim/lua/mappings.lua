@@ -5,7 +5,7 @@
 local presets = require("which-key.plugins.presets")
 presets.operators["v"] = nil
 
-local memory_utils = require("memory_utils")
+local memory_utils = pcall(require, "memory_utils")
 
 local showSymbolFinder = function ()
   local preview_width = vim.o.columns - 20 - 65
@@ -187,12 +187,12 @@ local mappings = {
       r = { "<cmd>Gitsigns reset_hunk<cr>",                    "Reset Hunk" },
       R = { "<cmd>Gitsigns reset_buffer<cr>",                  "Reset Buffer" },
     },
-    m = {
-      name = "Memory Leak...",
-      b = { memory_utils.capture_before,                       "Capture Before" },
-      a = { memory_utils.capture_after,                        "Capture After" },
-      c = { memory_utils.compare,                              "Compare" },
-    },
+    --m = {
+    --  name = "Memory Leak...",
+    --  b = { memory_utils.capture_before,                       "Capture Before" },
+    --  a = { memory_utils.capture_after,                        "Capture After" },
+    --  c = { memory_utils.compare,                              "Compare" },
+    --},
     s = { "<cmd>Neotree reveal git_status current<cr>",        "Show Git Status" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },

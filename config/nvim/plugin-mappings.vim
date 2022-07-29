@@ -53,10 +53,21 @@ endfunction
 "*****************************************************************************
 nnoremap <silent>       K         :lua vim.lsp.buf.hover()<cr>
 
-function! InitSql()
-    nnoremap <silent><buffer> <M-x> :%DB $DBUI_URL<cr>
-    vnoremap <silent><buffer> <M-x> :DB $DBUI_URL<cr>
-    let b:db=$DBUI_URL
+function! InitSql(dburl)
+    let b:db=a:dburl
+    nnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(0)<cr>
+    vnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(1)<cr>
+endfunction
+
+function! ExecuteSql(visual)
+  if b:db == ""
+    let b:db=input("Enter DB URL: ")
+  endif
+  if a:visual
+    call execute('DB ' . b:db)
+  else
+    call execute('%DB ' . b:db)
+  endif
 endfunction
 
 function! Highlight_Symbol() abort
@@ -71,7 +82,7 @@ augroup plugin_mappings_augroup
     autocmd CursorHold * silent! call Highlight_Symbol()
     autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
     autocmd FileType typescript,javascript nnoremap <buffer><leader>= :lua vim.lsp.buf.formatting()<cr>
-    autocmd FileType sql call InitSql()
+    autocmd FileType sql call InitSql("")
     autocmd FileType qf,Trouble silent! call CloseAllTools()
     autocmd FileType Trouble setlocal cursorline
     autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
