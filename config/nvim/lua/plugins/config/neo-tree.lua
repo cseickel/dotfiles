@@ -5,19 +5,6 @@ local mine = function ()
   hi NeoTreeCursorLine gui=bold guibg=#333333
   ]])
 
-  vim.cmd([[
-    hi NeoTreeNormal guibg=#000
-    hi NeoTreeNormalNC guibg=#000
-  ]])
-  vim.cmd[[
-    augroup NEOTREE_AUGROUP
-      autocmd!
-      autocmd User FugitiveChanged lua require("neo-tree.sources.manager").refresh("filesystem")
-    augroup END
-  ]]
-
-
-
   local config = {
     sources = {
       "filesystem",
@@ -25,14 +12,10 @@ local mine = function ()
       "git_status",
       "diagnostics",
     },
-    add_blank_line_at_top = false,
-    close_if_last_window = false,
     close_floats_on_escape_key = true,
-    git_status_async = true,
-    enable_git_status = true,
-    enable_refresh_on_write = true,
-    hide_root_node = false,
-    retain_hidden_root_indent = true,
+    git_status_async = false,
+    enable_git_status = false,
+    enable_refresh_on_write = false,
     log_level = "trace",
     log_to_file = true,
     open_files_in_last_window = true,
@@ -150,7 +133,7 @@ local mine = function ()
       },
     },
     filesystem = {
-      async_directory_scan = true,
+      async_directory_scan = false,
       cwd_target = {
         sidebar = "tab",
         current = "tab",
@@ -411,17 +394,12 @@ local issue = function ()
     },
     filesystem = {
       follow_current_file = true,
-      use_libuv_file_watcher = false,
-      filtered_items = {
-        hide_dotfiles = false,
-        hide_hidden = false,
-        hide_gitignored = false
-      }
+      use_libuv_file_watcher = true,
     },
-    enable_diagnostics = false,
-    enable_git_status = false,
-    --enable_modified_markers = false,
-    --enable_refresh_on_write = true,
+    enable_diagnostics = true,
+    enable_git_status = true,
+    enable_modified_markers = true,
+    enable_refresh_on_write = true,
     --resize_timer_interval = -1,
   })
 end
@@ -437,4 +415,4 @@ local example = function ()
   })
 end
 
-return mine
+return issue
