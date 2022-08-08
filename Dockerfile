@@ -5,14 +5,14 @@ ENV \
     GID="1000" \
     UNAME="cseickel" \
     SHELL="/bin/zsh" \
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=0
 
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
-    && sudo locale-gen
+    && sudo locale-gen \
+    && pacman -Sy --noprogressbar --noconfirm --needed archlinux-keyring
 
-RUN pacman -Syu --noprogressbar --noconfirm --needed \
+RUN pacman -Sy --noprogressbar --noconfirm --needed \
        cmake clang unzip ninja git curl wget openssh zsh reflector \
-       archlinux-keyring \
     && useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     && sudo reflector -p https -c us --score 20 --connection-timeout 1 --sort rate --save /etc/pacman.d/mirrorlist \

@@ -6,7 +6,7 @@
 -- @date      2016-02-03
 
 -- The global config of the mri.
-local cConfig = 
+local cConfig =
 {
     m_bAllMemoryRefFileAddTime = true,
     m_bSingleMemoryRefFileAddTime = true,
@@ -170,7 +170,7 @@ local function CollectObjectReferenceInMemory(strName, cObject, cDumpInfoContain
 	-- Get ref and name info.
 	local cRefInfoContainer = cDumpInfoContainer.m_cObjectReferenceCount
 	local cNameInfoContainer = cDumpInfoContainer.m_cObjectAddressToName
-	
+
 	local strType = type(cObject)
 	if "table" == strType then
 		-- Check table with class name.
@@ -407,7 +407,7 @@ local function CollectSingleObjectReferenceInMemory(strName, cObject, cDumpInfoC
 	local cExistTag = cDumpInfoContainer.m_cObjectExistTag
 	local cNameAllAlias = cDumpInfoContainer.m_cObjectAliasName
 	local cAccessTag = cDumpInfoContainer.m_cObjectAccessTag
-	
+
 	local strType = type(cObject)
 	if "table" == strType then
 		-- Check table with class name.
@@ -646,7 +646,7 @@ local function OutputMemorySnapshot(strSavePath, strExtraFileName, nMaxRescords,
 	local cNameInfoBase = (cDumpInfoResultsBase and cDumpInfoResultsBase.m_cObjectAddressToName) or nil
 	local cRefInfo = cDumpInfoResults.m_cObjectReferenceCount
 	local cNameInfo = cDumpInfoResults.m_cObjectAddressToName
-	
+
 	-- Create a cache result to sort by ref count.
 	local cRes = {}
 	local nIdx = 0
@@ -664,7 +664,7 @@ local function OutputMemorySnapshot(strSavePath, strExtraFileName, nMaxRescords,
 	local bOutputFile = strSavePath and (string.len(strSavePath) > 0)
 	local cOutputHandle = nil
 	local cOutputEntry = print
-	
+
 	if bOutputFile then
 		-- Check save path affix.
 		local strAffix = string.sub(strSavePath, -1)
@@ -804,7 +804,7 @@ local function OutputMemorySnapshotSingleObject(strSavePath, strExtraFileName, n
 	local bOutputFile = strSavePath and (string.len(strSavePath) > 0)
 	local cOutputHandle = nil
 	local cOutputEntry = print
-	
+
 	if bOutputFile then
 		-- Check save path affix.
 		local strAffix = string.sub(strSavePath, -1)
@@ -982,7 +982,7 @@ local function DumpMemorySnapshot(strSavePath, strExtraFileName, nMaxRescords, s
 
 	-- Collect memory info.
 	CollectObjectReferenceInMemory(strRootObjectName, cRootObject, cDumpInfoContainer)
-	
+
 	-- Dump the result.
 	OutputMemorySnapshot(strSavePath, strExtraFileName, nMaxRescords, strRootObjectName, cRootObject, nil, cDumpInfoContainer)
 end
@@ -1042,7 +1042,7 @@ local function DumpMemorySnapshotSingleObject(strSavePath, strExtraFileName, nMa
 
 	-- Collect memory info.
 	CollectSingleObjectReferenceInMemory("registry", debug.getregistry(), cDumpInfoContainer)
-	
+
 	-- Dump the result.
 	OutputMemorySnapshotSingleObject(strSavePath, strExtraFileName, nMaxRescords, cDumpInfoContainer)
 end

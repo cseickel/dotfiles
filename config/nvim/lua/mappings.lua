@@ -1,10 +1,3 @@
--- make sure to run this code before calling setup()
--- refer to the full lists at https://github.com/folke/which-key.nvim/blob/main/lua/which-key/plugins/presets/init.lua
---local trouble = require('trouble')
-
-local presets = require("which-key.plugins.presets")
-presets.operators["v"] = nil
-
 local memory_utils = pcall(require, "memory_utils")
 
 local showSymbolFinder = function ()
@@ -104,12 +97,6 @@ local grepProject = function ()
   require("telescope.builtin").live_grep({cwd=getProjectRoot()})
 end
 
-local hop = require('hop')
-vim.cmd [[
-  noremap ,, <cmd>HopChar2<cr>
-  noremap ,. <cmd>lua require("hop").hint_char2({direction = require'hop.hint'.HintDirection.AFTER_CURSOR, hint_offset=1 })<cr>
-  noremap ,/ <cmd>HopPattern<cr>
-]]
 local mappings = {
   [";"] = {"<Plug>(buf-surf-back)",               "Previous Buffer"},
   ["'"] = {"<Plug>(buf-surf-forward)",            "Next Buffer"},
@@ -121,8 +108,8 @@ local mappings = {
   l = { "Focus window to the RIGHT" },
   H = { "Start of Line" },
   L = { "End of Line" },
-  K = { "Show documentation"},
-  ["\\"] = { "<cmd>Neotree current reveal toggle<cr>",             "Open Tree in Current Window" },
+  K = { "<cmd>lua vim.lsp.buf.hover()<cr>",                 "Show documentation"},
+  ["\\"] = { "<cmd>Neotree current reveal toggle<cr>",      "Open Tree in Current Window" },
   ["|"] = { "<cmd>Neotree reveal<cr>",                      "Open Tree in Sidebar" },
   ["["] = {
       name = "Previous...",
@@ -215,11 +202,76 @@ local mappings = {
 }
 require("which-key").register(mappings)
 
-_G.test_symbols = function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  vim.lsp.buf_request_all(bufnr, "textDocument/documentSymbol", {}, function(...)
-    print(vim.inspect(...))
-  end)
-end
+vim.cmd [[
+  noremap ,, <cmd>HopChar2<cr>
+  noremap ,. <cmd>lua require("hop").hint_char2({direction = require'hop.hint'.HintDirection.AFTER_CURSOR, hint_offset=1 })<cr>
+  noremap ,/ <cmd>HopPattern<cr>
 
-vim.api.nvim_set_keymap("n", ",S", "<cmd>lua _G.test_symbols()<cr>", {noremap = true, silent = true})
+  imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+  let g:copilot_no_tab_map = v:true
+
+
+  function! ToggleWindowZoom(clear_decorations) abort
+      if exists("b:is_zoomed_win") && b:is_zoomed_win
+          unlet b:is_zoomed_win
+          let l:name = expand("%:p")
+          let l:top = line("w0")
+          let l:line = line(".")
+          tabclose
+          let windowNr = bufwinnr(l:name)
+          if windowNr > 0
+              execute windowNr 'wincmd w'
+              execute "normal " . l:top . "zt"
+              execute l:line
+          endif
+      else
+          if winnr('$') > 1 || a:clear_decorations
+              let l:top = line("w0")
+              let l:line = line(".")
+              -1tabedit %
+              let b:is_zoomed_win = 1
+              execute "normal " . l:top . "zt"
+              execute l:line
+              execute "TabooRename  " . expand("%:t")
+          endif
+          if a:clear_decorations
+              set nonumber
+              set signcolumn=no
+              IndentBlanklineDisable
+          endif
+      endif
+  endfunction
+
+
+  function! InitSql(dburl)
+      let b:db=a:dburl
+      nnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(0)<cr>
+      vnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(1)<cr>
+  endfunction
+
+  function! ExecuteSql(visual)
+    if b:db == ""
+      let b:db=input("Enter DB URL: ")
+    endif
+    if a:visual
+      call execute('DB ' . b:db)
+    else
+      call execute('%DB ' . b:db)
+    endif
+  endfunction
+
+  function! Highlight_Symbol() abort
+      if &ft != "cs"
+          lua vim.lsp.buf.document_highlight()
+      endif
+  endfunction
+
+
+  augroup plugin_mappings_augroup
+      autocmd!
+      autocmd CursorHold * silent! call Highlight_Symbol()
+      autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
+      autocmd FileType typescript,javascript nnoremap <buffer><leader>= :lua vim.lsp.buf.formatting()<cr>
+      autocmd FileType sql call InitSql("")
+  augroup END
+]]

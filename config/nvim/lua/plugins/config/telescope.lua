@@ -1,7 +1,4 @@
 return function ()
-  local quickfix_width = function()
-    return math.min(vim.o.columns - 2, 180)
-  end
   require('telescope').setup({
     defaults = {
       vimgrep_arguments = {
@@ -15,14 +12,10 @@ return function ()
       },
       mappings = {
         i = {
-          --["<Esc>"] = require('telescope.actions').close,
+          ["<Esc>"] = require('telescope.actions').close,
           ["<C-b>"] = function()
             vim.cmd("close!")
             require('telescope.builtin').file_browser()
-          end,
-          ["<C-d>"] = function ()
-            vim.cmd("close!")
-            require('telescope').extensions.zoxide.list()
           end,
           ["<C-f>"] = function()
             vim.cmd("close!")

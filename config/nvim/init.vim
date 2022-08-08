@@ -23,16 +23,17 @@ let g:loaded_netrwFileHandlers = 1
 
 source core-config.vim
 source core-mappings.vim
-lua    require('impatient')
-lua    require('plugins')
-source plugin-config.vim
-lua    require('quickfix')
-lua    require('mappings')
-source plugin-mappings.vim
-lua    require('status')
+lua << EOF
+  pcall(require, 'impatient')
+  require('plugins')
+  require('quickfix')
+  require('mappings')
+EOF
+source theme.vim
+lua require('status')
 exe 'cd ' . g:owd
 
 augroup init
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile>
+    autocmd BufWritePost */config/nvim/lua/* source <afile> | source ~/.config/nvim/lua/plugins/init.lua | PackerCompile
 augroup END

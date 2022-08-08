@@ -1,418 +1,364 @@
-local mine = function ()
-  -- See ":help neo-tree-highlights" for a list of available highlight groups
-  vim.cmd([[
-  "let g:neo_tree_remove_legacy_commands = 1
-  hi NeoTreeCursorLine gui=bold guibg=#333333
-  ]])
+local mine = function(use)
+	use {
+		"~/repos/neo-tree.nvim",
+		requires = { 
+      'mrbjarksen/neo-tree-diagnostics.nvim',
+		},
+    config = function()
+      -- See ":help neo-tree-highlights" for a list of available highlight groups
+      vim.cmd([[
+      "let g:neo_tree_remove_legacy_commands = 1
+      hi NeoTreeCursorLine gui=bold guibg=#333333
+      ]])
 
-  local config = {
-    sources = {
-      "filesystem",
-      "buffers",
-      "git_status",
-      "diagnostics",
-    },
-    close_floats_on_escape_key = true,
-    git_status_async = false,
-    enable_git_status = false,
-    enable_refresh_on_write = false,
-    log_level = "trace",
-    log_to_file = true,
-    open_files_in_last_window = true,
-    sort_case_insensitive = true,
-    popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
-    use_popups_for_input = true,
-    default_component_configs = {
-      container = {
-        --enable_character_fade = false
-      },
-      indent = {
-        with_markers = true,
-        with_arrows = true,
-        with_expanders = true,
-        padding = 2
-      },
-      git_status = {
-        symbols = {
-          -- Change type
-          added     = "",
-          deleted   = "✖",
-          modified  = "",
-          renamed   = "",
-          -- Status type
-          untracked = "",
-          ignored   = "",
-          unstaged  = "",
-          staged    = "",
-          conflict  = "",
+      local config = {
+        sources = {
+          "filesystem",
+          "buffers",
+          "git_status",
+          "diagnostics",
         },
-        --symbols =false
-      },
-      --icon = {
-      --  folder_closed = "",
-      --  folder_open = "",
-      --  folder_empty = "ﰊ",
-      --  default = "*",
-      --},
-      name = {
-        trailing_slash = true,
-        --use_git_status_colors = false,
-      },
-    },
-    event_handlers = {
-      {
-        event = "neo_tree_buffer_enter",
-        handler = function()
-          vim.cmd 'highlight! Cursor blend=100'
-        end
-      },
-      {
-        event = "neo_tree_buffer_leave",
-        handler = function()
-          vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
-        end
-      },
-    },
-    nesting_rules = {
-      --ts = { ".d.ts", "js", "css", "html", "scss" }
-    },
-    window = {
-      mapping_options = {
-        noremap = true,
-        nowait = true,
-      },
-      mappings = {
-        ["a"] = { "add", config = { show_path = "relative" }},
-        ["z"] = "close_all_nodes",
-        ["Z"] = "expand_all_nodes",
-      }
-    },
-    diagnostics = {
-      follow_behavior = { -- Behavior when `follow_current_file` is true
-        always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
-        expand_followed = true, -- Ensure the node of the followed file is expanded
-        collapse_others = false, -- Ensure other nodes are collapsed
-      },
-      components = {
-        linenr = function(config, node)
-          local lnum = tostring(node.extra.diag_struct.lnum + 1)
-          local pad = string.rep(" ", 4 - #lnum)
-          return {
-            {
-              text = pad .. lnum,
-              highlight = "LineNr",
-            },
-            {
-              text = "▕ ",
-              highlight = "NeoTreeDimText",
-            }
-          }
-        end
-      },
-      renderers = {
-        file = {
-          { "indent" },
-          { "icon" },
-          { "grouped_path" },
-          { "name", highlight = "NeoTreeFileNameOpened" },
-          --{ "diagnostic_count", show_when_none = true },
-          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Error", right_padding = 0 },
-          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Warn", right_padding = 0 },
-          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Info", right_padding = 0 },
-          { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Hint", right_padding = 0 },
-          { "clipboard" },
-        },
-        diagnostic = {
-          { "indent" },
-          { "icon" },
-          { "linenr" },
-          { "name" },
-          --{ "source" },
-          --{ "code" },
-        },
-      },
-    },
-    filesystem = {
-      async_directory_scan = false,
-      cwd_target = {
-        sidebar = "tab",
-        current = "tab",
-      },
-      hijack_netrw_behavior = "open_current",
-      follow_current_file = true,
-      group_empty_dirs = true,
-      use_libuv_file_watcher = true,
-      bind_to_cwd = true,
-      filtered_items = {
-        visible = false,
-        show_hidden_count = true,
-        hide_dotfiles = true,
-        hide_gitignored = false,
-        hide_by_pattern = { }
-      },
-      find_command = "fd",
-      find_args = {
-        fd = {
-          "--exclude", ".git",
-          "--exclude", "node_modules",
-        }
-      },
-      find_by_full_path_words = true,
-      window = {
-        position = "left",
-        popup = {
-          position = { col = "100%", row = "2" },
-          size = function(state)
-            local root_name = vim.fn.fnamemodify(state.path, ":~")
-            local root_len = string.len(root_name) + 4
-            return {
-              width = math.max(root_len, 50),
-              height = vim.o.lines - 6
-            }
-          end
-        },
-        mappings = {
-          ["K"] = "close_node",
-          ["J"] = function (state)
-            local utils = require("neo-tree.utils")
-            local node = state.tree:get_node()
-            if utils.is_expandable(node) then
-              if not node:is_expanded() then
-                require("neo-tree.sources.filesystem").toggle_directory(state, node)
-              end
-              local children = state.tree:get_nodes(node:get_id())
-              if children and #children > 0 then
-                local first_child = children[1]
-                require("neo-tree.ui.renderer").focus_node(state, first_child:get_id())
-              end
-            end
-          end,
-          ["<space>"] = function (state)
-            local node = state.tree:get_node()
-            if require("neo-tree.utils").is_expandable(node) then
-              state.commands["toggle_directory"](state)
-            else
-              state.commands["close_node"](state)
-            end
-          end,
-          ["S"] = "split_with_window_picker",
-          ["s"] = "vsplit_with_window_picker",
-        },
-      },
-    }
-  }
-
-  require("neo-tree").setup(config)
-end
-
-
-local quickstart = function ()
-      -- Unless you are still migrating, remove the deprecated commands from v1.x
-      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
-      -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-      vim.fn.sign_define("DiagnosticSignError",
-        {text = " ", texthl = "DiagnosticSignError"})
-      vim.fn.sign_define("DiagnosticSignWarn",
-        {text = " ", texthl = "DiagnosticSignWarn"})
-      vim.fn.sign_define("DiagnosticSignInfo",
-        {text = " ", texthl = "DiagnosticSignInfo"})
-      vim.fn.sign_define("DiagnosticSignHint",
-        {text = "", texthl = "DiagnosticSignHint"})
-      -- NOTE: this is changed from v1.x, which used the old style of highlight groups
-      -- in the form "LspDiagnosticsSignWarning"
-
-      require("neo-tree").setup({
-        close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
-        popup_border_style = "rounded",
-        enable_git_status = true,
-        enable_diagnostics = true,
+        close_floats_on_escape_key = true,
+        --enable_diagnostics = false,
+        --enable_git_status = false,
+        log_level = "trace",
+        log_to_file = false,
+        open_files_in_last_window = true,
+        sort_case_insensitive = true,
+        popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
         default_component_configs = {
+          container = {
+            --enable_character_fade = false
+            --padding_right = 8,
+          },
           indent = {
-            indent_size = 2,
-            padding = 1, -- extra padding on left hand side
-            -- indent guides
             with_markers = true,
-            indent_marker = "│",
-            last_indent_marker = "└",
-            highlight = "NeoTreeIndentMarker",
-            -- expander config, needed for nesting files
-            with_expanders = nil, -- if nil and file nesting is enabled, will enable expanders
-            expander_collapsed = "",
-            expander_expanded = "",
-            expander_highlight = "NeoTreeExpander",
-          },
-          icon = {
-            folder_closed = "",
-            folder_open = "",
-            folder_empty = "ﰊ",
-            default = "*",
-          },
-          modified = {
-            symbol = "[+]",
-            highlight = "NeoTreeModified",
-          },
-          name = {
-            trailing_slash = false,
-            use_git_status_colors = true,
+            with_arrows = true,
+            with_expanders = true,
+            padding = 2
           },
           git_status = {
             symbols = {
               -- Change type
-              added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-              modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-              deleted   = "✖",-- this can only be used in the git_status source
-              renamed   = "",-- this can only be used in the git_status source
+              added     = "",
+              deleted   = "✖",
+              modified  = "",
+              renamed   = "",
               -- Status type
               untracked = "",
               ignored   = "",
               unstaged  = "",
               staged    = "",
               conflict  = "",
+            },
+            --symbols =false
+          },
+          --icon = {
+          --  folder_closed = "",
+          --  folder_open = "",
+          --  folder_empty = "ﰊ",
+          --  default = "*",
+          --},
+          name = {
+            trailing_slash = true,
+            --use_git_status_colors = false,
+          },
+        },
+        event_handlers = {
+          {
+            event = "neo_tree_buffer_enter",
+            handler = function()
+              vim.cmd 'highlight! Cursor blend=100'
+            end
+          },
+          {
+            event = "neo_tree_buffer_leave",
+            handler = function()
+              vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
+            end
+          },
+        },
+        nesting_rules = {
+          --ts = { ".d.ts", "js", "css", "html", "scss" }
+        },
+        window = {
+          mapping_options = {
+            noremap = true,
+            nowait = true,
+          },
+          mappings = {
+            ["a"] = { "add", config = { show_path = "relative" }},
+            ["z"] = "close_all_nodes",
+            ["Z"] = "expand_all_nodes",
+          }
+        },
+        diagnostics = {
+          follow_behavior = { -- Behavior when `follow_current_file` is true
+            always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
+            expand_followed = true, -- Ensure the node of the followed file is expanded
+            collapse_others = false, -- Ensure other nodes are collapsed
+          },
+          components = {
+            linenr = function(config, node)
+              local lnum = tostring(node.extra.diag_struct.lnum + 1)
+              local pad = string.rep(" ", 4 - #lnum)
+              return {
+                {
+                  text = pad .. lnum,
+                  highlight = "LineNr",
+                },
+                {
+                  text = "▕ ",
+                  highlight = "NeoTreeDimText",
+                }
+              }
+            end
+          },
+          renderers = {
+            file = {
+              { "indent" },
+              { "icon" },
+              { "grouped_path" },
+              { "name", highlight = "NeoTreeFileNameOpened" },
+              --{ "diagnostic_count", show_when_none = true },
+              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Error", right_padding = 0 },
+              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Warn", right_padding = 0 },
+              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Info", right_padding = 0 },
+              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Hint", right_padding = 0 },
+              { "clipboard" },
+            },
+            diagnostic = {
+              { "indent" },
+              { "icon" },
+              { "linenr" },
+              { "name" },
+              --{ "source" },
+              --{ "code" },
+            },
+          },
+        },
+        filesystem = {
+          --async_directory_scan = false,
+          cwd_target = {
+            sidebar = "tab",
+            current = "tab",
+          },
+          hijack_netrw_behavior = "open_current",
+          follow_current_file = true,
+          group_empty_dirs = true,
+          use_libuv_file_watcher = true,
+          bind_to_cwd = true,
+          filtered_items = {
+            visible = false,
+            show_hidden_count = true,
+            hide_dotfiles = true,
+            hide_gitignored = false,
+            hide_by_pattern = { }
+          },
+          find_command = "fd",
+          find_args = {
+            fd = {
+              "--exclude", ".git",
+              "--exclude", "node_modules",
             }
+          },
+          find_by_full_path_words = true,
+          window = {
+            position = "left",
+            popup = {
+              position = { col = "100%", row = "2" },
+              size = function(state)
+                local root_name = vim.fn.fnamemodify(state.path, ":~")
+                local root_len = string.len(root_name) + 4
+                return {
+                  width = math.max(root_len, 50),
+                  height = vim.o.lines - 6
+                }
+              end
+            },
+            mappings = {
+              ["K"] = "close_node",
+              ["J"] = function (state)
+                local utils = require("neo-tree.utils")
+                local node = state.tree:get_node()
+                if utils.is_expandable(node) then
+                  if not node:is_expanded() then
+                    require("neo-tree.sources.filesystem").toggle_directory(state, node)
+                  end
+                  local children = state.tree:get_nodes(node:get_id())
+                  if children and #children > 0 then
+                    local first_child = children[1]
+                    require("neo-tree.ui.renderer").focus_node(state, first_child:get_id())
+                  end
+                end
+              end,
+              ["<space>"] = function (state)
+                local node = state.tree:get_node()
+                if require("neo-tree.utils").is_expandable(node) then
+                  state.commands["toggle_directory"](state)
+                else
+                  state.commands["close_node"](state)
+                end
+              end,
+              ["S"] = "split_with_window_picker",
+              ["s"] = "vsplit_with_window_picker",
+            },
+          },
+        }
+      }
+
+      require("neo-tree").setup(config)
+    end
+  }
+end
+
+local mem_issue = function(use)
+	use {
+		"~/repos/neo-tree.nvim",
+		requires = { 
+			"nvim-lua/plenary.nvim",
+			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+      'mrbjarksen/neo-tree-diagnostics.nvim',
+		},
+    config = function()
+      -- See ":help neo-tree-highlights" for a list of available highlight groups
+      vim.cmd([[
+      "let g:neo_tree_remove_legacy_commands = 1
+      hi NeoTreeCursorLine gui=bold guibg=#333333
+      ]])
+
+      local config = {
+        enable_diagnostics = false,
+        enable_git_status = false,
+        close_floats_on_escape_key = true,
+        --enable_diagnostics = false,
+        --enable_git_status = false,
+        log_level = "trace",
+        log_to_file = true,
+        open_files_in_last_window = true,
+        sort_case_insensitive = true,
+        popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
+        event_handlers = {
+          {
+            event = "neo_tree_buffer_enter",
+            handler = function()
+              vim.cmd 'highlight! Cursor blend=100'
+            end
+          },
+          {
+            event = "neo_tree_buffer_leave",
+            handler = function()
+              vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
+            end
           },
         },
         window = {
-          position = "left",
-          width = 40,
+          mapping_options = {
+            noremap = true,
+            nowait = true,
+          },
           mappings = {
-            ["<space>"] = "toggle_node",
-            ["<2-LeftMouse>"] = "open",
-            ["<cr>"] = "open",
-            ["S"] = "open_split",
-            ["s"] = "open_vsplit",
-            ["t"] = "open_tabnew",
-            ["C"] = "close_node",
-            ["a"] = "add",
-            ["A"] = "add_directory",
-            ["d"] = "delete",
-            ["r"] = "rename",
-            ["y"] = "copy_to_clipboard",
-            ["x"] = "cut_to_clipboard",
-            ["p"] = "paste_from_clipboard",
-            ["c"] = "copy", -- takes text input for destination
-            ["m"] = "move", -- takes text input for destination
-            ["q"] = "close_window",
-            ["R"] = "refresh",
-            ["Y"] = function(state)
-              local node = state.tree:get_node()
-              vim.fn.setreg('"', node.name, 'c')
-            end,
-            ["<C-y>"] = function(state)
-              local node = state.tree:get_node()
-              local full_path = node.path
-              local relative_path = full_path:sub(#state.path)
-              vim.fn.setreg('"', relative_path, 'c')
-            end,
+            ["a"] = { "add", config = { show_path = "relative" }},
+            ["z"] = "close_all_nodes",
+            ["Z"] = "expand_all_nodes",
           }
         },
-        nesting_rules = {},
         filesystem = {
-          filtered_items = {
-            visible = false, -- when true, they will just be displayed differently than normal items
-            hide_dotfiles = true,
-            hide_gitignored = true,
-            hide_by_name = {
-              ".DS_Store",
-              "thumbs.db"
-              --"node_modules"
-            },
-            never_show = { -- remains hidden even if visible is toggled to true
-              --".DS_Store",
-              --"thumbs.db"
-            },
+          --async_directory_scan = false,
+          cwd_target = {
+            sidebar = "tab",
+            current = "tab",
           },
-          follow_current_file = true, -- This will find and focus the file in the active buffer every
-                                       -- time the current file is changed while the tree is open.
-          hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
-                                                  -- in whatever position is specified in window.position
-                                -- "open_current",  -- netrw disabled, opening a directory opens within the
-                                                  -- window like netrw would, regardless of window.position
-                                -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-          use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
-                                          -- instead of relying on nvim autocmd events.
-          window = {
-            mappings = {
-              ["<bs>"] = "navigate_up",
-              ["."] = "set_root",
-              ["H"] = "toggle_hidden",
-              ["/"] = "fuzzy_finder",
-              ["f"] = "filter_on_submit",
-              ["<c-x>"] = "clear_filter",
-            }
-          }
-        },
-        buffers = {
-          show_unloaded = true,
-          window = {
-            mappings = {
-              ["bd"] = "buffer_delete",
-              ["<bs>"] = "navigate_up",
-              ["."] = "set_root",
-            }
+          hijack_netrw_behavior = "open_current",
+          follow_current_file = false,
+          use_libuv_file_watcher = false,
+          --filtered_items = {
+          --  visible = false,
+          --  show_hidden_count = true,
+          --  hide_dotfiles = true,
+          --  hide_gitignored = false,
+          --  hide_by_pattern = { }
+          --},
+          components = {
+            indent = function(_, node)
+              local indent = node.level * 2
+              local indent_str = string.rep(" ", indent)
+              return { text = indent_str }
+            end,
+            name = function(_, node)
+              local highlight = "NeoTreeFileName"
+              --local text = node.name
+              --if node.type == "directory" then
+              --  highlight = highlights.DIRECTORY_NAME
+              --  if config.trailing_slash and text ~= "/" then
+              --    text = text .. "/"
+              --  end
+              --end
+
+              --if node.level == 1 then
+              --  highlight = highlights.ROOT_NAME
+              --else
+                --local filtered_by = require("neo-tree.sources.common.components").filtered_by(config, node, state)
+                --highlight = filtered_by.highlight or highlight
+                --if config.use_git_status_colors then
+                --  local git_status = state.components.git_status({}, node, state)
+                --  if git_status and git_status.highlight then
+                --    highlight = git_status.highlight
+                --  end
+                --end
+              --end
+
+              return {
+                text = node.name .. " ",
+                highlight = highlight,
+              }
+            end
           },
-        },
-        git_status = {
-          window = {
-            position = "float",
-            mappings = {
-              ["A"]  = "git_add_all",
-              ["gu"] = "git_unstage_file",
-              ["ga"] = "git_add_file",
-              ["gr"] = "git_revert_file",
-              ["gc"] = "git_commit",
-              ["gp"] = "git_push",
-              ["gg"] = "git_commit_and_push",
-            }
+          renderers = {
+            file = {
+              {"indent"},
+              {"name"},
+            },
+            directory = {
+              {"indent"},
+              {"name"},
+            },
           }
         }
+      }
+
+      require("neo-tree").setup(config)
+    end
+  }
+end
+
+local issue = function(use)
+	use {
+		"~/repos/neo-tree.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+		},
+    config = function()
+      require("neo-tree").setup({
+        window = {
+          width = 30
+        },
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false,
+            hide_hidden = false,
+            hide_gitignored = false
+          }
+        },
+        enable_diagnostics = false,
+        enable_git_status = false,
       })
 
-  vim.cmd([[nnoremap \ :NeoTreeReveal<cr>]])
-
-  if vim.g.neo_tree_timer then
-    pcall(vim.g.neo_tree_timer.close, vim.g.neo_tree_timer)
-  end
-  -- Create a timer handle (implementation detail: uv_timer_t).
-  local timer = vim.loop.new_timer()
-  -- Waits 60 seconds, then repeats every 10 seconds until timer:close().
-  timer:start(60 * 1000, 10 * 1000, function()
-    require("neo-tree.events").fire_event("git_event")
-  end)
-  vim.g.neo_tree_timer = timer
+    end
+	}
 end
 
-local clean = function ()
-end
-
-local issue = function ()
-  require("neo-tree").setup({
-    log_to_file = true,
-    log_level = "trace",
-    window = {
-      width = 30
-    },
-    filesystem = {
-      follow_current_file = true,
-      use_libuv_file_watcher = true,
-    },
-    enable_diagnostics = true,
-    enable_git_status = true,
-    enable_modified_markers = true,
-    enable_refresh_on_write = true,
-    --resize_timer_interval = -1,
-  })
-end
-
-local example = function ()
-  require('neo-tree').setup({
-    renderers = {
-      message = {
-        { "indent", with_markers = true },
-        { "name", highlight = "NeoTreeMessage" },
-      }
-    }
-  })
-end
-
-return issue
+return mine

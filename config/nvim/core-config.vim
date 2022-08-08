@@ -137,7 +137,11 @@ set title
 set titleold="Terminal"
 set titlestring=%F
 
-"set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
+" clipboard settings
+set clipboard=unnamedplus
+" Avoid showing message extra message when using completion
+set shortmess+=c
+set sessionoptions=curdir,tabpages,winpos,winsize
 
 set guicursor=n-v-c:block-Cursor/lCursor
             \,i-ci-ve:ver100-iCursor

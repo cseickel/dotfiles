@@ -77,7 +77,8 @@ nnoremap <silent> <M-v> <C-v>
 tnoremap <silent> <M-v> <C-v>
 
 " Control+p as paste shortcut in insert modes
-imap <silent> <C-p> <Esc>pa
+imap <c-p> <C-o>p
+cmap <c-p> <C-r>0
 tmap <silent> <C-p> <c-\>pa
 
 
@@ -86,9 +87,9 @@ nnoremap <silent> <C-c> "cy
 vnoremap <silent> <C-c> "cy
 inoremap <silent> <C-c> <C-o>"cyiw
 
-inoremap <silent> <C-x> <C-o>"cdiw
-vnoremap <silent> <C-x> "cd
-nnoremap <silent> <C-x> "cdiw
+"inoremap <silent> <C-x> <C-o>"cdiw
+"vnoremap <silent> <C-x> "cd
+"nnoremap <silent> <C-x> "cdiw
 
 nnoremap <silent> <C-v> "cp
 vnoremap <silent> <C-v> "cp
@@ -326,3 +327,8 @@ nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 nnoremap <silent> <C-\>     :call RecycleTerminal()<cr>
 nnoremap <silent> <leader>t :15split<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
 nnoremap <silent> <leader>T :call CloseTerminal()<cr>
+
+augroup core_mappings_augroup
+  au!
+  autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
+augroup end
