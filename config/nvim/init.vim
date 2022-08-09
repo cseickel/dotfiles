@@ -28,6 +28,18 @@ lua << EOF
   require('plugins')
   require('quickfix')
   require('mappings')
+
+  _G.update_lua_plugin_config = function()
+    local path = vim.fn.expand("<afile>")
+    local module_name = vim.fn.fnamemodify(path, ':t:r')
+    package.loaded[module_name] = nil
+    package.loaded["plugins.config." .. module_name] = nil
+    package.loaded["plugins"] = nil
+    package.loaded["packer"] = nil
+    vim.cmd("source " .. path)
+    vim.cmd("source ~/.config/nvim/lua/plugins/init.lua")
+    require("packer").compile()
+  end
 EOF
 source theme.vim
 lua require('status')
@@ -35,5 +47,5 @@ exe 'cd ' . g:owd
 
 augroup init
     autocmd!
-    autocmd BufWritePost */config/nvim/lua/* source <afile> | source ~/.config/nvim/lua/plugins/init.lua | PackerCompile
+    autocmd BufWritePost */config/nvim/lua/* call v:lua.update_lua_plugin_config()
 augroup END
