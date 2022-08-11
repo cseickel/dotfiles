@@ -111,7 +111,7 @@ local startup = function(use)
   --  end
   --})
 
-  config 'lsp-signature'
+  --config 'lsp-signature'
   config 'nvim-cmp'
   use 'github/copilot.vim'
 

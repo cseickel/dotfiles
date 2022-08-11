@@ -5,13 +5,17 @@ ENV \
     GID="1000" \
     UNAME="cseickel" \
     SHELL="/bin/zsh" \
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=0
+    CLR_ICU_VERSION_OVERRIDE=71.1
 
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && sudo locale-gen \
-    && pacman -Sy --noprogressbar --noconfirm --needed archlinux-keyring
+    && sudo pacman -Sy --noprogressbar --noconfirm --needed archlinux-keyring \
+    && sudo pacman -Scc \
+    && sudo rm -Rf /etc/pacman.d/gnupg \
+    && sudo pacman-key --init \
+    && sudo pacman-key --populate archlinux
 
-RUN pacman -Sy --noprogressbar --noconfirm --needed \
+RUN pacman -Syu --noprogressbar --noconfirm --needed \
        cmake clang unzip ninja git curl wget openssh zsh reflector \
     && useradd -m -s "${SHELL}" "${UNAME}" \
     && echo "${UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
