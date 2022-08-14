@@ -77,6 +77,34 @@ local mine = function(use)
               vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
             end
           },
+    --{
+    --  event = "neo_tree_window_before_open",
+    --  handler = function(args)
+    --    print("neo_tree_window_before_open", vim.inspect(args))
+    --  end
+    --},
+    {
+      event = "neo_tree_window_after_open",
+      handler = function(args)
+        if args.position == "left" or args.position == "right" then
+          vim.cmd("wincmd =")
+        end
+      end
+    },
+    --{
+    --  event = "neo_tree_window_before_close",
+    --  handler = function(args)
+    --    print("neo_tree_window_before_close", vim.inspect(args))
+    --  end
+    --},
+    {
+      event = "neo_tree_window_after_close",
+      handler = function(args)
+        if args.position == "left" or args.position == "right" then
+          vim.cmd("wincmd =")
+        end
+      end
+    }
         },
         nesting_rules = {
           --ts = { ".d.ts", "js", "css", "html", "scss" }
@@ -347,22 +375,29 @@ local issue = function(use)
 		},
     config = function()
       require("neo-tree").setup({
-        window = {
-          width = 30
-        },
         filesystem = {
-          filtered_items = {
-            hide_dotfiles = false,
-            hide_hidden = false,
-            hide_gitignored = false
-          }
+          components = {
+            trailing_slash = function ()
+              return {
+                text = "/ ",
+                highlight = "NeoTreeDirectoryIcon",
+              }
+            end,
+          },
+          renderers = {
+            directory = {
+              {"icon"},
+              {"name", use_git_status_colors = false, trailing_slash = false, right_padding = 0},
+              {"trailing_slash"},
+              {"diagnostics"},
+              {"git_status"},
+            }
+          },
         },
-        enable_diagnostics = false,
-        enable_git_status = false,
       })
 
     end
 	}
 end
 
-return mine
+return issue
