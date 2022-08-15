@@ -26,6 +26,7 @@ local startup = function(use)
   use "MunifTanjim/nui.nvim"
   use { 'kyazdani42/nvim-web-devicons', config = c("nvim-web-devicons") }
 
+
   config "scrollview"
   config "bufsurf"
   config 'nvim-ts-autotag'
