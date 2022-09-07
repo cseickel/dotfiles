@@ -24,8 +24,8 @@ local startup = function(use)
   use {'lewis6991/impatient.nvim', rocks = 'mpack'}
   use 'nvim-lua/plenary.nvim'
   use "MunifTanjim/nui.nvim"
+  --use "/home/cseickel/repos/nui.nvim"
   use { 'kyazdani42/nvim-web-devicons', config = c("nvim-web-devicons") }
-
 
   config "scrollview"
   config "bufsurf"

@@ -22,7 +22,7 @@ local mine = function(use)
         --enable_diagnostics = false,
         --enable_git_status = false,
         log_level = "trace",
-        log_to_file = false,
+        log_to_file = true,
         open_files_in_last_window = true,
         sort_case_insensitive = true,
         popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
@@ -40,9 +40,9 @@ local mine = function(use)
           git_status = {
             symbols = {
               -- Change type
-              added     = "",
+              added     = "+",
               deleted   = "✖",
-              modified  = "",
+              modified  = "M",
               renamed   = "",
               -- Status type
               untracked = "",
@@ -375,27 +375,8 @@ local issue = function(use)
 		},
     config = function()
       require("neo-tree").setup({
-        filesystem = {
-          components = {
-            trailing_slash = function ()
-              return {
-                text = "/ ",
-                highlight = "NeoTreeDirectoryIcon",
-              }
-            end,
-          },
-          renderers = {
-            directory = {
-              {"icon"},
-              {"name", use_git_status_colors = false, trailing_slash = false, right_padding = 0},
-              {"trailing_slash"},
-              {"diagnostics"},
-              {"git_status"},
-            }
-          },
-        },
+        close_if_last_window = true,
       })
-
     end
 	}
 end
