@@ -33,7 +33,6 @@ local startup = function(use)
   config 'nvim-navic'
   config "which-key"
   setup('rmagatti/auto-session', "auto-session")
-  use 'sindrets/winshift.nvim'
 
   use "/home/cseickel/repos/diagnostic-window.nvim/"
   config 'neo-tree'
@@ -178,6 +177,14 @@ local startup = function(use)
       { 'kana/vim-textobj-user' }
     }
   }
+
+  use {
+    'D4KU/vim-textobj-chainmember',
+    requires = {
+      { 'kana/vim-textobj-user' }
+    }
+  }
+
 end
 
 return require('packer').startup({

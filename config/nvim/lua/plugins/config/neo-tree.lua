@@ -118,6 +118,12 @@ local mine = function(use)
             ["a"] = { "add", config = { show_path = "relative" }},
             ["z"] = "close_all_nodes",
             ["Z"] = "expand_all_nodes",
+            ["gu"] = "git_unstage_file",
+            ["ga"] = "git_add_file",
+            ["gr"] = "git_revert_file",
+            ["gc"] = "git_commit",
+            ["gp"] = "git_push",
+            ["gg"] = "git_commit_and_push",
           }
         },
         diagnostics = {
@@ -181,11 +187,6 @@ local mine = function(use)
             show_hidden_count = true,
             hide_dotfiles = true,
             hide_gitignored = true,
-            hide_by_pattern = { },
-            always_show = {
-               ".show_me",
-              "test"
-            },
           },
           find_command = "fd",
           find_args = {
@@ -376,9 +377,12 @@ local issue = function(use)
     config = function()
       require("neo-tree").setup({
         close_if_last_window = true,
+        hide_root_node = true,
+        retain_hidden_root_indent = false,
       })
     end
 	}
 end
+
 
 return mine
