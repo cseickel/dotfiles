@@ -14,15 +14,13 @@
     - ~/.gnupg
 - link:
     ~/start-arch-linux-docker.sh: start-arch-linux-docker.sh
-    ~/start-code-server.sh: start-code-server.sh
     ~/.gitconfig: gitconfig
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
-    ~/bin/gpg-for-fugitive.sh: bin/gpg-for-fugitive.sh
-    ~/.config/nvim:
+    ~/.config:
       glob: true
-      path: config/nvim/*
+      path: config/*
       recursive: true
 - shell:
   - [./tmux_install_plugins.sh, Installing tmux plugins.]

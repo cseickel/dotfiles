@@ -77,6 +77,12 @@ local mine = function(use)
               vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
             end
           },
+          {
+            event = "file_opened",
+            handler = function()
+              require("neo-tree").close_all();
+            end
+          },
     --{
     --  event = "neo_tree_window_before_open",
     --  handler = function(args)
@@ -115,6 +121,7 @@ local mine = function(use)
             nowait = true,
           },
           mappings = {
+            ["<esc>"] = "cancel",
             ["a"] = { "add", config = { show_path = "relative" }},
             ["z"] = "close_all_nodes",
             ["Z"] = "expand_all_nodes",
@@ -177,7 +184,7 @@ local mine = function(use)
             sidebar = "tab",
             current = "tab",
           },
-          hijack_netrw_behavior = "open_current",
+          --hijack_netrw_behavior = "open_current",
           follow_current_file = true,
           group_empty_dirs = true,
           use_libuv_file_watcher = true,
@@ -237,127 +244,6 @@ local mine = function(use)
               ["s"] = "vsplit_with_window_picker",
             },
           },
-        }
-      }
-
-      require("neo-tree").setup(config)
-    end
-  }
-end
-
-local mem_issue = function(use)
-	use {
-		"~/repos/neo-tree.nvim",
-		requires = { 
-			"nvim-lua/plenary.nvim",
-			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim",
-      'mrbjarksen/neo-tree-diagnostics.nvim',
-		},
-    config = function()
-      -- See ":help neo-tree-highlights" for a list of available highlight groups
-      vim.cmd([[
-      "let g:neo_tree_remove_legacy_commands = 1
-      hi NeoTreeCursorLine gui=bold guibg=#333333
-      ]])
-
-      local config = {
-        enable_diagnostics = false,
-        enable_git_status = false,
-        close_floats_on_escape_key = true,
-        --enable_diagnostics = false,
-        --enable_git_status = false,
-        log_level = "trace",
-        log_to_file = true,
-        open_files_in_last_window = true,
-        sort_case_insensitive = true,
-        popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
-        event_handlers = {
-          {
-            event = "neo_tree_buffer_enter",
-            handler = function()
-              vim.cmd 'highlight! Cursor blend=100'
-            end
-          },
-          {
-            event = "neo_tree_buffer_leave",
-            handler = function()
-              vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
-            end
-          },
-        },
-        window = {
-          mapping_options = {
-            noremap = true,
-            nowait = true,
-          },
-          mappings = {
-            ["a"] = { "add", config = { show_path = "relative" }},
-            ["z"] = "close_all_nodes",
-            ["Z"] = "expand_all_nodes",
-          }
-        },
-        filesystem = {
-          --async_directory_scan = false,
-          cwd_target = {
-            sidebar = "tab",
-            current = "tab",
-          },
-          hijack_netrw_behavior = "open_current",
-          follow_current_file = false,
-          use_libuv_file_watcher = false,
-          --filtered_items = {
-          --  visible = false,
-          --  show_hidden_count = true,
-          --  hide_dotfiles = true,
-          --  hide_gitignored = false,
-          --  hide_by_pattern = { }
-          --},
-          components = {
-            indent = function(_, node)
-              local indent = node.level * 2
-              local indent_str = string.rep(" ", indent)
-              return { text = indent_str }
-            end,
-            name = function(_, node)
-              local highlight = "NeoTreeFileName"
-              --local text = node.name
-              --if node.type == "directory" then
-              --  highlight = highlights.DIRECTORY_NAME
-              --  if config.trailing_slash and text ~= "/" then
-              --    text = text .. "/"
-              --  end
-              --end
-
-              --if node.level == 1 then
-              --  highlight = highlights.ROOT_NAME
-              --else
-                --local filtered_by = require("neo-tree.sources.common.components").filtered_by(config, node, state)
-                --highlight = filtered_by.highlight or highlight
-                --if config.use_git_status_colors then
-                --  local git_status = state.components.git_status({}, node, state)
-                --  if git_status and git_status.highlight then
-                --    highlight = git_status.highlight
-                --  end
-                --end
-              --end
-
-              return {
-                text = node.name .. " ",
-                highlight = highlight,
-              }
-            end
-          },
-          renderers = {
-            file = {
-              {"indent"},
-              {"name"},
-            },
-            directory = {
-              {"indent"},
-              {"name"},
-            },
-          }
         }
       }
 
