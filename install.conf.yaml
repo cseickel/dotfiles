@@ -18,11 +18,16 @@
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
+    ~/.local/share/fonts:
+      glob: true
+      path: fonts/*
+      recursive: true
     ~/.config:
       glob: true
       path: config/*
       recursive: true
 - shell:
+  - [fc-cache -f -v, Installing Fonts...]
   - [./tmux_install_plugins.sh, Installing tmux plugins.]
   - [nvim --headless -c "autocmd User PackerComplete quitall" -c "PackerSync", Installing nvim plugins.]
 
