@@ -182,7 +182,7 @@ local mine = function(use)
           --async_directory_scan = false,
           cwd_target = {
             sidebar = "tab",
-            current = "tab",
+            current = "window",
           },
           --hijack_netrw_behavior = "open_current",
           follow_current_file = true,

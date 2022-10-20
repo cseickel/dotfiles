@@ -67,9 +67,9 @@ return function ()
       name = "attach - netcoredbg",
       request = "attach",
       processId = function()
-        local pid = require('dap.utils').pick_process()
+        local pgrep = vim.fn.system("pgrep -f 'dotnet run'")
         vim.fn.setenv('NETCOREDBG_ATTACH_PID', pid)
-        return pid
+        return tonumber(pgrep)
       end,
     },
   }
