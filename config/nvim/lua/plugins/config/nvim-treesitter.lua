@@ -8,6 +8,7 @@ return function()
       "dockerfile",
       "go",
       "graphql",
+      "hcl",
       "lua",
       "javascript",
       "json",

@@ -269,3 +269,6 @@ function work-on-issue() {
 #
 #export GIT_DIR="$HOME/bare.git"
 #export GIT_WORK_TREE="$HOME"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform

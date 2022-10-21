@@ -3,7 +3,7 @@ FROM archlinux:base-devel
 ENV \
     UID="1000" \
     GID="1000" \
-    UNAME="cseickel" \
+    UNAME="chris" \
     SHELL="/bin/zsh" \
     CLR_ICU_VERSION_OVERRIDE=71.1
 
@@ -24,8 +24,8 @@ RUN pacman -Syu --noprogressbar --noconfirm --needed \
         -o /usr/share/ca-certificates/trust-source/rds-combined-ca-bundle.pem \
     && update-ca-trust
 
-USER cseickel
-WORKDIR /home/cseickel/
+USER chris
+WORKDIR /home/chris/
 
 RUN git clone https://aur.archlinux.org/yay.git \
     && cd yay \
@@ -33,25 +33,32 @@ RUN git clone https://aur.archlinux.org/yay.git \
     && cd .. \
     && rm -Rf yay
 
+# Base pacakages for neovim and terminal
 RUN yay -Syu --noprogressbar --noconfirm --needed \
         python3 python-pip nodejs-lts-fermium npm clang \
         eslint_d prettier stylua git-delta github-cli \
         tmux bat fzf fd ripgrep kitty-terminfo \
         neovim-nightly-bin neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-        dotnet-host-bin dotnet-sdk-bin aspnet-runtime-bin \
-       # dotnet-runtime-bin netcoredbg \
-        mssql-tools maven \
         aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
         docker docker-compose lazydocker \
         ncdu glances nnn-nerd jq zoxide-git \
     && sudo pip --disable-pip-version-check install pynvim \
-    && sudo npm install -g neovim ng wip \
+    && sudo npm install -g neovim wip \
     && yay -Scc --noprogressbar --noconfirm
 
-# netcoredbg has conflicts when it's part of the block above
-RUN yay -Syu --noprogressbar --noconfirm --needed netcoredbg \
+# Job specific packages
+RUN yay -Syu --noprogressbar --noconfirm --needed \
+       # dotnet-host-bin dotnet-sdk-bin aspnet-runtime-bin \
+       # dotnet-runtime-bin netcoredbg \
+       # mssql-tools maven ng \
+        doppler-cli-bin terraform \
+    && terraform -install-autocomplete \
     && yay -Scc --noprogressbar --noconfirm
+
+# netcoredbg (csharp debugger) has conflicts when it's part of the block above
+# RUN yay -Syu --noprogressbar --noconfirm --needed netcoredbg \
+#    && yay -Scc --noprogressbar --noconfirm
 
 # I don't know why I have to set this again, but I do...
 RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
