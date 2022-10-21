@@ -138,8 +138,8 @@ alias p="tmux attach -t primary"
 alias s="tmux attach -t secondary"
 alias t="~/start-arch-linux-docker.sh"
 
-#alias cdk="pass show cseickel-cli >> /dev/null && aws-vault exec admin --no-session -- npm run cdk"
-#alias aws="pass show cseickel-cli >> /dev/null && aws-vault exec admin -- aws"
+alias terra="aws-vault exec rva --no-session -- terraform"
+alias vault="aws-vault exec rva --"
 
 alias add="git add"
 alias checkout='git checkout'

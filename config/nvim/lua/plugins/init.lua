@@ -47,7 +47,7 @@ local startup = function(use)
   config "which-key"
   setup('rmagatti/auto-session', "auto-session")
 
-  use "/home/cseickel/repos/diagnostic-window.nvim/"
+  use "~/repos/diagnostic-window.nvim/"
   config 'neo-tree'
 
   use 'editorconfig/editorconfig-vim'
