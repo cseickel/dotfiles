@@ -1,14 +1,15 @@
 let g:EditorConfig_max_line_indicator="fill"
 let g:db_ui_use_nerd_fonts = 1
 
+" configure nvcode-color-schemes
+let g:nvcodetermcolors=256
+colorscheme nvcode
+
 " checks if your terminal has 24-bit color support
 if (has("termguicolors"))
     set termguicolors
     hi LineNr ctermbg=NONE guibg=NONE
 endif
-" configure nvcode-color-schemes
-let g:nvcodetermcolors=256
-colorscheme nvcode
 
 " Style vertical split bar
 "set fillchars+=vert:█

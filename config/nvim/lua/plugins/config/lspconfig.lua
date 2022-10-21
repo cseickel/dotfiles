@@ -7,9 +7,10 @@ return function(use)
       'jose-elias-alvarez/null-ls.nvim',
       'nvim-lua/plenary.nvim',
       'b0o/schemastore.nvim',
-      'folke/lua-dev.nvim',
+      'folke/neodev.nvim',
     },
     config = function()
+      require("neodev").setup({})
       require("nvim-lsp-installer").setup {}
 
       vim.fn.sign_define("DiagnosticSignError",
@@ -63,13 +64,13 @@ return function(use)
       local null_ls = require("null-ls")
       null_ls.setup({
         sources = {
-          null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
-          null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
+          --null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
+          --null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
           null_ls.builtins.formatting.stylua, -- prettier, eslint, eslint_d, or prettierd
           null_ls.builtins.formatting.trim_newlines,
           null_ls.builtins.formatting.trim_whitespace,
           null_ls.builtins.formatting.eslint_d,
-          null_ls.builtins.formatting.prettierd,
+          --null_ls.builtins.formatting.prettierd,
           --null_ls.builtins.formatting.prettier.with({
           --  filetypes = { "html", "css", "yaml", "markdown", "json" },
           --}),
@@ -154,15 +155,6 @@ return function(use)
           end
         })
       end
-
-      local luadev = require("lua-dev").setup({
-        -- add any options here, or leave empty to use the default settings
-         lspconfig = {
-          capabilities = capabilities,
-          on_attach = navic.attach,
-         },
-      })
-      lspconfig.sumneko_lua.setup(luadev)
 
       --lspconfig.sumneko_lua.setup({
       --  capabilities = capabilities,

@@ -77,12 +77,6 @@ local mine = function(use)
               vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
             end
           },
-          {
-            event = "file_opened",
-            handler = function()
-              require("neo-tree").close_all();
-            end
-          },
     --{
     --  event = "neo_tree_window_before_open",
     --  handler = function(args)

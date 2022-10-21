@@ -35,10 +35,10 @@ RUN git clone https://aur.archlinux.org/yay.git \
 
 # Base pacakages for neovim and terminal
 RUN yay -Syu --noprogressbar --noconfirm --needed \
-        python3 python-pip nodejs-lts-fermium npm clang \
+        python3 python-pip nodejs-lts-gallium npm clang \
         eslint_d prettier stylua git-delta github-cli \
         tmux bat fzf fd ripgrep kitty-terminfo \
-        neovim-nightly-bin neovim-remote nvim-packer-git \
+        neovim neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
         aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
         docker docker-compose lazydocker \
@@ -52,7 +52,7 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
        # dotnet-host-bin dotnet-sdk-bin aspnet-runtime-bin \
        # dotnet-runtime-bin netcoredbg \
        # mssql-tools maven ng \
-        doppler-cli-bin terraform \
+        doppler-cli-bin terraform yarn \
     && terraform -install-autocomplete \
     && yay -Scc --noprogressbar --noconfirm
 
@@ -69,4 +69,5 @@ RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
 #    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
 #      && sudo sysctl --system
 
+ENV TZ="America/Chicago"
 ENV TERM="xterm-256color"
