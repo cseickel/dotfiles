@@ -8,6 +8,10 @@ if [ ! "$TMUX" ]; then
             -v /var/run/docker.sock:/var/run/docker.sock \
             -v /home:/home \
             -h $HOSTNAME \
+            -v /tmp/.X11-unix:/tmp/.X11-unix \
+            -e DISPLAY=$DISPLAY \
+            -h $HOSTNAME \
+            -v $HOME/.Xauthority:/home/$USER/.Xauthority \
             --network host \
             --name arch-linux-tmux \
             cseickel/arch-linux \
