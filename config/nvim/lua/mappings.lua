@@ -244,12 +244,15 @@ vim.cmd [[
 
 
   function! InitSql(dburl)
-      let b:db=a:dburl
-      nnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(0)<cr>
-      vnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(1)<cr>
+    let b:db=a:dburl
+    nnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(0)<cr>
+    vnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(1)<cr>
   endfunction
 
   function! ExecuteSql(visual)
+    if b:db == ""
+      let b:db = $DBUI_URL
+    endif
     if b:db == ""
       let b:db=input("Enter DB URL: ")
     endif
