@@ -24,7 +24,7 @@ let g:loaded_netrwFileHandlers = 1
 source core-config.vim
 source core-mappings.vim
 lua << EOF
-  pcall(require, 'impatient')
+  --pcall(require, 'impatient')
   require('plugins')
   require('quickfix')
   require('mappings')

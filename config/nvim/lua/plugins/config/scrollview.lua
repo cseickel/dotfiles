@@ -1,4 +1,3 @@
-
 return function(use)
   use {
     "dstein64/nvim-scrollview",
