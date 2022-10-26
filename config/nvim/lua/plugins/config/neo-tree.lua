@@ -257,8 +257,6 @@ local issue = function(use)
     config = function()
       require("neo-tree").setup({
         close_if_last_window = true,
-        hide_root_node = true,
-        retain_hidden_root_indent = false,
       })
     end
 	}

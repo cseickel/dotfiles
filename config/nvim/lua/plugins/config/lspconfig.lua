@@ -156,27 +156,27 @@ return function(use)
         })
       end
 
-      --lspconfig.sumneko_lua.setup({
-      --  capabilities = capabilities,
-      --  on_attach = navic.attach,
-      --  settings = {
-      --    Lua = {
-      --      runtime = {
-      --        version = "LuaJIT",
-      --      },
-      --      diagnostics = {
-      --        globals = {
-      --          'vim',
-      --          "describe",
-      --          "it",
-      --          "before_each",
-      --          "after_each",
-      --          "pending",
-      --        },
-      --      }
-      --    }
-      --  }
-      --})
+      lspconfig.sumneko_lua.setup({
+        capabilities = capabilities,
+        on_attach = navic.attach,
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
+            diagnostics = {
+              globals = {
+                'vim',
+                "describe",
+                "it",
+                "before_each",
+                "after_each",
+                "pending",
+              },
+            }
+          }
+        }
+      })
 
       vim.cmd [[ do User LspAttachBuffers ]]
     end
