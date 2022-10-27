@@ -48,6 +48,7 @@ local startup = function(use)
   module "scrollview"
   module "telescope"
   use 'nanotee/zoxide.vim'
+  use "samjwill/nvim-unception"
 
   -- SQL Interface
   use 'tpope/vim-dadbod'
@@ -68,7 +69,7 @@ local startup = function(use)
   module 'nvim-cmp'
   module "nvim-dap"
   module "lspkind-nvim"
-  setup('vuki656/package-info.nvim', "package-info")
+  --setup('vuki656/package-info.nvim', "package-info")
   module 'nvim-ts-autotag'
   use "~/repos/diagnostic-window.nvim/"
 
