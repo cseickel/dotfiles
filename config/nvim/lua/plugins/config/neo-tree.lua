@@ -1,6 +1,6 @@
 local mine = function(use)
 	use {
-		"~/repos/neo-tree.nvim",
+		"nvim-neo-tree/neo-tree.nvim",
 		requires = { 
       'mrbjarksen/neo-tree-diagnostics.nvim',
 		},

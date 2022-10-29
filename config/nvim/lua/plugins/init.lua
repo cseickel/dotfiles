@@ -71,7 +71,7 @@ local startup = function(use)
   module "lspkind-nvim"
   --setup('vuki656/package-info.nvim', "package-info")
   module 'nvim-ts-autotag'
-  use "~/repos/diagnostic-window.nvim/"
+  use "cseickel/diagnostic-window.nvim"
 
 
   -- UI Stuff
