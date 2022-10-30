@@ -69,11 +69,37 @@ function make_entry.gen_from_lsp_symbols(opts)
 
     return displayer(display_columns)
   end
+  local skip_display = function()
+    return nil
+  end
 
   return function(entry)
     local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
     local symbol_msg = entry.text:gsub(".* | ", "")
     local symbol_type, symbol_name = symbol_msg:match("%[(.+)%]%s+(.*)")
+
+    -- Typescript/JavaScript can get messy, in that case we want any func/const/variables
+    -- that are at the top level, because const can can be anything and are probably important.
+    local skip = false
+    if string.match(vim.bo.filetype, "script") then
+      local rootOnlyKinds = {
+        ["Function"] = true,
+        ["Variable"] = true,
+        ["Constant"] = true,
+      }
+      if rootOnlyKinds[symbol_type] then
+        local indent = vim.api.nvim_buf_get_lines(entry.bufnr, entry.lnum - 1, entry.lnum, false)[1]:match("^%s*")
+        if string.len(indent) == 0 then
+          if symbol_type == "Variable" then
+            -- we don't want to capture variables within function signatures
+            -- more than 8 chars in is probably within a function signature
+            skip = entry.col > 8
+          end
+        else
+          skip = true
+        end
+      end
+    end
 
     local ordinal = ""
     if not opts.ignore_filename and filename then
@@ -81,11 +107,11 @@ function make_entry.gen_from_lsp_symbols(opts)
     end
     ordinal = ordinal ..  symbol_name .. " " .. (symbol_type or "unknown")
     return {
-      valid = true,
+      valid = not skip,
 
       value = entry,
       ordinal = ordinal,
-      display = make_display,
+      display = skip and skip_display or make_display,
 
       filename = filename,
       lnum = entry.lnum,

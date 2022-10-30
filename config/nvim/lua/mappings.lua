@@ -11,6 +11,7 @@ local showSymbolFinder = function ()
       "class",
       "constructor",
       "method",
+      "type",
     },
     entry_maker = require('telescope-custom').gen_from_lsp_symbols(),
     layout_config = {
@@ -18,6 +19,18 @@ local showSymbolFinder = function ()
       preview_width=preview_width
     }
   }
+  if string.match(vim.bo.filetype, "script") then
+    opts.symbols = {
+      "interface",
+      "class",
+      "constructor",
+      "method",
+      "type",
+      "function",
+      "constant",
+      "variable",
+    }
+  end
   if vim.bo.filetype == "vim" or vim.bo.filetype == "lua" then
     opts.symbols = { "function" }
   end

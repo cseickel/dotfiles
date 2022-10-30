@@ -26,6 +26,7 @@ source core-mappings.vim
 lua << EOF
   --pcall(require, 'impatient')
   require('plugins')
+  require('ts-fix-highlight-groups')
   require('quickfix')
   require('mappings')
 
