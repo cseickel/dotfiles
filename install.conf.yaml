@@ -12,6 +12,7 @@
     - ~/.config/nvim/lua
     - ~/.config/nvim/UltiSnips
     - ~/.gnupg
+    - ~/.local/share/fonts
 - link:
     ~/start-arch-linux-docker.sh: start-arch-linux-docker.sh
     ~/.gitconfig: gitconfig
