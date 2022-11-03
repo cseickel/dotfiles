@@ -53,7 +53,7 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
        # dotnet-runtime-bin netcoredbg \
        # mssql-tools maven ng \
         doppler-cli-bin terraform yarn \
-        psqlodbc time \
+        psqlodbc time prettierd \
     && terraform -install-autocomplete \
     && yay -Scc --noprogressbar --noconfirm
 

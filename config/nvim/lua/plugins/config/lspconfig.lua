@@ -62,6 +62,7 @@ return function(use)
 
 
       local null_ls = require("null-ls")
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
       null_ls.setup({
         sources = {
           --null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
@@ -69,13 +70,27 @@ return function(use)
           null_ls.builtins.formatting.stylua, -- prettier, eslint, eslint_d, or prettierd
           null_ls.builtins.formatting.trim_newlines,
           null_ls.builtins.formatting.trim_whitespace,
-          null_ls.builtins.formatting.eslint_d,
-          --null_ls.builtins.formatting.prettierd,
+         -- null_ls.builtins.formatting.eslint_d,
+          null_ls.builtins.formatting.prettierd,
           --null_ls.builtins.formatting.prettier.with({
           --  filetypes = { "html", "css", "yaml", "markdown", "json" },
           --}),
         },
+        on_attach = function(client, bufnr)
+          -- Format on save
+          if client.supports_method("textDocument/formatting") then
+            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = augroup,
+              buffer = bufnr,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = bufnr })
+              end,
+            })
+          end
+        end,
       })
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
       lspconfig.jsonls.setup {
         settings = {
           json = {
