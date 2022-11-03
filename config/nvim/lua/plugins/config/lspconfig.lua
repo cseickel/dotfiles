@@ -159,16 +159,23 @@ return function(use)
         "graphql",
         "yamlls",
         "html",
-        --"tailwindcss",
+        "pylsp",
+        "pyright",
+        "tailwindcss",
+        "terraformls",
+        "vimls",
+        "bashls",
         --"angularls"
       }
       for _, server in ipairs(other_servers) do
-        lspconfig[server].setup({
-          capabilities = capabilities,
-          on_attach = function (client, bufnr)
-            navic.attach(client, bufnr)
-          end
-        })
+        if lspconfig[server] then
+          lspconfig[server].setup({
+            capabilities = capabilities,
+            on_attach = function (client, bufnr)
+              navic.attach(client, bufnr)
+            end
+          })
+        end
       end
 
       lspconfig.sumneko_lua.setup({
