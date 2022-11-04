@@ -150,14 +150,16 @@ alias pull="git pull"
 alias push='git push'
 alias stash="git stash"
 alias status="git status"
-alias gca='git commit -a -m'
-alias gcan='git commit -a --amend --no-edit'
-alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
+alias gd="git diff"
+alias gs="git show"
+alias gca='nvr --nostart -s -c wa && git commit -a -m'
+alias gcan='nvr --nostart -s -c wa && git commit -a --amend --no-edit'
+alias gcan!='nvr --nostart -s -c wa && git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
 alias gpf='git push --force-with-lease'
 
 # custom fzf integrated actions
 function fn_git_checkout() {
-    branch=$(git branch --all | fzf | sed "s/remotes\/origin\///" | xargs) 
+    branch=$(git branch --all | fzf | sed "s/remotes\/origin\///" | xargs)
     git checkout $branch
 }
 alias gco='fn_git_checkout'
@@ -174,6 +176,7 @@ function fn_reset_branch() {
 }
 alias reset-branch="fn_reset_branch"
 alias rebase-dev="git fetch && git rebase origin/dev"
+alias rebase-develop="git fetch && git rebase origin/develop"
 alias rebase-main="git fetch && git rebase origin/main"
 
 function fn_docker_stop() {

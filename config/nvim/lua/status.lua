@@ -127,7 +127,6 @@ M.get_statusline = function()
   return table.concat(parts)
 end
 
-
 -- mode_map copied from:
 -- https://github.com/nvim-lualine/lualine.nvim/blob/5113cdb32f9d9588a2b56de6d1df6e33b06a554a/lua/lualine/utils/mode.lua
 -- Copyright (c) 2020-2021 hoob3rt

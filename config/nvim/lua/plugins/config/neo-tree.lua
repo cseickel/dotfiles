@@ -17,6 +17,15 @@ local mine = function(use)
           "buffers",
           "git_status",
           "diagnostics",
+          "zk",
+        },
+        zk = {
+          follow_current_file = true,
+          window = {
+            mappings = {
+              ["n"] = "change_query",
+            },
+          },
         },
         close_floats_on_escape_key = true,
         --enable_diagnostics = false,
