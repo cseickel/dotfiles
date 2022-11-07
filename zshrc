@@ -152,9 +152,9 @@ alias stash="git stash"
 alias status="git status"
 alias gd="git diff"
 alias gs="git show"
-alias gca='nvr --nostart -s -c wa && git commit -a -m'
-alias gcan='nvr --nostart -s -c wa && git commit -a --amend --no-edit'
-alias gcan!='nvr --nostart -s -c wa && git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
+alias gca='nvr --nostart -s -c wa; git commit -a -m'
+alias gcan='nvr --nostart -s -c wa; git commit -a --amend --no-edit'
+alias gcan!='nvr --nostart -s -c wa; git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
 alias gpf='git push --force-with-lease'
 
 # custom fzf integrated actions

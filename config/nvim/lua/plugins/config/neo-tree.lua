@@ -1,9 +1,14 @@
 local mine = function(use)
-	use {
-		"nvim-neo-tree/neo-tree.nvim",
-		requires = { 
-      'mrbjarksen/neo-tree-diagnostics.nvim',
-		},
+  local repo_url = "nvim-neo-tree/neo-tree.nvim"
+  local local_repo = vim.fn.expand("~/repos/neo-tree.nvim")
+  if vim.fn.isdirectory(local_repo) == 1 then
+    repo_url = local_repo
+  end
+  use({
+    repo_url,
+    requires = {
+      "mrbjarksen/neo-tree-diagnostics.nvim",
+    },
     config = function()
       -- See ":help neo-tree-highlights" for a list of available highlight groups
       vim.cmd([[
@@ -11,21 +16,33 @@ local mine = function(use)
       hi NeoTreeCursorLine gui=bold guibg=#333333
       ]])
 
+      local events = require("neo-tree.events")
+      ---@class FileMovedArgs
+      ---@field source string
+      ---@field destination string
+
+      ---@param args FileMovedArgs
+      local function on_file_remove(args)
+        local ts_clients = vim.lsp.get_active_clients({ name = "tsserver" })
+        for _, ts_client in ipairs(ts_clients) do
+          ts_client.request("workspace/executeCommand", {
+            command = "_typescript.applyRenameFile",
+            arguments = {
+              {
+                sourceUri = vim.uri_from_fname(args.source),
+                targetUri = vim.uri_from_fname(args.destination),
+              },
+            },
+          })
+        end
+      end
+
       local config = {
         sources = {
           "filesystem",
           "buffers",
           "git_status",
           "diagnostics",
-          "zk",
-        },
-        zk = {
-          follow_current_file = true,
-          window = {
-            mappings = {
-              ["n"] = "change_query",
-            },
-          },
         },
         close_floats_on_escape_key = true,
         --enable_diagnostics = false,
@@ -44,21 +61,21 @@ local mine = function(use)
             with_markers = true,
             with_arrows = true,
             with_expanders = true,
-            padding = 2
+            padding = 2,
           },
           git_status = {
             symbols = {
               -- Change type
-              added     = "+",
-              deleted   = "✖",
-              modified  = "M",
-              renamed   = "",
+              added = "+",
+              deleted = "✖",
+              modified = "M",
+              renamed = "",
               -- Status type
               untracked = "",
-              ignored   = "",
-              unstaged  = "",
-              staged    = "",
-              conflict  = "",
+              ignored = "",
+              unstaged = "",
+              staged = "",
+              conflict = "",
             },
             --symbols =false
           },
@@ -75,45 +92,53 @@ local mine = function(use)
         },
         event_handlers = {
           {
-            event = "neo_tree_buffer_enter",
-            handler = function()
-              vim.cmd 'highlight! Cursor blend=100'
-            end
+            event = events.FILE_MOVED,
+            handler = on_file_remove,
           },
           {
-            event = "neo_tree_buffer_leave",
-            handler = function()
-              vim.cmd 'highlight! Cursor guibg=#5f87af blend=0'
-            end
+            event = events.FILE_RENAMED,
+            handler = on_file_remove,
           },
-    --{
-    --  event = "neo_tree_window_before_open",
-    --  handler = function(args)
-    --    print("neo_tree_window_before_open", vim.inspect(args))
-    --  end
-    --},
-    {
-      event = "neo_tree_window_after_open",
-      handler = function(args)
-        if args.position == "left" or args.position == "right" then
-          vim.cmd("wincmd =")
-        end
-      end
-    },
-    --{
-    --  event = "neo_tree_window_before_close",
-    --  handler = function(args)
-    --    print("neo_tree_window_before_close", vim.inspect(args))
-    --  end
-    --},
-    {
-      event = "neo_tree_window_after_close",
-      handler = function(args)
-        if args.position == "left" or args.position == "right" then
-          vim.cmd("wincmd =")
-        end
-      end
-    }
+          {
+            event = events.NEO_TREE_BUFFER_ENTER,
+            handler = function()
+              vim.cmd("highlight! Cursor blend=100")
+            end,
+          },
+          {
+            event = events.NEO_TREE_BUFFER_LEAVE,
+            handler = function()
+              vim.cmd("highlight! Cursor guibg=#5f87af blend=0")
+            end,
+          },
+          --{
+          --  event = "neo_tree_window_before_open",
+          --  handler = function(args)
+          --    print("neo_tree_window_before_open", vim.inspect(args))
+          --  end
+          --},
+          -- {
+          --   event = "neo_tree_window_after_open",
+          --   handler = function(args)
+          --     if args.position == "left" or args.position == "right" then
+          --       vim.cmd("wincmd =")
+          --     end
+          --   end
+          -- },
+          --{
+          --  event = "neo_tree_window_before_close",
+          --  handler = function(args)
+          --    print("neo_tree_window_before_close", vim.inspect(args))
+          --  end
+          --},
+          -- {
+          --   event = "neo_tree_window_after_close",
+          --   handler = function(args)
+          --     if args.position == "left" or args.position == "right" then
+          --       vim.cmd("wincmd =")
+          --     end
+          --   end
+          -- }
         },
         nesting_rules = {
           --ts = { ".d.ts", "js", "css", "html", "scss" }
@@ -125,7 +150,7 @@ local mine = function(use)
           },
           mappings = {
             ["<esc>"] = "cancel",
-            ["a"] = { "add", config = { show_path = "relative" }},
+            ["a"] = { "add", config = { show_path = "relative" } },
             ["z"] = "close_all_nodes",
             ["Z"] = "expand_all_nodes",
             ["gu"] = "git_unstage_file",
@@ -133,10 +158,13 @@ local mine = function(use)
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
-            ["gg"] = "git_commit_and_push",
-          }
+          },
         },
         diagnostics = {
+          window = {
+            relative = "win",
+            position = "bottom",
+          },
           follow_behavior = { -- Behavior when `follow_current_file` is true
             always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
             expand_followed = true, -- Ensure the node of the followed file is expanded
@@ -154,9 +182,9 @@ local mine = function(use)
                 {
                   text = "▕ ",
                   highlight = "NeoTreeDimText",
-                }
+                },
               }
-            end
+            end,
           },
           renderers = {
             file = {
@@ -201,9 +229,11 @@ local mine = function(use)
           find_command = "fd",
           find_args = {
             fd = {
-              "--exclude", ".git",
-              "--exclude", "node_modules",
-            }
+              "--exclude",
+              ".git",
+              "--exclude",
+              "node_modules",
+            },
           },
           find_by_full_path_words = true,
           window = {
@@ -215,13 +245,13 @@ local mine = function(use)
                 local root_len = string.len(root_name) + 4
                 return {
                   width = math.max(root_len, 50),
-                  height = vim.o.lines - 6
+                  height = vim.o.lines - 6,
                 }
-              end
+              end,
             },
             mappings = {
               ["K"] = "close_node",
-              ["J"] = function (state)
+              ["J"] = function(state)
                 local utils = require("neo-tree.utils")
                 local node = state.tree:get_node()
                 if utils.is_expandable(node) then
@@ -235,7 +265,7 @@ local mine = function(use)
                   end
                 end
               end,
-              ["<space>"] = function (state)
+              ["<space>"] = function(state)
                 local node = state.tree:get_node()
                 if require("neo-tree.utils").is_expandable(node) then
                   state.commands["toggle_directory"](state)
@@ -243,33 +273,30 @@ local mine = function(use)
                   state.commands["close_node"](state)
                 end
               end,
-              ["S"] = "split_with_window_picker",
-              ["s"] = "vsplit_with_window_picker",
             },
           },
-        }
+        },
       }
 
       require("neo-tree").setup(config)
-    end
-  }
+    end,
+  })
 end
 
 local issue = function(use)
-	use {
-		"~/repos/neo-tree.nvim",
-		requires = {
-			"nvim-lua/plenary.nvim",
-			"kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-			"MunifTanjim/nui.nvim",
-		},
+  use({
+    "~/repos/neo-tree.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
     config = function()
       require("neo-tree").setup({
         close_if_last_window = true,
       })
-    end
-	}
+    end,
+  })
 end
-
 
 return mine
