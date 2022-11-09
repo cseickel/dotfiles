@@ -190,8 +190,8 @@ highlight TroubleText guibg=#262626
 highlight EndOfBuffer guifg=#1c1c1c guibg=None ctermfg=None ctermbg=None
 "highlight SignColumn guibg=#262626
 "highlight LineNR guibg=#262626
-highlight CursorLineNr guibg=#262626 guifg=#b2b2b2 gui=bold
-highlight CursorLine guibg=#262626
+highlight CursorLineNr guibg=#292929 guifg=#CCCCCC gui=bold
+highlight CursorLine guibg=#292929
 highlight debugPc guibg=#5f0000 gui=bold
 highlight ColorColumn guibg=#262626
 highlight Title ctermfg=79 guifg=#4ec9b0 gui=bold

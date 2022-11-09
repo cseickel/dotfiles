@@ -12,6 +12,7 @@ set pumheight=20
 "source $VIMRUNTIME/menu.vim
 set splitbelow
 set splitright
+set scrolloff=5
 
 "" Encoding
 set encoding=utf-8
@@ -60,7 +61,7 @@ abbreviate teh the
 set ruler
 set number
 set wrap linebreak breakindent
-set showbreak=\ ﬌\ 
+set showbreak=\ ﬌\
 set signcolumn=auto:1-2
 set cursorline
 "
@@ -175,7 +176,7 @@ endfunction
 function! VimEnter()
   setlocal cursorline
   "To share clipboard between instances
-  if exists(':rshada') 
+  if exists(':rshada')
     autocmd TextYankPost,FocusGained,FocusLost * rshada | wshada
   endif
 endfunction
