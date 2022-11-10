@@ -8,6 +8,10 @@ local mine = function(use)
     repo_url,
     requires = {
       "mrbjarksen/neo-tree-diagnostics.nvim",
+      {
+        "miversen33/netman.nvim",
+        branch = "v1.1",
+      },
     },
     config = function()
       -- See ":help neo-tree-highlights" for a list of available highlight groups
@@ -43,6 +47,7 @@ local mine = function(use)
           "buffers",
           "git_status",
           "diagnostics",
+          "netman.ui.neo-tree",
         },
         close_floats_on_escape_key = true,
         --enable_diagnostics = false,

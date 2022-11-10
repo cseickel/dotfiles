@@ -13,6 +13,7 @@ set pumheight=20
 set splitbelow
 set splitright
 set scrolloff=5
+set jumpoptions+=stack
 
 "" Encoding
 set encoding=utf-8
