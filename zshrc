@@ -164,9 +164,23 @@ function fn_git_checkout() {
 }
 alias gco='fn_git_checkout'
 
-function fn_squash_add_all() {
+function fn_reset_soft() {
     commit=$(git log --oneline | fzf | awk '{print $1}')
+    if [ -n "$commit" ]; then
+        git reset --soft $commit
+    else
+      echo "Soft reset cancelled because no commit was selected."
+    fi
+}
+alias reset-soft="fn_reset_soft"
+
+function fn_squash_add_all() {
+  commit=$(git log --oneline | fzf | awk '{print $1}')
+  if [ -n "$commit" ]; then
     git reset --soft $commit && git add -A && git commit
+  else
+    echo "Squash cancelled because no commit was selected."
+  fi
 }
 alias squash="fn_squash_add_all"
 
