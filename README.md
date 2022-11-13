@@ -6,7 +6,8 @@ to work on typescript, nodejs, graphql, react, aws, etc.
 
 ## Fonts
 
-You will need a nerd font to display the special characters correctly. I like
+You will need a nerd font to display the special characters correctly. It's not 
+required, but it is helpful. I like
 [Hack](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack).
 Do not get a "mono" font. They are all monospaced and "mono" in nerd fonts
 refers to handling of double wide charcaters. Mono is bad and will make some
@@ -58,7 +59,7 @@ a window.
 
 `h j k l` to navigate between windows.
 
-`\` to toggle a tree navigation, open a file or `q` to quit.
+`\` to toggle a tree navigation. Open a file or `q` to quit.
 
 `|` to open a file tree as a sidebar
 
@@ -123,7 +124,7 @@ and it will autosuggest packages.
 [cSpell](https://cspell.org) is enabled. This can be annoying if you are not
 willing to maintain a list of allowed words. To do so, add a `cspell.json` file
 to the root of every repo. It will use that git root if you are in a git
-directory, or just like in the current folder otherwise.
+directory, or just look in the current working directory otherwise.
 
 To configure or disable this, look in
 [config/nvim/lua/plugins/config/mason.lua](config/nvim/lua/plugins/config/mason.lua)
