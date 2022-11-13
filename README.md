@@ -9,9 +9,9 @@ to work on typescript, nodejs, graphql, react, aws, etc.
 You will need a nerd font to display the special characters correctly. It's not 
 required, but it is helpful. I like
 [Hack](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack).
-Do not get a "mono" font. They are all monospaced and "mono" in nerd fonts
-refers to handling of double wide charcaters. Mono is bad and will make some
-icons look too small.
+Do not get a "mono" font, it does not mean "monspaced". All nerd fonts are monospaced,
+the "mono" indicator in nerd fonts refers to handling of double wide characters. 
+Mono is for compatability with older terminals and will make some icons look too small.
 
 ## tmux
 
