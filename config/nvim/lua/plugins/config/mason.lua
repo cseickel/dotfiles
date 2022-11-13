@@ -6,9 +6,11 @@ return function(use)
       'williamboman/mason-lspconfig.nvim',
       'jose-elias-alvarez/nvim-lsp-ts-utils',
       'jose-elias-alvarez/null-ls.nvim',
+      'jayp0521/mason-null-ls.nvim',
       'nvim-lua/plenary.nvim',
       'b0o/schemastore.nvim',
       'folke/neodev.nvim',
+      'ThePrimeagen/refactoring.nvim'
     },
     config = function()
       require("mason").setup()
@@ -82,20 +84,32 @@ return function(use)
       }
 
 
+      local cspell_extra_args = function(params)
+        local project_root = vim.fn.system("git rev-parse --show-toplevel")
+        if project_root == "" then
+          project_root = vim.fn.getcwd()
+        end
+        return {
+          "--config", project_root .. "/cspell.json",
+        }
+      end
       local null_ls = require("null-ls")
       local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
       null_ls.setup({
         sources = {
-          --null_ls.builtins.diagnostics.eslint_d, -- eslint or eslint_d
-          --null_ls.builtins.code_actions.eslint_d, -- eslint or eslint_d
+          null_ls.builtins.code_actions.cspell.with({
+            extra_args = cspell_extra_args,
+          }),
+          --null_ls.builtins.code_actions.proselint,
+          null_ls.builtins.code_actions.refactoring,
+          null_ls.builtins.diagnostics.cspell.with({
+            extra_args = cspell_extra_args,
+          }),
+          --null_ls.builtins.diagnostics.proselint,
+          null_ls.builtins.formatting.prettierd,
           null_ls.builtins.formatting.stylua, -- prettier, eslint, eslint_d, or prettierd
           null_ls.builtins.formatting.trim_newlines,
           null_ls.builtins.formatting.trim_whitespace,
-         -- null_ls.builtins.formatting.eslint_d,
-          null_ls.builtins.formatting.prettierd,
-          --null_ls.builtins.formatting.prettier.with({
-          --  filetypes = { "html", "css", "yaml", "markdown", "json" },
-          --}),
         },
         on_attach = function(client, bufnr)
           -- Format on save
@@ -113,6 +127,9 @@ return function(use)
             })
           end
         end,
+      })
+      require("mason-null-ls").setup({
+        automatic_installation = true,
       })
 
       local lspconfig = require("lspconfig")
@@ -180,6 +197,7 @@ return function(use)
         on_attach = tsserver_on_attach
       })
 
+      -- cspell: disable
       local other_servers_with_navic = {
         --"omnisharp",
         "gopls",
@@ -192,6 +210,7 @@ return function(use)
         "bashls",
         --"angularls"
       }
+      -- cspell: enable
       for _, server in ipairs(other_servers_with_navic) do
         if lspconfig[server] then
           lspconfig[server].setup({

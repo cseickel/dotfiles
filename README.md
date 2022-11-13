@@ -16,7 +16,7 @@ icons look too small.
 
 The only thing to point here is that the prefix has been changed from the
 standard `Ctrl-b` to `Alt-b`. I don't remember why but I'm used to it this way.
-To create a new windo, `Alt-b c`, switch with `Alt-b <# of window>`, split
+To create a new window, `Alt-b c`, switch with `Alt-b <# of window>`, split
 with `Alt-b "` and `Alt-b %`, move between split panes with `Alt-b
 [<up>|<down>|<left>|<right>]`
 
@@ -80,7 +80,7 @@ pasting.
 ### Copy / Paste
 
 `Ctrl-c` will copy to the system clipboard on terminals that support OSC-52. I
-use Alacritty, Kitty, and Windows Terminal. It also copies to gthe `c` register.
+use Alacritty, Kitty, and Windows Terminal. It also copies to the `c` register.
 
 `Ctrl-v` will paste what has been copied using `Ctrl-c` within vim.
 
