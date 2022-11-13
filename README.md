@@ -8,7 +8,7 @@ to work on typescript, nodejs, graphql, react, aws, etc.
 
 You will need a nerd font to display the special characters correctly. I like
 [Hack](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack).
-Do not get a 'mono' font. They are al, monospaced and "mono" in nerd fonts
+Do not get a "mono" font. They are all monospaced and "mono" in nerd fonts
 refers to handling of double wide charcaters. Mono is bad and will make some
 icons look too small.
 
@@ -25,7 +25,7 @@ info.
 
 ## zsh
 
-I have a lot of aliases and custom functions defined in (zshrc)[zshrc], you
+I have a lot of aliases and custom functions defined in [zshrc](zshrc), you
 might want to read through that file. 
 
 ### git aliases
@@ -79,14 +79,28 @@ pasting.
 
 ### Copy / Paste
 
+This project uses [svermeulen/vim-cutlass](https://github.com/svermeulen/vim-cutlass)
+which will make vim registers behave in a more intuitive (to most) manner. If
+you are familiar with traditional vim registers this might be confusing.
+
+Since deletions are sent to the blackhole, "cut" operations use `m` instead.
+
+`m` will cut the selection.
+
+`mm` will cut a line.
+
+#### System clipboard
+
 `Ctrl-c` will copy to the system clipboard on terminals that support OSC-52. I
 use Alacritty, Kitty, and Windows Terminal. It also copies to the `c` register.
 
 `Ctrl-v` will paste what has been copied using `Ctrl-c` within vim.
 
-`m` will cut the selection.
+Copy and paste to/from the system clipboard is usually
+`Ctrl-shift-c`/`Ctrl-shift-v`.
 
-`mm` will cut a line.
+`Alt-p` is an extra mapping which will paste (`p`) while in insert or terminal mode.
+
 
 ### LSP / Treesitter
 
@@ -103,3 +117,15 @@ a new file type, type:
 ```
 and it will autosuggest packages.
 
+
+### cSpell
+
+[cSpell](https://cspell.org) is enabled. This can be annoying if you are not
+willing to maintain a list of allowed words. To do so, add a `cspell.json` file
+to the root of every repo. It will use that git root if you are in a git
+directory, or just like in the current folder otherwise.
+
+To configure or disable this, look in
+[config/nvim/lua/plugins/config/mason.lua](config/nvim/lua/plugins/config/mason.lua)
+
+vim:tw=80:ts=4
