@@ -4,6 +4,7 @@ return function(use)
     requires = {
       'rcarriga/nvim-dap-ui',
       'theHamsta/nvim-dap-virtual-text',
+      'jayp0521/mason-nvim-dap.nvim',
     },
 
     config = function ()
@@ -16,6 +17,18 @@ return function(use)
       nnoremap <silent> <leader>B :lua require'dap'.toggle_breakpoint()<CR>
       nnoremap <silent> <M-k> <Cmd>lua require("dapui").eval()<CR>
       ]])
+
+      require("mason-nvim-dap").setup({
+        ensure_installed = {
+          "bash",
+          "chrome",
+          "delve",
+          "python",
+          "node2",
+        },
+        automatic_setup = true,
+      })
+
       require("dapui").setup({
         icons = {
           expanded = "⯆",

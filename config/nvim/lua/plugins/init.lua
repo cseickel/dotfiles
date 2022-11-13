@@ -62,7 +62,8 @@ local startup = function(use)
 
   -- Lsp / Completion / Format
   use 'editorconfig/editorconfig-vim'
-  module 'lspconfig'
+  module "mason"
+  --module 'lspconfig'
   --module 'lsp-signature'
   --use 'sbdchd/neoformat'
   use 'github/copilot.vim'
