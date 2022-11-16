@@ -62,7 +62,7 @@ local startup = function(use)
 
   -- Lsp / Completion / Format
   use 'editorconfig/editorconfig-vim'
-  module "mason"
+  module "lspconfig"
   --module 'lspconfig'
   --module 'lsp-signature'
   --use 'sbdchd/neoformat'

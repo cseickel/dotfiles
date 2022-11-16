@@ -31,3 +31,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[credential]
+	helper = "!f() { /home/user/.vscode-server/bin/6261075646f055b99068d3688932416f2346dd3b/node /tmp/vscode-remote-containers-4d2a31452c65a18dee47414f089e2c45596a2fb7.js $*; }; f"
