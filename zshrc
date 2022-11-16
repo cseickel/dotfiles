@@ -158,6 +158,16 @@ alias gcan!='nvr --nostart -s -c wa; git commit -a --amend --no-edit && git push
 alias gpf='git push --force-with-lease'
 
 # custom fzf integrated actions
+function fn_cherry_pick() {
+  commit=$(git log --pretty=format:"%h %s" --branches='*' -n 100 \
+    | fzf --height "90%" --header "PLEASE CHOOSE A COMMIT TO CHERRY-PICK" --reverse --border --ansi --preview "git show --color=always {1}" \
+    | awk '{print $1}')
+  if [ -n "$commit" ]; then
+    git cherry-pick $commit
+  fi
+}
+alias cherry=fn_cherry_pick
+
 function fn_git_checkout() {
     branch=$(git branch --all | fzf | sed "s/remotes\/origin\///" | xargs)
     git checkout $branch
