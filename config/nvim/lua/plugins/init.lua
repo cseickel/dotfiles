@@ -59,6 +59,7 @@ local startup = function(use)
   module "gitsigns"
   module 'diffview'
   module 'conflict-marker'
+  module 'octo'
 
   -- Lsp / Completion / Format
   use 'editorconfig/editorconfig-vim'

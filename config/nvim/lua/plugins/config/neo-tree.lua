@@ -1,11 +1,14 @@
 local mine = function(use)
   local repo_url = "nvim-neo-tree/neo-tree.nvim"
+  local branch = "main"
   local local_repo = vim.fn.expand("~/repos/neo-tree.nvim")
   if vim.fn.isdirectory(local_repo) == 1 then
     repo_url = local_repo
+    branch = nil
   end
   use({
     repo_url,
+    branch = branch,
     requires = {
       "mrbjarksen/neo-tree-diagnostics.nvim",
       {
