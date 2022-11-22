@@ -62,6 +62,7 @@ abbreviate teh the
 set ruler
 set number
 set wrap linebreak breakindent
+set showbreak=\ ﬌\
 set signcolumn=auto:1-2
 set cursorline
 "
