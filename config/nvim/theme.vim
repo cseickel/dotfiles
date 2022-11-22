@@ -112,7 +112,6 @@ lua << EOF
   hl('@tag.delimiter', {link = 'Delimiter'})
   -- }}}
 EOF
-let g:EditorConfig_max_line_indicator="fill"
 let g:db_ui_use_nerd_fonts = 1
 
 " configure nvcode-color-schemes
