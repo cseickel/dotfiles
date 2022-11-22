@@ -89,7 +89,6 @@ return function(use)
         local project_root = params.root
           or vim.fn.system("git rev-parse --show-toplevel")
           or vim.fn.getcwd()
-        print("project_root", project_root)
         return {
           "--config", project_root .. "/cspell.json",
         }
