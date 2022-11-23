@@ -10,7 +10,7 @@ return function(use)
       'nvim-lua/plenary.nvim',
       'b0o/schemastore.nvim',
       'folke/neodev.nvim',
-      'ThePrimeagen/refactoring.nvim',
+      --'ThePrimeagen/refactoring.nvim',
     },
     config = function()
       --cSpell: disable
@@ -101,7 +101,7 @@ return function(use)
             extra_args = cspell_extra_args,
           }),
           --null_ls.builtins.code_actions.proselint,
-          null_ls.builtins.code_actions.refactoring,
+          --null_ls.builtins.code_actions.refactoring,
           null_ls.builtins.diagnostics.cspell.with({
             extra_args = cspell_extra_args,
           }),
