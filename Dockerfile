@@ -40,7 +40,7 @@ RUN yay -Syu --noprogressbar --noconfirm --needed \
         tmux bat fzf fd ripgrep kitty-terminfo \
         neovim neovim-remote nvim-packer-git \
         oh-my-zsh-git spaceship-prompt zsh-autosuggestions \
-        aws-cli-v2-bin aws-session-manager-plugin aws-vault pass \
+        aws-cli-v2 aws-session-manager-plugin aws-vault pass \
         docker docker-compose lazydocker \
         ncdu glances nnn-nerd jq zoxide-git \
     && sudo pip --disable-pip-version-check install pynvim \
