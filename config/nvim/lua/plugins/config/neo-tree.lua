@@ -53,6 +53,7 @@ local mine = function(use)
           "netman.ui.neo-tree",
         },
         close_floats_on_escape_key = true,
+        close_if_last_window = true,
         --enable_diagnostics = false,
         --enable_git_status = false,
         log_level = "trace",
@@ -152,6 +153,7 @@ local mine = function(use)
           --ts = { ".d.ts", "js", "css", "html", "scss" }
         },
         window = {
+          auto_expand_width = false,
           mapping_options = {
             noremap = true,
             nowait = true,
@@ -166,6 +168,7 @@ local mine = function(use)
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
+            ["<MouseUp>"] = "open"
           },
         },
         diagnostics = {
