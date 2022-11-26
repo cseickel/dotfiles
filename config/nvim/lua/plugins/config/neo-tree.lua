@@ -212,7 +212,7 @@ local mine = function(use)
               { "icon" },
               { "linenr" },
               { "name" },
-              --{ "source" },
+              { "source" },
               --{ "code" },
             },
           },

@@ -18,5 +18,8 @@
   ],
   "ignoreRegExpList": [
     "/.*\/.*/"
+  ],
+  "ignorePaths": [
+    "**/*.lua"
   ]
 }
