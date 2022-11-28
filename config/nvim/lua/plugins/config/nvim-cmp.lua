@@ -14,7 +14,7 @@ return function(use)
       --'rafamadriz/friendly-snippets',
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
+      --"hrsh7th/cmp-nvim-lsp-signature-help",
       'rcarriga/cmp-dap',
       {
         'David-Kunz/cmp-npm',
@@ -81,7 +81,6 @@ return function(use)
         },
         preselect = cmp.PreselectMode.None,
       }
-
 
       --cmp.setup.cmdline("/", {
       --    mapping = cmp.mapping.preset.cmdline(),

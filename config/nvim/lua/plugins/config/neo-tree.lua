@@ -153,7 +153,8 @@ local mine = function(use)
           --ts = { ".d.ts", "js", "css", "html", "scss" }
         },
         window = {
-          auto_expand_width = false,
+          auto_expand_width = true,
+          width = 20,
           mapping_options = {
             noremap = true,
             nowait = true,
@@ -168,7 +169,6 @@ local mine = function(use)
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
-            ["<MouseUp>"] = "open"
           },
         },
         diagnostics = {

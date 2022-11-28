@@ -64,8 +64,7 @@ local startup = function(use)
   -- Lsp / Completion / Format
   use 'editorconfig/editorconfig-vim'
   module "lspconfig"
-  --module 'lspconfig'
-  --module 'lsp-signature'
+  module 'lsp-signature'
   --use 'sbdchd/neoformat'
   use 'github/copilot.vim'
   module 'nvim-cmp'
@@ -85,6 +84,7 @@ local startup = function(use)
   module "indent-blankline"
   module 'nvim-navic'
   module "which-key"
+  --module "tundra"
 
   -- faster edits
   use 'antoinemadec/FixCursorHold.nvim'
