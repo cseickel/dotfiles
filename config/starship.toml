@@ -1,0 +1,25 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[❯](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+
+[container]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+# ~/.config/starship.toml
+
+[time]
+disabled = true
+format = '🕙[ $time ]($style) '
+utc_time_offset = "local"
+use_12hr = true
+style = "grey"
+
