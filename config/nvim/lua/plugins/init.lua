@@ -64,7 +64,7 @@ local startup = function(use)
   -- Lsp / Completion / Format
   use 'editorconfig/editorconfig-vim'
   module "lspconfig"
-  module 'lsp-signature'
+  --module 'lsp-signature'
   --use 'sbdchd/neoformat'
   use 'github/copilot.vim'
   module 'nvim-cmp'

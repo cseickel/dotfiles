@@ -14,7 +14,7 @@ return function(use)
       --'rafamadriz/friendly-snippets',
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
-      --"hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
       'rcarriga/cmp-dap',
       {
         'David-Kunz/cmp-npm',
@@ -72,7 +72,7 @@ return function(use)
           { name = "path" },
           { name = "calc" },
           { name = 'buffer', keyword_length = 2 },
-          --{ name = "nvim_lsp_signature_help" },
+          { name = "nvim_lsp_signature_help" },
         },
         completion = {
           completeopt = 'menu,menuone,noinsert,preview',
