@@ -139,7 +139,7 @@ return function(use)
         }
 
         require("dap-vscode-js").setup({
-          adapters = { -- which adapters to register in nvim-dap 
+          adapters = {
             'pwa-node',
             'pwa-chrome',
             'node-terminal',
