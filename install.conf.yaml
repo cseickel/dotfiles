@@ -5,16 +5,15 @@
       recursive: true
 - defaults:
     link:
-        relink: true
-        force: true
-        relative: true
+      relink: true
+      force: true
+      relative: true
 - create:
     - ~/.config/nvim/lua
     - ~/.config/nvim/UltiSnips
     - ~/.gnupg
     - ~/.local/share/fonts
 - link:
-    ~/start-arch-linux-docker.sh: start-arch-linux-docker.sh
     ~/.gitconfig: gitconfig
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
@@ -28,7 +27,5 @@
       path: config/*
       recursive: true
 - shell:
-  - [fc-cache -f -v, Installing Fonts...]
-  - [./tmux_install_plugins.sh, Installing tmux plugins.]
-  - [nvim --headless -c "autocmd User PackerComplete quitall" -c "PackerSync", Installing nvim plugins.]
-
+    - [fc-cache -f -v, Installing Fonts...]
+    - [./tmux_install_plugins.sh, Installing tmux plugins.]

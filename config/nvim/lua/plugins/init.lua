@@ -10,7 +10,7 @@ return {
   "editorconfig/editorconfig-vim",
   "github/copilot.vim",
   "cseickel/diagnostic-window.nvim",
-  { "rrethy/vim-hexokinase", run = "make hexokinase" },
+  { "rrethy/vim-hexokinase", build = "make hexokinase" },
   "christianchiarulli/nvcode-color-schemes.vim",
   "psliwka/vim-smoothie",
   "itchyny/vim-gitbranch",

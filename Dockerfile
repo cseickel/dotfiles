@@ -70,5 +70,4 @@ RUN sudo sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
 #    | sudo tee /etc/sysctl.d/40-max-user-watches.conf \
 #      && sudo sysctl --system
 
-ENV TZ="America/Chicago"
 ENV TERM="xterm-256color"
