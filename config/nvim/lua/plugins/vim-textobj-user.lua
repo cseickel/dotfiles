@@ -1,13 +1,13 @@
 return {
   {
     'Julian/vim-textobj-variable-segment',
-    requires = {
+    dependencies ={
       { 'kana/vim-textobj-user' }
     }
   },
   {
     'D4KU/vim-textobj-chainmember',
-    requires = {
+    dependencies ={
       { 'kana/vim-textobj-user' }
     }
   }

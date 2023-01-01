@@ -23,7 +23,7 @@ let g:loaded_netrwFileHandlers = 1
 
 source core-config.vim
 source core-mappings.vim
-lua require('lazy-plugins')
+lua require('lazy-bootstrap')
 lua require('ts-fix-highlight-groups')
 lua require('quickfix')
 lua require('mappings')

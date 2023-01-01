@@ -1,6 +1,6 @@
 return {
   'nvim-telescope/telescope.nvim',
-  requires = {
+  dependencies = {
     'nvim-telescope/telescope-fzy-native.nvim',
     --'jvgrootveld/telescope-zoxide',
   },

@@ -2,7 +2,7 @@ return {
   "hrsh7th/nvim-cmp",
   opt = true,
   event='InsertEnter',
-  requires = {
+  dependencies ={
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
     'hrsh7th/cmp-nvim-lua',

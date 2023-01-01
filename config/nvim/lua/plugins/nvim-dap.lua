@@ -1,7 +1,7 @@
 return {
   {
     'mfussenegger/nvim-dap',
-    requires = {
+    dependencies ={
       'rcarriga/nvim-dap-ui',
       'theHamsta/nvim-dap-virtual-text',
       'jayp0521/mason-nvim-dap.nvim',
