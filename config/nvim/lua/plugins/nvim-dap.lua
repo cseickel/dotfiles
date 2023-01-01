@@ -1,5 +1,5 @@
-return function(use)
-  use {
+return {
+  {
     'mfussenegger/nvim-dap',
     requires = {
       'rcarriga/nvim-dap-ui',
@@ -148,11 +148,10 @@ return function(use)
         })
       end
     end
-  }
-
-  use {
+  },
+ {
     "microsoft/vscode-js-debug",
     opt = true,
     run = "npm install --legacy-peer-deps && npm run compile",
   }
-end
+}

@@ -36,11 +36,10 @@ local config = function()
   }
 end
 
-return function(use)
-  use {
-    'sindrets/diffview.nvim',
-    opt = true,
-    cmd = 'DiffviewOpen',
-    config = config
-  }
-end
+
+return {
+  'sindrets/diffview.nvim',
+  opt = true,
+  cmd = 'DiffviewOpen',
+  config = config
+}
