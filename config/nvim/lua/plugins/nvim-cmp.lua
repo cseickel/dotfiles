@@ -1,38 +1,69 @@
 return {
   "hrsh7th/nvim-cmp",
-  opt = true,
-  event='InsertEnter',
-  dependencies ={
+  dependencies = {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
-    'hrsh7th/cmp-nvim-lua',
-    'hrsh7th/cmp-path',
+    "hrsh7th/cmp-nvim-lua",
+    "hrsh7th/cmp-path",
     --'hrsh7th/cmp-calc',
-    'hrsh7th/vim-vsnip',
-    'hrsh7th/vim-vsnip-integ',
+    "hrsh7th/vim-vsnip",
+    "hrsh7th/vim-vsnip-integ",
     --'rafamadriz/friendly-snippets',
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
     "hrsh7th/cmp-nvim-lsp-signature-help",
-    'rcarriga/cmp-dap',
+    "rcarriga/cmp-dap",
     {
-      'David-Kunz/cmp-npm',
+      "onsails/lspkind-nvim",
+      opt = true,
+      event = "InsertEnter",
       config = function()
-        require('cmp-npm').setup()
-      end
+        require("lspkind").init({
+          mode = "symbol_text",
+          preset = "default",
+          symbol_map = {
+            Text = "",
+            Method = "",
+            Function = "",
+            Constructor = "",
+            Variable = "",
+            Class = "",
+            Interface = "",
+            Module = "",
+            Property = "",
+            Unit = "",
+            Value = "",
+            Enum = "了",
+            Keyword = "",
+            Snippet = "﬌",
+            Color = "",
+            File = "",
+            Folder = "",
+            EnumMember = "",
+            Constant = "",
+            Struct = "",
+            Operator = "",
+          },
+        })
+      end,
+    },
+    {
+      "David-Kunz/cmp-npm",
+      config = function()
+        require("cmp-npm").setup()
+      end,
     },
   },
   config = function()
-    local cmp = require('cmp')
-    cmp.setup {
-      enabled = function ()
-        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-          or require("cmp_dap").is_dap_buffer()
+    local cmp = require("cmp")
+    cmp.setup({
+      enabled = function()
+        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
       end,
       formatting = {
         format = function(entry, vim_item)
           -- fancy icons and a name of kind
-          vim_item.kind = require("lspkind").presets.default[vim_item.kind]-- .. " " .. vim_item.kind
+          vim_item.kind = require("lspkind").presets.default[vim_item.kind] -- .. " " .. vim_item.kind
           -- set a name for each source
           vim_item.menu = ({
             buffer = "[Buffer]",
@@ -49,37 +80,39 @@ return {
             dap = "[DAP]",
           })[entry.source.name]
           return vim_item
-        end
+        end,
       },
       mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.close(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
       }),
-      snippet = {expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-      end},
+      snippet = {
+        expand = function(args)
+          vim.fn["vsnip#anonymous"](args.body)
+        end,
+      },
       sources = {
         --{ name = "copilot"},
         --{ name = "nvim_lua" },
-        { name = 'nvim_lsp', keyword_length = 1 },
-        { name = 'dap' },
+        { name = "nvim_lsp", keyword_length = 1 },
+        { name = "dap" },
         { name = "npm", keyword_length = 3 },
         { name = "vsnip", keyword_length = 1 },
         { name = "path" },
         { name = "calc" },
-        { name = 'buffer', keyword_length = 2 },
+        { name = "buffer", keyword_length = 2 },
         { name = "nvim_lsp_signature_help" },
       },
       completion = {
-        completeopt = 'menu,menuone,noinsert,preview',
+        completeopt = "menu,menuone,noinsert,preview",
         --keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%(-\w*\)*\)]],
         --keyword_length = 1,
       },
       preselect = cmp.PreselectMode.None,
-    }
+    })
 
     --cmp.setup.cmdline("/", {
     --    mapping = cmp.mapping.preset.cmdline(),
@@ -96,5 +129,5 @@ return {
     --        { name = "cmdline" },
     --    }),
     --})
-  end
+  end,
 }
