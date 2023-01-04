@@ -286,6 +286,9 @@ function work-on-issue() {
             base=$(git branch --show-current)
             echo "${bold}Please confirm the base branch:${normal}"
             vared base
+            if [[ -z "$base" ]]; then
+              base=$(gh repo view --json defaultBranchRef --jq ".defaultBranchRef.name")
+            fi
             git checkout -b $branchname origin/$base
             git push --set-upstream origin $branchname
         fi
