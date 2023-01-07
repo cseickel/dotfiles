@@ -62,7 +62,8 @@ abbreviate teh the
 set ruler
 set number
 set wrap linebreak breakindent
-set showbreak=\ ﬌\
+set textwidth=120
+set showbreak=↳\
 set signcolumn=auto:1-2
 set cursorline
 "
@@ -197,12 +198,45 @@ function! InitTerminal()
   let g:last_terminal_bufid = nvim_get_current_buf()
 endfunction
 
+function! GetUsableWinWidth()
+  let l:id = nvim_get_current_win()
+  let l:info = getwininfo(l:id)[0]
+  let l:width = l:info['width'] - l:info['textoff']
+  return l:width
+endfunction
+
+function! InitMarkdown()
+  set wrap linebreak breakindent
+  " if the window is smaller than 120, use the window width minus any gutter
+  let l:usable = GetUsableWinWidth()
+  if l:usable < 120
+    if l:usable > 80
+      echo "Setting textwidth to " . l:usable
+      execute "setlocal textwidth=" . l:usable
+    else
+      echo "Setting textwidth to 80"
+      setlocal textwidth=80
+    endif
+  else
+    echo "Setting textwidth to 120"
+    setlocal textwidth=120
+  endif
+  set showbreak=↳\
+
+  " if this file is in a tmp directory, delete the buffer on hide
+  if expand('%:p') =~# '/tmp/'
+    setlocal bufhidden=delete
+  endif
+endfunction
+
+
 augroup core_autocmd
   autocmd!
   autocmd FileType gitcommit,gitrebase,gitconfig,gitrebase,git,tmp set bufhidden=delete
   autocmd FileType go set noexpandtab
   autocmd FileType javascript,typescript,typescriptreact,html,lua call TwoSpaceIndent()
   autocmd FileType dockerfile,yml,vim call TwoSpaceIndent()
+  autocmd FileType markdown call InitMarkdown()
   autocmd FileType cs call FourSpaceIndent()
   autocmd TermOpen * call InitTerminal()
   autocmd TermEnter * call InitTerminal()
