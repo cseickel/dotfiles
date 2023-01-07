@@ -1,3 +1,4 @@
+-- cSpell:disable
 local mine = function(use)
   local M = {
     "nvim-neo-tree/neo-tree.nvim",
