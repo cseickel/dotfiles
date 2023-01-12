@@ -234,3 +234,21 @@ highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 " highlight link csUnspecifiedStatement PlainText
 " highlight link csContextualStatement Control
 " highlight link csUnsupportedStatement PlainText
+
+
+"-------------------------------------------------------------------------
+" rhysd/conflict-marker.vim
+"-------------------------------------------------------------------------
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+let g:conflict_marker_enable_mappings = 0
+
+" Include text after begin and end markers in Highlights
+let g:conflict_marker_begin = '^<<<<<<< .*$'
+let g:conflict_marker_end   = '^>>>>>>> .*$'
+
+highlight ConflictMarkerBegin guibg=#00875f
+highlight ConflictMarkerOurs guibg=#005f5f
+highlight ConflictMarkerTheirs guibg=#005f87
+highlight ConflictMarkerEnd guibg=#5f87af
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81

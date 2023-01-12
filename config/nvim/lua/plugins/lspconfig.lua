@@ -1,31 +1,31 @@
 return {
-  'neovim/nvim-lspconfig',
-  dependencies ={
-    'williamboman/mason.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    'jose-elias-alvarez/nvim-lsp-ts-utils',
-    'jose-elias-alvarez/null-ls.nvim',
+  "neovim/nvim-lspconfig",
+  dependencies = {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "jose-elias-alvarez/nvim-lsp-ts-utils",
+    "jose-elias-alvarez/null-ls.nvim",
     --'jayp0521/mason-null-ls.nvim',
-    'nvim-lua/plenary.nvim',
-    'b0o/schemastore.nvim',
-    'folke/neodev.nvim',
+    "nvim-lua/plenary.nvim",
+    "b0o/schemastore.nvim",
+    "folke/neodev.nvim",
     --'ThePrimeagen/refactoring.nvim',
   },
   config = function()
     --cSpell: disable
     require("mason").setup()
     require("mason-lspconfig").setup({
-  -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
-  -- This setting has no relation with the `automatic_installation` setting.
+      -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
+      -- This setting has no relation with the `automatic_installation` setting.
       ensure_installed = {
         "bashls",
         "dockerls",
         "gopls",
         "graphql",
         "html",
+        "jedi_language_server",
         "jsonls",
         "marksman",
-        "pylsp",
         "pyright",
         "sqlls",
         "sumneko_lua",
@@ -47,20 +47,15 @@ return {
     })
     require("neodev").setup({})
 
-    vim.fn.sign_define("DiagnosticSignError",
-      {text = "", texthl = "DiagnosticSignError"})
-    vim.fn.sign_define("DiagnosticSignWarn",
-      {text = "", texthl = "DiagnosticSignWarn"})
-    vim.fn.sign_define("DiagnosticSignInfo",
-      {text = "", texthl = "DiagnosticSignInfo"})
-    vim.fn.sign_define("DiagnosticSignHint",
-      {text = "", texthl = "DiagnosticSignHint"})
+    vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
+    vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })
+    vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo" })
+    vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
 
-    vim.lsp.handlers["textDocument/hover"] =
-      vim.lsp.with(vim.lsp.handlers.hover, {
-        -- Use a sharp border with `FloatBorder` highlights
-        border = "single",
-      })
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      -- Use a sharp border with `FloatBorder` highlights
+      border = "single",
+    })
     vim.diagnostic.config({
       update_in_insert = false,
     })
@@ -69,27 +64,25 @@ return {
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-      }
+        "documentation",
+        "detail",
+        "additionalTextEdits",
+      },
     }
 
     -- for nvim-ufo
     vim.wo.foldlevel = 99 -- feel free to decrease the value
     vim.wo.foldenable = true
     capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true
+      dynamicRegistration = false,
+      lineFoldingOnly = true,
     }
 
-
     local cspell_extra_args = function(params)
-      local project_root = params.root
-        or vim.fn.system("git rev-parse --show-toplevel")
-        or vim.fn.getcwd()
+      local project_root = params.root or vim.fn.system("git rev-parse --show-toplevel") or vim.fn.getcwd()
       return {
-        "--config", project_root .. "/cspell.json",
+        "--config",
+        project_root .. "/cspell.json",
       }
     end
     local null_ls = require("null-ls")
@@ -111,22 +104,23 @@ return {
         null_ls.builtins.formatting.trim_whitespace,
         null_ls.builtins.diagnostics.actionlint,
       },
-      on_attach = function(client, bufnr)
-        -- Format on save
-        if client.supports_method("textDocument/formatting") then
-          vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-              local success, msg = pcall(vim.lsp.buf.format, { bufnr = bufnr })
-              if not success then
-                vim.notify("Unable to auto format buffer.", vim.log.levels.WARN)
-              end
-            end,
-          })
-        end
-      end,
+      -- on_attach = function(client, bufnr)
+      --   -- Format on save
+      --   -- This causes bugs, sometimes I lose data because of this...
+      --   if client.supports_method("textDocument/formatting") then
+      --     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+      --     vim.api.nvim_create_autocmd("BufWritePre", {
+      --       group = augroup,
+      --       buffer = bufnr,
+      --       callback = function()
+      --         local success, msg = pcall(vim.lsp.buf.format, { bufnr = bufnr })
+      --         if not success then
+      --           vim.notify("Unable to auto format buffer.", vim.log.levels.WARN)
+      --         end
+      --       end,
+      --     })
+      --   end
+      -- end,
     })
     --require("mason-null-ls").setup({
     --  automatic_installation = true,
@@ -135,13 +129,13 @@ return {
     local lspconfig = require("lspconfig")
     local navic = require("nvim-navic")
 
-    lspconfig.jsonls.setup {
+    lspconfig.jsonls.setup({
       settings = {
         json = {
-          schemas = require'schemastore'.json.schemas(),
+          schemas = require("schemastore").json.schemas(),
         },
       },
-    }
+    })
 
     -- make sure to only run this once!
     local tsserver_on_attach = function(client, bufnr)
@@ -152,7 +146,7 @@ return {
       local ts_utils = require("nvim-lsp-ts-utils")
 
       -- defaults
-      ts_utils.setup {
+      ts_utils.setup({
         enable_import_on_completion = true,
         -- eslint
         eslint_enable_code_actions = true,
@@ -174,7 +168,7 @@ return {
         -- filter diagnostics
         filter_out_diagnostics_by_severity = {},
         filter_out_diagnostics_by_code = {},
-      }
+      })
 
       -- required to fix code action ranges and filter diagnostics
       ts_utils.setup_client(client)
@@ -194,7 +188,7 @@ return {
 
     lspconfig.tsserver.setup({
       capabilities = capabilities,
-      on_attach = tsserver_on_attach
+      on_attach = tsserver_on_attach,
     })
 
     -- cspell: disable
@@ -204,7 +198,7 @@ return {
       --"graphql",
       "yamlls",
       "html",
-      "pylsp",
+      "jedi_language_server",
       "terraformls",
       "vimls",
       "bashls",
@@ -215,9 +209,9 @@ return {
       if lspconfig[server] then
         lspconfig[server].setup({
           capabilities = capabilities,
-          on_attach = function (client, bufnr)
+          on_attach = function(client, bufnr)
             navic.attach(client, bufnr)
-          end
+          end,
         })
       end
     end
@@ -232,7 +226,7 @@ return {
           },
           diagnostics = {
             globals = {
-              'vim',
+              "vim",
               "describe",
               "it",
               "before_each",
@@ -241,16 +235,16 @@ return {
             },
           },
           workspace = {
-            library = vim.api.nvim_get_runtime_file('', true),
+            library = vim.api.nvim_get_runtime_file("", true),
             checkThirdParty = false,
           },
           telemetry = {
             enable = false,
           },
-        }
-      }
+        },
+      },
     })
 
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end
+    vim.cmd([[ do User LspAttachBuffers ]])
+  end,
 }
