@@ -269,3 +269,10 @@ function! SendToLastTerminal(args)
 endfunction
 
 command! -nargs=? T call SendToLastTerminal("<args>")
+
+
+"*****************************************************************************
+" => Plugins
+" *****************************************************************************
+
+let g:BufSurfIgnore = 'neo-tree .* \[.*\],^$'
