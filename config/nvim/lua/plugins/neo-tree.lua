@@ -482,4 +482,11 @@ local issue = function(use)
   }
 end
 
-return mine()
+local function fzy()
+  M = mine()
+  M[1] = "pysan3/neo-tree.nvim"
+  M.branch = "feat-fzy-finder"
+  return M
+end
+
+return fzy()

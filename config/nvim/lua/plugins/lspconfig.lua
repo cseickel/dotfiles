@@ -88,6 +88,13 @@ return {
     local null_ls = require("null-ls")
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     null_ls.setup({
+      should_attach = function(bufnr)
+        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        if ft == "dbui" or ft == "dbout" or ft:match("sql") then
+          return false
+        end
+        return true
+      end,
       sources = {
         null_ls.builtins.code_actions.cspell.with({
           extra_args = cspell_extra_args,
