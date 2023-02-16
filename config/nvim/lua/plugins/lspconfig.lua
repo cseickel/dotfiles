@@ -28,7 +28,7 @@ return {
         "marksman",
         "pyright",
         "sqlls",
-        "sumneko_lua",
+        "lua_ls",
         "tailwindcss",
         "terraformls",
         "tsserver",
@@ -223,7 +223,7 @@ return {
       end
     end
 
-    lspconfig.sumneko_lua.setup({
+    lspconfig.lua_ls.setup({
       capabilities = capabilities,
       on_attach = navic.attach,
       settings = {

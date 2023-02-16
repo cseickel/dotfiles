@@ -1,6 +1,7 @@
 return {
   'lewis6991/gitsigns.nvim',
-  dependencies ={
+  version = "",
+  dependencies = {
     'nvim-lua/plenary.nvim'
   },
   config = function()
