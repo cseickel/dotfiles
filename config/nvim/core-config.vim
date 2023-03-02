@@ -177,10 +177,10 @@ endfunction
 
 function! VimEnter()
   setlocal cursorline
-  "To share clipboard between instances
-  if exists(':rshada')
-    autocmd TextYankPost,FocusGained,FocusLost * rshada | wshada
-  endif
+  " To share clipboard between instances
+  " if exists(':rshada')
+  "   autocmd TextYankPost,FocusGained,FocusLost * rshada | wshada
+  " endif
 endfunction
 
 function! WinLeave()

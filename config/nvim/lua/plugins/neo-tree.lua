@@ -4,10 +4,7 @@ local mine = function(use)
     branch = "main",
     dependencies = {
       "mrbjarksen/neo-tree-diagnostics.nvim",
-      {
-        "miversen33/netman.nvim",
-        branch = "v1.1",
-      },
+      "miversen33/netman.nvim",
     },
     cmd = "Neotree",
     --keys = {
@@ -482,11 +479,4 @@ local issue = function(use)
   }
 end
 
-local function fzy()
-  M = mine()
-  M[1] = "pysan3/neo-tree.nvim"
-  M.branch = "feat-fzy-finder"
-  return M
-end
-
-return fzy()
+return mine()

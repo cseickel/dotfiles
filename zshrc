@@ -140,6 +140,7 @@ alias s="tmux attach -t secondary"
 alias t="~/start-arch-linux-docker.sh"
 
 alias terra="aws-vault exec rva --no-session -- terraform"
+alias cdk="aws-vault exec rva --no-session -- npm run cdk"
 alias vault="aws-vault exec rva --"
 
 alias add="git add"
