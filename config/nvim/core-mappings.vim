@@ -10,6 +10,9 @@ tnoremap <silent> <C-\> <c-\><c-n>
 " I make this mistake all the time...
 command! Qa :qa
 
+" quick wraite and buffer wipe for commit messages
+cnorea wd write\|bwipeout
+
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
