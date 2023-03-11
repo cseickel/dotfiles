@@ -147,6 +147,17 @@ nnoremap <silent> <leader>w8 :8wincmd w <cr>
 nnoremap <silent> <leader>w9 :9wincmd w <cr>
 nnoremap <silent> <leader>w0 :10wincmd w <cr>
 
+nnoremap <silent> <leader>1 :1wincmd w <cr>
+nnoremap <silent> <leader>2 :2wincmd w <cr>
+nnoremap <silent> <leader>3 :3wincmd w <cr>
+nnoremap <silent> <leader>4 :4wincmd w <cr>
+nnoremap <silent> <leader>5 :5wincmd w <cr>
+nnoremap <silent> <leader>6 :6wincmd w <cr>
+nnoremap <silent> <leader>7 :7wincmd w <cr>
+nnoremap <silent> <leader>8 :8wincmd w <cr>
+nnoremap <silent> <leader>9 :9wincmd w <cr>
+nnoremap <silent> <leader>0 :10wincmd w <cr>
+
 " window movement
 nnoremap <silent> <C-h> <C-w>H
 nnoremap <silent> <C-j> <C-w>x<C-w>j
@@ -165,6 +176,13 @@ nnoremap <silent> H ^
 vnoremap <silent> H ^
 nnoremap <silent> L g_
 vnoremap <silent> L g_
+
+function! TermClear() abort
+  call feedkeys("", 'n')
+  set scrollback=1
+  set scrollback=10000
+endfunction
+tnoremap <silent> <C-l> <cmd>call TermClear()<CR>
 
 function! SmartWindowResize(orientation, direction) abort
     if a:orientation == "v"
