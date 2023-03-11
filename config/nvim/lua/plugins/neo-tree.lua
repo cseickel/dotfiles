@@ -164,7 +164,7 @@ local mine = function(use)
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
-            ["l"] = "focus_preview",
+            ["pp"] = "focus_preview",
           },
         },
         diagnostics = {
@@ -257,6 +257,8 @@ local mine = function(use)
               end,
             },
             mappings = {
+              ["/"] = "none",
+              ["f"] = "fuzzy_sorter",
               ["K"] = "close_node",
               ["J"] = function(state)
                 local utils = require("neo-tree.utils")
