@@ -17,9 +17,9 @@ disabled = true
 # ~/.config/starship.toml
 
 [time]
-disabled = true
-format = '🕙[ $time ]($style) '
+disabled = false
+style = "#888888"
+format = '[$time]($style) '
 utc_time_offset = "local"
 use_12hr = true
-style = "grey"
 

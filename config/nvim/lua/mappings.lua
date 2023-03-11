@@ -94,16 +94,8 @@ local findFile = function()
 end
 
 local getProjectRoot = function()
-  local cwd = vim.fn.getcwd()
-  local project_dir = cwd
-  local match = cwd:match("/invest%-apps/([%w%s%.%-%_]+)")
-  if match then
-    project_dir = "~/invest-apps/" .. match
-  end
-  if cwd:find("/.dotfiles/config", 0, true) then
-    project_dir = "~/.dotfiles/config"
-  end
-  return project_dir
+  local dot_git_path = vim.fn.finddir(".git", ".;")
+  return vim.fn.fnamemodify(dot_git_path, ":h")
 end
 
 local grepProject = function()
@@ -171,7 +163,8 @@ local mappings = {
       name = "File...", -- optional group name
       d = { findDirectory, "Directory picker (neo-tree)" },
       f = { findFile, "Find File (neo-tree)" },
-      g = { grepProject, "Grep" },
+      c = { "<cmd>Telescope live_grep<cr>", "Grep CWD" },
+      g = { grepProject, "Grep Project (git root)" },
     },
     g = {
       name = "Go to...",

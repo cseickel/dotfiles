@@ -61,9 +61,10 @@ abbreviate teh the
 "syntax enable
 set ruler
 set number
-set wrap linebreak breakindent
+set linebreak breakindent
 set textwidth=120
 set showbreak=↳\
+set nowrap
 set signcolumn=auto:1-2
 set cursorline
 "
@@ -206,27 +207,27 @@ function! GetUsableWinWidth()
 endfunction
 
 function! InitMarkdown()
+  " if this file is in a tmp directory, delete the buffer on hide
+  " it is probably a git commit message
+  if expand('%:p') =~# '/tmp/'
+    setlocal bufhidden=delete
+    setlocal nowrap
+    return
+  endif
+
   set wrap linebreak breakindent
   " if the window is smaller than 120, use the window width minus any gutter
   let l:usable = GetUsableWinWidth()
   if l:usable < 120
     if l:usable > 80
-      echo "Setting textwidth to " . l:usable
       execute "setlocal textwidth=" . l:usable
     else
-      echo "Setting textwidth to 80"
       setlocal textwidth=80
     endif
   else
-    echo "Setting textwidth to 120"
     setlocal textwidth=120
   endif
   set showbreak=↳\
-
-  " if this file is in a tmp directory, delete the buffer on hide
-  if expand('%:p') =~# '/tmp/'
-    setlocal bufhidden=delete
-  endif
 endfunction
 
 

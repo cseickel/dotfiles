@@ -1,6 +1,5 @@
 return {
   'lewis6991/gitsigns.nvim',
-  version = "",
   dependencies = {
     'nvim-lua/plenary.nvim'
   },

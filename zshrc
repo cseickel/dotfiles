@@ -117,7 +117,7 @@ fi
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nvim'
 # fi
 
 # Compilation flags
@@ -128,7 +128,7 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-export EDITOR="nvr --remote-tab-wait-silent"
+export EDITOR="nvr --remote-wait-silent"
 alias edit="$EDITOR"
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
@@ -288,7 +288,8 @@ function work-on-issue() {
             normal=$(tput sgr0)
             echo "${bold}Please confirm new branch name:${normal}"
             vared branchname
-            base=$(git branch --show-current)
+            #base=$(git branch --show-current)
+            base=dev
             echo "${bold}Please confirm the base branch:${normal}"
             vared base
             if [[ -z "$base" ]]; then

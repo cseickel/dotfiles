@@ -3,7 +3,7 @@ return {
   --commit = "4cccb6f494eb255b32a290d37c35ca12584c74d0",
   --run = ':TSUpdate',
   config = function()
-    require'nvim-treesitter.configs'.setup {
+    require('nvim-treesitter.configs').setup {
       ensure_installed = {
         "bash",
         "c",
@@ -37,10 +37,7 @@ return {
       },
       indent = {
         enable = true
-      }
-    }
-
-    require('nvim-treesitter.configs').setup {
+      },
       textobjects = {
         select = {
           enable = true,
