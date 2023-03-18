@@ -99,8 +99,26 @@ local getProjectRoot = function()
   return vim.fn.fnamemodify(dot_git_path, ":h")
 end
 
+grep_args = {
+  "-g", "!node_modules/",
+  "-g", "!dist/",
+  "-g", "!build/",
+  "-g", "!codegen/",
+  "-g", "!generated/",
+}
+
 local grepProject = function()
-  require("telescope.builtin").live_grep({ cwd = getProjectRoot() })
+  require("telescope.builtin").live_grep({
+    cwd = getProjectRoot(),
+    additional_args = grep_args,
+  })
+end
+
+local grepCWD = function()
+  require("telescope.builtin").live_grep({
+    cwd = vim.fn.getcwd(0, 0),
+    additional_args = grep_args,
+  })
 end
 
 local mappings = {
@@ -164,7 +182,7 @@ local mappings = {
       name = "File...", -- optional group name
       d = { findDirectory, "Directory picker (neo-tree)" },
       f = { findFile, "Find File (neo-tree)" },
-      c = { "<cmd>Telescope live_grep<cr>", "Grep CWD" },
+      c = { grepCWD, "Grep CWD" },
       g = { grepProject, "Grep Project (git root)" },
     },
     g = {
