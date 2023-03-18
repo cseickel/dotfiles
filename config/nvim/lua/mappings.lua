@@ -41,6 +41,7 @@ local getQuickfixOptions = function()
   local width = math.min(vim.o.columns - 2, 180)
   local height = math.min(vim.o.lines - 10, 60)
   local opt = {
+    jump_type = "never",
     layout_strategy = "vertical",
     layout_config = {
       width = width,
