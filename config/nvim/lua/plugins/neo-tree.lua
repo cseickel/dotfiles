@@ -3,6 +3,7 @@ local mine = function(use)
     "nvim-neo-tree/neo-tree.nvim",
     branch = "main",
     dependencies = {
+      "christianchiarulli/nvcode-color-schemes.vim",
       "mrbjarksen/neo-tree-diagnostics.nvim",
       "miversen33/netman.nvim",
     },
@@ -14,7 +15,7 @@ local mine = function(use)
     config = function()
       -- See ":help neo-tree-highlights" for a list of available highlight groups
       vim.cmd([[
-      "let g:neo_tree_remove_legacy_commands = 1
+      let g:neo_tree_remove_legacy_commands = 1
       hi NeoTreeCursorLine gui=bold guibg=#333333
       ]])
 
@@ -222,7 +223,7 @@ local mine = function(use)
             sidebar = "tab",
             current = "window",
           },
-          --hijack_netrw_behavior = "open_current",
+          hijack_netrw_behavior = "open_current",
           follow_current_file = true,
           group_empty_dirs = true,
           use_libuv_file_watcher = true,
