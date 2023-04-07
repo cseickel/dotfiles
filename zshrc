@@ -79,7 +79,6 @@ ZSH_CUSTOM=/usr/share/zsh
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git aws docker fzf)
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval "$(zoxide init zsh)"
 source "$ZSH/oh-my-zsh.sh"
 
 
@@ -229,7 +228,6 @@ function fn_aws_tail() {
 }
 alias awstail="fn_aws_tail"
 
-command -v z >/dev/null 2>&1 && alias cd="z"
 
 SPACESHIP_CHAR_SYMBOL='❯ '
 SPACESHIP_CHAR_SYMBOL_ROOT='# '
@@ -309,8 +307,14 @@ function work-on-issue() {
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+eval "$(zoxide init zsh)"
+command -v z >/dev/null 2>&1 && alias cd="z"
 
 # pyenv, for managing python versions
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

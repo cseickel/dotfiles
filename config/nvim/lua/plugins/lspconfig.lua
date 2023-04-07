@@ -9,7 +9,13 @@ return {
     "nvim-lua/plenary.nvim",
     "b0o/schemastore.nvim",
     "folke/neodev.nvim",
-    --'ThePrimeagen/refactoring.nvim',
+    {
+      "SmiteshP/nvim-navbuddy",
+      requires = {
+        "SmiteshP/nvim-navic",
+        "MunifTanjim/nui.nvim"
+      },
+    }
   },
   config = function()
     --cSpell: disable
@@ -88,6 +94,7 @@ return {
     local null_ls = require("null-ls")
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     null_ls.setup({
+      fallback_severity = vim.diagnostic.severity.HINT,
       should_attach = function(bufnr)
         local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
         if ft == "dbui" or ft == "dbout" or ft:match("sql") then
@@ -135,6 +142,7 @@ return {
 
     local lspconfig = require("lspconfig")
     local navic = require("nvim-navic")
+    local navbuddy = require("nvim-navbuddy")
 
     lspconfig.jsonls.setup({
       settings = {
@@ -187,6 +195,7 @@ return {
       vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
 
       navic.attach(client, bufnr)
+      navbuddy.attach(client, bufnr)
     end
 
     --lspconfig.setup ({
@@ -199,7 +208,7 @@ return {
     })
 
     -- cspell: disable
-    local other_servers_with_navic = {
+    local other_servers_with_doc_symbols = {
       --"omnisharp",
       "gopls",
       --"graphql",
@@ -212,12 +221,13 @@ return {
       --"angularls"
     }
     -- cspell: enable
-    for _, server in ipairs(other_servers_with_navic) do
+    for _, server in ipairs(other_servers_with_doc_symbols) do
       if lspconfig[server] then
         lspconfig[server].setup({
           capabilities = capabilities,
           on_attach = function(client, bufnr)
             navic.attach(client, bufnr)
+          navbuddy.attach(client, bufnr)
           end,
         })
       end
