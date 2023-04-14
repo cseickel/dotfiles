@@ -49,6 +49,7 @@ local mine = function(use)
           "git_status",
           "diagnostics",
           "netman.ui.neo-tree",
+          "document_symbols",
         },
         log_level = "info",
         log_to_file = false,
