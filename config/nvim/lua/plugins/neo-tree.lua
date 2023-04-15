@@ -9,7 +9,7 @@ local mine = function(use)
       },
       "miversen33/netman.nvim",
     },
-    cmd = "Neotree",
+    -- cmd = "Neotree",
     --keys = {
     --  { "\\", "<cmd>Neotree current reveal toggle<cr>", "Open Tree in Current Window" },
     --  { "|", "<cmd>Neotree reveal<cr>", "Open Tree in Sidebar" },

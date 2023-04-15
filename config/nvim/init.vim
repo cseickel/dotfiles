@@ -23,10 +23,10 @@ let g:loaded_netrwFileHandlers = 1
 
 source core-config.vim
 source core-mappings.vim
+source theme.vim
 lua require('lazy-bootstrap')
 lua require('ts-fix-highlight-groups')
 lua require('quickfix')
 lua require('mappings')
-source theme.vim
 lua require('status')
 exe 'cd ' . g:owd
