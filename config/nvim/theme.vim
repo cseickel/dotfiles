@@ -1,117 +1,117 @@
-lua << EOF
-  -- This block fixes highlight groups that were renamed from neovim 0.7 to 0.8
-  -- see https://github.com/nvim-treesitter/nvim-treesitter/commit/42ab95d5e11f247c6f0c8f5181b02e816caa4a4f
-  local hl = function(group, opts)
-      opts.default = true
-      vim.api.nvim_set_hl(0, group, opts)
-  end
-
-  -- Misc {{{
-  hl('@comment', {link = 'Comment'})
-  -- hl('@error', {link = 'Error'})
-  hl('@none', {bg = 'NONE', fg = 'NONE'})
-  hl('@preproc', {link = 'PreProc'})
-  hl('@define', {link = 'Define'})
-  hl('@operator', {link = 'Operator'})
-  -- }}}
-
-  -- Punctuation {{{
-  hl('@punctuation.delimiter', {link = 'Delimiter'})
-  hl('@punctuation.bracket', {link = 'Delimiter'})
-  hl('@punctuation.special', {link = 'Delimiter'})
-  -- }}}
-
-  -- Literals {{{
-  hl('@string', {link = 'String'})
-  hl('@string.regex', {link = 'String'})
-  hl('@string.escape', {link = 'SpecialChar'})
-  hl('@string.special', {link = 'SpecialChar'})
-
-  hl('@character', {link = 'Character'})
-  hl('@character.special', {link = 'SpecialChar'})
-
-  hl('@boolean', {link = 'Boolean'})
-  hl('@number', {link = 'Number'})
-  hl('@float', {link = 'Float'})
-  -- }}}
-
-  -- Functions {{{
-  hl('@function', {link = 'Function'})
-  hl('@function.call', {link = 'Function'})
-  hl('@function.builtin', {link = 'Special'})
-  hl('@function.macro', {link = 'Macro'})
-
-  hl('@method', {link = 'Function'})
-  hl('@method.call', {link = 'Function'})
-
-  hl('@constructor', {link = 'Special'})
-  hl('@parameter', {link = 'Identifier'})
-  -- }}}
-
-  -- Keywords {{{
-  hl('@keyword', {link = 'Keyword'})
-  hl('@keyword.function', {link = 'Keyword'})
-  hl('@keyword.operator', {link = 'Keyword'})
-  hl('@keyword.return', {link = 'Keyword'})
-
-  hl('@conditional', {link = 'Conditional'})
-  hl('@repeat', {link = 'Repeat'})
-  hl('@debug', {link = 'Debug'})
-  hl('@label', {link = 'Label'})
-  hl('@include', {link = 'Include'})
-  hl('@exception', {link = 'Exception'})
-  -- }}}
-
-  -- Types {{{
-  hl('@type', {link = 'Type'})
-  hl('@type.builtin', {link = 'Type'})
-  hl('@type.qualifier', {link = 'Type'})
-  hl('@type.definition', {link = 'Typedef'})
-
-  hl('@storageclass', {link = 'StorageClass'})
-  hl('@attribute', {link = 'PreProc'})
-  hl('@field', {link = 'Identifier'})
-  hl('@property', {link = 'Identifier'})
-  -- }}}
-
-  -- Identifiers {{{
-  hl('@variable', {link = 'Normal'})
-  hl('@variable.builtin', {link = 'Special'})
-
-  hl('@constant', {link = 'Constant'})
-  hl('@constant.builtin', {link = 'Special'})
-  hl('@constant.macro', {link = 'Define'})
-
-  hl('@namespace', {link = 'Include'})
-  hl('@symbol', {link = 'Identifier'})
-  -- }}}
-
-  -- Text {{{
-  hl('@text', {link = 'Normal'})
-  hl('@text.strong', {bold = true})
-  hl('@text.emphasis', {italic = true})
-  hl('@text.underline', {underline = true})
-  hl('@text.strike', {strikethrough = true})
-  hl('@text.title', {link = 'Title'})
-  hl('@text.literal', {link = 'String'})
-  hl('@text.uri', {link = 'Underlined'})
-  hl('@text.math', {link = 'Special'})
-  hl('@text.environment', {link = 'Macro'})
-  hl('@text.environment.name', {link = 'Type'})
-  hl('@text.reference', {link = 'Constant'})
-
-  hl('@text.todo', {link = 'Todo'})
-  hl('@text.note', {link = 'SpecialComment'})
-  hl('@text.warning', {link = 'WarningMsg'})
-  hl('@text.danger', {link = 'ErrorMsg'})
-  -- }}}
-
-  -- Tags {{{
-  hl('@tag', {link = 'Tag'})
-  hl('@tag.attribute', {link = 'Identifier'})
-  hl('@tag.delimiter', {link = 'Delimiter'})
-  -- }}}
-EOF
+" lua << EOF
+"   -- This block fixes highlight groups that were renamed from neovim 0.7 to 0.8
+"   -- see https://github.com/nvim-treesitter/nvim-treesitter/commit/42ab95d5e11f247c6f0c8f5181b02e816caa4a4f
+"   local hl = function(group, opts)
+"       opts.default = true
+"       vim.api.nvim_set_hl(0, group, opts)
+"   end
+" 
+"   -- Misc {{{
+"   hl('@comment', {link = 'Comment'})
+"   -- hl('@error', {link = 'Error'})
+"   hl('@none', {bg = 'NONE', fg = 'NONE'})
+"   hl('@preproc', {link = 'PreProc'})
+"   hl('@define', {link = 'Define'})
+"   hl('@operator', {link = 'Operator'})
+"   -- }}}
+" 
+"   -- Punctuation {{{
+"   hl('@punctuation.delimiter', {link = 'Delimiter'})
+"   hl('@punctuation.bracket', {link = 'Delimiter'})
+"   hl('@punctuation.special', {link = 'Delimiter'})
+"   -- }}}
+" 
+"   -- Literals {{{
+"   hl('@string', {link = 'String'})
+"   hl('@string.regex', {link = 'String'})
+"   hl('@string.escape', {link = 'SpecialChar'})
+"   hl('@string.special', {link = 'SpecialChar'})
+" 
+"   hl('@character', {link = 'Character'})
+"   hl('@character.special', {link = 'SpecialChar'})
+" 
+"   hl('@boolean', {link = 'Boolean'})
+"   hl('@number', {link = 'Number'})
+"   hl('@float', {link = 'Float'})
+"   -- }}}
+" 
+"   -- Functions {{{
+"   hl('@function', {link = 'Function'})
+"   hl('@function.call', {link = 'Function'})
+"   hl('@function.builtin', {link = 'Special'})
+"   hl('@function.macro', {link = 'Macro'})
+" 
+"   hl('@method', {link = 'Function'})
+"   hl('@method.call', {link = 'Function'})
+" 
+"   hl('@constructor', {link = 'Special'})
+"   hl('@parameter', {link = 'Identifier'})
+"   -- }}}
+" 
+"   -- Keywords {{{
+"   hl('@keyword', {link = 'Keyword'})
+"   hl('@keyword.function', {link = 'Keyword'})
+"   hl('@keyword.operator', {link = 'Keyword'})
+"   hl('@keyword.return', {link = 'Keyword'})
+" 
+"   hl('@conditional', {link = 'Conditional'})
+"   hl('@repeat', {link = 'Repeat'})
+"   hl('@debug', {link = 'Debug'})
+"   hl('@label', {link = 'Label'})
+"   hl('@include', {link = 'Include'})
+"   hl('@exception', {link = 'Exception'})
+"   -- }}}
+" 
+"   -- Types {{{
+"   hl('@type', {link = 'Type'})
+"   hl('@type.builtin', {link = 'Type'})
+"   hl('@type.qualifier', {link = 'Type'})
+"   hl('@type.definition', {link = 'Typedef'})
+" 
+"   hl('@storageclass', {link = 'StorageClass'})
+"   hl('@attribute', {link = 'PreProc'})
+"   hl('@field', {link = 'Identifier'})
+"   hl('@property', {link = 'Identifier'})
+"   -- }}}
+" 
+"   -- Identifiers {{{
+"   hl('@variable', {link = 'Normal'})
+"   hl('@variable.builtin', {link = 'Special'})
+" 
+"   hl('@constant', {link = 'Constant'})
+"   hl('@constant.builtin', {link = 'Special'})
+"   hl('@constant.macro', {link = 'Define'})
+" 
+"   hl('@namespace', {link = 'Include'})
+"   hl('@symbol', {link = 'Identifier'})
+"   -- }}}
+" 
+"   -- Text {{{
+"   hl('@text', {link = 'Normal'})
+"   hl('@text.strong', {bold = true})
+"   hl('@text.emphasis', {italic = true})
+"   hl('@text.underline', {underline = true})
+"   hl('@text.strike', {strikethrough = true})
+"   hl('@text.title', {link = 'Title'})
+"   hl('@text.literal', {link = 'String'})
+"   hl('@text.uri', {link = 'Underlined'})
+"   hl('@text.math', {link = 'Special'})
+"   hl('@text.environment', {link = 'Macro'})
+"   hl('@text.environment.name', {link = 'Type'})
+"   hl('@text.reference', {link = 'Constant'})
+" 
+"   hl('@text.todo', {link = 'Todo'})
+"   hl('@text.note', {link = 'SpecialComment'})
+"   hl('@text.warning', {link = 'WarningMsg'})
+"   hl('@text.danger', {link = 'ErrorMsg'})
+"   -- }}}
+" 
+"   -- Tags {{{
+"   hl('@tag', {link = 'Tag'})
+"   hl('@tag.attribute', {link = 'Identifier'})
+"   hl('@tag.delimiter', {link = 'Delimiter'})
+"   -- }}}
+" EOF
 let g:db_ui_use_nerd_fonts = 1
 
 " configure nvcode-color-schemes
@@ -152,10 +152,6 @@ hi TabModified guifg=#d7d787 ctermfg=186 guibg=#444444 ctermbg=238 gui=NONE cter
 hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
 
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
-" nvcode overrides from dark+
-highlight Comment ctermfg=0 guifg=#505050 cterm=italic gui=italic
-highlight TSComment none
-highlight link TSComment Comment
 
 highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
@@ -171,15 +167,15 @@ highlight GitGutterChangeDelete      guifg=#c97755 gui=Bold
 
 highlight TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
-hi DiagnosticVirtualTextError none
-hi DiagnosticVirtualTextWarn none
-hi DiagnosticVirtualTextInfo none
-hi DiagnosticVirtualTextHint none
-hi DiagnosticDefaultWarn guifg=#d7d700 gui=Italic
-hi DiagnosticDefaultInfo guifg=#87d7ff gui=Italic
-hi DiagnosticDefaultHint guifg=#ffffd7 gui=Italic
-hi DiagnosticDefaultError guifg=#af0000 gui=Italic,Bold
-hi link vimUserFunc none
+"hi DiagnosticVirtualTextError none
+"hi DiagnosticVirtualTextWarn none
+"hi DiagnosticVirtualTextInfo none
+"hi DiagnosticVirtualTextHint none
+hi DiagnosticWarn guifg=#d7d700 gui=Italic
+hi DiagnosticInfo guifg=#87d7ff gui=Italic
+hi DiagnosticHint guifg=#ffffd7 gui=Italic
+hi DiagnosticError guifg=#af0000 gui=Italic,Bold
+"hi link vimUserFunc none
 
 hi Normal guibg=#1c1c1c
 highlight clear NormalNC" guibg=#262626
@@ -199,18 +195,18 @@ highlight Cursor guibg=#5f87af ctermbg=67
 highlight iCursor guibg=#ffffaf ctermbg=229
 highlight rCursor guibg=#d70000 ctermbg=124
 
-highlight Type ctermfg=6 guifg=#4ec9b0
-highlight link This Language
-highlight link New Constant
-highlight link Interpolation Identifier
-highlight link InterpolationDelim Constant
-highlight link DocComment SpecialComment
-highlight link DocExample Identifier
-highlight link DocString Identifier
-highlight link Operator Conditional
-highlight link OperLambda Conditional
-highlight link Modifier Conditional
-highlight link LinqKeyword Conditional
+" highlight Type ctermfg=6 guifg=#4ec9b0
+" highlight link This Language
+" highlight link New Constant
+" highlight link Interpolation Identifier
+" highlight link InterpolationDelim Constant
+" highlight link DocComment SpecialComment
+" highlight link DocExample Identifier
+" highlight link DocString Identifier
+" highlight link Operator Conditional
+" highlight link OperLambda Conditional
+" highlight link Modifier Conditional
+" highlight link LinqKeyword Conditional
 
 " Colors for nvim-cmp completion menu
 highlight CmpItemAbbr guifg=#949494
