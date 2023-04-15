@@ -20,6 +20,7 @@ local vscode = {
         ["@comment"] = { fg="#505050", bg="NONE", italic=true },
         Comment = { fg="#505050", bg="NONE", italic=true },
         Directory = { fg=c.vscBlue, bg="NONE" },
+        ["@punctuation.bracket"] = { fg=c.vscFront, bg="None" },
       }
     })
     require("vscode").load()

@@ -1,7 +1,7 @@
 return {
   "nvim-lua/plenary.nvim",
   "MunifTanjim/nui.nvim",
-  { "rmagatti/auto-session", config = true },
+  { "rmagatti/auto-session", config = { auto_session_use_git_branch = true } },
   "nanotee/zoxide.vim",
   "samjwill/nvim-unception",
   "tpope/vim-dadbod",

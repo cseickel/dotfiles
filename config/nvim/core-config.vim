@@ -61,10 +61,9 @@ abbreviate teh the
 "syntax enable
 set ruler
 set number
-set linebreak breakindent
-set textwidth=120
+set wrap
 set showbreak=↳\
-set nowrap
+set linebreak breakindent
 set signcolumn=auto:1-2
 set cursorline
 "
@@ -211,11 +210,9 @@ function! InitMarkdown()
   " it is probably a git commit message
   if expand('%:p') =~# '/tmp/'
     setlocal bufhidden=delete
-    setlocal nowrap
     return
   endif
 
-  set wrap linebreak breakindent
   " if the window is smaller than 120, use the window width minus any gutter
   let l:usable = GetUsableWinWidth()
   if l:usable < 120
@@ -227,7 +224,6 @@ function! InitMarkdown()
   else
     setlocal textwidth=120
   endif
-  set showbreak=↳\
 endfunction
 
 
