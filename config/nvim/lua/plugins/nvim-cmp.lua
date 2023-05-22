@@ -15,13 +15,28 @@ return {
     "rcarriga/cmp-dap",
     "onsails/lspkind-nvim",
     "David-Kunz/cmp-npm",
+    -- {
+    --   "zbirenbaum/copilot-cmp",
+    --   dependencies = {
+    --     "zbirenbaum/copilot.lua",
+    --   },
+    -- }
+
   },
   config = function()
+    -- require("copilot").setup({
+    --   suggestion = { enabled = false },
+    --   panel = { enabled = false },
+    -- })
+    -- require("copilot_cmp").setup()
+
     require("cmp-npm").setup()
+
     require("lspkind").init({
       mode = "symbol_text",
       preset = "default",
       symbol_map = {
+        Copilot = "",
         Text = "",
         Method = "",
         Function = "",
@@ -55,8 +70,12 @@ return {
         format = function(entry, vim_item)
           -- fancy icons and a name of kind
           vim_item.kind = require("lspkind").presets.default[vim_item.kind] -- .. " " .. vim_item.kind
+          if entry.source.name == "copilot" then
+            vim_item.kind = ""
+          end
           -- set a name for each source
           vim_item.menu = ({
+            copilot = "[Copilot]",
             buffer = "[Buffer]",
             nvim_lsp = "[LSP]",
             vsnip = "[VSnip]",
@@ -88,6 +107,7 @@ return {
       sources = {
         --{ name = "copilot"},
         --{ name = "nvim_lua" },
+        { name = "copilot" },
         { name = "nvim_lsp", keyword_length = 1 },
         { name = "dap" },
         { name = "npm", keyword_length = 3 },
@@ -120,5 +140,17 @@ return {
     --        { name = "cmdline" },
     --    }),
     --})
+    --
+    -- right a random word function
+    local function random_word()
+      local words = { "hello", "world", "foo", "bar", "baz" }
+      return words[math.random(#words)]
+    end
+
+    local word_one = random_word()
+    local word_two = random_word()
+    local word_three = random_word()
+
+    vim.api.nvim_set_hl(0, "CmpItemKindCopilot", {fg ="#6CC644"})
   end,
 }

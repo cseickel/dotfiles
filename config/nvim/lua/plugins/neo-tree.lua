@@ -154,19 +154,6 @@ local mine = function(use)
             noremap = true,
             nowait = true,
           },
-          mappings = {
-            ["<esc>"] = "cancel",
-            ["a"] = { "add", config = { show_path = "relative" } },
-            ["l"] = "none",
-            ["z"] = "close_all_nodes",
-            ["Z"] = "expand_all_nodes",
-            ["gu"] = "git_unstage_file",
-            ["ga"] = "git_add_file",
-            ["gr"] = "git_revert_file",
-            ["gc"] = "git_commit",
-            ["gp"] = "git_push",
-            ["pp"] = "focus_preview",
-          },
         },
         diagnostics = {
           window = {
@@ -221,6 +208,32 @@ local mine = function(use)
               { "name" },
               { "source" },
               --{ "code" },
+            },
+          },
+        },
+        document_symbols = {
+          follow_cursor = true,
+        },
+        buffers = {
+          window = {
+            auto_expand_width = false,
+            width = 40,
+            mapping_options = {
+              noremap = true,
+              nowait = true,
+            },
+            mappings = {
+              ["<esc>"] = "cancel",
+              ["a"] = { "add", config = { show_path = "relative" } },
+              ["l"] = "none",
+              ["z"] = "close_all_nodes",
+              ["Z"] = "expand_all_nodes",
+              ["gu"] = "git_unstage_file",
+              ["ga"] = "git_add_file",
+              ["gr"] = "git_revert_file",
+              ["gc"] = "git_commit",
+              ["gp"] = "git_push",
+              ["pp"] = "focus_preview",
             },
           },
         },
@@ -296,6 +309,17 @@ local mine = function(use)
                   state.commands["close_node"](state)
                 end
               end,
+              ["<esc>"] = "cancel",
+              ["a"] = { "add", config = { show_path = "relative" } },
+              ["l"] = "none",
+              ["z"] = "close_all_nodes",
+              ["Z"] = "expand_all_nodes",
+              ["gu"] = "git_unstage_file",
+              ["ga"] = "git_add_file",
+              ["gr"] = "git_revert_file",
+              ["gc"] = "git_commit",
+              ["gp"] = "git_push",
+              ["pp"] = "focus_preview",
             },
           },
         },
@@ -339,3 +363,39 @@ local issue = function(use)
 end
 
 return mine()
+
+-- require("neo-tree").setup({
+--   default_component_configs = {
+--     icon = {
+--       folder_empty = "󰜌",
+--       folder_empty_open = "󰜌",
+--     },
+--     git_status = {
+--       symbols = {
+--         renamed   = "󰁕",
+--         unstaged  = "󰄱",
+--       },
+--     },
+--   },
+--   document_symbols = {
+--     kinds = {
+--       File = { icon = "󰈙", hl = "Tag" },
+--       Namespace = { icon = "󰌗", hl = "Include" },
+--       Package = { icon = "󰏖", hl = "Label" },
+--       Class = { icon = "󰌗", hl = "Include" },
+--       Property = { icon = "󰆧", hl = "@property" },
+--       Enum = { icon = "󰒻", hl = "@number" },
+--       Function = { icon = "󰊕", hl = "Function" },
+--       String = { icon = "󰀬", hl = "String" },
+--       Number = { icon = "󰎠", hl = "Number" },
+--       Array = { icon = "󰅪", hl = "Type" },
+--       Object = { icon = "󰅩", hl = "Type" },
+--       Key = { icon = "󰌋", hl = "" },
+--       Struct = { icon = "󰌗", hl = "Type" },
+--       Operator = { icon = "󰆕", hl = "Operator" },
+--       TypeParameter = { icon = "󰊄", hl = "Type" },
+--       StaticMethod = { icon = '󰠄 ', hl = 'Function' },
+--     }
+--   },
+--   -- Other options ...
+-- })
