@@ -174,10 +174,30 @@ function fn_cherry_pick() {
 alias cherry=fn_cherry_pick
 
 function fn_git_checkout() {
-    branch=$(git branch --all | fzf | sed "s/remotes\/origin\///" | xargs)
-    git checkout $branch
+    branch=$(git branch --all \
+      | fzf --height "90%" --header "PLEASE CHOOSE A BRANCH TO CHECKOUT" \
+      | sed "s/remotes\/origin\///" | xargs)
+    if [ -n "$branch" ]; then
+      git checkout $branch
+    fi
 }
 alias gco='fn_git_checkout'
+
+function fn_git_checkout_recent() {
+  selection=$(git reflog show --pretty=format:'%gs ~ %gd' --date=relative \
+    | grep 'checkout:' \
+    | grep -oE '[^ ]+ ~ .*' \
+    | awk -F~ '!seen[$1]++' \
+    | head -n 20 \
+    | awk -F' ~ HEAD@{' '{printf("  %14s:  %s\n", substr($2, 1, length($2)-1), $1)}' \
+    | fzf --height "90%" --header "PLEASE CHOOSE A RECENTLY USED BRANCH TO CHECKOUT")
+  if [ -n "$selection" ]; then
+    # the branch starts at character 18
+    branch=$(echo $selection | cut -c 20-)
+    git checkout $branch
+  fi
+}
+alias gcr='fn_git_checkout_recent'
 
 function fn_reset_soft() {
     commit=$(git log --oneline | fzf | awk '{print $1}')

@@ -43,6 +43,7 @@ local mine = function(use)
       end
 
       local config = {
+        close_if_last_window = true,
         sources = {
           "filesystem",
           "buffers",
