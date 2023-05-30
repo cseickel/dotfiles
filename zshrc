@@ -189,10 +189,9 @@ function fn_git_checkout_recent() {
     | grep -oE '[^ ]+ ~ .*' \
     | awk -F~ '!seen[$1]++' \
     | head -n 20 \
-    | awk -F' ~ HEAD@{' '{printf("  %14s:  %s\n", substr($2, 1, length($2)-1), $1)}' \
-    | fzf --height "90%" --header "PLEASE CHOOSE A RECENTLY USED BRANCH TO CHECKOUT")
+    | awk -F' ~ HEAD@{' '{printf("  \033[33m%14s: \033[37m %s\033[0m\n", substr($2, 1, length($2)-1), $1)}' \
+    | fzf --height "90%" --ansi --border --border-label "RECENTLY USED BRANCHES" )
   if [ -n "$selection" ]; then
-    # the branch starts at character 18
     branch=$(echo $selection | cut -c 20-)
     git checkout $branch
   fi
