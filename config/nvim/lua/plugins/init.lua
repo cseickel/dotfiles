@@ -20,4 +20,5 @@ return {
   "dkarter/bullets.vim",
   "nvim-treesitter/nvim-treesitter-textobjects",
   "svermeulen/vim-cutlass",
+  --{ "nvim-tree/nvim-tree.lua", setup = true },
 }
