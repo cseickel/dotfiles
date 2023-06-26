@@ -12,10 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  ui = {
-    change_detection = {
-      enabled = false,
-    },
+  change_detection = {
+    -- automatically check for config file changes and reload the ui
+    enabled = true,
+    notify = false, -- get a notification when changes are found
   },
   spec = {
     { import = "plugins" },

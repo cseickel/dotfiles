@@ -152,6 +152,11 @@ hi TabModified guifg=#d7d787 ctermfg=186 guibg=#444444 ctermbg=238 gui=NONE cter
 hi TabModifiedSelected guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=Bold cterm=Bold
 
 highlight MatchParen gui=BOLD guifg=#ffaf00 guibg=#444444
+hi FlashCurrent guifg=#ffaf00 gui=Bold
+hi FlashBackdrop guifg=#666666
+hi FlashMatch guifg=#EEEEEE
+hi FlashLabel guifg=#ff5555 guibg=#000000 gui=Bold
+hi Search guibg=#535e03 gui=Bold
 
 highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE

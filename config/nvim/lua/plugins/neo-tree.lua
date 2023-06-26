@@ -43,7 +43,6 @@ local mine = function(use)
       end
 
       local config = {
-        close_if_last_window = true,
         sources = {
           "filesystem",
           "buffers",
@@ -52,8 +51,8 @@ local mine = function(use)
           "netman.ui.neo-tree",
           "document_symbols",
         },
-        log_level = "info",
-        log_to_file = false,
+        log_level = "trace",
+        log_to_file = true,
         open_files_in_last_window = true,
         sort_case_insensitive = true,
         popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
@@ -239,7 +238,8 @@ local mine = function(use)
           },
         },
         filesystem = {
-          --async_directory_scan = false,
+          async_directory_scan = "always",
+          scan_mode = "deep",
           cwd_target = {
             sidebar = "tab",
             current = "window",
@@ -339,64 +339,53 @@ local mine = function(use)
   return M
 end
 
-local issue = function(use)
+local issue = function()
   return {
-    "~/repos/neo-tree.nvim",
+    -- file tree
+    dir = "~/repos/neo-tree.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
-      "MunifTanjim/nui.nvim",
+      'nvim-lua/plenary.nvim',
+      'kyazdani42/nvim-web-devicons',
+    },
+    keys = {
+      { '<leader>e', '<cmd>Neotree show current<cr>' },
+      { '<leader>E', '<cmd>Neotree show current reveal=true<cr>' },
     },
     config = function()
-			require("neo-tree").setup({
-        window = {
-          position = "current",
-        },
-        renderers = {
-          message = {
-            { "indent", with_markers = true },
-            { "name", highlight = "NeoTreeMessage" },
+      require 'neo-tree'.setup {
+        close_if_last_window = true,
+        popup_border_style = 'solid',
+        enable_git_status = true,
+        enable_diagnostics = true,
+        default_component_configs = {
+          indent = {
+            indent_size = 2,
+            padding = 1, -- extra padding on left hand side
+            with_markers = true,
+            indent_marker = '│',
+            last_indent_marker = '└',
+            highlight = 'NeoTreeIndentMarker',
+          },
+          icon = {
+            folder_closed = '',
+            folder_open = '',
+            folder_empty = "",
+            default = '',
+          },
+          name = {
+            trailing_slash = false,
+            use_git_status_colors = true,
           },
         },
-			})
-    end,
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          }
+        },
+      }
+    end
   }
 end
 
 return mine()
-
--- require("neo-tree").setup({
---   default_component_configs = {
---     icon = {
---       folder_empty = "󰜌",
---       folder_empty_open = "󰜌",
---     },
---     git_status = {
---       symbols = {
---         renamed   = "󰁕",
---         unstaged  = "󰄱",
---       },
---     },
---   },
---   document_symbols = {
---     kinds = {
---       File = { icon = "󰈙", hl = "Tag" },
---       Namespace = { icon = "󰌗", hl = "Include" },
---       Package = { icon = "󰏖", hl = "Label" },
---       Class = { icon = "󰌗", hl = "Include" },
---       Property = { icon = "󰆧", hl = "@property" },
---       Enum = { icon = "󰒻", hl = "@number" },
---       Function = { icon = "󰊕", hl = "Function" },
---       String = { icon = "󰀬", hl = "String" },
---       Number = { icon = "󰎠", hl = "Number" },
---       Array = { icon = "󰅪", hl = "Type" },
---       Object = { icon = "󰅩", hl = "Type" },
---       Key = { icon = "󰌋", hl = "" },
---       Struct = { icon = "󰌗", hl = "Type" },
---       Operator = { icon = "󰆕", hl = "Operator" },
---       TypeParameter = { icon = "󰊄", hl = "Type" },
---       StaticMethod = { icon = '󰠄 ', hl = 'Function' },
---     }
---   },
---   -- Other options ...
--- })
