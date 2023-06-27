@@ -156,7 +156,7 @@ hi FlashCurrent guifg=#ffaf00 gui=Bold
 hi FlashBackdrop guifg=#666666
 hi FlashMatch guifg=#EEEEEE
 hi FlashLabel guifg=#ff5555 guibg=#000000 gui=Bold
-hi Search guibg=#535e03 gui=Bold
+hi Search guibg=#444444 gui=Bold
 
 highlight ALEInfoSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
