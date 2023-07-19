@@ -207,6 +207,7 @@ local mappings = {
     --  a = { memory_utils.capture_after,                        "Capture After" },
     --  c = { memory_utils.compare,                              "Compare" },
     --},
+    r = { '<cmd>lua require("spectre").open()<CR>', "Search and Replace" },
     s = { "<cmd>Neotree reveal git_status current<cr>", "Show Git Status" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },
@@ -230,9 +231,7 @@ local mappings = {
 require("which-key").register(mappings)
 
 vim.cmd([[
-  noremap ,, <cmd>HopChar2<cr>
-  noremap ,. <cmd>lua require("hop").hint_char2({direction = require'hop.hint'.HintDirection.AFTER_CURSOR, hint_offset=1 })<cr>
-  noremap ,/ <cmd>HopPattern<cr>
+  vnoremap <leader>r <esc><cmd>lua require("spectre").open_visual()<CR>
 
   imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
   let g:copilot_no_tab_map = v:true
