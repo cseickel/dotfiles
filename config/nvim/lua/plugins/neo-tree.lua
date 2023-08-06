@@ -245,7 +245,7 @@ local mine = function(use)
             current = "window",
           },
           hijack_netrw_behavior = "open_current",
-          follow_current_file = true,
+          follow_current_file = { enabled = true },
           group_empty_dirs = false,
           use_libuv_file_watcher = true,
           bind_to_cwd = true,

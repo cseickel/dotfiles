@@ -183,12 +183,13 @@ function fn_git_checkout() {
 }
 alias gco='fn_git_checkout'
 
-function gpr() {
+function fn_checkout_gh_pr() {
  pr_number=$(gh pr ls | fzf | awk '{print $1}')
  if [ -n "$pr_number" ]; then
    gh pr checkout $pr_number
  fi
 }
+alias gpr='fn_checkout_gh_pr'
 
 function fn_git_checkout_recent() {
   selection=$(git reflog show --pretty=format:'%gs ~ %gd' --date=relative \
