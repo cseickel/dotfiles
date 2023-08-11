@@ -124,8 +124,6 @@ end
 local mappings = {
   [";"] = { "<Plug>(buf-surf-back)", "Previous Buffer" },
   ["'"] = { "<Plug>(buf-surf-forward)", "Next Buffer" },
-  [",,"] = { "Hop Char 2" },
-  [",."] = { "Hop AFTER Char 2" },
   h = { "Focus window to the LEFT" },
   j = { "Focus window BELOW" },
   k = { "Focus window ABOVE" },
@@ -152,6 +150,14 @@ local mappings = {
     q = { "<cmd>cnext<bar>normal z.<cr>", "Next Quickfix" },
   },
   ["<leader>"] = {
+    ["<leader>"] = {
+      name = "Octo Context Actions...",
+      a = { "Assignee..." },
+      c = { "Comment..." },
+      l = { "Label..." },
+      r = { "React..." },
+    },
+    i = { "<cmd>Octo issue list is:open assignee:cseickel<cr>", "My Open Issues" },
     ["."] = { "Set Working Directory from current file" },
     ["="] = { "<cmd>Neoformat<cr>", "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code actions" },
