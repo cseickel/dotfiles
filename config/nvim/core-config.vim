@@ -212,18 +212,6 @@ function! InitMarkdown()
     setlocal bufhidden=delete
     return
   endif
-
-  " if the window is smaller than 120, use the window width minus any gutter
-  let l:usable = GetUsableWinWidth()
-  if l:usable < 120
-    if l:usable > 80
-      execute "setlocal textwidth=" . l:usable
-    else
-      setlocal textwidth=80
-    endif
-  else
-    setlocal textwidth=120
-  endif
 endfunction
 
 
@@ -247,10 +235,21 @@ augroup core_autocmd
 
 augroup END
 
+
+function! CreateNewTerminal()
+  split 20
+  terminal
+  call InitTerminal()
+endfunction
+
+function! SendToTerminal(cmd, job_id)
+  let g:last_terminal_cmd = a:cmd
+  call chansend(a:job_id, a:cmd . "\<cr>")
+endfunction
+
 function! SendToLastTerminal(args)
   if !exists("g:last_terminal_job_id") || !exists("g:last_terminal_winid")
-    echo "No terminal found"
-    return
+    call CreateNewTerminal()
   endif
   let cmd = a:args
   if len(a:args) == 0
@@ -260,8 +259,12 @@ function! SendToLastTerminal(args)
     echo "No command found"
     return
   endif
-  let g:last_terminal_cmd = cmd
-  call chansend(g:last_terminal_job_id, cmd . "\<cr>")
+  try
+    call SendToTerminal(cmd, g:last_terminal_job_id)
+  catch
+    call CreateNewTerminal()
+    call SendToTerminal(cmd, g:last_terminal_job_id)
+  endtry
   call win_execute(g:last_terminal_winid, 'normal! G')
 endfunction
 
