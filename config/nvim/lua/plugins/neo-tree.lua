@@ -15,32 +15,11 @@ local mine = function(use)
     --  { "|", "<cmd>Neotree reveal<cr>", "Open Tree in Sidebar" },
     --},
     config = function()
+      local events = require("neo-tree.events")
       -- See ":help neo-tree-highlights" for a list of available highlight groups
       vim.cmd([[
-      let g:neo_tree_remove_legacy_commands = 1
       hi NeoTreeCursorLine gui=bold guibg=#333333
       ]])
-
-      local events = require("neo-tree.events")
-      ---@class FileMovedArgs
-      ---@field source string
-      ---@field destination string
-
-      ---@param args FileMovedArgs
-      local function on_file_remove(args)
-        local ts_clients = vim.lsp.get_active_clients({ name = "tsserver" })
-        for _, ts_client in ipairs(ts_clients) do
-          ts_client.request("workspace/executeCommand", {
-            command = "_typescript.applyRenameFile",
-            arguments = {
-              {
-                sourceUri = vim.uri_from_fname(args.source),
-                targetUri = vim.uri_from_fname(args.destination),
-              },
-            },
-          })
-        end
-      end
 
       local config = {
         sources = {
@@ -52,7 +31,7 @@ local mine = function(use)
           "document_symbols",
         },
         log_level = "trace",
-        log_to_file = true,
+        log_to_file = false,
         open_files_in_last_window = true,
         sort_case_insensitive = true,
         popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
@@ -93,16 +72,11 @@ local mine = function(use)
             trailing_slash = true,
             --use_git_status_colors = false,
           },
+          created = {
+            enabled = false,
+          },
         },
         event_handlers = {
-          {
-            event = events.FILE_MOVED,
-            handler = on_file_remove,
-          },
-          {
-            event = events.FILE_RENAMED,
-            handler = on_file_remove,
-          },
           {
             event = events.NEO_TREE_BUFFER_ENTER,
             handler = function()
