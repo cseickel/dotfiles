@@ -159,7 +159,7 @@ local mappings = {
     },
     i = { "<cmd>Octo issue list is:open assignee:cseickel<cr>", "My Open Issues" },
     ["."] = { "Set Working Directory from current file" },
-    ["="] = { "<cmd>Neoformat<cr>", "Format Document" },
+    ["="] = { "<cmd>Format<cr>", "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code actions" },
     b = { "<cmd>Neotree reveal buffers current<cr>", "Show Buffers Tree" },
     c = {
@@ -239,6 +239,7 @@ require("which-key").register(mappings)
 
 vim.cmd([[
   vnoremap <leader>r <esc><cmd>lua require("spectre").open_visual()<CR>
+  vnoremap = <cmd>Format<cr>
 
   imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
   let g:copilot_no_tab_map = v:true
@@ -307,7 +308,6 @@ vim.cmd([[
       autocmd!
       autocmd CursorHold * silent! call Highlight_Symbol()
       autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
-      autocmd FileType typescript,javascript nnoremap <buffer><leader>= :lua vim.lsp.buf.formatting()<cr>
       autocmd FileType sql call InitSql("")
   augroup END
 ]])

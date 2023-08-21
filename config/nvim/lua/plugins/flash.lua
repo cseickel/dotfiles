@@ -15,6 +15,9 @@ return {
         highlight = { backdrop = false },
         jump = { register = false },
       },
+      search = {
+        enabled = false,
+      }
     }
   },
   keys = {

@@ -112,10 +112,6 @@ return {
           extra_args = cspell_extra_args,
         }),
         --null_ls.builtins.diagnostics.proselint,
-        null_ls.builtins.formatting.prettierd,
-        null_ls.builtins.formatting.stylua, -- prettier, eslint, eslint_d, or prettierd
-        null_ls.builtins.formatting.trim_newlines,
-        null_ls.builtins.formatting.trim_whitespace,
         null_ls.builtins.diagnostics.actionlint,
       },
       -- on_attach = function(client, bufnr)
