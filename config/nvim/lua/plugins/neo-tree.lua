@@ -218,6 +218,7 @@ local mine = function(use)
             sidebar = "tab",
             current = "window",
           },
+          check_gitignore_in_search = false,
           hijack_netrw_behavior = "open_current",
           follow_current_file = { enabled = true },
           group_empty_dirs = false,

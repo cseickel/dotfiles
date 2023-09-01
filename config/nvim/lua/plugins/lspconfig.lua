@@ -9,13 +9,6 @@ return {
     "nvim-lua/plenary.nvim",
     "b0o/schemastore.nvim",
     "folke/neodev.nvim",
-    {
-      "SmiteshP/nvim-navbuddy",
-      requires = {
-        "SmiteshP/nvim-navic",
-        "MunifTanjim/nui.nvim"
-      },
-    }
   },
   config = function()
     --cSpell: disable
@@ -138,7 +131,6 @@ return {
 
     local lspconfig = require("lspconfig")
     local navic = require("nvim-navic")
-    local navbuddy = require("nvim-navbuddy")
 
     lspconfig.jsonls.setup({
       settings = {
@@ -191,7 +183,6 @@ return {
     --  vim.api.nvim_buf_set_keymap(bufnr, "n", ",gi", ":TSLspImportAll<CR>", opts)
 
     --  navic.attach(client, bufnr)
-    --  navbuddy.attach(client, bufnr)
     --end
 
     --lspconfig.setup ({
@@ -223,7 +214,6 @@ return {
           capabilities = capabilities,
           on_attach = function(client, bufnr)
             navic.attach(client, bufnr)
-          navbuddy.attach(client, bufnr)
           end,
         })
       end

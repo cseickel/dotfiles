@@ -16,6 +16,7 @@ return {
   "tpope/vim-eunuch",
   "tpope/vim-surround",
   "tpope/vim-fugitive",
+  "junegunn/vim-easy-align",
   "wellle/targets.vim",
   "dkarter/bullets.vim",
   "nvim-treesitter/nvim-treesitter-textobjects",

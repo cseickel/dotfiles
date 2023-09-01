@@ -151,13 +151,6 @@ return {
         filetypes = { "gitcommit", "octo" },
         remotes = { "upstream", "origin" }, -- in order of most to least prioritized
         enableRemoteUrlRewrites = false, -- enable git url rewrites, see https://git-scm.com/docs/git-config#Documentation/git-config.txt-urlltbasegtinsteadOf
-        git = {
-            commits = {
-                limit = 100,
-                sort_by = sort.git.commits,
-                format = format.git.commits,
-            },
-        },
         github = {
             hosts = {},  -- list of private instances of github
             issues = {
@@ -182,13 +175,6 @@ return {
             },
         },
         trigger_actions = {
-            {
-                debug_name = "git_commits",
-                trigger_character = ":",
-                action = function(sources, trigger_char, callback, params, git_info)
-                    return sources.git:get_commits(callback, params, trigger_char)
-                end,
-            },
             {
                 debug_name = "github_issues_and_pr",
                 trigger_character = "#",
