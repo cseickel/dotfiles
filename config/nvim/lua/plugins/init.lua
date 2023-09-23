@@ -6,7 +6,6 @@ return {
   "tpope/vim-dadbod",
   "kristijanhusak/vim-dadbod-ui",
   "kristijanhusak/vim-dadbod-completion",
-  "editorconfig/editorconfig-vim",
   "github/copilot.vim",
   "cseickel/diagnostic-window.nvim",
   { "rrethy/vim-hexokinase", build = "make hexokinase" },

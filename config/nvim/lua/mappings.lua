@@ -150,7 +150,7 @@ local mappings = {
     q = { "<cmd>cnext<bar>normal z.<cr>", "Next Quickfix" },
   },
   ["<leader>"] = {
-    ["<leader>"] = {
+    ["o"] = {
       name = "Octo Context Actions...",
       a = { "Assignee..." },
       c = { "Comment..." },
@@ -213,7 +213,6 @@ local mappings = {
     --  a = { memory_utils.capture_after,                        "Capture After" },
     --  c = { memory_utils.compare,                              "Compare" },
     --},
-    o = {"<cmd>Octo actions<cr>", "Octo Actions"},
     r = { '<cmd>lua require("spectre").open()<CR>', "Search and Replace" },
     s = { "<cmd>Neotree reveal git_status current<cr>", "Show Git Status" },
     t = { "Open  Terminal" },

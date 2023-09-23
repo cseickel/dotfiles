@@ -7,6 +7,10 @@ map <silent> <C-\> <Esc>
 imap <silent> <C-\> <Esc>
 tnoremap <silent> <C-\> <c-\><c-n>
 
+" Insert newline without triggering completion
+inoremap <silent> <CR><CR> <C-o>o
+
+
 " I make this mistake all the time...
 command! Qa :qa
 

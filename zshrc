@@ -348,3 +348,10 @@ export NVM_DIR="$HOME/.nvm"
 
 eval $(thefuck --alias)
 alias fu="fuck"
+
+# bun completions
+[ -s "/home/user/.bun/_bun" ] && source "/home/user/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
