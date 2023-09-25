@@ -17,6 +17,11 @@ require("lazy").setup({
     enabled = true,
     notify = false, -- get a notification when changes are found
   },
+  dev = {
+    path = "~/repos",
+    patterns = { "nvim-neo-tree", "cseickel" },
+    fallback = true,
+  },
   spec = {
     { import = "plugins" },
   }

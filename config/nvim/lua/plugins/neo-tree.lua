@@ -1,4 +1,4 @@
-local mine = function(use)
+local mine = function()
   local M = {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "main",
@@ -189,6 +189,7 @@ local mine = function(use)
           follow_cursor = true,
         },
         buffers = {
+          terminals_first = true,
           window = {
             auto_expand_width = false,
             width = 40,
