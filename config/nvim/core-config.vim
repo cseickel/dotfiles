@@ -271,6 +271,41 @@ endfunction
 command! -nargs=? T call SendToLastTerminal("<args>")
 
 
+function! CountWindows()
+  let l:count = 0
+  for l:win in nvim_tabpage_list_wins(0)
+    let l:cfg = nvim_win_get_config(l:win)
+    if cfg.relative > "" || cfg.external
+      " skip floating and external windows
+      continue
+    end
+    let l:count += 1
+  endfor
+  return l:count
+endfunction
+
+" There is no reason why I would ever want a widescreen monitor to have a
+" window that goes all the way to the edge of the screen. This will create
+" splits to fit as many 100 characters wide windows as possible.
+" This is only done when Vim or a new tab is first opened, so it will not resize
+" windows that are already open.
+function! InitNewTab()
+  let l:desired_windows = &columns / 100
+  let l:desired_windows = l:desired_windows > 0 ? l:desired_windows : 1
+
+  echo "Creating " . l:desired_windows . " windows"
+  while CountWindows() < l:desired_windows
+    echo "Creating window " . winnr('$')
+    silent! vsplit
+  endwhile
+endfunction
+
+augroup core_tab
+  autocmd!
+  autocmd TabNew * call InitNewTab()
+  autocmd VimEnter * call InitNewTab()
+augroup END
+
 "*****************************************************************************
 " => Plugins
 " *****************************************************************************
