@@ -1,5 +1,6 @@
 local v2 = {
   'lukas-reineke/indent-blankline.nvim',
+  version = '2',
   config = function ()
     vim.cmd([[
     highlight IndentBlanklineChar guifg=#303030
@@ -19,7 +20,7 @@ local v2 = {
 
 local v3 = {
   'lukas-reineke/indent-blankline.nvim',
-  branch = 'v3',
+  version = '3',
   config = function ()
     vim.cmd([[
     highlight IndentBlanklineChar guifg=#303030

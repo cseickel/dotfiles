@@ -71,7 +71,7 @@ set cursorline
 set updatetime=1000
 set lazyredraw
 
-let $EDITOR="nvr --remote-wait -cc vsplit"
+let $EDITOR="nvr --remote-wait -cc split"
 function! EnterTerminal()
   setlocal nonumber norelativenumber autowriteall modifiable noruler
   "setlocal winfixheight
@@ -277,25 +277,23 @@ function! CountWindows()
     let l:cfg = nvim_win_get_config(l:win)
     if cfg.relative > "" || cfg.external
       " skip floating and external windows
-      continue
+    else
+      let l:count += 1
     end
-    let l:count += 1
   endfor
   return l:count
 endfunction
 
 " There is no reason why I would ever want a widescreen monitor to have a
 " window that goes all the way to the edge of the screen. This will create
-" splits to fit as many 100 characters wide windows as possible.
-" This is only done when Vim or a new tab is first opened, so it will not resize
+" splits to fit as many xxx characters wide windows as possible.
+" This is only done when nvim or a new tab is first opened, so it will not resize
 " windows that are already open.
 function! InitNewTab()
-  let l:desired_windows = &columns / 100
+  let l:desired_windows = &columns / 120
   let l:desired_windows = l:desired_windows > 0 ? l:desired_windows : 1
 
-  echo "Creating " . l:desired_windows . " windows"
   while CountWindows() < l:desired_windows
-    echo "Creating window " . winnr('$')
     silent! vsplit
   endwhile
 endfunction

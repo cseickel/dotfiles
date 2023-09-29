@@ -8,8 +8,7 @@ imap <silent> <C-\> <Esc>
 tnoremap <silent> <C-\> <c-\><c-n>
 
 " Insert newline without triggering completion
-inoremap <silent> <CR><CR> <C-o>o
-
+inoremap <silent> <C-enter> <C-o>o
 
 " I make this mistake all the time...
 command! Qa :qa
@@ -342,8 +341,14 @@ function! NextBufferByName(direction) abort
 endfunction
 
 function! DeleteBuffer() abort
-    call NextBufferByName(-1)
-    bd#
+  silent! write
+  if exists(":Bwipeout")
+    Bwipeout
+  else
+    let l:bufnr = bufnr("%")
+    b#
+    bwipeout l:bufnr
+  endif
 endfunction
 
 "nnoremap <silent> ;         :call NextBufferByName(-1)<cr>

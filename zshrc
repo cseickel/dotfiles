@@ -127,7 +127,7 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-export EDITOR="nvr --remote-tab-wait-silent"
+export EDITOR="nvr --remote-wait-silent"
 alias edit="$EDITOR"
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
