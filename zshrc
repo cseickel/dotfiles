@@ -82,18 +82,18 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source "$ZSH/oh-my-zsh.sh"
 
 
-if [ -f /.dockerenv ]; then
-    # at least this is needed when connecting to docker
-    # from windows powershell in windows terminal...
-    bindkey  "^[[1~" beginning-of-line
-    bindkey  "^[[4~" end-of-line
-    bindkey  "^[[3~" delete-char
-
-    # these work in neovim terminal
-    bindkey  "^[[H" beginning-of-line
-    bindkey  "^[[F" end-of-line
-
-fi
+# if [ -f /.dockerenv ]; then
+#     # at least this is needed when connecting to docker
+#     # from windows powershell in windows terminal...
+#     bindkey  "^[[1~" beginning-of-line
+#     bindkey  "^[[4~" end-of-line
+#     bindkey  "^[[3~" delete-char
+# 
+#     # these work in neovim terminal
+#     bindkey  "^[[H" beginning-of-line
+#     bindkey  "^[[F" end-of-line
+# 
+# fi
 
 if [ -f $HOME/.local-env.sh  ]; then
     source $HOME/.local-env.sh
@@ -346,8 +346,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-eval $(thefuck --alias)
-alias fu="fuck"
+# eval $(thefuck --alias)
+# alias fu="fuck"
 
 # bun completions
 [ -s "/home/user/.bun/_bun" ] && source "/home/user/.bun/_bun"

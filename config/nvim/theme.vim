@@ -236,7 +236,7 @@ highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 " highlight link csContextualStatement Control
 " highlight link csUnsupportedStatement PlainText
 
-highlight @comment.documentation guifg=#808080
+"highlight @comment.documentation guifg=#808080
 
 "-------------------------------------------------------------------------
 " rhysd/conflict-marker.vim
