@@ -4,14 +4,13 @@ return {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "jose-elias-alvarez/nvim-lsp-ts-utils",
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     --'jayp0521/mason-null-ls.nvim',
     "nvim-lua/plenary.nvim",
     "b0o/schemastore.nvim",
     "folke/neodev.nvim",
   },
   config = function()
-    --cSpell: disable
     require("mason").setup()
     require("mason-lspconfig").setup({
       -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
@@ -46,10 +45,10 @@ return {
     })
     require("neodev").setup({})
 
-    vim.fn.sign_define("DiagnosticSignError", { text = "", texthl = "DiagnosticSignError" })
-    vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn" })
-    vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo" })
-    vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+    vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+    vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+    vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+    vim.fn.sign_define("DiagnosticSignHint", { text = " ", texthl = "DiagnosticSignHint" })
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
       -- Use a sharp border with `FloatBorder` highlights
@@ -99,12 +98,11 @@ return {
         null_ls.builtins.code_actions.cspell.with({
           extra_args = cspell_extra_args,
         }),
-        --null_ls.builtins.code_actions.proselint,
         --null_ls.builtins.code_actions.refactoring,
         null_ls.builtins.diagnostics.cspell.with({
           extra_args = cspell_extra_args,
         }),
-        --null_ls.builtins.diagnostics.proselint,
+        null_ls.builtins.diagnostics.write_good,
         null_ls.builtins.diagnostics.actionlint,
       },
       -- on_attach = function(client, bufnr)

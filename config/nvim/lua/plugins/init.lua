@@ -23,5 +23,6 @@ return {
   "nvim-pack/nvim-spectre",
   "famiu/bufdelete.nvim",
   { "edluffy/hologram.nvim", config = {  auto_display = true } },
+  { 'edluffy/hologram.nvim', config = { auto_display = true } },
   --{ "nvim-tree/nvim-tree.lua", setup = true },
 }

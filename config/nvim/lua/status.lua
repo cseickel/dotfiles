@@ -8,8 +8,8 @@ vim.cmd [[
   highlight WinBar           guifg=#BBBBBB gui=bold
   highlight WinBarNC         guifg=#888888 gui=bold
   highlight WinBarLocation   guifg=#888888 gui=bold
-  highlight WinBarModified   guifg=#d7d787 gui=bold
-  highlight WinBarGitDirty   guifg=#d7afd7 gui=bold
+  highlight WinBarModified   guifg=#d7d787
+  highlight WinBarGitDirty   guifg=#d7afd7
   highlight WinBarIndicator  guifg=#5fafd7 gui=bold
   highlight WinBarInactive   guibg=#3a3a3a guifg=#777777 gui=bold
 
@@ -191,6 +191,7 @@ M.get_icon = function(filename, extension)
   if not filename then
     if vim.bo.modified then
       return " %#WinBarModified# %*"
+      --return " %#WinBarModified#* %*"
     end
 
     if vim.bo.filetype == "terminal" then
@@ -403,6 +404,7 @@ vim.cmd([[
       return cnt == 0 ? "" : ( &modified ? "[+". (cnt>1?cnt:"") ."]" : "[".cnt."]" )
   endfunction
 ]])
+
 
 _G.status = M
 vim.o.winbar="%{%v:lua.status.get_winbar()%}"
