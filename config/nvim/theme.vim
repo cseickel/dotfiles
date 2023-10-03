@@ -164,10 +164,10 @@ highlight ALEWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEStyleErrorSign ctermbg=None guibg=None cterm=NONE gui=NONE
 highlight ALEStyleWarningSign ctermbg=None guibg=None cterm=NONE gui=NONE
 
-highlight GitGutterAdd               guifg=#5faf5f gui=Bold
-highlight GitGutterChange            guifg=#d7af5f gui=Bold
-highlight GitGutterDelete            guifg=#ff5555 gui=Bold
-highlight GitGutterChangeDelete      guifg=#c97755 gui=Bold
+highlight GitGutterAdd               guifg=#5faf5f
+highlight GitGutterChange            guifg=#d7af5f
+highlight GitGutterDelete            guifg=#ff5555
+highlight GitGutterChangeDelete      guifg=#c97755
 
 
 highlight TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
@@ -258,3 +258,5 @@ highlight ConflictMarkerOurs guibg=#005f5f
 highlight ConflictMarkerTheirs guibg=#005f87
 highlight ConflictMarkerEnd guibg=#5f87af
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+
+highlight NeoTreeGitConflict guifg=#ff8700
