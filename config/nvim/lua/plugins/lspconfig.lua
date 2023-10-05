@@ -96,10 +96,12 @@ return {
       end,
       sources = {
         null_ls.builtins.code_actions.cspell.with({
+          command = "/home/user/.bun/bin/cspell",
           extra_args = cspell_extra_args,
         }),
         --null_ls.builtins.code_actions.refactoring,
         null_ls.builtins.diagnostics.cspell.with({
+          command = "/home/user/.bun/bin/cspell",
           extra_args = cspell_extra_args,
         }),
         null_ls.builtins.diagnostics.write_good,
