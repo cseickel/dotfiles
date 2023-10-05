@@ -127,7 +127,12 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-export EDITOR="nvr --remote-wait-silent"
+if [[ -z "${TMUX}" ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='/usr/bin/tmux popup -w 120 -h "80%" -E nvim'
+fi
+
 alias edit="$EDITOR"
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"

@@ -71,7 +71,7 @@ set cursorline
 set updatetime=1000
 set lazyredraw
 
-let $EDITOR="nvr --remote-wait -cc split"
+"let $EDITOR="nvr --remote-wait -cc split"
 function! EnterTerminal()
   setlocal nonumber norelativenumber autowriteall modifiable noruler
   "setlocal winfixheight
