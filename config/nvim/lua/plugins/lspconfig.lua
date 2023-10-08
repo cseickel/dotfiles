@@ -76,13 +76,51 @@ return {
       lineFoldingOnly = true,
     }
 
-    local cspell_extra_args = function(params)
-      local project_root = params.root or vim.fn.system("git rev-parse --show-toplevel") or vim.fn.getcwd()
-      return {
-        "--config",
-        project_root .. "/cspell.json",
-      }
+    _G.find_cspell = function ()
+      if vim.b.cspell_config_file_path ~= nil then
+        return
+      end
+      -- use vim.loop to walk up the directory tree until we find a cspell.json file
+      local dir = vim.fn.expand("%:p:h")
+      while dir ~= nil and dir ~= "" and dir ~= "/" do
+        local cspell_json = dir .. "/cspell.json"
+        if vim.fn.filereadable(cspell_json) == 1 then
+          vim.b.cspell_config_file_path = cspell_json
+          return
+        end
+        dir = vim.fn.fnamemodify(dir, ":h")
+      end
+      return nil
     end
+
+    vim.api.nvim_exec([[
+      augroup FindCspellConfig
+        autocmd!
+        autocmd BufEnter * lua find_cspell()
+      augroup END
+    ]], false)
+
+    local cspell_config = {
+      find_json = function ()
+        return vim.b.cspell_config_file_path
+      end,
+      on_success = function(cspell_config_file_path, _, action_name)
+          -- For example, you can format the cspell config file after you add a word
+          if action_name == 'add_to_json' then
+              os.execute(
+                  string.format(
+                      "cat %s | jq -S '.words |= sort' | tee %s > /dev/null",
+                      cspell_config_file_path,
+                      cspell_config_file_path
+                  )
+              )
+          end
+
+          -- Note: The cspell_config_file_path param could be nil for the
+          -- 'use_suggestion' action
+      end
+    }
+
     local null_ls = require("null-ls")
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     null_ls.setup({
@@ -97,12 +135,12 @@ return {
       sources = {
         null_ls.builtins.code_actions.cspell.with({
           command = "/home/user/.bun/bin/cspell",
-          extra_args = cspell_extra_args,
+          config = cspell_config,
         }),
         --null_ls.builtins.code_actions.refactoring,
         null_ls.builtins.diagnostics.cspell.with({
           command = "/home/user/.bun/bin/cspell",
-          extra_args = cspell_extra_args,
+          config = cspell_config,
         }),
         null_ls.builtins.diagnostics.write_good,
         null_ls.builtins.diagnostics.actionlint,
