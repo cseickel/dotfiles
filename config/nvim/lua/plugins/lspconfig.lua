@@ -77,11 +77,20 @@ return {
     }
 
     _G.find_cspell = function ()
+      if vim.bo.buftype ~= "" then
+        return
+      end
       if vim.b.cspell_config_file_path ~= nil then
         return
       end
       -- use vim.loop to walk up the directory tree until we find a cspell.json file
       local dir = vim.fn.expand("%:p:h")
+      -- make sure this is a real directory
+      local stat = vim.loop.fs_stat(dir)
+      if stat == nil then
+        return nil
+      end
+
       while dir ~= nil and dir ~= "" and dir ~= "/" do
         local cspell_json = dir .. "/cspell.json"
         if vim.fn.filereadable(cspell_json) == 1 then
