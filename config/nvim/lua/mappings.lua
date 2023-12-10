@@ -242,7 +242,8 @@ vim.cmd([[
   vnoremap <leader>r <esc><cmd>lua require("spectre").open_visual()<CR>
   vnoremap = <cmd>Format<cr>
 
-  imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+  imap <silent><script><expr> <C-j> copilot#Accept("\<C-j>")
+  imap <silent><script><expr> <RIGHT> copilot#Accept("\<RIGHT>")
   let g:copilot_no_tab_map = v:true
 
 

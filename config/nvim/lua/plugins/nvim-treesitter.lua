@@ -28,6 +28,7 @@ return {
         "r",
         "regex",
         "scss",
+        "sql",
         "vim",
         "yaml"
       }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages

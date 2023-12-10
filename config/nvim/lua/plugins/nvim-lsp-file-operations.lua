@@ -2,7 +2,7 @@ return {
   --'antosha417/nvim-lsp-file-operations',
   'cseickel/nvim-lsp-file-operations',
   config = {
-    timeout = 30,
+    timeout = 60,
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
