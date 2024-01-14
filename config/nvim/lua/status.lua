@@ -122,7 +122,7 @@ M.get_statusline = function()
     "%#StatusLineTransition1#▕%*",
     "%#StatusLineTransition2#▏%*",
     "%{%v:lua.status.get_git_branch()%}",
-    '%#StatusLineOutside# %3l/%L祈%3c %*',
+    '%#StatusLineOutside# %3l/%L󰮾 %3c %*',
   }
   return table.concat(parts)
 end

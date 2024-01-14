@@ -14,7 +14,6 @@ return {
   "tpope/vim-repeat",
   "tpope/vim-eunuch",
   "tpope/vim-surround",
-  "tpope/vim-fugitive",
   "junegunn/vim-easy-align",
   "wellle/targets.vim",
   "dkarter/bullets.vim",
