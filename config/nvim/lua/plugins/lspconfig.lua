@@ -3,7 +3,6 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "jose-elias-alvarez/nvim-lsp-ts-utils",
     "nvimtools/none-ls.nvim",
     --'jayp0521/mason-null-ls.nvim',
     "nvim-lua/plenary.nvim",
@@ -249,7 +248,7 @@ return {
       "yamlls",
       "html",
       "pylsp",
-      "terraformls",
+      --"terraformls",
       "vimls",
       "bashls",
       --"angularls"
