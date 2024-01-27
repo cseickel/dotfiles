@@ -3,7 +3,7 @@ return {
   dependencies ={
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope.nvim',
-    'kyazdani42/nvim-web-devicons',
+    'nvim-tree/nvim-web-devicons',
   },
   config = {
     use_local_fs = false,                    -- use local files on right side of reviews

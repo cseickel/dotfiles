@@ -128,6 +128,13 @@ local mine = function()
             noremap = true,
             nowait = true,
           },
+          mapppings = {
+            ["Y"] = function(state)
+              local node = state.tree:get_node()
+              local path = node:get_id()
+              vim.fn.setreg("+", path, "c")
+            end,
+          },
         },
         diagnostics = {
           window = {
@@ -338,7 +345,7 @@ local issue = function()
     dir = "~/repos/neo-tree.nvim",
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'kyazdani42/nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons',
     },
     keys = {
       { '<leader>e', '<cmd>Neotree show current<cr>' },
