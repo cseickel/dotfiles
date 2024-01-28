@@ -11,6 +11,7 @@ local monokai = {
 
 local vscode = {
   "Mofiqul/vscode.nvim",
+  priority = 1000,
   config = function()
     local c = require('vscode.colors').get_colors()
     require("vscode").setup({

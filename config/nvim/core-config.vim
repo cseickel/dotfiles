@@ -68,7 +68,7 @@ set signcolumn=auto:1-2
 set cursorline
 "
 " Tweaks to improve performance
-set updatetime=1000
+set updatetime=100
 set lazyredraw
 
 "let $EDITOR="nvr --remote-wait -cc split"
