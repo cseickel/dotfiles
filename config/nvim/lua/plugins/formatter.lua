@@ -2,7 +2,7 @@ return {
 	"mhartington/formatter.nvim",
 	config = function()
 		-- Utilities for creating configurations
-    local ft = require("formatter.filetypes")
+		local ft = require("formatter.filetypes")
 
 		-- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
 		require("formatter").setup({

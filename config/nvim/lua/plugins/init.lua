@@ -5,7 +5,6 @@ return {
   "samjwill/nvim-unception",
   "github/copilot.vim",
   "cseickel/diagnostic-window.nvim",
-  { "rrethy/vim-hexokinase", build = "make hexokinase" },
   "itchyny/vim-gitbranch",
   "antoinemadec/FixCursorHold.nvim",
   "tpope/vim-repeat",

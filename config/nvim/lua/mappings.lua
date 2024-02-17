@@ -185,7 +185,8 @@ local mappings = {
     },
     D = { "<cmd>Neotree diagnostics reveal bottom<cr>", "Show all Diagnostics" },
     j = { showSymbolFinder, "Jump to Method, Class, etc" },
-    J = { "f,ls<cr><esc>", "Newline at next comma" },
+    -- J = { "f,ls<cr><esc>", "Newline at next comma" },
+    J = { "<cmd>TSJToggle<cr>", "Toggle Split/Join" },
     q = { "Show Quickfix" },
     Q = { "Close Quickfix" },
     f = {

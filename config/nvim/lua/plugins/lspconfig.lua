@@ -129,6 +129,9 @@ return {
       end
     }
 
+    local home = os.getenv("HOME")
+    local cspell_bin = home .. "/.bun/bin/cspell"
+
     local null_ls = require("null-ls")
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     null_ls.setup({
@@ -142,12 +145,12 @@ return {
       end,
       sources = {
         null_ls.builtins.code_actions.cspell.with({
-          command = "/home/user/.bun/bin/cspell",
+          command = cspell_bin,
           config = cspell_config,
         }),
         --null_ls.builtins.code_actions.refactoring,
         null_ls.builtins.diagnostics.cspell.with({
-          command = "/home/user/.bun/bin/cspell",
+          command = cspell_bin,
           config = cspell_config,
         }),
         null_ls.builtins.diagnostics.write_good,

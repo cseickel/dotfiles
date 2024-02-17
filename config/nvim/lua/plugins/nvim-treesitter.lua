@@ -25,6 +25,7 @@ return {
         "typescript",
         "prisma",
         "python",
+        "query",
         "r",
         "regex",
         "scss",

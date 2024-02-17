@@ -1,6 +1,5 @@
 return {
-  --'antosha417/nvim-lsp-file-operations',
-  'cseickel/nvim-lsp-file-operations',
+  'antosha417/nvim-lsp-file-operations',
   config = {
     timeout = 60,
   },

@@ -33,4 +33,4 @@ local gitsigns = {
   end
 }
 
-return gitgutter
+return gitsigns
