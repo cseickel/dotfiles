@@ -81,12 +81,10 @@ M.get_winbar = function()
     return "%{%v:lua.status.get_neo_tree_context()%}"
   end
 
-  if winbar_filetype_exclude[vim.bo.filetype] then
-    return "%{%v:lua.status.active_indicator()%}"
-  end
-
   if vim.bo.buftype == "terminal" then
     return "%{%v:lua.status.get_mode()%}%{%v:lua.status.get_icon()%} TERMINAL #%n %#WinBarLocation# %{b:term_title}%*"
+  elseif winbar_filetype_exclude[vim.bo.filetype] then
+    return "%{%v:lua.status.active_indicator()%}"
   else
     local buftype = vim.bo.buftype
     -- real files do not have buftypes
