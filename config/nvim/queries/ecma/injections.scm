@@ -1,19 +1,38 @@
 ; extends
 
-; /* html */ `<html>`
-; /* sql */ `SELECT * FROM foo`
-(variable_declarator
-  (comment) @injection.language (#offset! @injection.language 0 3 0 -3)
-  (template_string) @injection.content (#offset! @injection.content 0 1 0 -1)
-  )
-
-; foo(/* html */ `<span>`)
-; foo(/* sql */ `SELECT * FROM foo`)
-(call_expression
-  arguments: [
-              (arguments
-                (comment) @injection.language (#offset! @injection.language 0 3 0 -3)
-                (template_string) @injection.content (#offset! @injection.content 0 1 0 -1)
-                )
-              ]
-  )
+; detect_sql_strings
+(    
+  [
+    (string_fragment)
+  ] @injection.content
+  (#match? @injection.content "(SELECT|INSERT|UPDATE|DELETE).+(FROM|INTO|VALUES|SET)")
+  (#set! injection.language "sql")
+)
+(    
+  [
+    (string_fragment)
+  ] @injection.content
+  (#match? @injection.content "(select|insert|update|delete).+(from|into|values|set)")
+  (#set! injection.language "sql")
+)
+(    
+  [
+    (string_fragment)
+  ] @injection.content
+  (#match? @injection.content "(ALTER|CREATE|CREATE OR REPLACE|DROP) (TABLE|VIEW|INDEX|PROCEDURE|FUNCTION|SEQUENCE|TRIGGER|SCHEMA|DATABASE|USER|ROLE)")
+  (#set! injection.language "sql")
+)
+(    
+  [
+    (string_fragment)
+  ] @injection.content
+  (#match? @injection.content "(alter|create|create or replace|drop) (table|view|index|procedure|function|sequence|trigger|schema|database|user|role)")
+  (#set! injection.language "sql")
+)
+(    
+  [
+    (comment)
+  ] @injection.content
+  (#contains? @injection.content "\@dg-")
+  (#set! injection.language "markdown")
+)

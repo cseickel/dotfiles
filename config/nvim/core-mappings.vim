@@ -13,7 +13,7 @@ inoremap <silent> <C-enter> <C-o>o
 " I make this mistake all the time...
 command! Qa :qa
 
-" quick wraite and buffer wipe for commit messages
+" quick write and buffer wipe for commit messages
 cnorea wd write\|bwipeout
 
 " Search mappings: These will make it so that going to the next one in a
@@ -106,9 +106,12 @@ command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | 
 
 
 " Select All
-nnoremap <silent> <C-a> ggVG
-inoremap <silent> <C-a> <Esc>ggVG
-vnoremap <silent> <C-a> <Esc>ggVG
+nnoremap <silent> <C-g> ggVG
+inoremap <silent> <C-g> <Esc>ggVG
+vnoremap <silent> <C-g> <Esc>ggVG
+
+" Why would I want to pause neovim? Just make it undo.
+nnoremap <silent> <C-z> u
 
 
 " Search and Replace Selected Text
@@ -118,14 +121,14 @@ vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
 noremap <C-q> :q<cr>
 inoremap <C-q> <Esc>:q<cr>
 
-    " Open quickfix at bottom of all windows
-    noremap <leader>q :botright copen<cr>
-    " Close Quickfix
-    noremap <leader>Q :cclose<cr>
+" Open quickfix at bottom of all windows
+noremap <leader>q :botright copen<cr>
+" Close Quickfix
+noremap <leader>Q :cclose<cr>
 
-    " Open/close location list
-    noremap <leader>l :lopen<cr>
-    noremap <leader>L :lclose<cr>
+" Open/close location list
+noremap <leader>l :lopen<cr>
+noremap <leader>L :lclose<cr>
 
 "" Quick folding of a block in normal mode with the 'z' key
 "nnoremap z V%zf
