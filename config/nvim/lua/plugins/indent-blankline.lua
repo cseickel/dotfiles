@@ -50,15 +50,16 @@ local v3 = {
         max = 1000,
       },
       exclude = {
-        filetypes = { 
+        filetypes = {
           "NvimTree", "neo-tree", "neo-tree-popup",
           "help", "gitcommit", "man",
           "octo", "TelescopePrompt", "TelescopeResults",
           "lazy", "packer", "lsp-installer", "mason"
         },
+        buftypes = { "terminal" },
       },
     })
   end
 }
 
-return v2
+return v3

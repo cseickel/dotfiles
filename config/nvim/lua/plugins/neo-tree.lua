@@ -3,10 +3,7 @@ local mine = function()
     "nvim-neo-tree/neo-tree.nvim",
     branch = "main",
     dependencies = {
-      {
-        "mrbjarksen/neo-tree-diagnostics.nvim",
-        branch = "refresh-config"
-      },
+      "mrbjarksen/neo-tree-diagnostics.nvim",
       "miversen33/netman.nvim",
     },
     -- cmd = "Neotree",
@@ -140,11 +137,6 @@ local mine = function()
           window = {
             relative = "win",
             position = "bottom",
-          },
-          follow_behavior = { -- Behavior when `follow_current_file` is true
-            always_focus_file = false, -- Focus the followed file, even when focus is currently on a diagnostic item belonging to that file.
-            expand_followed = true, -- Ensure the node of the followed file is expanded
-            collapse_others = false, -- Ensure other nodes are collapsed
           },
           refresh = {
             delay = 1000, -- Time (in ms) to wait before updating diagnostics. Might resolve some issues with Neovim hanging.
