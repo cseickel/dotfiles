@@ -12,7 +12,7 @@ return {
   "tpope/vim-surround",
   "junegunn/vim-easy-align",
   "wellle/targets.vim",
-  --"dkarter/bullets.vim",
+  "dkarter/bullets.vim",
   --"nvim-treesitter/nvim-treesitter-textobjects",
   "svermeulen/vim-cutlass",
   --"nvim-pack/nvim-spectre",
