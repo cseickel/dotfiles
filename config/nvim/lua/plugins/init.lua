@@ -1,5 +1,5 @@
 return {
-"nvim-treesitter/playground",
+  "nvim-treesitter/playground",
   "nvim-lua/plenary.nvim",
   "MunifTanjim/nui.nvim",
   { "rmagatti/auto-session", config = { auto_session_use_git_branch = true } },

@@ -40,6 +40,9 @@ return {
       indent = {
         enable = true
       },
+      matchup = {
+        enable = true,              -- mandatory, false will disable the whole extension
+      },
       playground = {
         enable = true,
         updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code

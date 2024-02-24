@@ -21,6 +21,9 @@ let g:loaded_netrwPlugin = 1
 let g:loaded_netrwSettings = 1
 let g:loaded_netrwFileHandlers = 1
 
+" replaced by matchup
+let g:loaded_matchit = 1
+
 source core-config.vim
 source core-mappings.vim
 source theme.vim
