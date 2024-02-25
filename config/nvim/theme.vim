@@ -1,173 +1,4 @@
-" lua << EOF
-"   -- This block fixes highlight groups that were renamed from neovim 0.7 to 0.8
-"   -- see https://github.com/nvim-treesitter/nvim-treesitter/commit/42ab95d5e11f247c6f0c8f5181b02e816caa4a4f
-"   local hl = function(group, opts)
-"       opts.default = true
-"       vim.api.nvim_set_hl(0, group, opts)
-"   end
-" 
-"   -- Misc {{{
-"   hl('@comment', {link = 'Comment'})
-"   -- hl('@error', {link = 'Error'})
-"   hl('@none', {bg = 'NONE', fg = 'NONE'})
-"   hl('@preproc', {link = 'PreProc'})
-"   hl('@define', {link = 'Define'})
-"   hl('@operator', {link = 'Operator'})
-"   -- }}}
-" 
-"   -- Punctuation {{{
-"   hl('@punctuation.delimiter', {link = 'Delimiter'})
-"   hl('@punctuation.bracket', {link = 'Delimiter'})
-"   hl('@punctuation.special', {link = 'Delimiter'})
-"   -- }}}
-" 
-"   -- Literals {{{
-"   hl('@string', {link = 'String'})
-"   hl('@string.regex', {link = 'String'})
-"   hl('@string.escape', {link = 'SpecialChar'})
-"   hl('@string.special', {link = 'SpecialChar'})
-" 
-"   hl('@character', {link = 'Character'})
-"   hl('@character.special', {link = 'SpecialChar'})
-" 
-"   hl('@boolean', {link = 'Boolean'})
-"   hl('@number', {link = 'Number'})
-"   hl('@float', {link = 'Float'})
-"   -- }}}
-" 
-"   -- Functions {{{
-"   hl('@function', {link = 'Function'})
-"   hl('@function.call', {link = 'Function'})
-"   hl('@function.builtin', {link = 'Special'})
-"   hl('@function.macro', {link = 'Macro'})
-" 
-"   hl('@method', {link = 'Function'})
-"   hl('@method.call', {link = 'Function'})
-" 
-"   hl('@constructor', {link = 'Special'})
-"   hl('@parameter', {link = 'Identifier'})
-"   -- }}}
-" 
-"   -- Keywords {{{
-"   hl('@keyword', {link = 'Keyword'})
-"   hl('@keyword.function', {link = 'Keyword'})
-"   hl('@keyword.operator', {link = 'Keyword'})
-"   hl('@keyword.return', {link = 'Keyword'})
-" 
-"   hl('@conditional', {link = 'Conditional'})
-"   hl('@repeat', {link = 'Repeat'})
-"   hl('@debug', {link = 'Debug'})
-"   hl('@label', {link = 'Label'})
-"   hl('@include', {link = 'Include'})
-"   hl('@exception', {link = 'Exception'})
-"   -- }}}
-" 
-"   -- Types {{{
-"   hl('@type', {link = 'Type'})
-"   hl('@type.builtin', {link = 'Type'})
-"   hl('@type.qualifier', {link = 'Type'})
-"   hl('@type.definition', {link = 'Typedef'})
-" 
-"   hl('@storageclass', {link = 'StorageClass'})
-"   hl('@attribute', {link = 'PreProc'})
-"   hl('@field', {link = 'Identifier'})
-"   hl('@property', {link = 'Identifier'})
-"   -- }}}
-" 
-"   -- Identifiers {{{
-"   hl('@variable', {link = 'Normal'})
-"   hl('@variable.builtin', {link = 'Special'})
-" 
-"   hl('@constant', {link = 'Constant'})
-"   hl('@constant.builtin', {link = 'Special'})
-"   hl('@constant.macro', {link = 'Define'})
-" 
-"   hl('@namespace', {link = 'Include'})
-"   hl('@symbol', {link = 'Identifier'})
-"   -- }}}
-" 
-"   -- Text {{{
-"   hl('@text', {link = 'Normal'})
-"   hl('@text.strong', {bold = true})
-"   hl('@text.emphasis', {italic = true})
-"   hl('@text.underline', {underline = true})
-"   hl('@text.strike', {strikethrough = true})
-"   hl('@text.title', {link = 'Title'})
-"   hl('@text.literal', {link = 'String'})
-"   hl('@text.uri', {link = 'Underlined'})
-"   hl('@text.math', {link = 'Special'})
-"   hl('@text.environment', {link = 'Macro'})
-"   hl('@text.environment.name', {link = 'Type'})
-"   hl('@text.reference', {link = 'Constant'})
-" 
-"   hl('@text.todo', {link = 'Todo'})
-"   hl('@text.note', {link = 'SpecialComment'})
-"   hl('@text.warning', {link = 'WarningMsg'})
-"   hl('@text.danger', {link = 'ErrorMsg'})
-"   -- }}}
-" 
-"   -- Tags {{{
-"   hl('@tag', {link = 'Tag'})
-"   hl('@tag.attribute', {link = 'Identifier'})
-"   hl('@tag.delimiter', {link = 'Delimiter'})
-"   -- }}}
-" EOF
-
-" tree-sitter "standard capture names"
-
-" Compatibility with nvim-treesitter 0.9.2+
-" https://www.reddit.com/r/neovim/comments/19aratu/psa_nvimtreesitter_breaking_changes_on_highlight/
-hi link @variable.parameter         @parameter
-hi link @variable.member            @field
-hi link @module                     @namespace
-hi link @number.float               @float
-hi link @string.special.symbol      @symbol
-hi link @string.regexp              @string.regex
-hi link @markup.strong              @text.strong
-hi link @markup.italic              @text.emphasis
-hi link @markup.underline           @text.underline   " note: some are changed to @string.special
-hi link @markup.strikethrough       @text.strike
-hi link @markup.heading             @text.title
-hi link @markup.quote               @text.quote
-hi link @markup.link.url            @text.uri
-hi link @markup.math                @text.math
-hi link @markup.environment         @text.environment
-hi link @markup.environment.name    @text.environment.name
-hi link @markup.link                @text.reference
-hi link @markup.raw                 @text.literal
-hi link @markup.raw.block           @text.literal.block
-hi link @markup.link.label          @string.special
-hi link @markup.list                @punctuation.special
-
-" Helix captures
-hi link @function.method            @method
-hi link @function.method.call       @method.call
-hi link @comment.todo               @text.todo
-hi link @comment.error              @text.danger
-hi link @comment.warning            @text.warning
-hi link @comment.hint               @text.note
-hi link @comment.info               @text.note
-hi link @comment.note               @text.note
-hi link @comment.ok                 @text.note
-hi link @diff.plus                  @text.diff.add
-hi link @diff.minus                 @text.diff.delete
-hi link @diff.delta                 @text.diff.change
-hi link @string.special.url         @text.uri
-hi link @keyword.directive          @preproc
-hi link @keyword.storage            @storageclass
-hi link @keyword.directive          @define
-hi link @keyword.conditional        @conditional
-hi link @keyword.debug              @debug
-hi link @keyword.exception          @exception
-hi link @keyword.import             @include
-hi link @keyword.repeat             @repeat
-" END of compatibility with nvim-treesitter 0.9.2+
-
 let g:db_ui_use_nerd_fonts = 1
-
-" configure nvcode-color-schemes
-" let g:nvcodetermcolors=256
-" colorscheme nvcode
 
 " checks if your terminal has 24-bit color support
 if (has("termguicolors"))
@@ -176,7 +7,6 @@ if (has("termguicolors"))
 endif
 
 " Style vertical split bar
-"set fillchars+=vert:█
 set fillchars=horiz:━
 set fillchars+=horizup:┻
 set fillchars+=horizdown:┳
@@ -185,13 +15,6 @@ set fillchars+=vertleft:┫
 set fillchars+=vertright:┣
 set fillchars+=verthoriz:╋
 
-"set fillchars=horiz:▄
-"set fillchars+=horizup:█
-"set fillchars+=horizdown:▄
-"set fillchars+=vert:█
-"set fillchars+=vertleft:█
-"set fillchars+=vertright:█
-"set fillchars+=verthoriz:█
 
 highlight WinSeparator guifg=#3c3c52
 highlight FloatBorder guifg=#b8b8e6
@@ -223,10 +46,6 @@ highlight GitGutterChangeDelete      guifg=#c97755
 
 highlight TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
-"hi DiagnosticVirtualTextError none
-"hi DiagnosticVirtualTextWarn none
-"hi DiagnosticVirtualTextInfo none
-"hi DiagnosticVirtualTextHint none
 hi DiagnosticWarn guifg=#d7d700 gui=Italic
 hi DiagnosticInfo guifg=#87d7ff gui=Italic
 hi DiagnosticHint guifg=#ffffd7 gui=Italic
@@ -255,19 +74,6 @@ highlight Cursor guibg=#5f87af ctermbg=67
 highlight iCursor guibg=#ffffaf ctermbg=229
 highlight rCursor guibg=#d70000 ctermbg=124
 
-" highlight Type ctermfg=6 guifg=#4ec9b0
-" highlight link This Language
-" highlight link New Constant
-" highlight link Interpolation Identifier
-" highlight link InterpolationDelim Constant
-" highlight link DocComment SpecialComment
-" highlight link DocExample Identifier
-" highlight link DocString Identifier
-" highlight link Operator Conditional
-" highlight link OperLambda Conditional
-" highlight link Modifier Conditional
-" highlight link LinqKeyword Conditional
-
 " Colors for nvim-cmp completion menu
 highlight CmpItemAbbr guifg=#949494
 " gray
@@ -287,11 +93,6 @@ highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
 highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
 highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
 
-" highlight link csUnspecifiedStatement PlainText
-" highlight link csContextualStatement Control
-" highlight link csUnsupportedStatement PlainText
-
-"highlight @comment.documentation guifg=#808080
 
 "-------------------------------------------------------------------------
 " rhysd/conflict-marker.vim
