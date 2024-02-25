@@ -7,6 +7,7 @@ return {
   { "github/copilot.vim", tag = "v1.18.0" },
   "cseickel/diagnostic-window.nvim",
   "itchyny/vim-gitbranch",
+  "tpope/vim-fugitive",
   "tpope/vim-repeat",
   "tpope/vim-eunuch",
   "tpope/vim-surround",
