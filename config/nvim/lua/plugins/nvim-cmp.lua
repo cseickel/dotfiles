@@ -6,8 +6,8 @@ return {
 		"hrsh7th/cmp-nvim-lua",
 		"hrsh7th/cmp-path",
 		--'hrsh7th/cmp-calc',
-		--"hrsh7th/vim-vsnip",
-		--"hrsh7th/vim-vsnip-integ",
+		"hrsh7th/vim-vsnip",
+		"hrsh7th/vim-vsnip-integ",
 		--'rafamadriz/friendly-snippets',
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-nvim-lsp-document-symbol",
@@ -100,11 +100,11 @@ return {
 				["<C-e>"] = cmp.mapping.close(),
 				["<Tab>"] = cmp.mapping.confirm({ select = true }),
 			}),
-			--snippet = {
-			--	expand = function(args)
-			--		vim.fn["vsnip#anonymous"](args.body)
-			--	end,
-			--},
+			snippet = {
+				expand = function(args)
+					vim.fn["vsnip#anonymous"](args.body)
+				end,
+			},
 			sources = {
 				--{ name = "copilot"},
 				--{ name = "nvim_lua" },
@@ -112,7 +112,7 @@ return {
 				{ name = "nvim_lsp", keyword_length = 1 },
 				{ name = "dap" },
 				{ name = "npm", keyword_length = 3 },
-				--{ name = "vsnip", keyword_length = 1 },
+				{ name = "vsnip", keyword_length = 1 },
 				{ name = "path" },
 				{ name = "calc" },
 				{ name = "buffer", keyword_length = 2 },

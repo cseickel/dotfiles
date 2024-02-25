@@ -217,7 +217,11 @@ end
 M.get_filename = function()
   local has_icon, icon = pcall(M.get_icon)
   if has_icon then
-    return icon .. "%t"
+    if vim.b.db_name then
+      return icon .. "%t [" .. vim.b.db_name .. "]"
+    else
+      return icon .. " %t"
+    end
   else
     return " %t"
   end

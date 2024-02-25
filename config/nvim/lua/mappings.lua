@@ -1,4 +1,3 @@
-local memory_utils = pcall(require, "memory_utils")
 
 local showSymbolFinder = function()
   local preview_width = vim.o.columns - 20 - 65
@@ -244,7 +243,6 @@ local mappings = {
 require("which-key").register(mappings)
 
 vim.cmd([[
-  vnoremap <leader>r <esc><cmd>lua require("spectre").open_visual()<CR>
   vnoremap = <cmd>Format<cr>
 
   imap <silent><script><expr> <C-j> copilot#Accept("\<C-j>")
@@ -283,38 +281,9 @@ vim.cmd([[
       endif
   endfunction
 
-
-  function! InitSql(dburl)
-    let b:db=a:dburl
-    nnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(0)<cr>
-    vnoremap <silent><buffer> <M-x> <cmd>call ExecuteSql(1)<cr>
-  endfunction
-
-  function! ExecuteSql(visual)
-    if b:db == ""
-      let b:db = $DBUI_URL
-    endif
-    if b:db == ""
-      let b:db=input("Enter DB URL: ")
-    endif
-    if a:visual
-      call execute('DB ' . b:db)
-    else
-      call execute('%DB ' . b:db)
-    endif
-  endfunction
-
-  function! Highlight_Symbol() abort
-      if &ft != "cs"
-          lua vim.lsp.buf.document_highlight()
-      endif
-  endfunction
-
-
   augroup plugin_mappings_augroup
       autocmd!
-      autocmd CursorHold * silent! call Highlight_Symbol()
+      autocmd CursorHold * silent! lua vim.lsp.buf.document_highlight()
       autocmd CursorMoved * silent! lua vim.lsp.buf.clear_references()
-      autocmd FileType sql call InitSql("")
   augroup END
 ]])
