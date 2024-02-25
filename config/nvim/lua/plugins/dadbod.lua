@@ -30,10 +30,17 @@ _G.executeSql = function(visual)
   end
 
   if visual == 1 then
-    vim.cmd("DB b:db")
+    vim.cmd("DB")
   else
-    vim.cmd("%DB b:db")
+    vim.cmd("%DB")
   end
+end
+
+_G.openInLess = function()
+  -- Open the current file in less in a tmux popup window
+  local path = vim.fn.expand("%")
+  local cmd = '/usr/bin/less -S --header 1 --mouse --wheel-lines 3 ' .. path
+  vim.fn.system("tmux popup -w 80% -h 80% -E " .. vim.fn.shellescape(cmd))
 end
 
 
@@ -71,7 +78,15 @@ return {
         lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
       endfunction
 
-      autocmd FileType sql,mysql,plsql call InitSql()
+      function! InitDbout()
+        nnoremap <silent><buffer> <M-x> <cmd>lua openInLess()<cr>
+      endfunction
+
+      augroup db
+        autocmd!
+        autocmd FileType sql,mysql,plsql call InitSql()
+        autocmd FileType dbout call InitDbout()
+      augroup END
     ]]
   end,
 }

@@ -6,6 +6,7 @@ end
 
 vim.cmd [[
   highlight WinBar           guifg=#BBBBBB gui=bold
+  highlight WinBarHeader     guifg=#BBBBBB gui=bold,underline
   highlight WinBarNC         guifg=#888888 gui=bold
   highlight WinBarLocation   guifg=#888888 gui=bold
   highlight WinBarModified   guifg=#d7d787
@@ -70,6 +71,34 @@ M.get_neo_tree_context = function()
   --return ""
 end
 
+M.get_header = function()
+  -- Sets the winbar to the first line of the buffer, but only if the buffer is
+  -- scrolled down so that the first line is not visible.
+  local view = vim.fn.winsaveview()
+
+  if view.topline == 1 then
+    return nil
+  else
+    -- get the gutter width
+    local winid = vim.api.nvim_get_current_win()
+    local wininfo = vim.fn.getwininfo(winid)
+    if #wininfo == 0 then
+      return nil
+    end
+    local textoff = wininfo[1].textoff
+    local gutter = string.rep(" ", textoff)
+
+    local text = vim.fn.getline(1)
+    -- remove the first_col - 1 characters from the beginning of the text
+    if view.leftcol > 1 then
+      text = text:sub(view.leftcol + 1, -1)
+    end
+    -- add textoff to the beginning of the text
+    -- ensure the text is left aligned
+    return gutter .. "%#WinBarHeader#" .. text .. "%*%<"
+  end
+end
+
 M.get_winbar = function()
   -- floating window
   local cfg = vim.api.nvim_win_get_config(0)
@@ -79,6 +108,13 @@ M.get_winbar = function()
 
   if vim.bo.filetype == "neo-tree" then
     return "%{%v:lua.status.get_neo_tree_context()%}"
+  end
+
+  if vim.bo.filetype == "dbout" then
+    local header = M.get_header()
+    if header then
+      return header
+    end
   end
 
   if winbar_filetype_exclude[vim.bo.filetype] then
