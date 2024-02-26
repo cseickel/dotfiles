@@ -142,17 +142,6 @@ noremap <leader>L :lclose<cr>
 
 nnoremap <silent> <leader>. :tcd %:p:h<CR>
 
-nnoremap <silent> <leader>w1 :1wincmd w <cr>
-nnoremap <silent> <leader>w2 :2wincmd w <cr>
-nnoremap <silent> <leader>w3 :3wincmd w <cr>
-nnoremap <silent> <leader>w4 :4wincmd w <cr>
-nnoremap <silent> <leader>w5 :5wincmd w <cr>
-nnoremap <silent> <leader>w6 :6wincmd w <cr>
-nnoremap <silent> <leader>w7 :7wincmd w <cr>
-nnoremap <silent> <leader>w8 :8wincmd w <cr>
-nnoremap <silent> <leader>w9 :9wincmd w <cr>
-nnoremap <silent> <leader>w0 :10wincmd w <cr>
-
 nnoremap <silent> <leader>1 :1wincmd w <cr>
 nnoremap <silent> <leader>2 :2wincmd w <cr>
 nnoremap <silent> <leader>3 :3wincmd w <cr>

@@ -71,16 +71,6 @@ set cursorline
 set updatetime=100
 set lazyredraw
 
-"let $EDITOR="nvr --remote-wait -cc split"
-function! EnterTerminal()
-  setlocal nonumber norelativenumber autowriteall modifiable noruler
-  "setlocal winfixheight
-  "setlocal noshowmode
-  "setlocal laststatus=0
-  "setlocal noshowcmd
-  "setlocal cmdheight=1
-endfunction
-
 " For regular expressions turn magic on
 set magic
 
@@ -190,12 +180,22 @@ function! WinLeave()
 endfunction
 
 function! InitTerminal()
-  setlocal nonumber norelativenumber noruler nocursorline signcolumn=yes
-  setlocal autowriteall modifiable
   set filetype=terminal
+  call EnterTerminal()
+  startinsert
+endfunction
+
+function! EnterTerminal()
+  setlocal nonumber norelativenumber autowriteall modifiable noruler signcolumn=yes
+  "setlocal winfixheight
+  "setlocal noshowmode
+  "setlocal laststatus=0
+  "setlocal noshowcmd
+  "setlocal cmdheight=1
   let g:last_terminal_job_id = b:terminal_job_id
   let g:last_terminal_winid = nvim_get_current_win()
   let g:last_terminal_bufid = nvim_get_current_buf()
+  startinsert
 endfunction
 
 function! GetUsableWinWidth()
@@ -224,7 +224,8 @@ augroup core_autocmd
   autocmd FileType markdown call InitMarkdown()
   autocmd FileType cs call FourSpaceIndent()
   autocmd TermOpen * call InitTerminal()
-  autocmd TermEnter * call InitTerminal()
+  autocmd WinEnter term://* call EnterTerminal()
+  autocmd BufEnter term://* call EnterTerminal()
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
   autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
