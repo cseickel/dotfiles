@@ -73,13 +73,13 @@ return {
           normal vi"
         endif
         " This is a hack, I just want to set the marks of the visual selection
-        " I'll yank it to the `s` register
-        normal "sy
+        " I'll yank it to the blackhole register
+        normal "_y
         " Now I can execute the command with the range
         lua executeSql(1)
       endfunction
 
-      nnoremap <M-x> <cmd>call DBexecuteText()<cr>
+      nnoremap <silent> <M-x> <cmd>call DBexecuteText()<cr>
 
       function! InitSql()
         if exists('g:db')
