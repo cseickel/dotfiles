@@ -30,24 +30,17 @@ _G.executeSql = function(visual)
   end
 
   if visual == 1 then
-    vim.cmd("DB")
+    vim.cmd("'<,'>DB")
   else
     vim.cmd("%DB")
   end
 end
 
-_G.openInLess = function()
-  -- Open the current file in less in a tmux popup window
-  local path = vim.fn.expand("%")
-  local cmd = '/usr/bin/less -S --header 1 --mouse --wheel-lines 3 ' .. path
-  vim.fn.system("tmux popup -w 80% -h 80% -E " .. vim.fn.shellescape(cmd))
-end
-
-
 return {
   'kristijanhusak/vim-dadbod-ui',
+  lazy = false,
   dependencies = {
-    { 'tpope/vim-dadbod', lazy = true },
+    { 'tpope/vim-dadbod' },
     { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
   },
   cmd = {
@@ -56,9 +49,10 @@ return {
     'DBUIToggle',
     'DBUIAddConnection',
     'DBUIFindBuffer',
+    'DBexecute',
+    'DBconnect'
   },
   init = function()
-    -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
     vim.g.db_ui_hide_schemas = {
       "pg_toast",
@@ -68,24 +62,37 @@ return {
     }
 
     vim.cmd[[
+      command! DBconnect lua connectDB()
+      command! DBexecute lua executeSql(0)
+      command! -range DBexecute lua executeSql(1)
+
+      function! DBexecuteText()
+        if &ft == 'typescript'
+          normal vi`
+        else
+          normal vi"
+        endif
+        " This is a hack, I just want to set the marks of the visual selection
+        " I'll yank it to the `s` register
+        normal "sy
+        " Now I can execute the command with the range
+        lua executeSql(1)
+      endfunction
+
+      nnoremap <M-x> <cmd>call DBexecuteText()<cr>
+
       function! InitSql()
         if exists('g:db')
           let b:db=g:db
         endif
-        command! -buffer DBconnect lua connectDB()
         nnoremap <silent><buffer> <M-x> <cmd>lua executeSql(0)<cr>
         vnoremap <silent><buffer> <M-x> <cmd>lua executeSql(1)<cr>
         lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })
       endfunction
 
-      function! InitDbout()
-        nnoremap <silent><buffer> <M-x> <cmd>lua openInLess()<cr>
-      endfunction
-
       augroup db
         autocmd!
         autocmd FileType sql,mysql,plsql call InitSql()
-        autocmd FileType dbout call InitDbout()
       augroup END
     ]]
   end,

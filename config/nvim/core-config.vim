@@ -182,7 +182,7 @@ endfunction
 function! InitTerminal()
   set filetype=terminal
   call EnterTerminal()
-  startinsert
+  "startinsert
 endfunction
 
 function! EnterTerminal()
@@ -195,7 +195,7 @@ function! EnterTerminal()
   let g:last_terminal_job_id = b:terminal_job_id
   let g:last_terminal_winid = nvim_get_current_win()
   let g:last_terminal_bufid = nvim_get_current_buf()
-  startinsert
+  "startinsert
 endfunction
 
 function! GetUsableWinWidth()
@@ -304,9 +304,3 @@ augroup core_tab
   autocmd TabNew * call InitNewTab()
   autocmd VimEnter * call InitNewTab()
 augroup END
-
-"*****************************************************************************
-" => Plugins
-" *****************************************************************************
-
-let g:BufSurfIgnore = 'neo-tree .* \[.*\],^$'
