@@ -3,6 +3,7 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
+    "davidmh/cspell.nvim",
     "nvimtools/none-ls.nvim",
     --'jayp0521/mason-null-ls.nvim',
     "nvim-lua/plenary.nvim",
@@ -112,20 +113,23 @@ return {
       find_json = function ()
         return vim.b.cspell_config_file_path
       end,
-      on_success = function(cspell_config_file_path, _, action_name)
-          -- For example, you can format the cspell config file after you add a word
-          if action_name == 'add_to_json' then
-              os.execute(
-                  string.format(
-                      "cat %s | jq -S '.words |= sort' | tee %s > /dev/null",
-                      cspell_config_file_path,
-                      cspell_config_file_path
-                  )
-              )
-          end
+      ---@param payload AddToJSONSuccess
+      on_add_to_json = function(payload)
+          -- Includes:
+          -- payload.new_word
+          -- payload.cspell_config_path
+          -- payload.generator_params
 
-          -- Note: The cspell_config_file_path param could be nil for the
-          -- 'use_suggestion' action
+          -- For example, you can format the cspell config file after you add a word
+          os.execute(
+              string.format(
+                  "jq -S '.words |= sort' %s > %s.tmp && mv %s.tmp %s",
+                  payload.cspell_config_path,
+                  payload.cspell_config_path,
+                  payload.cspell_config_path,
+                  payload.cspell_config_path
+              )
+          )
       end
     }
 
@@ -133,7 +137,9 @@ return {
     local cspell_bin = home .. "/.bun/bin/cspell"
 
     local null_ls = require("null-ls")
+    local cspell = require('cspell')
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
     null_ls.setup({
       fallback_severity = vim.diagnostic.severity.HINT,
       should_attach = function(bufnr)
@@ -144,15 +150,8 @@ return {
         return true
       end,
       sources = {
-        null_ls.builtins.code_actions.cspell.with({
-          command = cspell_bin,
-          config = cspell_config,
-        }),
-        --null_ls.builtins.code_actions.refactoring,
-        null_ls.builtins.diagnostics.cspell.with({
-          command = cspell_bin,
-          config = cspell_config,
-        }),
+        cspell.diagnostics.with({ config = config }),
+        cspell.code_actions.with({ config = config }),
         null_ls.builtins.diagnostics.write_good,
         null_ls.builtins.diagnostics.actionlint,
       },

@@ -28,7 +28,8 @@ local gitsigns = {
       watch_gitdir = {
         interval = 3000,
         follow_files = true
-      }
+      },
+      signs_priority = 100,
     })
   end
 }
