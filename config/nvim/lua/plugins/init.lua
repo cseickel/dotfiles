@@ -3,7 +3,6 @@ return {
   "nvim-lua/plenary.nvim",
   "MunifTanjim/nui.nvim",
   { "rmagatti/auto-session", config = { auto_session_use_git_branch = true } },
-  "samjwill/nvim-unception",
   { "github/copilot.vim", tag = "v1.18.0" },
   "cseickel/diagnostic-window.nvim",
   "itchyny/vim-gitbranch",
