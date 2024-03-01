@@ -29,7 +29,7 @@ local gitsigns = {
         interval = 3000,
         follow_files = true
       },
-      signs_priority = 100,
+      sign_priority = 100,
     })
   end
 }
