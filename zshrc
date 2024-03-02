@@ -127,11 +127,12 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-export EDITOR='nvim'
 # if nvr is installed, use it to open files in the current neovim instance
 # if not, use nvim
 if command -v nvr > /dev/null; then
   export EDITOR="nvr --remote-wait -cc split"
+else
+  export EDITOR='nvim'
 fi
 # if [[ -z "${TMUX}" ]]; then
 #   export EDITOR='nvim'
@@ -144,10 +145,6 @@ alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
-alias ta="tmux attach"
-alias p="tmux attach -t primary"
-alias s="tmux attach -t secondary"
-alias t="~/start-arch-linux-docker.sh"
 
 alias terra="aws-vault exec rva --no-session -- terraform"
 alias cdk="aws-vault exec rva --no-session -- npm run cdk"
@@ -366,5 +363,7 @@ export NVM_DIR="$HOME/.nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# fixes display issues due to special characters in prompt
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
