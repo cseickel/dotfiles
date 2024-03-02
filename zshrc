@@ -128,6 +128,11 @@ SAVEHIST=1000
 setopt APPEND_HISTORY
 
 export EDITOR='nvim'
+# if nvr is installed, use it to open files in the current neovim instance
+# if not, use nvim
+if command -v nvr > /dev/null; then
+  export EDITOR="nvr --remote-wait -cc split"
+fi
 # if [[ -z "${TMUX}" ]]; then
 #   export EDITOR='nvim'
 # else
