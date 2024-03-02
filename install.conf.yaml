@@ -14,7 +14,6 @@
     - ~/.gnupg
     - ~/.local/share/fonts
 - link:
-    ~/.bashrc: bashrc
     ~/.gitconfig: gitconfig
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
