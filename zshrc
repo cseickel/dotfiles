@@ -127,20 +127,6 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-# if nvr is installed, use it to open files in the current neovim instance
-# if not, use nvim
-if command -v nvr > /dev/null; then
-  export EDITOR="nvr --remote-wait -cc split"
-else
-  export EDITOR='nvim'
-fi
-# if [[ -z "${TMUX}" ]]; then
-#   export EDITOR='nvim'
-# else
-#   export EDITOR='/usr/bin/tmux popup -w 120 -h "80%" -E nvim'
-# fi
-
-alias edit="$EDITOR"
 alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
@@ -367,3 +353,12 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # fixes display issues due to special characters in prompt
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
+
+
+if [[ -z "${TMUX}" ]]; then
+  export EDITOR='nvim'
+else
+  export EDITOR='PATH="${PATH}" /usr/bin/tmux popup -w 120 -h "80%" -E nvim'
+fi
+
+alias edit="$EDITOR"
