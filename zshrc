@@ -358,7 +358,7 @@ export LANG=en_US.UTF-8
 if [[ -z "${TMUX}" ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='PATH="${PATH}" /usr/bin/tmux popup -w 120 -h "80%" -E nvim'
+  export EDITOR='/usr/bin/tmux popup -w 120 -h "80%" -E nvim'
 fi
 
 alias edit="$EDITOR"

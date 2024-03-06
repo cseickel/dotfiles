@@ -186,7 +186,7 @@ function! InitTerminal()
 endfunction
 
 function! EnterTerminal()
-  setlocal nonumber norelativenumber autowriteall modifiable noruler signcolumn=yes
+  setlocal nonumber norelativenumber autowriteall modifiable noruler signcolumn=no
   "setlocal winfixheight
   "setlocal noshowmode
   "setlocal laststatus=0
