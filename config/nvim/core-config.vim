@@ -179,6 +179,8 @@ function! WinLeave()
   endif
 endfunction
 
+highlight TransparentBackground guibg=transparent
+
 function! InitTerminal()
   set filetype=terminal
   call EnterTerminal()
@@ -187,6 +189,7 @@ endfunction
 
 function! EnterTerminal()
   setlocal nonumber norelativenumber autowriteall modifiable noruler signcolumn=no
+  setlocal winhighlight=Normal:TransparentBackground
   "setlocal winfixheight
   "setlocal noshowmode
   "setlocal laststatus=0

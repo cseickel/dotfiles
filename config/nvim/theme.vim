@@ -112,3 +112,15 @@ highlight ConflictMarkerEnd guibg=#5f87af
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
 highlight NeoTreeGitConflict guifg=#ff8700
+
+highlight TermNormal           guibg=#101010
+highlight TermWinBar           guibg=#101010 guifg=#BBBBBB gui=bold
+highlight TermWinBarHeader     guibg=#101010 guifg=#BBBBBB gui=bold,underline
+highlight TermWinBarLocation   guibg=#101010 guifg=#888888 gui=bold
+
+augroup TerminalHighlights
+    autocmd!
+    autocmd TermEnter * setlocal winhighlight=Normal:TermNormal,WinBar:TermWinBar,WinBarHeader:TermWinBarHeader,WinBarLocation:TermWinBarLocation
+    " when we ;eave insert mode, return the bakcground to normal
+    autocmd TermLeave * setlocal winhighlight=
+augroup END

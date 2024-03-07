@@ -5,14 +5,14 @@ local isempty = function(s)
 end
 
 vim.cmd [[
-  highlight WinBar           guifg=#BBBBBB gui=bold
-  highlight WinBarHeader     guifg=#BBBBBB gui=bold,underline
-  highlight WinBarNC         guifg=#888888 gui=bold
-  highlight WinBarLocation   guifg=#888888 gui=bold
-  highlight WinBarModified   guifg=#d7d787
-  highlight WinBarGitDirty   guifg=#d7afd7
-  highlight WinBarIndicator  guifg=#5fafd7 gui=bold
-  highlight WinBarInactive   guibg=#3a3a3a guifg=#777777 gui=bold
+  highlight WinBar           guibg=None guifg=#BBBBBB gui=bold
+  highlight WinBarHeader     guibg=None guifg=#BBBBBB gui=bold,underline
+  highlight WinBarNC         guibg=None guifg=#888888 gui=bold
+  highlight WinBarLocation   guibg=None guifg=#888888 gui=bold
+  highlight WinBarModified   guibg=None guifg=#d7d787
+  highlight WinBarGitDirty   guibg=None guifg=#d7afd7
+  highlight WinBarIndicator  guibg=None guifg=#5fafd7 gui=bold
+  highlight WinBarInactive   guibg=None guibg=#3a3a3a guifg=#777777 gui=bold
 
   highlight ModeC guibg=#dddddd guifg=#101010 gui=bold " COMMAND 
   highlight ModeI guibg=#ffff5f guifg=#353535 gui=bold " INSERT  
