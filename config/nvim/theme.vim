@@ -56,7 +56,7 @@ hi DiagnosticSignHint guifg=#ffffd7
 hi DiagnosticSignError guifg=#af0000
 "hi link vimUserFunc none
 
-hi Normal guibg=#1c1c1c
+"hi Normal guibg=#1c1c1c
 highlight clear NormalNC" guibg=#262626
 highlight link NormalFloat NormalNC
 highlight TroubleNormal guibg=none ctermbg=none

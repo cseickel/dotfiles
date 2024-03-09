@@ -9,12 +9,25 @@ local monokai = {
 	end,
 }
 
+local catpuccin =
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      vim.cmd('colorscheme catppuccin-mocha')
+    end,
+  }
+
 local vscode = {
 	"Mofiqul/vscode.nvim",
 	priority = 1000,
 	config = function()
 		local c = require("vscode.colors").get_colors()
 		require("vscode").setup({
+     color_overrides = { 
+        vscBack = "#1A1A1A",
+      },
 			group_overrides = {
 				-- this supports the same val table as vim.api.nvim_set_hl
 				-- use colors from this colorscheme by requiring vscode.colors!
@@ -27,6 +40,15 @@ local vscode = {
 		require("vscode").load()
 		vim.cmd([[source ~/.config/nvim/theme.vim]])
 	end,
+}
+
+local tokyonight = {
+  "folke/tokyonight.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function ()
+    vim.cmd("colorscheme tokyonight-night")
+  end
 }
 
 local tundra = {

@@ -307,3 +307,8 @@ augroup core_tab
   autocmd TabNew * call InitNewTab()
   autocmd VimEnter * call InitNewTab()
 augroup END
+
+augroup ForgetfulMe
+  autocmd!
+  autocmd WinEnter * :stopinsert
+augroup end
