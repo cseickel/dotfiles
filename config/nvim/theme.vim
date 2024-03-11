@@ -111,6 +111,9 @@ highlight ConflictMarkerTheirs guibg=#005f87
 highlight ConflictMarkerEnd guibg=#5f87af
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
+highlight IndentBlanklineChar guifg=#303030
+highlight IndentBlanklineContextChar guifg=#585858 gui=Bold
+
 highlight NeoTreeGitConflict guifg=#ff8700
 
 highlight TermNormal           guibg=#101010

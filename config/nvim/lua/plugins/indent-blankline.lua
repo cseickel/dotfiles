@@ -22,11 +22,6 @@ local v3 = {
   'lukas-reineke/indent-blankline.nvim',
   version = '3',
   config = function ()
-    vim.cmd([[
-    highlight IndentBlanklineChar guifg=#303030
-    highlight IndentBlanklineContextChar guifg=#585858 gui=Bold
-    ]])
-
     -- require("indent_blankline").setup({
     --   char = '▏',
     --   space_char = " ",
