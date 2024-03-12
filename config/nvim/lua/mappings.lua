@@ -241,10 +241,6 @@ require("which-key").register(mappings)
 vim.cmd([[
   vnoremap = <cmd>Format<cr>
 
-  imap <silent><script><expr> <C-j> copilot#Accept("\<C-j>")
-  imap <silent><script><expr> <RIGHT> copilot#Accept("\<RIGHT>")
-  let g:copilot_no_tab_map = v:true
-
 
   function! ToggleWindowZoom(clear_decorations) abort
       if exists("b:is_zoomed_win") && b:is_zoomed_win
