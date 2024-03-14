@@ -172,6 +172,16 @@ vnoremap <silent> H ^
 nnoremap <silent> L g_
 vnoremap <silent> L g_
 
+" Natural movement through wrapped lines
+noremap  <silent> <Up>   gk
+noremap  <silent> <Down> gj
+noremap  <silent> <Home> g<Home>
+noremap  <silent> <End>  g<End>
+inoremap <silent> <Up>   <C-o>gk
+inoremap <silent> <Down> <C-o>gj
+inoremap <silent> <Home> <C-o>g<Home>
+inoremap <silent> <End>  <C-o>g<End>
+
 function! TermClear() abort
   call feedkeys("", 'n')
   set scrollback=1
