@@ -195,6 +195,7 @@ local mappings = {
       f = { "<cmd>lua require('telescope').extensions.smart_open.smart_open()<CR>", "Find File (smart_open)" },
       c = { grepCWD, "Grep CWD" },
       g = { grepProject, "Grep Project (git root)" },
+      h = { "<cmd>Telescope git_file_history<cr>", "Git File History" },
     },
     g = {
       name = "Go to...",

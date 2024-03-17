@@ -42,6 +42,17 @@ local vscode = {
 	end,
 }
 
+local sonokai = {
+  "sainnhe/sonokai",
+  config = function()
+    vim.g.sonokai_style = "andromeda"
+
+    vim.g.sonokai_enable_italic = 1
+    vim.g.sonokai_disable_italic_comment = 1
+    vim.cmd("colorscheme sonokai")
+  end,
+}
+
 local tokyonight = {
   "folke/tokyonight.nvim",
   lazy = false,

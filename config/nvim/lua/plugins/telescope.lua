@@ -7,6 +7,10 @@ return {
       "danielfalk/smart-open.nvim",
       branch = "0.2.x",
       dependencies = { "kkharji/sqlite.lua" }
+    },
+    {
+        "isak102/telescope-git-file-history.nvim",
+        dependencies = { "tpope/vim-fugitive" }
     }
   },
   config = function ()
@@ -84,6 +88,7 @@ return {
     })
     require('telescope').load_extension('fzy_native')
     require("telescope").load_extension("smart_open")
+    require("telescope").load_extension("git_file_history")
     --require'telescope'.load_extension('zoxide')
     --require("telescope._extensions.zoxide.config").setup({
     --  mappings = {
