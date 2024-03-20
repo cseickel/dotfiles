@@ -6,6 +6,7 @@ return {
       'theHamsta/nvim-dap-virtual-text',
       'jayp0521/mason-nvim-dap.nvim',
       "mxsdev/nvim-dap-vscode-js",
+      "nvim-neotest/nvim-nio"
     },
 
     config = function ()
