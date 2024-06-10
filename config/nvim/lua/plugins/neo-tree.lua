@@ -1,7 +1,7 @@
 local mine = function()
   local M = {
     "nvim-neo-tree/neo-tree.nvim",
-    branch = "main",
+    branch = "v3.x",
     dependencies = {
       "mrbjarksen/neo-tree-diagnostics.nvim",
       "miversen33/netman.nvim",

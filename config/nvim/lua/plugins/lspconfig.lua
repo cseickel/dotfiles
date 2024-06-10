@@ -152,7 +152,7 @@ return {
       sources = {
         cspell.diagnostics.with({ config = config }),
         cspell.code_actions.with({ config = config }),
-        null_ls.builtins.diagnostics.write_good,
+       -- null_ls.builtins.diagnostics.write_good,
         null_ls.builtins.diagnostics.actionlint,
       },
       -- on_attach = function(client, bufnr)

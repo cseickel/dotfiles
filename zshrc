@@ -132,9 +132,9 @@ alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
 
-alias terra="aws-vault exec rva --no-session -- terraform"
 alias cdk="aws-vault exec rva --no-session -- npm run cdk"
 alias vault="aws-vault exec rva --"
+alias vault-no-session="aws-vault exec rva --no-session --"
 
 alias add="git add"
 alias checkout='git checkout'

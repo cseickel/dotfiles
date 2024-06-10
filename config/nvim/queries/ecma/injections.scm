@@ -29,12 +29,4 @@
   (#match? @injection.content "(alter|create|create or replace|drop) (table|view|index|procedure|function|sequence|trigger|schema|database|user|role)")
   (#set! injection.language "sql")
 )
-; @dg = document generator
-(    
-  [
-    (comment)
-  ] @injection.content
-  (#contains? @injection.content "\@dg-")
-  (#set! injection.language "markdown")
-)
 
