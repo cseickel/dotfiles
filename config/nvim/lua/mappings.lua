@@ -220,7 +220,6 @@ local mappings = {
     --  a = { memory_utils.capture_after,                        "Capture After" },
     --  c = { memory_utils.compare,                              "Compare" },
     --},
-    r = { '<cmd>lua require("spectre").open()<CR>', "Search and Replace" },
     s = { "<cmd>Neotree reveal git_status current<cr>", "Show Git Status" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },

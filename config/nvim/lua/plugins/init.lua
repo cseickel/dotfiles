@@ -10,7 +10,7 @@ return {
   "tpope/vim-eunuch",
   "tpope/vim-surround",
   "junegunn/vim-easy-align",
-  "vim-table-mode",
+  --"vim-table-mode",
   "wellle/targets.vim",
   "dkarter/bullets.vim",
   --"nvim-treesitter/nvim-treesitter-textobjects",

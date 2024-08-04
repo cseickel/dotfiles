@@ -123,6 +123,7 @@ return {
           -- For example, you can format the cspell config file after you add a word
           os.execute(
               string.format(
+                  -- Sort the words array in the cspell.json file, and output with newlines and indents
                   "jq -S '.words |= sort' %s > %s.tmp && mv %s.tmp %s",
                   payload.cspell_config_path,
                   payload.cspell_config_path,
@@ -150,8 +151,8 @@ return {
         return true
       end,
       sources = {
-        cspell.diagnostics.with({ config = config }),
-        cspell.code_actions.with({ config = config }),
+        cspell.diagnostics.with({ config = cspell_config }),
+        cspell.code_actions.with({ config = cspell_config }),
        -- null_ls.builtins.diagnostics.write_good,
         null_ls.builtins.diagnostics.actionlint,
       },
