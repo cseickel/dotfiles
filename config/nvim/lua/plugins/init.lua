@@ -12,10 +12,10 @@ return {
   "junegunn/vim-easy-align",
   --"vim-table-mode",
   "wellle/targets.vim",
-  "dkarter/bullets.vim",
   --"nvim-treesitter/nvim-treesitter-textobjects",
   "svermeulen/vim-cutlass",
   --"nvim-pack/nvim-spectre",
   "famiu/bufdelete.nvim",
+  "yioneko/nvim-vtsls",
   --{ "nvim-tree/nvim-tree.lua", setup = true },
 }

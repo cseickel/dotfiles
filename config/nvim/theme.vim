@@ -115,6 +115,8 @@ highlight IndentBlanklineChar guifg=#303030
 highlight IndentBlanklineContextChar guifg=#585858 gui=Bold
 
 highlight NeoTreeGitConflict guifg=#ff8700
+highlight NeoTreeDimText guifg=#303030 guibg=None
+highlight NeoTreeExpander guifg=#505050 guibg=None
 
 highlight TermNormal           guibg=#101010
 highlight TermWinBar           guibg=#101010 guifg=#BBBBBB gui=bold
