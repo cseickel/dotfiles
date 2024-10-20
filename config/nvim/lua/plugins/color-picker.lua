@@ -1,4 +1,8 @@
 return {
-  "uga-rosa/ccc.nvim",
-  cmd = "CccPick",
+  "nvchad/minty",
+  dependencies = {
+    "nvchad/volt",
+    lazy = true,
+  },
+  lazy = true
 }

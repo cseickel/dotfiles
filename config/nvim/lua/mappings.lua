@@ -121,6 +121,7 @@ local grepCWD = function()
 end
 
 local mappings = {
+  ["<F1>"] = { "<cmd>:CodeCompanionActions<cr>", "Code Companion" },
   [";"] = { "<Plug>(buf-surf-back)", "Previous Buffer" },
   ["'"] = { "<Plug>(buf-surf-forward)", "Next Buffer" },
   h = { "Focus window to the LEFT" },
@@ -220,6 +221,11 @@ local mappings = {
     --  a = { memory_utils.capture_after,                        "Capture After" },
     --  c = { memory_utils.compare,                              "Compare" },
     --},
+    p = { 
+      name = "Pick Color",
+      h = { "<cmd>lua require('minty.huefy').open()<cr>", "Hues" },
+      s = { "<cmd>lua require('minty.shades').open()<cr>", "Shades" },
+    },
     s = { "<cmd>Neotree reveal git_status current<cr>", "Show Git Status" },
     t = { "Open  Terminal" },
     T = { "Close Terminal" },

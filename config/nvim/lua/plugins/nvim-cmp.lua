@@ -109,6 +109,7 @@ return {
 				--{ name = "copilot"},
 				--{ name = "nvim_lua" },
 				--{ name = "git" },
+        --{ name = "supermaven" },
 				{ name = "nvim_lsp", keyword_length = 1 },
 				{ name = "dap" },
 				{ name = "npm", keyword_length = 3 },
