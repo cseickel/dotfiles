@@ -127,7 +127,6 @@ HISTSIZE=10000
 SAVEHIST=1000
 setopt APPEND_HISTORY
 
-alias tcd='nvr --remote-send "<C-\>:tcd $(pwd)<cr>"'
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
@@ -147,9 +146,9 @@ alias stash="git stash"
 alias status="git status"
 alias gd="git diff"
 alias gs="git show"
-alias gca='nvr --nostart -s -c wa; git commit -a -m'
-alias gcan='nvr --nostart -s -c wa; git commit -a --amend --no-edit'
-alias gcan!='nvr --nostart -s -c wa; git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
+alias gca='git commit -a -m'
+alias gcan='git commit -a --amend --no-edit'
+alias gcan!='git commit -a --amend --no-edit && git push --force-with-lease' # gcan!
 alias gpf='git push --force-with-lease'
 
 function git_last() {

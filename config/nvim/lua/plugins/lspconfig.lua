@@ -17,6 +17,7 @@ return {
       -- This setting has no relation with the `automatic_installation` setting.
       ensure_installed = {
         "bashls",
+        "denols",
         "dockerls",
         "gopls",
         "graphql",
@@ -196,7 +197,7 @@ return {
       --"terraformls",
       "vimls",
       "bashls",
-      "vtsls",
+      --"vtsls",
       --"angularls",
       --"ts_ls"
     }
@@ -236,6 +237,53 @@ return {
           },
           telemetry = {
             enable = false,
+          },
+        },
+      },
+    })
+
+    lspconfig.denols.setup({
+      capabilities = capabilities,
+      root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+      single_file_support = false,
+      init_options = {
+        lint = true,
+        unstable = true,
+        suggest = {
+          imports = {
+            hosts = {
+              ["https://deno.land"] = true,
+              ["https://cdn.nest.land"] = true,
+              ["https://crux.land"] = true,
+            },
+          },
+        },
+      },
+
+      on_attach = navic.attach,
+    })
+
+    lspconfig.vtsls.setup({
+      capabilities = capabilities,
+      on_attach = navic.attach,
+      single_file_support = false,
+      root_dir = function (filename, bufnr)
+        local denoRootDir = lspconfig.util.root_pattern("deno.json", "deno.json")(filename);
+        if denoRootDir then
+          -- this seems to be a deno project; returning nil so that tsserver does not attach
+          return nil;
+        end
+
+        return lspconfig.util.root_pattern("package.json")(filename);
+      end,
+      settings = {
+        vtsls = {
+          autoUseWorkspaceTsdk = true,
+          experimental = {
+            completion = {
+              enableServerSideFuzzyMatch = true,
+              entriesLimit = 100,
+            },
           },
         },
       },
