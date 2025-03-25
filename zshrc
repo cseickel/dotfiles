@@ -130,6 +130,10 @@ setopt APPEND_HISTORY
 alias epoch="date +%s"
 alias ls='ls --color=auto'
 alias cat='bat'
+# edit the most recently modified file in the current directory, recursively
+alias emod='nvim "$(find ./ -type f -printf '\''%T@ %p\n'\'' | sort -n | tail -1 | cut -d'\'' '\'' -f2-)"'
+# edit the newest file in the current directory, recursively
+alias enew='nvim "$(find . -type f -exec stat --format='\''%W %n'\'' {} + | sort -nr | awk '\''NR==1{print $2}'\'')"'
 
 alias cdk="aws-vault exec rva --no-session -- npm run cdk"
 alias vault="aws-vault exec rva --"
