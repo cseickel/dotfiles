@@ -39,6 +39,11 @@ local vscode = {
 		})
 		require("vscode").load()
 		vim.cmd([[source ~/.config/nvim/theme.vim]])
+    vim.diagnostic.config({
+      float = {
+        border = "rounded",
+      },
+    })
 	end,
 }
 

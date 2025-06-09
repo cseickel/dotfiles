@@ -12,48 +12,67 @@ return {
   },
   config = function()
     require("mason").setup()
-    require("mason-lspconfig").setup({
-      -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
-      -- This setting has no relation with the `automatic_installation` setting.
-      ensure_installed = {
-        "bashls",
-        "denols",
-        "dockerls",
-        "gopls",
-        "graphql",
-        "html",
-        "pylsp",
-        "jsonls",
-        "marksman",
-        "pyright",
-        "sqlls",
-        "lua_ls",
-        "tailwindcss",
-        "terraformls",
-        "vtsls",
-        "vimls",
-        "yamlls",
-      },
+    --require("mason-lspconfig").setup({
+    --  -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
+    --  -- This setting has no relation with the `automatic_installation` setting.
+    --  ensure_installed = {
+    --    "bashls",
+    --    --"denols",
+    --    "dockerls",
+    --    "gopls",
+    --    "graphql",
+    --    "html",
+    --    "pylsp",
+    --    "jsonls",
+    --    "marksman",
+    --    "pyright",
+    --    "sqlls",
+    --    "lua_ls",
+    --    "tailwindcss",
+    --    --"terraformls",
+    --    "vtsls",
+    --    "vimls",
+    --    "yamlls",
+    --  },
 
-      -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
-      -- This setting has no relation with the `ensure_installed` setting.
-      -- Can either be:
-      --   - false: Servers are not automatically installed.
-      --   - true: All servers set up via lspconfig are automatically installed.
-      --   - { exclude: string[] }: All servers set up via lspconfig, except the ones provided in the list, are automatically installed.
-      --       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
-      automatic_installation = true,
-    })
+    --  -- Whether servers that are set up (via lspconfig) should be automatically installed if they're not already installed.
+    --  -- This setting has no relation with the `ensure_installed` setting.
+    --  -- Can either be:
+    --  --   - false: Servers are not automatically installed.
+    --  --   - true: All servers set up via lspconfig are automatically installed.
+    --  --   - { exclude: string[] }: All servers set up via lspconfig, except the ones provided in the list, are automatically installed.
+    --  --       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
+    --  automatic_installation = true,
+    --})
     require("neodev").setup({})
 
-    vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-    vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-    vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-    vim.fn.sign_define("DiagnosticSignHint", { text = " ", texthl = "DiagnosticSignHint" })
+    vim.diagnostic.config({
+      update_in_insert = false,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = " ",
+          [vim.diagnostic.severity.WARN] = " ",
+          [vim.diagnostic.severity.INFO] = " ",
+          [vim.diagnostic.severity.HINT] = " ",
+        },
+        linehl = {
+          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+        },
+        numhl = {
+          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+        },
+      },
+    })
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
       -- Use a sharp border with `FloatBorder` highlights
-      border = "single",
+      winborder = "rounded"
     })
     vim.diagnostic.config({
       update_in_insert = false,
@@ -267,6 +286,7 @@ return {
       capabilities = capabilities,
       on_attach = navic.attach,
       single_file_support = false,
+      reuse_client = function() return true end,
       root_dir = function (filename, bufnr)
         local denoRootDir = lspconfig.util.root_pattern("deno.json", "deno.json")(filename);
         if denoRootDir then
@@ -289,6 +309,6 @@ return {
       },
     })
 
-    vim.cmd([[ do User LspAttachBuffers ]])
+    --vim.cmd([[ do User LspAttachBuffers ]])
   end,
 }

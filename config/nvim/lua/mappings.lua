@@ -130,7 +130,7 @@ local mappings = {
   l = { "Focus window to the RIGHT" },
   H = { "Start of Line" },
   L = { "End of Line" },
-  K = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Show documentation" },
+  K = { "<cmd>lua vim.lsp.buf.hover({ border = 'rounded' })<cr>", "Show documentation" },
   ["\\"] = { "<cmd>Neotree current reveal toggle<cr>", "Open Tree in Current Window" },
   ["|"] = { "<cmd>Neotree reveal<cr>", "Open Tree in Sidebar" },
   ["["] = {

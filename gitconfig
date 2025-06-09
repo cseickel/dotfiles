@@ -3,7 +3,7 @@
 [user]
 	email = cseickel@gmail.com
 	name = Chris Seickel
-	signingkey = A5575A92B79F8385
+	signingkey = /home/user/.ssh/chris-ssh-2025.pub
 
 [pager]
     diff = delta
@@ -31,3 +31,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[gpg]
+	format = ssh
