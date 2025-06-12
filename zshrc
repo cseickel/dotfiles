@@ -266,7 +266,7 @@ export GPG_TTY=$(tty)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ulimit -c 0
 
-# nnn file borwser wrapper to cd on quit
+# nnn file browser wrapper to cd on quit
 n ()
 {
     # Block nesting of nnn in subshells
@@ -332,7 +332,11 @@ function work-on-issue() {
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
 eval "$(zoxide init zsh)"
-command -v z >/dev/null 2>&1 && alias cd="z"
+
+# Do not use the cd alias if we are in a non-interactive shell or if the __zoxide_z function is not defined
+if [[ $- == *i* ]] && command -v z >/dev/null 2>&1 && command -v __zoxide_z >/dev/null 2>&1; then
+  alias cd='z'
+fi
 
 # pyenv, for managing python versions
 export PYENV_ROOT="$HOME/.pyenv"
@@ -361,7 +365,7 @@ export LANG=en_US.UTF-8
 if [[ -z "${TMUX}" ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='/usr/bin/tmux popup -w 120 -h "80%" -E nvim'
+  export EDITOR='/usr/bin/tmux popup -w "80%" -h "80%" -E nvim'
 fi
 
 alias edit="$EDITOR"

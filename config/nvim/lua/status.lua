@@ -333,10 +333,18 @@ local get_sign = function(severity, icon_only)
 		return cached
 	end
 
-	if config.signs.linehl and config.signs.linehl[severity] then
-		highlight = config.signs.linehl[severity]
+	if config.signs.numhl and config.signs.numhl[severity] then
+		highlight = config.signs.numhl[severity]
   else
-    highlight = "DiagnosticSignError"
+    if severity == vim.diagnostic.severity.ERROR then
+      highlight = "DiagnosticSignError"
+    elseif severity == vim.diagnostic.severity.WARN then
+      highlight = "DiagnosticSignWarn"
+    elseif severity == vim.diagnostic.severity.INFO then
+      highlight = "DiagnosticSignInfo"
+    elseif severity == vim.diagnostic.severity.HINT then
+      highlight = "DiagnosticSignHint"
+    end
 	end
 	cached = "%#" .. highlight .. "#" .. text .. "%*"
 	sign_cache[severity] = cached
