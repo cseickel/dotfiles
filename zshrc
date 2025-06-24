@@ -370,13 +370,13 @@ fi
 
 alias edit="$EDITOR"
 
-function fn_claude() {
+function claude() {
   # if Claude is not installed, install it
   # Since we are shadowing the claude command, we need to check if the expected path is installed
-  claude_bin_path="$HOME/.local/node_modules/@anthropic-ai/claude-code/cli.js"
+  claude_bin_path="$HOME/.claude/local/claude"
   if [ ! -e "$claude_bin_path" ]; then
     echo "Claude is not installed. Installing it..."
-    npm install --prefix $HOME/.local @anthropic-ai/claude-code
+    npm install --prefix $HOME/.claude/local @anthropic-ai/claude-code
   fi
   # If we are not in a Git repository, change to the root directory
   local git_root=$(git rev-parse --show-toplevel 2>/dev/null)
