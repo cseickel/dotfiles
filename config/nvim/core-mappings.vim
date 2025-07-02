@@ -104,6 +104,13 @@ tnoremap <silent> <C-v> <c-\><c-n>"cpa
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
+" Yank path of current file
+function! CopyPath()
+  let @+ = expand('%:p')
+  echo "Path copied: " . expand('%:p')
+endfunction
+noremap <silent> <leader>yp :call CopyPath()<CR>
+
 
 " Select All
 nnoremap <silent> <C-g> ggVG

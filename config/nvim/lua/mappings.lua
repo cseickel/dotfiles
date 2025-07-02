@@ -193,7 +193,7 @@ local mappings = {
       name = "File...", -- optional group name
       d = { findDirectory, "Directory picker (neo-tree)" },
       -- f = { findFile, "Find File (neo-tree)" },
-      f = { "<cmd>lua require('telescope').extensions.smart_open.smart_open()<CR>", "Find File (smart_open)" },
+      f = { "<cmd>lua require('telescope').extensions.smart_open.smart_open({ cwd_only = true })<CR>", "Find File (smart_open)" },
       c = { grepCWD, "Grep CWD" },
       g = { grepProject, "Grep Project (git root)" },
       h = { "<cmd>Telescope git_file_history<cr>", "Git File History" },

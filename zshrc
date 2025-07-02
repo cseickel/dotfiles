@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.claude/local:$PATH
 
 # Path to your oh-my-zsh installation.
 #export ZSH="$HOME/.oh-my-zsh"
@@ -330,13 +330,14 @@ function work-on-issue() {
 #export GIT_WORK_TREE="$HOME"
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform
-eval "$(zoxide init zsh)"
 
-# Do not use the cd alias if we are in a non-interactive shell or if the __zoxide_z function is not defined
-if [[ $- == *i* ]] && command -v z >/dev/null 2>&1 && command -v __zoxide_z >/dev/null 2>&1; then
-  alias cd='z'
-fi
+# I'm disable zoxide because it doesn't work well with git worktrees
+# eval "$(zoxide init zsh)"
+
+# # Do not use the cd alias if we are in a non-interactive shell or if the __zoxide_z function is not defined
+# if [[ $- == *i* ]] && command -v z >/dev/null 2>&1 && command -v __zoxide_z >/dev/null 2>&1; then
+#   alias cd='z'
+# fi
 
 # pyenv, for managing python versions
 export PYENV_ROOT="$HOME/.pyenv"
@@ -370,7 +371,16 @@ fi
 
 alias edit="$EDITOR"
 
-function claude() {
+get_repo_root() {
+    local superproject_root=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
+    if [[ -n "$superproject_root" ]]; then
+        echo "$superproject_root"
+    else
+        git rev-parse --show-toplevel
+    fi
+}
+
+function ccode() {
   # if Claude is not installed, install it
   # Since we are shadowing the claude command, we need to check if the expected path is installed
   claude_bin_path="$HOME/.claude/local/claude"
@@ -379,9 +389,17 @@ function claude() {
     npm install --prefix $HOME/.claude/local @anthropic-ai/claude-code
   fi
   # If we are not in a Git repository, change to the root directory
-  local git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+  local git_root=$(get_repo_root 2>/dev/null)
   if [ -n "$git_root" ]; then
     cd "$git_root"
   fi
-  PROJECT_ROOT=$PWD "$claude_bin_path"
+  PROJECT_ROOT=$PWD "$claude_bin_path" "$@"
+}
+
+function impl() {
+  # Find all files in directories named "todos" at any depth
+  local todo_file=$(find . -type d -name "todos" -exec find {} -type f \; | fzf --header "SELECT A TODO FILE TO IMPLEMENT")
+  if [ -n "$todo_file" ]; then
+    ccode "/process implementation Please read $todo_file"
+  fi
 }
