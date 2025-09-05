@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.claude/local:$PATH
+export GOPATH=$(go env GOPATH || echo $HOME/go)
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.claude/local:$GOPATH/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 #export ZSH="$HOME/.oh-my-zsh"
@@ -362,14 +363,20 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export LC_ALL=en_US.UTF-8  
 export LANG=en_US.UTF-8
 
-
-if [[ -z "${TMUX}" ]]; then
-  export EDITOR='nvim'
-else
-  export EDITOR='/usr/bin/tmux popup -w "80%" -h "80%" -E nvim'
+# We will write an edit.sh script so that the logic is available without shell functions
+if [ -z ~/.local/bin/edit.sh ]; then
+  mkdir -p ~/.local/bin
+  echo '#!/bin/bash
+  if [[ -z "${TMUX}" ]]; then
+    nvim "$@"
+  else
+    tmux popup -w "160" -h "80%" -E nvim "$@"
+  fi' > ~/.local/bin/edit.sh
+  chmod +x ~/.local/bin/edit.sh
 fi
+export EDITOR=~/.local/bin/edit.sh
 
-alias edit="$EDITOR"
+alias claude="~/.claude/local/claude"
 
 get_repo_root() {
     local superproject_root=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
@@ -393,13 +400,5 @@ function ccode() {
   if [ -n "$git_root" ]; then
     cd "$git_root"
   fi
-  PROJECT_ROOT=$PWD "$claude_bin_path" "$@"
-}
-
-function impl() {
-  # Find all files in directories named "todos" at any depth
-  local todo_file=$(find . -type d -name "todos" -exec find {} -type f \; | fzf --header "SELECT A TODO FILE TO IMPLEMENT")
-  if [ -n "$todo_file" ]; then
-    ccode "/process implementation Please read $todo_file"
-  fi
+  CLAUDE_ROOT="$HOME/claude-instructions" PROJECT_ROOT=$PWD "$claude_bin_path" "$@"
 }

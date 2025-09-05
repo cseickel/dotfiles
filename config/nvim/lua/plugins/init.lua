@@ -16,6 +16,5 @@ return {
   "svermeulen/vim-cutlass",
   --"nvim-pack/nvim-spectre",
   "famiu/bufdelete.nvim",
-  "yioneko/nvim-vtsls",
   --{ "nvim-tree/nvim-tree.lua", setup = true },
 }

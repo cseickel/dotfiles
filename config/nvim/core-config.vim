@@ -230,7 +230,7 @@ augroup core_autocmd
   autocmd WinEnter term://* call EnterTerminal()
   autocmd BufEnter term://* call EnterTerminal()
   autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
-  autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
+  "autocmd TermClose * if !v:event.status | exe 'bdelete! '..expand('<abuf>') | endif
 
   autocmd VimEnter    * call VimEnter()
   autocmd WinEnter    * setlocal cursorline

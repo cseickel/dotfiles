@@ -278,23 +278,60 @@ function! RecycleTerminal()
         b#
         return
     endif
-    let page_handle = nvim_get_current_tabpage()
+    let win_handle = nvim_get_current_win()
     for buf in nvim_list_bufs()
         if nvim_buf_is_valid(buf) && nvim_buf_is_loaded(buf)
             try
-                let term_tab_owner = nvim_buf_get_var(buf, "term_tab_owner")
+                let term_last_winid = nvim_buf_get_var(buf, "term_last_winid")
+                " is this terminal showing in another window?
+                let num_windows = len(filter(nvim_tabpage_list_wins(0), "nvim_win_get_buf(v:val)==" . buf))
+                if num_windows == 0 && term_last_winid == win_handle
+                    execute "buffer " . nvim_buf_get_name(buf)
+                    return buf
+                endif
             catch
-                let term_tab_owner = -1
+                let term_last_winid = -1
             endtry
-            let num_windows = len(filter(nvim_tabpage_list_wins(0), "nvim_win_get_buf(v:val)==" . buf))
-            if num_windows == 0 && term_tab_owner == page_handle
-                execute "buffer " . nvim_buf_get_name(buf)
-                return buf
-            endif
         endif
     endfor
     terminal
-    let b:term_tab_owner = page_handle
+    let b:term_last_winid = win_handle
+endfunction
+
+function! SetTerminalWindowId()
+    let win_handle = nvim_get_current_win()
+    try
+      let old_winid = nvim_buf_get_var(nvim_get_current_buf(), "term_last_winid")
+      if old_winid == win_handle
+        return
+      endif
+    catch
+      let old_winid = -1
+    endtry
+    " If another terminal was set to this window, then we need to remove it so
+    " the current terminal can be set to this window.
+    for buf in nvim_list_bufs()
+        if nvim_buf_is_valid(buf) && nvim_buf_is_loaded(buf)
+            " skip current buffer
+            if buf == nvim_get_current_buf()
+                continue
+            endif
+            try
+                let other_term_last_winid = nvim_buf_get_var(buf, "term_last_winid")
+                if other_term_last_winid == win_handle
+                   if old_winid != -1
+                     " if we are taking a terminal from another window, then we will swap
+                     call nvim_buf_set_var(buf, "term_last_winid", old_winid)
+                  else
+                     call nvim_buf_del_var(buf, "term_last_winid")
+
+                  endif
+                endif
+            catch
+            endtry
+        endif
+    endfor
+    let b:term_last_winid = win_handle
 endfunction
 
 function! ComparePaths(item1, item2)
@@ -370,6 +407,7 @@ nnoremap <silent> <leader>T :call CloseTerminal()<cr>
 augroup core_mappings_augroup
   au!
   autocmd FileType json nnoremap <buffer> <leader>= :%!python -m json.tool<cr>
+  autocmd TermEnter * call SetTerminalWindowId()
 augroup end
 
 lua << EOF
