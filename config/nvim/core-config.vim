@@ -312,3 +312,10 @@ augroup ForgetfulMe
   autocmd!
   autocmd WinEnter * :stopinsert
 augroup end
+
+augroup AutoRefreshFromDisk
+  autocmd!
+  autocmd FocusGained * checktime
+  autocmd WinEnter * if mode() == 'n' | checktime | endif
+  autocmd BufWinEnter * if mode() == 'n' | checktime | endif
+augroup end

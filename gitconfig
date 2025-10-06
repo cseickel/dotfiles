@@ -33,3 +33,5 @@
 	helper = !/usr/bin/gh auth git-credential
 [gpg]
 	format = ssh
+[coderabbit]
+	machineId = cli/7f9cb5871f8c4ddb953fb7531abb7222

@@ -377,6 +377,7 @@ fi
 export EDITOR=~/.local/bin/edit.sh
 
 alias claude="~/.claude/local/claude"
+export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 
 get_repo_root() {
     local superproject_root=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
@@ -402,3 +403,6 @@ function ccode() {
   fi
   CLAUDE_ROOT="$HOME/claude-instructions" PROJECT_ROOT=$PWD "$claude_bin_path" "$@"
 }
+
+# Added by CodeRabbit CLI installer
+export PATH="/home/user/.local/bin:$PATH"
