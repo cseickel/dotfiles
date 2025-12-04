@@ -82,11 +82,6 @@ tnoremap <silent> <M-s> <C-\><C-n>:wa<cr>
 nnoremap <silent> <M-v> <C-v>
 tnoremap <silent> <M-v> <C-v>
 
-" Control+p as paste shortcut in insert modes
-imap <c-p> <C-o>p
-cmap <c-p> <C-r>0
-tmap <silent> <C-p> <c-\>pa
-
 
 " Use Ctl+c/x/v as secondary clipboard
 nnoremap <silent> <C-c> "cy
@@ -104,10 +99,29 @@ tnoremap <silent> <C-v> <c-\><c-n>"cpa
 
 command! WipeReg for i in range(34,122) | silent! call setreg(nr2char(i), []) | endfor
 
+function! PathRelativeToGitRoot(path)
+  let abs_path = fnamemodify(a:path, ':p')
+  let file_dir = fnamemodify(abs_path, ':h')
+  let git_root = trim(system('git -C ' . shellescape(file_dir) . ' rev-parse --show-toplevel'))
+
+  if v:shell_error || empty(git_root)
+    return a:path
+  endif
+
+  if stridx(abs_path, git_root . '/') == 0
+    return strpart(abs_path, len(git_root) + 1)
+  else
+    return a:path
+  endif
+endfunction
+
 " Yank path of current file
+" relative to the project root (closest .git folder)
 function! CopyPath()
-  let @+ = expand('%:p')
-  echo "Path copied: " . expand('%:p')
+  let path = expand('%:p')
+  let relpath = PathRelativeToGitRoot(path)
+  let @+ = relpath
+  echo "Path copied: " . relpath
 endfunction
 noremap <silent> <leader>yp :call CopyPath()<CR>
 

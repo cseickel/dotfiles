@@ -12,6 +12,7 @@ return {
     "yioneko/nvim-vtsls"
 	},
 	config = function()
+    require("vtsls").config({})
 		require("mason").setup()
 		--require("mason-lspconfig").setup({
 		--  -- A list of servers to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
@@ -193,7 +194,7 @@ return {
 		local lspconfig = require("lspconfig")
 		local navic = require("nvim-navic")
 
-		lspconfig.jsonls.setup({
+    vim.lsp.config('jsonls', {
 			settings = {
 				json = {
 					schemas = require("schemastore").json.schemas(),
@@ -218,18 +219,16 @@ return {
 		}
 		-- cspell: enable
 		for _, server in ipairs(servers_with_doc_symbols) do
-			if lspconfig[server] then
-				lspconfig[server].setup({
-					capabilities = capabilities,
-					on_attach = function(client, bufnr)
-						navic.attach(client, bufnr)
-					end,
-				})
-			end
+      vim.lsp.config(server, {
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          navic.attach(client, bufnr)
+        end,
+      })
 		end
 
-		lspconfig.lua_ls.setup({
-			capabilities = capabilities,
+    vim.lsp.config('lua_ls', {
+			--capabilities = capabilities,
 			on_attach = navic.attach,
 			settings = {
 				Lua = {
@@ -257,9 +256,9 @@ return {
 			},
 		})
 
-		lspconfig.denols.setup({
+    vim.lsp.config('denols', {
 			capabilities = capabilities,
-			root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+      root_markers = { "deno.json" },
 			single_file_support = false,
 			init_options = {
 				lint = true,
@@ -275,27 +274,17 @@ return {
 				},
 			},
 
-			on_attach = navic.attach,
+			-- on_attach = navic.attach,
 		})
 
-		require("lspconfig.configs").vtsls = require("vtsls").lspconfig
-
-		lspconfig.vtsls.setup({
+    vim.lsp.config('vtsls', {
 			capabilities = capabilities,
 			on_attach = navic.attach,
-			single_file_support = false,
-			reuse_client = function()
-				return true
-			end,
-			root_dir = function(filename, bufnr)
-				local denoRootDir = lspconfig.util.root_pattern("deno.json", "deno.json")(filename)
-				if denoRootDir then
-					-- this seems to be a deno project; returning nil so that tsserver does not attach
-					return nil
-				end
-
-				return lspconfig.util.root_pattern("package.json")(filename)
-			end,
+		  single_file_support = false,
+			-- reuse_client = function()
+			-- 	return true
+			-- end,
+      root_markers = { "package.json", "tsconfig.json" },
 			settings = {
 				typescript = {
 					tsserver = {
@@ -313,6 +302,22 @@ return {
 				},
 			},
 		})
+
+    vim.lsp.enable({
+      "bashls",
+      --"denols",
+      "gopls",
+      "graphql",
+      "html",
+      "lua_ls",
+      "pylsp",
+      "vimls",
+      "vtsls",
+      "yamlls",
+			--"omnisharp",
+			--"terraformls",
+			--"ts_ls"
+    })
 
 		--vim.cmd([[ do User LspAttachBuffers ]])
 	end,

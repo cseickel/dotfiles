@@ -1,6 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 export GOPATH=$(go env GOPATH || echo $HOME/go)
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.claude/local:$GOPATH/bin:$PATH
+export PAGER="less -F"
 
 # Path to your oh-my-zsh installation.
 #export ZSH="$HOME/.oh-my-zsh"
@@ -312,7 +313,7 @@ function work-on-issue() {
             echo "${bold}Please confirm new branch name:${normal}"
             vared branchname
             #base=$(git branch --show-current)
-            base=dev
+            base=$(gh repo view --json defaultBranchRef --jq ".defaultBranchRef.name")
             echo "${bold}Please confirm the base branch:${normal}"
             vared base
             if [[ -z "$base" ]]; then
@@ -398,11 +399,19 @@ function ccode() {
   fi
   # If we are not in a Git repository, change to the root directory
   local git_root=$(get_repo_root 2>/dev/null)
+  echo "git_root: $git_root"
   if [ -n "$git_root" ]; then
     cd "$git_root"
   fi
-  CLAUDE_ROOT="$HOME/claude-instructions" PROJECT_ROOT=$PWD "$claude_bin_path" "$@"
+  export CLAUDE_ROOT="$HOME/claude-instructions" 
+  export PROJECT_ROOT="$PWD"
+  echo "Running Claude with CLAUDE_ROOT=$CLAUDE_ROOT and PROJECT_ROOT=$PROJECT_ROOT"
+  doppler run -- "$claude_bin_path" "$@"
 }
 
 # Added by CodeRabbit CLI installer
 export PATH="/home/user/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/user/.opencode/bin:$PATH
+unset zle_bracketed_paste

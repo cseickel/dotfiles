@@ -2,10 +2,10 @@ local mine = function()
   local M = {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
-    dependencies = {
-      "mrbjarksen/neo-tree-diagnostics.nvim",
-      "miversen33/netman.nvim",
-    },
+    -- dependencies = {
+    --   "mrbjarksen/neo-tree-diagnostics.nvim",
+    --   "miversen33/netman.nvim",
+    -- },
     -- cmd = "Neotree",
     --keys = {
     --  { "\\", "<cmd>Neotree current reveal toggle<cr>", "Open Tree in Current Window" },
@@ -23,14 +23,15 @@ local mine = function()
           "filesystem",
           "buffers",
           "git_status",
-          "diagnostics",
-          "netman.ui.neo-tree",
-          "document_symbols",
+          -- "diagnostics",
+          ---"netman.ui.neo-tree",
+          -- "document_symbols",
         },
-        log_level = "trace",
+        --log_level = "trace",
         log_to_file = false,
         open_files_in_last_window = true,
         sort_case_insensitive = true,
+        use_popups_for_input = false,
         popup_border_style = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
         default_component_configs = {
           container = {
@@ -74,18 +75,19 @@ local mine = function()
           },
         },
         event_handlers = {
-          {
-            event = events.NEO_TREE_BUFFER_ENTER,
-            handler = function()
-              vim.cmd("highlight! Cursor blend=100")
-            end,
-          },
-          {
-            event = events.NEO_TREE_BUFFER_LEAVE,
-            handler = function()
-              vim.cmd("highlight! Cursor guibg=#5f87af blend=0")
-            end,
-          },
+          -- {
+          --   event = events.NEO_TREE_BUFFER_ENTER,
+          --   handler = function()
+          --     print("tree_buffer_enter", vim.api.nvim_get_mode().mode)
+          --     vim.cmd("highlight! Cursor blend=100")
+          --   end,
+          -- },
+          -- {
+          --   event = events.NEO_TREE_BUFFER_LEAVE,
+          --   handler = function()
+          --     vim.cmd("highlight! Cursor guibg=#5f87af blend=0")
+          --   end,
+          -- },
           --{
           --  event = "neo_tree_window_before_open",
           --  handler = function(args)
@@ -133,57 +135,57 @@ local mine = function()
             end,
           },
         },
-        diagnostics = {
-          window = {
-            relative = "win",
-            position = "bottom",
-          },
-          refresh = {
-            delay = 1000, -- Time (in ms) to wait before updating diagnostics. Might resolve some issues with Neovim hanging.
-            event = "vim_diagnostic_changed", -- Event to use for updating diagnostics (for example `"neo_tree_buffer_enter"`)
-            -- Set to `false` or `"none"` to disable automatic refreshing
-            max_items = 100, -- The maximum number of diagnostic items to attempt processing
-            -- Set to `false` for no maximum
-          },
-          components = {
-            linenr = function(config, node)
-              local lnum = tostring(node.extra.diag_struct.lnum + 1)
-              local pad = string.rep(" ", 4 - #lnum)
-              return {
-                {
-                  text = pad .. lnum,
-                  highlight = "LineNr",
-                },
-                {
-                  text = "▕ ",
-                  highlight = "NeoTreeDimText",
-                },
-              }
-            end,
-          },
-          renderers = {
-            file = {
-              { "indent" },
-              { "icon" },
-              { "grouped_path" },
-              { "name", highlight = "NeoTreeFileNameOpened" },
-              --{ "diagnostic_count", show_when_none = true },
-              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Error", right_padding = 0 },
-              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Warn", right_padding = 0 },
-              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Info", right_padding = 0 },
-              { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Hint", right_padding = 0 },
-              { "clipboard" },
-            },
-            diagnostic = {
-              { "indent" },
-              { "icon" },
-              { "linenr" },
-              { "name" },
-              { "source" },
-              --{ "code" },
-            },
-          },
-        },
+        -- diagnostics = {
+        --   window = {
+        --     relative = "win",
+        --     position = "bottom",
+        --   },
+        --   refresh = {
+        --     delay = 1000, -- Time (in ms) to wait before updating diagnostics. Might resolve some issues with Neovim hanging.
+        --     event = "vim_diagnostic_changed", -- Event to use for updating diagnostics (for example `"neo_tree_buffer_enter"`)
+        --     -- Set to `false` or `"none"` to disable automatic refreshing
+        --     max_items = 100, -- The maximum number of diagnostic items to attempt processing
+        --     -- Set to `false` for no maximum
+        --   },
+        --   components = {
+        --     linenr = function(config, node)
+        --       local lnum = tostring(node.extra.diag_struct.lnum + 1)
+        --       local pad = string.rep(" ", 4 - #lnum)
+        --       return {
+        --         {
+        --           text = pad .. lnum,
+        --           highlight = "LineNr",
+        --         },
+        --         {
+        --           text = "▕ ",
+        --           highlight = "NeoTreeDimText",
+        --         },
+        --       }
+        --     end,
+        --   },
+        --   renderers = {
+        --     file = {
+        --       { "indent" },
+        --       { "icon" },
+        --       { "grouped_path" },
+        --       { "name", highlight = "NeoTreeFileNameOpened" },
+        --       --{ "diagnostic_count", show_when_none = true },
+        --       { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Error", right_padding = 0 },
+        --       { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Warn", right_padding = 0 },
+        --       { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Info", right_padding = 0 },
+        --       { "diagnostic_count", highlight = "NeoTreeDimText", severity = "Hint", right_padding = 0 },
+        --       { "clipboard" },
+        --     },
+        --     diagnostic = {
+        --       { "indent" },
+        --       { "icon" },
+        --       { "linenr" },
+        --       { "name" },
+        --       { "source" },
+        --       --{ "code" },
+        --     },
+        --   },
+        -- },
         document_symbols = {
           follow_cursor = true,
         },
@@ -262,6 +264,7 @@ local mine = function()
             mappings = {
               ["/"] = "none",
               ["f"] = "fuzzy_sorter",
+              ["F"] = "filter_on_submit",
               ["h"] = function(state)
                 local node = state.tree:get_node()
                   if node.type == 'directory' and node:is_expanded() then
