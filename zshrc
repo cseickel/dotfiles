@@ -377,37 +377,9 @@ if [ -z ~/.local/bin/edit.sh ]; then
 fi
 export EDITOR=~/.local/bin/edit.sh
 
-alias claude="~/.claude/local/claude"
 export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
-
-get_repo_root() {
-    local superproject_root=$(git rev-parse --show-superproject-working-tree 2>/dev/null)
-    if [[ -n "$superproject_root" ]]; then
-        echo "$superproject_root"
-    else
-        git rev-parse --show-toplevel
-    fi
-}
-
-function ccode() {
-  # if Claude is not installed, install it
-  # Since we are shadowing the claude command, we need to check if the expected path is installed
-  claude_bin_path="$HOME/.claude/local/claude"
-  if [ ! -e "$claude_bin_path" ]; then
-    echo "Claude is not installed. Installing it..."
-    npm install --prefix $HOME/.claude/local @anthropic-ai/claude-code
-  fi
-  # If we are not in a Git repository, change to the root directory
-  local git_root=$(get_repo_root 2>/dev/null)
-  echo "git_root: $git_root"
-  if [ -n "$git_root" ]; then
-    cd "$git_root"
-  fi
-  export CLAUDE_ROOT="$HOME/claude-instructions" 
-  export PROJECT_ROOT="$PWD"
-  echo "Running Claude with CLAUDE_ROOT=$CLAUDE_ROOT and PROJECT_ROOT=$PROJECT_ROOT"
-  doppler run -- "$claude_bin_path" "$@"
-}
+# ccode launcher is installed by claude-instructions/scripts/setup/run-setup.sh
+# as ~/.local/bin/ccode -> ~/claude-instructions/scripts/ccode.sh
 
 # Added by CodeRabbit CLI installer
 export PATH="/home/user/.local/bin:$PATH"
