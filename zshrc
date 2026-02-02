@@ -21,6 +21,7 @@ fi
 #autoload -U promptinit; promptinit
 #prompt spaceship
 eval "$(starship init zsh)"
+command -v direnv &>/dev/null && eval "$(direnv hook zsh)"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -80,7 +81,7 @@ ZSH_CUSTOM=/usr/share/zsh
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git aws docker fzf)
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source "$ZSH/oh-my-zsh.sh"
 
 
@@ -342,9 +343,9 @@ autoload -U +X bashcompinit && bashcompinit
 # fi
 
 # pyenv, for managing python versions
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="$HOME/.pyenv"
+# command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -365,11 +366,11 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # We will write an edit.sh script so that the logic is available without shell functions
-if [ -z ~/.local/bin/edit.sh ]; then
+if [[ ! -e ~/.local/bin/edit.sh ]]; then
   mkdir -p ~/.local/bin
   echo '#!/bin/bash
   if [[ -z "${TMUX}" ]]; then
-    nvim "$@"
+    kitty nvim "$@"
   else
     tmux popup -w "160" -h "80%" -E nvim "$@"
   fi' > ~/.local/bin/edit.sh
