@@ -128,7 +128,8 @@ set modelines=10
 
 set title
 set titleold="Terminal"
-set titlestring=%F
+"set titlestring=%{fnamemodify(getcwd(-1, 0),\ ':t')}
+set titlestring=%{toupper(fnamemodify(getcwd(-1,0),\ ':t'))}\ ...\ %t
 
 " clipboard settings
 set clipboard=unnamedplus
@@ -275,37 +276,210 @@ endfunction
 command! -nargs=? T call SendToLastTerminal("<args>")
 
 
-function! CountWindows()
-  let l:count = 0
+" Stack to remember closed column buffers (per tab)
+" Key: tabnr, Value: list of bufnrs (rightmost column first)
+let g:closed_column_buffers = {}
+
+function! GetClosedColumnStack()
+  let l:tabnr = tabpagenr()
+  if !has_key(g:closed_column_buffers, l:tabnr)
+    let g:closed_column_buffers[l:tabnr] = []
+  endif
+  return g:closed_column_buffers[l:tabnr]
+endfunction
+
+" Get all non-floating windows with their positions
+function! GetWindowsWithPositions()
+  let l:windows = []
   for l:win in nvim_tabpage_list_wins(0)
     let l:cfg = nvim_win_get_config(l:win)
     if cfg.relative > "" || cfg.external
-      " skip floating and external windows
-    else
-      let l:count += 1
-    end
+      continue
+    endif
+    let l:pos = win_screenpos(l:win)
+    call add(l:windows, {
+          \ 'win': l:win,
+          \ 'x': l:pos[1],
+          \ 'y': l:pos[0],
+          \ 'bufnr': winbufnr(l:win)
+          \ })
   endfor
-  return l:count
+  return l:windows
+endfunction
+
+" Get minimum y position (top row, accounts for tabline)
+function! GetMinY()
+  let l:windows = GetWindowsWithPositions()
+  if len(l:windows) == 0
+    return 1
+  endif
+  let l:min_y = l:windows[0].y
+  for l:w in l:windows
+    if l:w.y < l:min_y
+      let l:min_y = l:w.y
+    endif
+  endfor
+  return l:min_y
+endfunction
+
+" Get top-row windows (these define columns)
+function! GetTopWindows()
+  let l:windows = GetWindowsWithPositions()
+  let l:min_y = GetMinY()
+  let l:top_windows = []
+  for l:w in l:windows
+    if l:w.y == l:min_y
+      call add(l:top_windows, l:w)
+    endif
+  endfor
+  return l:top_windows
+endfunction
+
+" Count columns (windows at top of screen)
+function! CountColumns()
+  return len(GetTopWindows())
 endfunction
 
 " There is no reason why I would ever want a widescreen monitor to have a
 " window that goes all the way to the edge of the screen. This will create
 " splits to fit as many xxx characters wide windows as possible.
-" This is only done when nvim or a new tab is first opened, so it will not resize
-" windows that are already open.
 function! InitNewTab()
-  let l:desired_windows = &columns / 120
-  let l:desired_windows = l:desired_windows > 0 ? l:desired_windows : 1
+  let l:desired_columns = &columns / 120
+  let l:desired_columns = l:desired_columns > 0 ? l:desired_columns : 1
 
-  while CountWindows() < l:desired_windows
+  while CountColumns() < l:desired_columns
     silent! vsplit
   endwhile
+endfunction
+
+" Close rightmost column (all windows in column, save topmost buffer)
+function! CloseRightmostColumn()
+  let l:top_windows = GetTopWindows()
+  if len(l:top_windows) <= 1
+    return 0
+  endif
+
+  " Find rightmost top window
+  let l:rightmost_top = l:top_windows[0]
+  for l:w in l:top_windows
+    if l:w.x > l:rightmost_top.x
+      let l:rightmost_top = l:w
+    endif
+  endfor
+
+  " Save topmost buffer
+  let l:stack = GetClosedColumnStack()
+  if bufexists(l:rightmost_top.bufnr)
+    call insert(l:stack, l:rightmost_top.bufnr, 0)
+  endif
+
+  " Find ALL windows in this column (same x or greater, up to next column)
+  let l:all_windows = GetWindowsWithPositions()
+  let l:sorted_top = sort(copy(l:top_windows), {a, b -> a.x - b.x})
+  let l:col_x = l:rightmost_top.x
+
+  " Find the x of the column to the left (if any)
+  let l:left_col_x = 0
+  for l:w in l:sorted_top
+    if l:w.x < l:col_x
+      let l:left_col_x = l:w.x
+    endif
+  endfor
+
+  " Close all windows in the rightmost column (x >= col_x)
+  for l:w in l:all_windows
+    if l:w.x >= l:col_x
+      try
+        call nvim_win_close(l:w.win, v:false)
+      catch
+      endtry
+    endif
+  endfor
+
+  return 1
+endfunction
+
+" Restore a column from the stack
+function! RestoreColumn()
+  let l:stack = GetClosedColumnStack()
+
+  " Find top-right window to split from
+  let l:top_windows = GetTopWindows()
+  if len(l:top_windows) == 0
+    return
+  endif
+  let l:top_right = l:top_windows[0]
+  for l:w in l:top_windows
+    if l:w.x > l:top_right.x
+      let l:top_right = l:w
+    endif
+  endfor
+
+  " Get buffer to restore (or create empty)
+  let l:bufnr = 0
+  if len(l:stack) > 0
+    let l:saved_bufnr = remove(l:stack, 0)
+    if bufexists(l:saved_bufnr)
+      let l:bufnr = l:saved_bufnr
+    endif
+  endif
+  if l:bufnr == 0
+    let l:bufnr = nvim_create_buf(v:true, v:false)
+  endif
+
+  " Create split to the right without changing focus
+  call nvim_open_win(l:bufnr, v:false, {'split': 'right', 'win': l:top_right.win})
+endfunction
+
+" Handle window resize - close or open columns as needed
+function! HandleResize()
+  let l:desired_columns = &columns / 120
+  let l:desired_columns = l:desired_columns > 0 ? l:desired_columns : 1
+  let l:current_columns = CountColumns()
+
+  " Shrinking: close rightmost columns
+  let l:max_iterations = 20
+  let l:iterations = 0
+  while l:current_columns > l:desired_columns && l:current_columns > 1 && l:iterations < l:max_iterations
+    let l:prev_columns = l:current_columns
+    if !CloseRightmostColumn()
+      break
+    endif
+    let l:current_columns = CountColumns()
+    if l:current_columns >= l:prev_columns
+      break
+    endif
+    let l:iterations += 1
+  endwhile
+
+  " Growing: restore columns
+  let l:iterations = 0
+  while l:current_columns < l:desired_columns && l:iterations < l:max_iterations
+    let l:prev_columns = l:current_columns
+    call RestoreColumn()
+    let l:current_columns = CountColumns()
+    if l:current_columns <= l:prev_columns
+      break
+    endif
+    let l:iterations += 1
+  endwhile
+endfunction
+
+function! CleanupClosedTab()
+  let l:valid_tabs = range(1, tabpagenr('$'))
+  for l:tabnr in keys(g:closed_column_buffers)
+    if index(l:valid_tabs, str2nr(l:tabnr)) < 0
+      call remove(g:closed_column_buffers, l:tabnr)
+    endif
+  endfor
 endfunction
 
 augroup core_tab
   autocmd!
   autocmd TabNew * call InitNewTab()
   autocmd VimEnter * call InitNewTab()
+  autocmd VimResized * call HandleResize()
+  autocmd TabClosed * call CleanupClosedTab()
 augroup END
 
 augroup ForgetfulMe
