@@ -20,7 +20,7 @@
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
-    ~/.local/alerts/alert-monitor.py: alerts/alert-monitor.py
+    ~/.local/alerts/alert-monitor: alerts/alert-monitor
     ~/.local/alerts/triage.md: alerts/triage.md
     ~/.local/alerts/critical-alert.md: alerts/critical-alert.md
     ~/.local/alerts/run.sh: alerts/run.sh
@@ -34,5 +34,6 @@
       path: config/*
       recursive: true
 - shell:
+    - [cd alerts && go build -o alert-monitor ./alert-monitor.go, Building alert-monitor...]
     - [fc-cache -f -v, Installing Fonts...]
     - [./tmux_install_plugins.sh, Installing tmux plugins.]
