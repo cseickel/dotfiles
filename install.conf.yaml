@@ -13,11 +13,18 @@
     - ~/.config/nvim/UltiSnips
     - ~/.gnupg
     - ~/.local/share/fonts
+    - ~/.local/alerts/emails
+    - ~/.local/alerts/logs
 - link:
     ~/.gitconfig: gitconfig
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
     ~/.zshrc: zshrc
+    ~/.local/alerts/alert-monitor.py: alerts/alert-monitor.py
+    ~/.local/alerts/triage.md: alerts/triage.md
+    ~/.local/alerts/critical-alert.md: alerts/critical-alert.md
+    ~/.local/alerts/run.sh: alerts/run.sh
+    ~/.local/alerts/README.md: alerts/README.md
     ~/.local/share/fonts:
       glob: true
       path: fonts/*
