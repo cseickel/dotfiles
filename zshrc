@@ -355,7 +355,7 @@ export NVM_DIR="$HOME/.nvm"
 # alias fu="fuck"
 
 # bun completions
-[ -s "/home/user/.bun/_bun" ] && source "/home/user/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -383,7 +383,7 @@ export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1
 # as ~/.local/bin/ccode -> ~/claude-instructions/scripts/ccode.sh
 
 # Added by CodeRabbit CLI installer
-export PATH="/home/user/.local/bin:$PATH"
+export PATH="/home/chris/.local/bin:$PATH"
 
 # opencode
 export PATH=/home/user/.opencode/bin:$PATH
