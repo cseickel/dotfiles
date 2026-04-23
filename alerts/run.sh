@@ -15,5 +15,5 @@ export PGPORT="$MEMORY_PORT"
 export PGDATABASE="$MEMORY_DATABASE"
 export PGUSER="$MEMORY_USER"
 export PGPASSWORD="$MEMORY_PASSWORD"
-
+export PATH="/home/chris/.local/bin:$PATH"
 ./alert-monitor
