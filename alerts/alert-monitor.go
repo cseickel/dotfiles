@@ -22,12 +22,13 @@ import (
 )
 
 var (
-	alertsDir  = filepath.Join(os.Getenv("HOME"), ".local", "alerts")
-	emailsDir  = filepath.Join(alertsDir, "emails")
-	logsDir    = filepath.Join(alertsDir, "logs")
-	rulesFile  = filepath.Join(alertsDir, "rules.md")
-	triageMD   = filepath.Join(alertsDir, "triage.md")
-	criticalMD = filepath.Join(alertsDir, "critical-alert.md")
+	alertsDir      = filepath.Join(os.Getenv("HOME"), ".local", "alerts")
+	emailsDir      = filepath.Join(alertsDir, "emails")
+	logsDir        = filepath.Join(alertsDir, "logs")
+	rulesFile      = filepath.Join(alertsDir, "rules.md")
+	triageMD       = filepath.Join(alertsDir, "triage.md")
+	criticalMD     = filepath.Join(alertsDir, "critical-alert.md")
+	alertCountFile = filepath.Join(alertsDir, "pending-count")
 )
 
 type Email struct {
@@ -400,7 +401,7 @@ func runTriageAgent(emails []Email) ([]Decision, error) {
 		"CLAUDE_CODE_DISABLE_THINKING=1",
 		"CLAUDE_CODE_ENABLE_PROMPT_SUGGESTIONS=false",
 		"CLAUDE_CODE_ENABLE_TASKS=0",
-		"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1",
+		"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=0",
 		"CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS=100000",
 		"CLAUDE_CODE_SYNC_PLUGIN_INSTALL=0",
 		"CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS=100",
@@ -459,18 +460,6 @@ func applyDecisions(db *sql.DB, decisions []Decision) error {
 		}
 
 		switch d.Status {
-		case "A":
-			var from, subject string
-			db.QueryRow("SELECT from_addr, subject FROM alert_emails WHERE id = $1", d.ID).Scan(&from, &subject)
-			if subject != "" {
-				if len(subject) > 50 {
-					subject = subject[:50]
-				}
-				exec.Command("notify-send", "-u", "normal",
-					fmt.Sprintf("Alert: %s", subject),
-					fmt.Sprintf("From: %s\n%s", from, d.Reason),
-				).Run()
-			}
 		case "N":
 			hasCritical = true
 		case "U":
@@ -478,11 +467,25 @@ func applyDecisions(db *sql.DB, decisions []Decision) error {
 		}
 	}
 
+	// Write current alert count for cron job to check at scheduled times
+	if err := writeAlertCount(db); err != nil {
+		log.Printf("write alert count: %v", err)
+	}
+
 	if hasCritical || hasUnknown {
 		launchInteractiveAgent()
 	}
 
 	return nil
+}
+
+func writeAlertCount(db *sql.DB) error {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM alert_emails WHERE status = 'A'").Scan(&count)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(alertCountFile, []byte(fmt.Sprintf("%d\n", count)), 0644)
 }
 
 func launchInteractiveAgent() {
@@ -493,6 +496,28 @@ func launchInteractiveAgent() {
 			cleanEnv = append(cleanEnv, env)
 		}
 	}
+
+	// Add Claude env vars (same as runTriageAgent)
+	cleanEnv = append(cleanEnv,
+		"CLAUDE_CODE_DISABLE_CLAUDE_MDS=1",
+		"CLAUDE_CODE_DISABLE_CRON=1",
+		"CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS=1",
+		"CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1",
+		"CLAUDE_CODE_ENABLE_PROMPT_SUGGESTIONS=false",
+		"CLAUDE_CODE_ENABLE_TASKS=0",
+		"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=0",
+		"CLAUDE_CODE_FILE_READ_MAX_OUTPUT_TOKENS=100000",
+		"CLAUDE_CODE_SYNC_PLUGIN_INSTALL=0",
+		"CLAUDE_CODE_SYNC_PLUGIN_INSTALL_TIMEOUT_MS=100",
+		"DISABLE_AUTOUPDATER=1",
+		"DISABLE_COMPACT=1",
+		"DISABLE_NON_ESSENTIAL_MODEL_CALLS=1",
+		"DISABLE_TELEMETRY=1",
+		"ENABLE_CLAUDEAI_MCP_SERVERS=false",
+		"ENABLE_LSP_TOOL=0",
+		"ENABLE_TOOL_SEARCH=false",
+		"MAX_MCP_OUTPUT_TOKENS=100000",
+	)
 
 	cmd := exec.Command("ghostty", "-e",
 		"claude", "--append-system-prompt-file", criticalMD,
