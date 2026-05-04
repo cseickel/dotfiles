@@ -26,7 +26,7 @@ if [[ "$count" -gt 0 ]]; then
     echo "$(date): $count alerts pending, launching agent"
 
     set -a
-    source <(doppler secrets download --no-file --format env | grep -E "^($(IFS='|'; echo "${vars[*]}"))=")
+    source <(/usr/bin/doppler secrets download --no-file --format env | grep -E "^($(IFS='|'; echo "${vars[*]}"))=")
     set +a
 
     # PG* for psql -> memory DB
@@ -62,6 +62,6 @@ if [[ "$count" -gt 0 ]]; then
 
     # Launch interactive agent in ghostty
     /usr/bin/ghostty -e \
-        claude --append-system-prompt-file "$CRITICAL_MD" \
+        "$HOME/.local/bin/ccode" --append-system-prompt-file "$CRITICAL_MD" \
         "Review the $count alerts that need attention."
 fi
