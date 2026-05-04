@@ -15,6 +15,8 @@ vars=(
   MEMORY_PASSWORD
 )
 
+export PATH="/home/chris/.local/bin:$PATH"
+
 # Read pending count
 count=0
 if [[ -f "$COUNT_FILE" ]]; then
