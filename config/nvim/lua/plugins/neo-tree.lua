@@ -225,7 +225,7 @@ local mine = function()
           follow_current_file = { enabled = true },
           group_empty_dirs = false,
           use_libuv_file_watcher = true,
-          bind_to_cwd = true,
+          bind_to_cwd = false,
           filtered_items = {
             visible = false,
             show_hidden_count = true,
@@ -240,6 +240,12 @@ local mine = function()
               "--exclude",
               "node_modules",
             },
+          },
+          always_show = {
+            ".git",
+            "build",
+            "dist",
+            "tmp",
           },
           find_by_full_path_words = true,
           -- renderers = {

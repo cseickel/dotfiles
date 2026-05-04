@@ -6,6 +6,15 @@ ALERTS_DIR="$HOME/.local/alerts"
 COUNT_FILE="$ALERTS_DIR/pending-count"
 CRITICAL_MD="$HOME/dotfiles/alerts/critical-alert.md"
 
+vars=(
+  # Memory DB (needed by mcp-servers)
+  MEMORY_HOST
+  MEMORY_PORT
+  MEMORY_DATABASE
+  MEMORY_USER
+  MEMORY_PASSWORD
+)
+
 # Read pending count
 count=0
 if [[ -f "$COUNT_FILE" ]]; then
@@ -15,6 +24,17 @@ fi
 
 if [[ "$count" -gt 0 ]]; then
     echo "$(date): $count alerts pending, launching agent"
+
+    set -a
+    source <(doppler secrets download --no-file --format env | grep -E "^($(IFS='|'; echo "${vars[*]}"))=")
+    set +a
+
+    # PG* for psql -> memory DB
+    export PGHOST="$MEMORY_HOST"
+    export PGPORT="$MEMORY_PORT"
+    export PGDATABASE="$MEMORY_DATABASE"
+    export PGUSER="$MEMORY_USER"
+    export PGPASSWORD="$MEMORY_PASSWORD"
 
     # Clean env to avoid nix library conflicts with system ghostty
     unset NIX_CC NIX_PROFILES NIX_PATH

@@ -29,9 +29,9 @@ For each email:
 
 ## Status Codes
 
-- A: Alert (important but not critical, will trigger desktop notification)
-- D: Dismiss (not important, ignore)
-- N: Critical (requires immediate human attention)
+- C: Critical (requires immediate human attention)
+- A: Alert (important but not critical, will be batched)
+- D: Dismiss/Done (not important, ignore)
 - U: Unknown (no matching rule, needs human classification)
 
 ## Output Format

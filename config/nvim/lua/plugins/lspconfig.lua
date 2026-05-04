@@ -66,10 +66,10 @@ return {
 			},
 		})
 
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-			-- Use a sharp border with `FloatBorder` highlights
-			winborder = "rounded",
-		})
+		-- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+		-- 	-- Use a sharp border with `FloatBorder` highlights
+		-- 	winborder = "rounded",
+		-- })
 		vim.diagnostic.config({
 			update_in_insert = false,
 		})

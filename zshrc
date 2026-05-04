@@ -1,6 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 export GOPATH=$(go env GOPATH || echo $HOME/go)
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/.claude/local:$GOPATH/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$HOME/AppImages:$HOME/.claude/local:$GOPATH/bin:$PATH
 export PAGER="less -F"
 
 # Path to your oh-my-zsh installation.
@@ -325,6 +325,15 @@ function work-on-issue() {
         fi
     fi
 }
+
+function fn_switch_workspace() {
+  workspace_path=$(switch-workspace.sh)
+  if [ -n "$workspace_path" ]; then
+    cd $workspace_path
+  fi
+}
+alias switch-workspace="fn_switch_workspace"
+
 #if [[ -n $SSH_CONNECTION ]] ; then
 #    [ -z "$TMUX"  ] && { tmux attach || exec tmux new-session }
 #fi

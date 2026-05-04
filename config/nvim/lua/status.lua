@@ -178,6 +178,7 @@ M.get_statusline = function()
 		"%#StatusLineTransition1#▕%*",
 		"%#StatusLineTransition2#▏%*",
 		"%{%v:lua.status.get_git_branch()%}",
+		"%{%v:lua.status.get_visual_chars()%}",
 		"%#StatusLineOutside# %3l/%L󰮾 %3c %*",
 	}
 	return table.concat(parts)
@@ -458,6 +459,18 @@ M.get_mode = function()
 	local mode_code = vim.api.nvim_get_mode().mode
 	local mode = mode_map[mode_code] or string.upper(mode_code)
 	return "%#Mode" .. mode:sub(1, 1) .. "# " .. mode .. " %*"
+end
+
+M.get_visual_chars = function()
+	local mode = vim.fn.mode()
+	if mode:find("[vV\22]") then
+		local wc = vim.fn.wordcount()
+		local chars = wc.visual_chars
+		if chars then
+			return string.format(" %d chars ", chars)
+		end
+	end
+	return ""
 end
 
 vim.cmd([[
