@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # Cron job to check for pending alerts and launch interactive agent
 # Schedule: 45 8,11,14,16 * * 1-5 /home/chris/dotfiles/alerts/check-alerts.sh
 
@@ -62,7 +62,8 @@ if [[ "$count" -gt 0 ]]; then
     export ENABLE_TOOL_SEARCH=false
     export MAX_MCP_OUTPUT_TOKENS=100000
 
-    # Launch interactive agent in ghostty
+    # Launch interactive agent in ghostty (cwd = alerts dir so psql/Read tools work)
+    cd "$ALERTS_DIR"
     /usr/bin/ghostty -e \
         "$HOME/.local/bin/ccode" --append-system-prompt-file "$CRITICAL_MD" \
         "Review the $count alerts that need attention."

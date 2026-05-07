@@ -19,6 +19,7 @@
     ~/.gitconfig: gitconfig
     ~/.gnupg/gpg-agent.conf: gpg-agent.conf
     ~/.tmux.conf: tmux.conf
+    ~/.zshenv: zshenv
     ~/.zshrc: zshrc
     ~/.local/alerts/alert-monitor: alerts/alert-monitor
     ~/.local/alerts/triage.md: alerts/triage.md

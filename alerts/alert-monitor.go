@@ -523,6 +523,8 @@ func launchInteractiveAgent() {
 		"claude", "--append-system-prompt-file", criticalMD,
 		"Review the alerts that need attention.")
 	cmd.Env = cleanEnv
+	// cwd = alerts dir so claude's psql/Read tools resolve relative paths correctly
+	cmd.Dir = alertsDir
 	cmd.Start()
 }
 
