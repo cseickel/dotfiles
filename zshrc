@@ -51,7 +51,6 @@ alias fetch="git fetch"
 alias log="git log"
 alias pull="git pull"
 alias push='git push'
-alias stash="git stash"
 alias status="git status"
 alias gd="git diff"
 alias gs="git show"

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Agenda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: black;
+      color: white;
+      font-family: 'Roboto', Calibri, Helvetica, sans-serif;
+      font-size: 48px;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100vw;
+      max-width: 100%;
+      text-align: center;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      margin: 0.25 em;
+      margin-bottom: 1em;
+    }
+    .day-block {
+      border-style: solid;
+      border-width: 1px 0 0 0;
+      border-image: linear-gradient(to right, transparent 5%, rgba(170,170,170,0.6) 5%, #aaa 8%, #aaa 92%, rgba(170,170,170,0.6) 95%, transparent 95%) 1;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+    }
+    .day-name {
+      font-size: 1.333em;
+      font-weight: 700;
+      display: inline;
+    }
+    .today-name {
+      font-size: 1.75em;
+      font-weight: 700;
+      display: inline;
+    }
+    .days-away {
+      font-size: 1em;
+      opacity: 0.7;
+      margin-left: 0.5em;
+    }
+    .day-header {
+      margin-bottom: 0.1em;
+    }
+    .date-line {
+      font-size: 1em;
+      margin-bottom: 0.4
+    }
+    .messages {
+      font-size: 1em;
+      margin-bottom: 0.2em;
+    }
+    .message-item {
+      margin-bottom: 0.2em;
+    }
+    .agenda {
+      font-size: 1em;
+    }
+    .agenda-item {
+      margin-bottom: 0.1em;
+    }
+    .countdown {
+      opacity: 0.7;
+      font-size: 0.85em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app"></div>
+
+  <script>
+    const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const RELAX_MESSAGES = [
+      'Nothing to do today, relax!',
+      'Goof off day!',
+      'Take the day off',
+      'A peaceful day ahead',
+      'Rest and recharge',
+      'Enjoy the quiet day',
+      'Free day!'
+    ];
+    const JSON_REFETCH_MS = 10 * 60 * 1000;
+    const CONTENT_REFRESH_MS = 60 * 1000;
+
+    let cachedData = null;
+
+    function getJsonUrl() {
+      const base = window.location.href.split('?')[0];
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get('data');
+      if (data) {
+        // This is for local development, json file specified in URL as ?data=file.json
+        return data;
+      }
+      const draft = params.get('draft') ? '&draft=true' : '';
+      return base + '?format=json' + draft;
+    }
+
+    async function fetchData() {
+      const url = getJsonUrl();
+      if (!url) {
+        console.error('No data URL provided. Use ?data=path/to/file.json');
+        return null;
+      }
+      try {
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        cachedData = await response.json();
+        return cachedData;
+      } catch (err) {
+        console.error('Failed to fetch data:', err);
+        return cachedData;
+      }
+    }
+
+    function formatDate(date) {
+      const month = MONTHS[date.getMonth()];
+      const d = date.getDate();
+      const y = date.getFullYear();
+      return `${month} ${d}, ${y}`;
+    }
+
+    function formatTime(date) {
+      let hours = date.getHours();
+      const minutes = date.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      const minStr = minutes.toString().padStart(2, '0');
+      return `${hours}:${minStr} ${ampm}`;
+    }
+
+    function getCountdown(eventDate, now) {
+      const diffMs = eventDate - now;
+      if (diffMs <= 0) return null;
+
+      const diffMins = Math.floor(diffMs / 60000);
+      if (diffMins < 60) {
+        return `in ${diffMins} minute${diffMins !== 1 ? 's' : ''}`;
+      }
+      const diffHours = Math.round(diffMins / 60);
+      return `in ${diffHours} hour${diffHours !== 1 ? 's' : ''}`;
+    }
+
+    function getDaysAway(eventDate, today) {
+      const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+      const todayDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const diffDays = Math.round((eventDay - todayDay) / (1000 * 60 * 60 * 24));
+      if (diffDays === 1) return 'tomorrow';
+      return `${diffDays} days away`;
+    }
+
+    function applyStyles(element, styleObj) {
+      if (!styleObj) return;
+      for (const [key, value] of Object.entries(styleObj)) {
+        element.style[key] = value;
+      }
+    }
+
+    function renderTextArray(textArray) {
+      const span = document.createElement('span');
+      if (!textArray || !Array.isArray(textArray)) return span;
+
+      for (const item of textArray) {
+        const part = document.createElement('span');
+        part.textContent = item.content || '';
+        applyStyles(part, item.style);
+        span.appendChild(part);
+      }
+      return span;
+    }
+
+    function isSameDay(d1, d2) {
+      return d1.getFullYear() === d2.getFullYear() &&
+             d1.getMonth() === d2.getMonth() &&
+             d1.getDate() === d2.getDate();
+    }
+
+    function hasTime(date) {
+      return date.getHours() !== 0 || date.getMinutes() !== 0;
+    }
+
+    function getRandomRelaxMessage() {
+      return RELAX_MESSAGES[Math.floor(Math.random() * RELAX_MESSAGES.length)];
+    }
+
+    function groupAgendaByDay(agenda) {
+      const groups = new Map();
+      for (const item of agenda) {
+        const date = new Date(item.date);
+        const dayKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+        if (!groups.has(dayKey)) {
+          groups.set(dayKey, { date, items: [] });
+        }
+        groups.get(dayKey).items.push({ ...item, dateObj: date });
+      }
+      // Sort groups by date
+      const sorted = Array.from(groups.values()).sort((a, b) => a.date - b.date);
+      // Sort items within each group by time
+      for (const group of sorted) {
+        group.items.sort((a, b) => a.dateObj - b.dateObj);
+      }
+      return sorted;
+    }
+
+    function render(data) {
+      if (!data) {
+        document.getElementById('app').innerHTML = '<p style="font-size:24px;">Loading agenda...</p>';
+        return;
+      }
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      const agendaGroups = groupAgendaByDay(data.agenda || []);
+
+      // Generate 4 days: today + 3
+      const relevantGroups = [];
+      for (let i = 0; i < 4; i++) {
+        const dayDate = new Date(today);
+        dayDate.setDate(dayDate.getDate() + i);
+
+        // Find matching agenda group
+        const existing = agendaGroups.find(g => isSameDay(g.date, dayDate));
+        relevantGroups.push({
+          date: dayDate,
+          items: existing ? existing.items : []
+        });
+      }
+
+      const container = document.getElementById('app');
+      const fragment = document.createDocumentFragment();
+
+      relevantGroups.forEach((group, index) => {
+        const isToday = isSameDay(group.date, now);
+        const scale = Math.pow(0.8, index);
+        const opacity = Math.pow(0.8, index);
+
+        const block = document.createElement('div');
+        block.className = 'day-block';
+        block.style.fontSize = `${scale}em`;
+        block.style.opacity = opacity;
+        block.style.marginLeft = `${index * 3}%`;
+        block.style.marginRight = `${index * 3}%`;
+
+        // Day header (name + optional days away)
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'day-header';
+
+        const dayName = document.createElement('span');
+
+        if (isToday) {
+          dayName.textContent = "Today is " + DAYS[group.date.getDay()];
+          dayName.className = 'today-name';
+          dayHeader.appendChild(dayName)
+          block.style.borderTop = "none";
+          block.style.marginTop = "0";
+        } else {
+          dayName.textContent = DAYS[group.date.getDay()];
+        dayName.className = 'day-name';
+          dayHeader.appendChild(dayName);
+          const daysAwaySpan = document.createElement('span');
+          daysAwaySpan.className = 'days-away';
+          daysAwaySpan.textContent = getDaysAway(group.date, now);
+          dayHeader.appendChild(daysAwaySpan);
+        }
+
+        block.appendChild(dayHeader);
+
+        if (isToday) {
+          // Date line
+          const dateLine = document.createElement('div');
+          dateLine.className = 'date-line';
+          dateLine.textContent = formatDate(group.date);
+          block.appendChild(dateLine);
+
+          // Messages
+          if (data.messages && data.messages.length > 0) {
+            const messagesDiv = document.createElement('div');
+            messagesDiv.className = 'messages';
+            for (const msg of data.messages) {
+              const msgItem = document.createElement('div');
+              msgItem.className = 'message-item';
+              msgItem.appendChild(renderTextArray(msg.text));
+              messagesDiv.appendChild(msgItem);
+            }
+            block.appendChild(messagesDiv);
+          }
+
+          // Today's agenda with times and countdown
+          const agendaDiv = document.createElement('div');
+          agendaDiv.className = 'agenda';
+
+          const futureItems = group.items.filter(item => item.dateObj > now);
+          if (futureItems.length === 0) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'agenda-item';
+            itemDiv.textContent = getRandomRelaxMessage();
+            agendaDiv.appendChild(itemDiv);
+          } else {
+            for (const item of futureItems) {
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'agenda-item';
+
+              if (hasTime(item.dateObj)) {
+                const timeSpan = document.createElement('span');
+                timeSpan.textContent = formatTime(item.dateObj) + ' - ';
+                itemDiv.appendChild(timeSpan);
+              }
+
+              itemDiv.appendChild(renderTextArray(item.text));
+
+              const countdown = getCountdown(item.dateObj, now);
+              if (countdown) {
+                const countdownSpan = document.createElement('span');
+                countdownSpan.className = 'countdown';
+                countdownSpan.textContent = ` (${countdown})`;
+                itemDiv.appendChild(countdownSpan);
+              }
+
+              agendaDiv.appendChild(itemDiv);
+            }
+          }
+          block.appendChild(agendaDiv);
+
+        } else {
+          // Future agenda
+          const agendaDiv = document.createElement('div');
+          agendaDiv.className = 'agenda';
+          const isTomorrow = getDaysAway(group.date, now) === 'tomorrow';
+
+          if (group.items.length === 0) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'agenda-item';
+            itemDiv.textContent = getRandomRelaxMessage();
+            agendaDiv.appendChild(itemDiv);
+          } else {
+            for (const item of group.items) {
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'agenda-item';
+
+              if (isTomorrow && hasTime(item.dateObj)) {
+                const timeSpan = document.createElement('span');
+                timeSpan.textContent = formatTime(item.dateObj) + ' - ';
+                itemDiv.appendChild(timeSpan);
+              }
+
+              itemDiv.appendChild(renderTextArray(item.text));
+              agendaDiv.appendChild(itemDiv);
+            }
+          }
+          block.appendChild(agendaDiv);
+        }
+
+        fragment.appendChild(block);
+      });
+
+      // Swap content in one operation to avoid flicker
+      container.innerHTML = '';
+      container.appendChild(fragment);
+    }
+
+    async function init() {
+      const data = await fetchData();
+      render(data);
+
+      // Refresh content every minute (uses cached data)
+      setInterval(() => render(cachedData), CONTENT_REFRESH_MS);
+
+      // Refetch JSON every 10 minutes
+      setInterval(async () => {
+        await fetchData();
+        render(cachedData);
+      }, JSON_REFETCH_MS);
+    }
+
+    init();
+  </script>
+</body>
+</html>

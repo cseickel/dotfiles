@@ -1,0 +1,46 @@
+{
+  "agenda": [
+    {
+      "date": "2026-05-23T09:00:00",
+      "text": [{ "content": "Morning medication", "style": {} }]
+    },
+    {
+      "date": "2026-05-23T12:00:00",
+      "text": [{ "content": "Lunch with ", "style": {} }, { "content": "Sarah", "style": { "fontWeight": "bold" } }]
+    },
+    {
+      "date": "2026-05-23T15:00:00",
+      "text": [{ "content": "Physical therapy", "style": {} }]
+    },
+    {
+      "date": "2026-05-23T18:00:00",
+      "text": [{ "content": "Dinner", "style": {} }]
+    },
+    {
+      "date": "2026-05-24T10:00:00",
+      "text": [{ "content": "Doctor appointment", "style": { "color": "#ff9999" } }]
+    },
+    {
+      "date": "2026-05-24T14:00:00",
+      "text": [{ "content": "Rest time", "style": {} }]
+    },
+    {
+      "date": "2026-05-25T11:00:00",
+      "text": [{ "content": "Church service", "style": {} }]
+    },
+    {
+      "date": "2026-05-26T09:00:00",
+      "text": [{ "content": "Weekly checkup", "style": {} }]
+    }
+  ],
+  "messages": [
+    {
+      "id": "1",
+      "text": [{ "content": "Package on front porch", "style": { "color": "#ffcc00" } }]
+    },
+    {
+      "id": "2",
+      "text": [{ "content": "Call if you need anything!", "style": {} }]
+    }
+  ]
+}

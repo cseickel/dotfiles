@@ -94,6 +94,11 @@ local findFile = function()
 end
 
 local getProjectRoot = function()
+  -- If and env variable called "PROJECT_ROOT" is set, use that
+  local project_root = os.getenv("PROJECT_ROOT")
+  if project_root then
+    return project_root
+  end
   local dot_git_path = vim.fn.finddir(".git", ".;")
   return vim.fn.fnamemodify(dot_git_path, ":h")
 end
