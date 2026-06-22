@@ -3,7 +3,7 @@
 [user]
 	email = cseickel@gmail.com
 	name = Chris Seickel
-	signingkey = /home/user/.ssh/chris-ssh-2025.pub
+	signingkey = /home/chris/.ssh/chris-ssh-2025.pub
 
 [pager]
     diff = delta

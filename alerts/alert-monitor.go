@@ -116,7 +116,7 @@ func ensureTables(db *sql.DB) error {
 	_, err := db.Exec(`
 		CREATE TABLE IF NOT EXISTS alert_emails (
 			id SERIAL PRIMARY KEY,
-			status CHAR(1) CHECK(status IS NULL OR status IN ('Y','N','A','D','U')),
+			status TEXT CHECK(status IS NULL OR status IN ('critical','alert','dismissed','unknown','ignore')),
 			from_addr TEXT NOT NULL,
 			subject TEXT NOT NULL,
 			folder TEXT NOT NULL,
@@ -460,9 +460,9 @@ func applyDecisions(db *sql.DB, decisions []Decision) error {
 		}
 
 		switch d.Status {
-		case "N":
+		case "critical":
 			hasCritical = true
-		case "U":
+		case "unknown":
 			hasUnknown = true
 		}
 	}
@@ -481,7 +481,7 @@ func applyDecisions(db *sql.DB, decisions []Decision) error {
 
 func writeAlertCount(db *sql.DB) error {
 	var count int
-	err := db.QueryRow("SELECT COUNT(*) FROM alert_emails WHERE status = 'A'").Scan(&count)
+	err := db.QueryRow("SELECT COUNT(*) FROM alert_emails WHERE status = 'alert'").Scan(&count)
 	if err != nil {
 		return err
 	}

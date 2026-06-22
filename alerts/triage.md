@@ -17,33 +17,36 @@ You receive a list of emails with metadata:
 Read `~/.local/alerts/rules.md` for classification rules. Each rule has:
 - from_pattern: regex or substring to match sender
 - subject_pattern: regex or substring to match subject
-- instructions: what status to assign (A, D, N) and why
+- instructions: which status to assign and why
 
 ## Classification
 
 For each email:
 1. Check rules for matching patterns (from or subject)
 2. If match found: apply the rule's instructions
-3. If no match: classify as U (unknown)
+3. If no match: classify as `unknown`
 4. Only read the email body from the folder if the from/subject are insufficient to decide
 
 ## Status Codes
 
-- C: Critical (requires immediate human attention)
-- A: Alert (important but not critical, will be batched)
-- D: Dismiss/Done (not important, ignore)
-- U: Unknown (no matching rule, needs human classification)
+Assign exactly one of these lowercase values as the `status`:
+
+- `critical`: Requires immediate human attention
+- `alert`: Important but not critical, will be batched for review
+- `dismissed`: Reviewed and not important, no action needed
+- `ignore`: Routine noise, never needs attention
+- `unknown`: No matching rule, needs human classification
 
 ## Output Format
 
 Output ONLY a valid JSON array. No markdown, no explanation, no questions. Just the JSON.
 
 Example:
-[{"id": 1, "status": "U", "reason": "no matching rule"}]
+[{"id": 1, "status": "unknown", "reason": "no matching rule"}]
 
 ## Critical Rules
 
 - NO CONVERSATION. You are in a pipeline with no human present.
 - NO QUESTIONS. Make decisions with available information.
-- If no rules exist, classify everything as U.
+- If no rules exist, classify everything as `unknown`.
 - Output must be parseable JSON. Nothing before or after the array.

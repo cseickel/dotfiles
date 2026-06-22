@@ -206,14 +206,6 @@ function work-on-issue() {
     fi
 }
 
-function fn_switch_workspace() {
-  workspace_path=$(switch-workspace.sh)
-  if [ -n "$workspace_path" ]; then
-    cd $workspace_path
-  fi
-}
-alias switch-workspace="fn_switch_workspace"
-
 autoload -U +X bashcompinit && bashcompinit
 
 # NVM (interactive only - expensive startup)
@@ -240,3 +232,6 @@ export EDITOR=~/.local/bin/edit.sh
 # opencode
 export PATH=/home/user/.opencode/bin:$PATH
 unset zle_bracketed_paste
+
+# Claude Code shell functions
+source "/home/chris/claude-instructions/scripts/shell-init.sh"

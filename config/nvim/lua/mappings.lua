@@ -126,9 +126,9 @@ local grepCWD = function()
 end
 
 local mappings = {
-  ["<F1>"] = { "<cmd>:CodeCompanionActions<cr>", "Code Companion" },
   [";"] = { "<Plug>(buf-surf-back)", "Previous Buffer" },
   ["'"] = { "<Plug>(buf-surf-forward)", "Next Buffer" },
+  ["<tab>"] = { "<cmd>QuickBuf<cr>", "Quickbuf" },
   h = { "Focus window to the LEFT" },
   j = { "Focus window BELOW" },
   k = { "Focus window ABOVE" },

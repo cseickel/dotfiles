@@ -17,4 +17,5 @@ return {
   --"nvim-pack/nvim-spectre",
   "famiu/bufdelete.nvim",
   --{ "nvim-tree/nvim-tree.lua", setup = true },
+  "tjgao/quickbuf.nvim",
 }
