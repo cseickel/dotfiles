@@ -36,6 +36,14 @@ return {
       -- languages = {}, -- override or add new parser sources
       -- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
       -- query_dir = vim.fn.stdpath("data") .. "/site/queries",
+      languages = {
+        d2 = {
+          install_info = {
+            url = "https://github.com/ravsii/tree-sitter-d2/",
+            use_repo_queries = true, -- copy queries/ from the cloned repo
+          },
+        },
+      },
     })
   end
 }

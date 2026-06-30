@@ -235,3 +235,33 @@ unset zle_bracketed_paste
 
 # Claude Code shell functions
 source "/home/chris/claude-instructions/scripts/shell-init.sh"
+
+nv() {
+  # Inside an nvim :terminal, defer to nvim-unception (open in the host).
+  if [[ -n "$NVIM" || -n "$NVIM_UNCEPTION_PIPE_PATH_HOST" ]]; then
+    command nvim "$@"
+    return
+  fi
+
+  # Deterministic per-directory socket (hash of the physical cwd).
+  local key sock
+  key=$(pwd -P | command md5sum | cut -c1-16)
+  sock="${XDG_RUNTIME_DIR:-/tmp}/nvim-${key}.sock"
+
+  # No live server here? Spawn a headless one that auto-closes when idle.
+  if [[ ! -S "$sock" ]] || ! command nvim --server "$sock" --remote-expr '1' &>/dev/null; then
+    [[ -e "$sock" ]] && rm -f "$sock"               # clear a stale/dead socket file
+    NVIM_AUTOCLOSE=300000 command nvim --headless --listen "$sock" &!  # 5-min idle close
+    # Wait (up to ~2.5s) for the socket to come up before attaching.
+    local i=0
+    while [[ ! -S "$sock" ]] && (( i < 50 )); do sleep 0.05; ((i++)); done
+    if [[ ! -S "$sock" ]]; then
+      echo "nv: server failed to start at $sock" >&2
+      return 1
+    fi
+  fi
+
+  # Open any files passed, in the running server, then attach this terminal's UI.
+  (( $# )) && command nvim --server "$sock" --remote "$@"
+  command nvim --server "$sock" --remote-ui
+}

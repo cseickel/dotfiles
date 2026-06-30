@@ -139,8 +139,22 @@ nnoremap <silent> <C-z> u
 vnoremap <C-r> "ry:%s/<C-r>rp//gc<left><left><left>
 
 " Close window
-noremap <C-q> :q<cr>
-inoremap <C-q> <Esc>:q<cr>
+function! s:QuitOrDetach() abort
+  " Headless server spawned by `nv` -> detach this UI, keep the session alive.
+  if !empty($NVIM_AUTOCLOSE)
+    try
+      detach
+      return
+    catch
+      " older nvim without :detach, or detach refused -> fall through to qa
+    endtry
+  endif
+  qa
+endfunction
+
+nnoremap <silent> <C-q> <Cmd>call <SID>QuitOrDetach()<CR>
+inoremap <silent> <C-q> <Cmd>call <SID>QuitOrDetach()<CR>
+xnoremap <silent> <C-q> <Cmd>call <SID>QuitOrDetach()<CR>
 
 " Open quickfix at bottom of all windows
 noremap <leader>q :botright copen<cr>
