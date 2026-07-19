@@ -265,3 +265,5 @@ nv() {
   (( $# )) && command nvim --server "$sock" --remote "$@"
   command nvim --server "$sock" --remote-ui
 }
+
+export PATH=$HOME/.rill:$PATH # Added by Rill install

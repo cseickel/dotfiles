@@ -83,29 +83,31 @@ func run() error {
 		return fmt.Errorf("get null emails: %w", err)
 	}
 
-	if len(nullEmails) == 0 {
+	if len(nullEmails) > 0 {
+		fmt.Printf("Triaging %d emails\n", len(nullEmails))
+
+		decisions, err := runTriageAgent(nullEmails)
+		if err != nil {
+			return fmt.Errorf("triage: %w", err)
+		}
+
+		if len(decisions) == 0 {
+			fmt.Println("No decisions from triage agent")
+		} else {
+			fmt.Printf("Got %d decisions\n", len(decisions))
+			if err := applyDecisions(db, decisions); err != nil {
+				return fmt.Errorf("apply decisions: %w", err)
+			}
+		}
+	} else {
 		fmt.Println("No emails to triage")
-		return nil
 	}
 
-	fmt.Printf("Triaging %d emails\n", len(nullEmails))
-
-	// Run triage agent
-	decisions, err := runTriageAgent(nullEmails)
-	if err != nil {
-		return fmt.Errorf("triage: %w", err)
-	}
-
-	if len(decisions) == 0 {
-		fmt.Println("No decisions from triage agent")
-		return nil
-	}
-
-	fmt.Printf("Got %d decisions\n", len(decisions))
-
-	// Apply decisions
-	if err := applyDecisions(db, decisions); err != nil {
-		return fmt.Errorf("apply decisions: %w", err)
+	// Refresh every cycle: interactive sessions dismiss alerts directly in
+	// the database, so a count written only during triage goes stale and
+	// check-alerts.sh keeps launching review agents for dismissed alerts.
+	if err := writeAlertCount(db); err != nil {
+		log.Printf("write alert count: %v", err)
 	}
 
 	fmt.Println("Done")
@@ -465,11 +467,6 @@ func applyDecisions(db *sql.DB, decisions []Decision) error {
 		case "unknown":
 			hasUnknown = true
 		}
-	}
-
-	// Write current alert count for cron job to check at scheduled times
-	if err := writeAlertCount(db); err != nil {
-		log.Printf("write alert count: %v", err)
 	}
 
 	if hasCritical || hasUnknown {

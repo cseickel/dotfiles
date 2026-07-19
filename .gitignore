@@ -1,2 +1,4 @@
 .nvimlog
 **/packer_compiled.lua
+.mcp-servers
+tmp

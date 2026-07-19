@@ -111,6 +111,10 @@ highlight ConflictMarkerTheirs guibg=#005f87
 highlight ConflictMarkerEnd guibg=#5f87af
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 
+highlight DiffAdd guibg=#005f5f
+highlight DiffChange guibg=#5f3f00
+highlight DiffDelete guibg=#5f0000
+
 highlight IndentBlanklineChar guifg=#303030
 highlight IndentBlanklineContextChar guifg=#585858 gui=Bold
 
