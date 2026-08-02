@@ -2,3 +2,5 @@
 **/packer_compiled.lua
 .mcp-servers
 tmp
+config/niri/**backup*.kdl
+config/DankMaterialShell/plugins

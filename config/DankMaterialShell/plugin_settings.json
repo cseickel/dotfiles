@@ -1,0 +1,74 @@
+{
+  "dankNotepadModule": {
+    "enabled": true
+  },
+  "calculator": {
+    "enabled": true,
+    "trigger": "=",
+    "noTrigger": false,
+    "persistHistoryOnFile": false,
+    "keepLastResults": "100"
+  },
+  "niriWindows": {
+    "enabled": true
+  },
+  "githubInbox": {
+    "enabled": true
+  },
+  "wallpaperDiscovery": {
+    "enabled": true
+  },
+  "unifiedTaskbar": {
+    "enabled": false,
+    "filledPills": false,
+    "allMonitors": false,
+    "groupByApp": false,
+    "compactMode": false,
+    "itemSpacing": 10,
+    "iconPadding": 5
+  },
+  "customRunningApps": {
+    "enabled": true,
+    "showAdditionalIndicator": false,
+    "overrideBackground": "default",
+    "indicatorType": "circle",
+    "iconBackgroundSize": 100,
+    "indicatorLocation": "top",
+    "indicatorSize": 8
+  },
+  "dankTodo": {
+    "enabled": true
+  },
+  "recentFiles": {
+    "enabled": true,
+    "trigger": "rf",
+    "noTrigger": false,
+    "settingsVersion": 1
+  },
+  "commandRunner": {
+    "enabled": true,
+    "trigger": "!",
+    "terminal": "ghostty"
+  },
+  "niriDS": {
+    "enabled": true
+  },
+  "colorPickerDms": {
+    "enabled": true
+  },
+  "dankLauncherKeys": {
+    "enabled": true,
+    "noTrigger": true
+  },
+  "screenCapture": {
+    "enabled": false
+  },
+  "displayManager": {
+    "enabled": true,
+    "brightness_DP-2": 50.905845905172406
+  },
+  "dcalUpcoming": {
+    "enabled": true,
+    "dynamicWidth": true
+  }
+}

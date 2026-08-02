@@ -1,0 +1,27 @@
+// DMS Window Rules - Managed by DankMaterialShell
+// Do not edit manually - changes may be overwritten
+
+// @id=wr_1782689097903427510 @name=google-chrome
+window-rule {
+    match app-id="^google-chrome$" is-active=true is-focused=true
+    default-column-width { fixed 1400; }
+}
+
+// @id=wr_1782709043154915610 @name=org.quickshell
+window-rule {
+    match app-id="^org.quickshell$"
+    max-width 1024
+}
+
+// @id=wr_1785596760206673736 @name=chrome link opener
+window-rule {
+    match app-id="^chrome-.+$"
+    default-column-display "tabbed"
+}
+
+// @id=wr_1785678968508000449 @name=rva-desktop
+window-rule {
+    match app-id="^rva-desktop$" title="^RVA.+"
+    default-column-display "tabbed"
+    min-width 1400
+}
