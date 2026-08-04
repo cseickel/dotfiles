@@ -220,7 +220,7 @@ inoremap <silent> <End>  <C-o>g<End>
 function! TermClear() abort
   call feedkeys("", 'n')
   set scrollback=1
-  set scrollback=10000
+  set scrollback=20000
 endfunction
 tnoremap <silent> <C-l> <cmd>call TermClear()<CR>
 

@@ -1,0 +1,1 @@
+/home/chris/claude-instructions/scripts/claude-pair.lua

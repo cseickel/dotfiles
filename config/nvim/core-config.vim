@@ -178,6 +178,12 @@ function! WinLeave()
   if &filetype != "neo-tree"
     setlocal nocursorline
   endif
+  " park the cursor on the last line so the terminal keeps following output
+  " while it is unfocused, but only if we are already scrolled to the bottom --
+  " if the user scrolled up to read something, leave their view alone
+  if &buftype ==# 'terminal' && line('w$') >= line('$')
+    call nvim_win_set_cursor(0, [line('$'), 0])
+  endif
 endfunction
 
 highlight TransparentBackground guibg=transparent

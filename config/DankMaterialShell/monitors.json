@@ -2,161 +2,13 @@
   "version": 1,
   "configurations": [
     {
-      "id": "profile_1784557057226_j12uhvx",
-      "name": "Laptop Only",
-      "outputs": {
-        "eDP-1": {
-          "mode": "2256x1504@59.999",
-          "position": {
-            "x": 917,
-            "y": 0
-          },
-          "scale": 1.5,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": null,
-            "disabled": false
-          }
-        },
-        "DP-2": {
-          "mode": "3840x1080@59.999",
-          "position": {
-            "x": 0,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": true,
-          "niri": {
-            "layout": {
-              "alwaysCenterSingleColumn": true
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "profile_1784557109420_yel31z8",
-      "name": "OCNJ Desk",
-      "outputs": {
-        "eDP-1": {
-          "mode": "2256x1504@59.999",
-          "position": {
-            "x": 1213,
-            "y": 1080
-          },
-          "scale": 1.5,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": null,
-            "disabled": false
-          }
-        },
-        "DP-2": {
-          "mode": "3840x1080@59.999",
-          "position": {
-            "x": 0,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": {
-              "alwaysCenterSingleColumn": true
-            }
-          }
-        }
-      }
-    },
-    {
-      "id": "profile_1785512058559_fxjdovk",
-      "name": "Green Ave",
-      "outputs": {
-        "DVI-I-1": {
-          "mode": "1920x1080@60.000",
-          "position": {
-            "x": 0,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
-        },
-        "DVI-I-2": {
-          "mode": "1920x1080@60.000",
-          "position": {
-            "x": 1920,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
-        },
-        "eDP-1": {
-          "mode": "2256x1504@59.999",
-          "position": {
-            "x": 3674,
-            "y": 1757
-          },
-          "scale": 1.5,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": null,
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
-        },
-        "DP-2": {
-          "mode": "3440x1440@59.973",
-          "position": {
-            "x": 234,
-            "y": 1080
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": {
-              "alwaysCenterSingleColumn": true
-            }
-          }
-        }
-      }
-    },
-    {
       "id": "auto_da87ea14",
       "name": "",
       "outputs": {
         "DP-2": {
           "mode": "3440x1440@59.973",
           "position": {
-            "x": 233,
+            "x": 236,
             "y": 1080
           },
           "scale": 1,
@@ -167,23 +19,6 @@
             "layout": {
               "alwaysCenterSingleColumn": true
             }
-          }
-        },
-        "DVI-I-1": {
-          "mode": "1920x1080@60.000",
-          "position": {
-            "x": 0,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
           }
         },
         "DVI-I-2": {
@@ -203,11 +38,102 @@
             "disabled": false
           }
         },
+        "DVI-I-1": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            },
+            "disabled": false
+          }
+        },
         "eDP-1": {
           "mode": "2256x1504@59.999",
           "position": {
-            "x": 3673,
-            "y": 1740
+            "x": 3676,
+            "y": 1832
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "layout": null,
+            "hotCorners": {
+              "off": true
+            },
+            "disabled": false
+          }
+        }
+      }
+    },
+    {
+      "id": "profile_1785763615144_5u1344h",
+      "name": "Green Ave",
+      "outputs": {
+        "DP-2": {
+          "mode": "3440x1440@59.973",
+          "position": {
+            "x": 236,
+            "y": 1080
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "layout": {
+              "alwaysCenterSingleColumn": true
+            }
+          }
+        },
+        "DVI-I-2": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            },
+            "disabled": false
+          }
+        },
+        "DVI-I-1": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            },
+            "disabled": false
+          }
+        },
+        "eDP-1": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3676,
+            "y": 1832
           },
           "scale": 1.5,
           "transform": "Normal",

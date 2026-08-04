@@ -23,6 +23,7 @@ vim.cmd([[
   highlight ModeR guibg=#f44747 guifg=#353535 gui=bold " REPLACE
 
   highlight StatusLine              guibg=#303030 guifg=#999999
+  highlight StatusLineClaudePair    guibg=#303030 guifg=#d7d787 gui=bold
   highlight StatusLineGit  gui=bold guibg=#3a3a3a guifg=#c586c0
   highlight StatusLineCwd  gui=bold guibg=#3a3a3a guifg=#999999
   highlight StatusLineFile gui=bold guibg=#303030 guifg=#bbbbbb
@@ -73,6 +74,15 @@ local winbar_filetype_exclude = {
 	["startify"] = true,
 	["toggleterm"] = true,
 }
+
+M.get_claude_pair_enabled = function()
+  local enabled = vim.g.claude_pair_enabled
+  if enabled then
+    return "%#StatusLineTransition1#▕%#StatusLineTransition2#▏%#StatusLineClaudePair#󱇴 claude%*"
+  else
+    return ""
+  end
+end
 
 M.get_neo_tree_context = function()
 	local context = require("neo-tree.ui.selector").get_scrolled_off_node_text()
@@ -175,6 +185,7 @@ M.get_statusline = function()
 		"%=",
 		"%{%v:lua.status.get_diag_counts()%}",
 		"%{%v:lua.status.get_git_changes()%}",
+    "%{%v:lua.status.get_claude_pair_enabled()%}",
 		"%#StatusLineTransition1#▕%*",
 		"%#StatusLineTransition2#▏%*",
 		"%{%v:lua.status.get_git_branch()%}",

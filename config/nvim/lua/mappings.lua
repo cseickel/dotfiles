@@ -128,7 +128,7 @@ end
 local mappings = {
   [";"] = { "<Plug>(buf-surf-back)", "Previous Buffer" },
   ["'"] = { "<Plug>(buf-surf-forward)", "Next Buffer" },
-  ["<tab>"] = { "<cmd>QuickBuf<cr>", "Quickbuf" },
+  ["<M-b>"] = { "<cmd>QuickBuf<cr>", "Quickbuf" },
   h = { "Focus window to the LEFT" },
   j = { "Focus window BELOW" },
   k = { "Focus window ABOVE" },
@@ -159,14 +159,14 @@ local mappings = {
     q = { "<cmd>cnext<bar>normal z.<cr>", "Next Quickfix" },
   },
   ["<leader>"] = {
-    ["o"] = {
-      name = "Octo Context Actions...",
-      a = { "Assignee..." },
-      c = { "Comment..." },
-      l = { "Label..." },
-      r = { "React..." },
-    },
-    i = { "<cmd>Octo issue list is:open assignee:cseickel<cr>", "My Open Issues" },
+    -- ["o"] = {
+    --   name = "Octo Context Actions...",
+    --   a = { "Assignee..." },
+    --   c = { "Comment..." },
+    --   l = { "Label..." },
+    --   r = { "React..." },
+    -- },
+    -- i = { "<cmd>Octo issue list is:open assignee:cseickel<cr>", "My Open Issues" },
     ["."] = { "Set Working Directory from current file" },
     ["="] = { "<cmd>Format<cr>", "Format Document" },
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code actions" },
@@ -177,6 +177,11 @@ local mappings = {
       o = { "<cmd>ConflictMarkerOurselves<cr>", "Keep Ourselves (Top/HEAD)" },
       n = { "<cmd>ConflictMarkerOurselves<cr>", "Keep None" },
       t = { "<cmd>ConflictMarkerThemselves<cr>", "Keep Themselves (Bottom)" },
+    },
+    C = { 
+      name = "Pick Color",
+      h = { "<cmd>lua require('minty.huefy').open()<cr>", "Hues" },
+      s = { "<cmd>lua require('minty.shades').open()<cr>", "Shades" },
     },
     d = {
       name = "Diagnostics...",
@@ -226,10 +231,14 @@ local mappings = {
     --  a = { memory_utils.capture_after,                        "Capture After" },
     --  c = { memory_utils.compare,                              "Compare" },
     --},
-    p = { 
-      name = "Pick Color",
-      h = { "<cmd>lua require('minty.huefy').open()<cr>", "Hues" },
-      s = { "<cmd>lua require('minty.shades').open()<cr>", "Shades" },
+    p = {
+      name = "Claude Pair...",
+      l = { "<cmd>ClaudePairLook<cr>", "Take a Look" },
+      j = { "<cmd>ClaudePairJump<cr>", "Jump to Suggestion" },
+      y = { "<cmd>ClaudePairAccept<cr>", "Accept Suggestion" },
+      n = { "<cmd>ClaudePairReject<cr>", "Reject Suggestion" },
+      s = { "<cmd>ClaudePairShow<cr>", "Toggle Suggestion Marks" },
+      t = { "<cmd>ClaudePairToggle<cr>", "Toggle Capture" },
     },
     s = { "<cmd>Neotree reveal git_status current<cr>", "Show Git Status" },
     t = { "Open  Terminal" },

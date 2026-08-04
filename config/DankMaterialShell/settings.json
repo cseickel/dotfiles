@@ -584,7 +584,7 @@
   "hyprlandOutputSettings": {},
   "displayProfiles": {},
   "activeDisplayProfile": {
-    "niri": "profile_1785512058559_fxjdovk"
+    "niri": "profile_1785763615144_5u1344h"
   },
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
@@ -600,6 +600,10 @@
         {
           "name": "DP-2",
           "model": "49C1G"
+        },
+        {
+          "name": "eDP-1",
+          "model": "0x0BCA"
         }
       ],
       "showOnLastDisplay": false,
@@ -609,7 +613,11 @@
           "enabled": true
         },
         {
-          "id": "dankTodo",
+          "id": "controlCenterButton",
+          "enabled": true
+        },
+        {
+          "id": "colorPicker",
           "enabled": true
         }
       ],
@@ -617,7 +625,7 @@
         {
           "id": "runningApps",
           "enabled": true,
-          "runningAppsCompactMode": false,
+          "runningAppsCompactMode": true,
           "runningAppsGroupByApp": false,
           "runningAppsCurrentWorkspace": true,
           "runningAppsCurrentMonitor": true
@@ -643,15 +651,20 @@
           "enabled": true
         },
         {
-          "id": "controlCenterButton",
+          "id": "separator",
           "enabled": true
+        },
+        {
+          "id": "clock",
+          "enabled": true,
+          "clockCompactMode": true
         },
         {
           "id": "separator",
           "enabled": true
         },
         {
-          "id": "clock",
+          "id": "dankTodo",
           "enabled": true
         },
         {
@@ -663,7 +676,7 @@
       "innerPadding": -5,
       "bottomGap": 0,
       "transparency": 1,
-      "widgetTransparency": 0,
+      "widgetTransparency": 1,
       "squareCorners": true,
       "noBackground": true,
       "maximizeWidgetIcons": false,
@@ -681,8 +694,8 @@
       "widgetOutlineColor": "surfaceText",
       "widgetOutlineOpacity": 1,
       "widgetOutlineThickness": 1,
-      "fontScale": 1.33,
-      "iconScale": 1.33,
+      "fontScale": 1.5,
+      "iconScale": 1.75,
       "autoHide": false,
       "autoHideDelay": 250,
       "showOnWindowsOpen": false,
@@ -706,12 +719,7 @@
       "name": "Bar 2",
       "enabled": true,
       "position": 1,
-      "screenPreferences": [
-        {
-          "name": "eDP-1",
-          "model": "0x0BCA"
-        }
-      ],
+      "screenPreferences": [],
       "showOnLastDisplay": false,
       "leftWidgets": [
         {
@@ -719,7 +727,42 @@
           "enabled": true
         },
         {
-          "id": "dankTodo",
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "controlCenterButton",
+          "enabled": true,
+          "showNetworkIcon": true,
+          "showBluetoothIcon": true,
+          "showAudioIcon": true,
+          "showAudioPercent": false,
+          "showVpnIcon": true,
+          "showBrightnessIcon": false,
+          "showBrightnessPercent": false,
+          "showMicIcon": false,
+          "showMicPercent": true,
+          "showBatteryIcon": false,
+          "showPrinterIcon": false,
+          "showScreenSharingIcon": true,
+          "showIdleInhibitorIcon": false,
+          "showDoNotDisturbIcon": false,
+          "controlCenterGroupOrder": [
+            "network",
+            "vpn",
+            "bluetooth",
+            "audio",
+            "microphone",
+            "brightness",
+            "battery",
+            "printer",
+            "screenSharing",
+            "idleInhibitor",
+            "doNotDisturb"
+          ]
+        },
+        {
+          "id": "colorPicker",
           "enabled": true
         }
       ],
@@ -758,37 +801,6 @@
           "batteryPillPercentSign": false
         },
         {
-          "id": "controlCenterButton",
-          "enabled": true,
-          "showNetworkIcon": true,
-          "showBluetoothIcon": true,
-          "showAudioIcon": true,
-          "showAudioPercent": false,
-          "showVpnIcon": true,
-          "showBrightnessIcon": false,
-          "showBrightnessPercent": false,
-          "showMicIcon": false,
-          "showMicPercent": true,
-          "showBatteryIcon": false,
-          "showPrinterIcon": false,
-          "showScreenSharingIcon": true,
-          "showIdleInhibitorIcon": false,
-          "showDoNotDisturbIcon": false,
-          "controlCenterGroupOrder": [
-            "network",
-            "vpn",
-            "bluetooth",
-            "audio",
-            "microphone",
-            "brightness",
-            "battery",
-            "printer",
-            "screenSharing",
-            "idleInhibitor",
-            "doNotDisturb"
-          ]
-        },
-        {
           "id": "separator",
           "enabled": true
         },
@@ -796,6 +808,14 @@
           "id": "clock",
           "enabled": true,
           "clockCompactMode": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "dankTodo",
+          "enabled": true
         },
         {
           "id": "notificationButton",
