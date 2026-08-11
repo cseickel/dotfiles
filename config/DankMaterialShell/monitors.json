@@ -148,6 +148,49 @@
           }
         }
       }
+    },
+    {
+      "id": "profile_1786023094011_fmpmksa",
+      "name": "OCNJ",
+      "outputs": {
+        "eDP-1": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 6416,
+            "y": 1080
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "layout": null,
+            "hotCorners": {
+              "off": true
+            },
+            "disabled": false
+          }
+        },
+        "DP-2": {
+          "mode": "3840x1080@59.999",
+          "position": {
+            "x": 5180,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": true,
+          "niri": {
+            "layout": {
+              "alwaysCenterSingleColumn": true
+            },
+            "hotCorners": {
+              "off": true
+            }
+          }
+        }
+      }
     }
   ]
 }

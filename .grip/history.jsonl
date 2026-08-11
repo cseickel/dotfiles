@@ -1,0 +1,3 @@
+{"url": "postgres://postgres:***@localhost/rva3_local", "table": "AppLog", "elapsed_ms": 24, "ts": 1786333044, "type": "query", "sql": "SELECT * FROM \"AppLog\" LIMIT 100"}
+{"url": "postgres://postgres:***@localhost/rva3_local", "table": "BloombergTickerData", "elapsed_ms": 33, "ts": 1786333263, "type": "query", "sql": "SELECT * FROM \"BloombergTickerData\" LIMIT 100"}
+{"url": "postgres://postgres:***@localhost/rva3_local", "table": "ChangeMetricsForColumns", "elapsed_ms": 24, "ts": 1786333440, "type": "query", "sql": "SELECT * FROM \"ChangeMetricsForColumns\" LIMIT 100"}

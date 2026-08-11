@@ -566,7 +566,11 @@
     "DP-2": {
       "layout": {
         "alwaysCenterSingleColumn": true
-      }
+      },
+      "hotCorners": {
+        "off": true
+      },
+      "disabled": true
     },
     "DVI-I-1": {
       "hotCorners": {
@@ -584,7 +588,7 @@
   "hyprlandOutputSettings": {},
   "displayProfiles": {},
   "activeDisplayProfile": {
-    "niri": "profile_1785763615144_5u1344h"
+    "niri": "profile_1786023094011_fmpmksa"
   },
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
@@ -596,16 +600,7 @@
       "name": "Main Bar",
       "enabled": true,
       "position": 1,
-      "screenPreferences": [
-        {
-          "name": "DP-2",
-          "model": "49C1G"
-        },
-        {
-          "name": "eDP-1",
-          "model": "0x0BCA"
-        }
-      ],
+      "screenPreferences": [],
       "showOnLastDisplay": false,
       "leftWidgets": [
         {
@@ -657,7 +652,7 @@
         {
           "id": "clock",
           "enabled": true,
-          "clockCompactMode": true
+          "clockCompactMode": false
         },
         {
           "id": "separator",
@@ -696,7 +691,7 @@
       "widgetOutlineThickness": 1,
       "fontScale": 1.5,
       "iconScale": 1.75,
-      "autoHide": false,
+      "autoHide": true,
       "autoHideDelay": 250,
       "showOnWindowsOpen": false,
       "openOnOverview": true,
@@ -719,7 +714,12 @@
       "name": "Bar 2",
       "enabled": true,
       "position": 1,
-      "screenPreferences": [],
+      "screenPreferences": [
+        {
+          "name": "eDP-1",
+          "model": "0x0BCA"
+        }
+      ],
       "showOnLastDisplay": false,
       "leftWidgets": [
         {
@@ -863,6 +863,129 @@
       "shadowCustomColor": "#000000",
       "useOverlayLayer": false,
       "clickThrough": false
+    },
+    {
+      "id": "bar1785862572946",
+      "name": "Bar 3",
+      "enabled": true,
+      "position": 1,
+      "screenPreferences": [
+        {
+          "name": "DP-2",
+          "model": "PHL 346E2C"
+        }
+      ],
+      "showOnLastDisplay": false,
+      "leftWidgets": [
+        {
+          "id": "launcherButton",
+          "enabled": true
+        },
+        {
+          "id": "controlCenterButton",
+          "enabled": true
+        },
+        {
+          "id": "colorPicker",
+          "enabled": true
+        }
+      ],
+      "centerWidgets": [
+        {
+          "id": "runningApps",
+          "enabled": true,
+          "runningAppsCompactMode": false,
+          "runningAppsGroupByApp": false,
+          "runningAppsCurrentWorkspace": true,
+          "runningAppsCurrentMonitor": true
+        }
+      ],
+      "rightWidgets": [
+        {
+          "id": "systemUpdate",
+          "enabled": true,
+          "hideWhenIdle": false
+        },
+        {
+          "id": "systemTray",
+          "enabled": true,
+          "trayUseInlineExpansion": false
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "battery",
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "clock",
+          "enabled": true,
+          "clockCompactMode": false
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "dankTodo",
+          "enabled": true
+        },
+        {
+          "id": "notificationButton",
+          "enabled": true
+        }
+      ],
+      "spacing": 0,
+      "innerPadding": -5,
+      "bottomGap": 0,
+      "transparency": 1,
+      "widgetTransparency": 1,
+      "squareCorners": true,
+      "noBackground": true,
+      "gothCornersEnabled": false,
+      "gothCornerRadiusOverride": false,
+      "gothCornerRadiusValue": 12,
+      "borderEnabled": false,
+      "borderColor": "surfaceText",
+      "borderOpacity": 1,
+      "borderThickness": 1,
+      "widgetOutlineEnabled": false,
+      "widgetOutlineColor": "surfaceText",
+      "widgetOutlineOpacity": 1,
+      "widgetOutlineThickness": 1,
+      "widgetPadding": 4,
+      "maximizeWidgetIcons": false,
+      "maximizeWidgetText": false,
+      "removeWidgetPadding": false,
+      "fontScale": 1.5,
+      "iconScale": 1.75,
+      "autoHide": false,
+      "autoHideStrict": false,
+      "autoHideDelay": 250,
+      "showOnWindowsOpen": false,
+      "openOnOverview": true,
+      "visible": true,
+      "popupGapsAuto": true,
+      "popupGapsManual": 4,
+      "maximizeDetection": true,
+      "useOverlayLayer": false,
+      "scrollEnabled": true,
+      "scrollXBehavior": "column",
+      "scrollYBehavior": "workspace",
+      "hoverPopouts": true,
+      "hoverPopoutDelay": 150,
+      "shadowIntensity": 0,
+      "shadowOpacity": 60,
+      "shadowDirectionMode": "inherit",
+      "shadowDirection": "top",
+      "shadowColorMode": "text",
+      "shadowCustomColor": "#000000"
     }
   ],
   "desktopClockEnabled": false,
@@ -1037,6 +1160,13 @@
     },
     "dms_clipboard_search": {
       "trigger": "cb"
+    },
+    "dankNotepadModule": {
+      "previewActive": false,
+      "currentFilePath": "/home/chris/claude-instructions/rva-3-5228-calc-engine-anchors-historical-expiry-se/docs/expiry-coverage-and-as-of-dates.md",
+      "currentFileExtension": "md",
+      "sourceContent": "# Why a FinalScore history has gaps, and what its numbers mean\n\nTwo calendars decide what the FinalScore tooltip gives you: the calendar as it stood on the historical date, and today's. Which one answers which question decides how many of the ten lines come back, and what the volatility on a line means.\n\n<details>\n<summary>Anchors</summary>\n\n`backend/src/ui/components/grid/Tooltips/FinalScoreTooltip.tsx:179`\n\n```ts\nconst dataMinus1 = useCalcEngineView(\"MainView\", { tradingDate: dayMinus1 });\n...\nconst rowKey = (tradingDate) => `${tradingDate}|${expiry}|${ticker}`;\n```\n\nTen independent MainView evaluations, one per prior trading date, each looked up by the hovered row's own ticker and expiry. A date whose evaluation has no row at that key contributes nothing and the tooltip is one line shorter. `useFinalScoreHistoryPreload` warms the same ten dates at page load so a hover does not start ten fetches.\n\n</details>\n\n## What each decision is anchored to\n\nTwo decisions are anchored to today:\n\n- Which monthly expiries get an interpolated row.\n- Which expiries may serve as interpolation endpoints.\n\nThree are anchored to the historical date:\n\n- Which collected expiries survive.\n- Which expiries a position rescues.\n- Every price, vol, greek, and day count on a row.\n\n**The ladder of expiries is what it was on the day. The choice of which gaps to fill, and what to fill them from, is made from today.**\n\n<details>\n<summary>Anchors</summary>\n\n`backend/src/calc-engine/views/main/MainViewDef.ts:325`\n\n```ts\nstructuralSources: [\"Equity:CURRENT\", \"OptionPosition\"],\n```\n\n`Equity:CURRENT` resolves to today's partition regardless of the view's date. A bare `OptionPosition` resolves to the view's own date.\n\nThe universe is a sixth decision, anchored to today. It is left out of the lists above because it has no observable effect on the tooltip: hovering requires a row on today's grid, and that row's ticker is in today's universe by construction.\n\n`backend/src/calc-engine/views/main/MainViewDef.ts:379`\n\n```ts\nrow.expiryType = tradingDates.getExpiryType(currentTradingDate, row.expiry);\nconst desiredOnRowDate =\n  tradingDates.getExpiryType(row.tradingDate, row.expiry) !== \"OTHER\";\n```\n\nThe same expiry is classified twice. `expiryType` is the stamped label (today) that the two interpolation gates read. `desiredOnRowDate` (the historical date) drives the row filter.\n\nThe database side splits the same way: `wd02_get_real_censored_ivs.ts:222` filters against its `tradingDate` parameter, while `wd03_get_all_censored_ivs.ts:131` reads `vw_current_trading_date` into `actualTradingDate` and uses that for the label and the interpolation list.\n\n</details>\n\n## The rules\n\n### Which collected expiries survive\n\n```sql\n-- for a row dated <historical>\nexpiry in (\n      -- the next 3 Fridays that are not a third Friday\n      select expiry from weekly_expiries(<historical>)\n  union\n      -- every third Friday from here out\n      select expiry from third_fridays(<historical>)\n  union\n      -- any expiry held anywhere in the book on that date\n      select expiry from option_position where trading_date = <historical>\n)\n```\n\nThe position term matches on expiry alone, so an expiry held in one name is kept for **every** ticker, which is what lets you put a held expiry side by side with SPY and its peers. It reads the book as it stood on the historical date, so closing a position today does not erase it from the history.\n\n<details>\n<summary>Anchors</summary>\n\n`backend/src/database/views-and-functions/queries/wd02_get_real_censored_ivs.ts:222`\n\n```sql\ne.expiry in (\n  select expiry from get_desired_weekly_expiries(tradingDate)\n  UNION\n  select \"tradingDate\" from get_expiry_fridays(tradingDate) where friday_number = 3\n  UNION\n  select expiry from \"OptionPosition\" where \"tradingDate\" = tradingDate\n)\n```\n\n`backend/src/calc-engine/views/main/MainViewDef.ts:359`\n\n```ts\nconst skipRow = (row, desiredOnRowDate: boolean) => {\n  if (!universe.has(row.ticker)) return true;\n  if (positionExpiries.has(row.expiry)) return false;\n  return !desiredOnRowDate;\n};\n```\n\n`get_expiry_fridays` returns third Fridays on or after its argument for five years, holiday-snapped back to Thursday. `get_desired_weekly_expiries` takes the first three non-third-Friday entries from that same list.\n\n</details>\n\n### Which expiries get an interpolated row\n\nA ticker with no collected row at a desired monthly expiry gets one built by interpolating between its neighbors. Which monthlies are desired is asked of today's calendar.\n\n```sql\n-- ranks 1-7, 9, 12, 18, 24 among upcoming third Fridays,\n-- plus January of each of the next two years\nselect expiry from desired_monthly_expiries(<today>)\n```\n\nSPY is the exception. It gets an interpolated row at every expiry present anywhere in the universe, so the SPY spread and ratio are available wherever a row exists to compare.\n\n### Which expiries may serve as interpolation endpoints\n\nAn endpoint must be a collected row, and its expiry must classify as a weekly or a third Friday **as of today**. An expiry present only because the firm held it is never an endpoint.\n\n<details>\n<summary>Anchors</summary>\n\n`backend/src/calc-engine/synthetics/SyntheticRowFactory.ts:112`\n\n```ts\nconst eligibleNeighborExpiries = new Set<DateString>();\nfor (const row of realRows) {\n  if (row.expiryType !== \"OTHER\") eligibleNeighborExpiries.add(row.expiry);\n}\n...\nconst desiredRegularExpiries = tradingDates\n  .getDesiredReports(ctx.engine.controller.getCurrentTradingDate())\n```\n\n`backend/src/calc-engine/formula/functions/interpolate_adjusted_previous_iv.ts:341` applies the same gate to the fixed-strike change columns.\n\nThe database equivalent is `wd03_get_all_censored_ivs.ts:359` (`prior.\"expiryType\" is not null`), where `expiryType` was labeled from `actualTradingDate`.\n\n</details>\n\n## What you see: monthlies have history, weeklies do not\n\nA third Friday is a desired expiry on every date, so a monthly is never dropped from a historical date. It still needs a row to have existed: either the expiry was collected that day, or it is one of the ranked monthlies that get an interpolated row. For a name collected consistently, a monthly's tooltip comes back with all ten lines.\n\nA weekly is desired only while it sits in the front three, so its tooltip reaches back only to the date it entered.\n\nToday is Thursday 6 August 2026. The non-third-Friday Fridays around it are 31 Jul, 7 Aug, 14 Aug, and 28 Aug, with 21 Aug the third Friday.\n\nAs of  | Front three weeklies\n------ | ---------------------\n30 Jul | 31 Jul, 7 Aug, 14 Aug\n31 Jul | 31 Jul, 7 Aug, 14 Aug\n3 Aug  | 7 Aug, 14 Aug, 28 Aug\n6 Aug  | 7 Aug, 14 Aug, 28 Aug\n\nHover the FS cell on a 28 August row today and the tooltip holds three lines, for 3, 4, and 5 August. 28 August entered the front three on 3 August, the first session after the 31 July expiry retired a slot. Before that it was not on the ladder, so those dates have no row to show.\n\nHover 21 August, a third Friday, and all ten lines come back.\n\nA position extends the coverage. If the firm had held 28 August on 30 July, every ticker would carry a 28 August row on 30 July and the tooltip would reach back that far.\n\n**A date with no row is dropped from the table, not shown empty.** The tooltip is shorter and the date column skips, with no marker at the skip. Read the dates, not the row count.\n\n## What a number means\n\n**A collected expiry's implied volatility on a historical date is exactly what was collected that day.** Nothing about today touches it, and it compares against today's reading directly.\n\n**An interpolated expiry's implied volatility on a historical date is a reconstruction**, and the endpoints it is built from are chosen by today's calendar. On the 30 July evaluation, 31 July carries its own collected volatility, and it is still barred from serving as an endpoint, because by 6 August it is neither a weekly nor a third Friday.\n\nThe same bar applies to the fixed-strike change columns, which reach for neighbors whenever a row has no usable previous day. Those run on collected rows, so the reach is wider than the interpolated monthlies.\n\nBarring an expiry never removes its own row. Only values move.\n\nThe bar changes a number only when the barred expiry would have been the nearest eligible neighbor on its side, which needs the ticker to have no collected row at the weeklies between. In a liquid name the endpoints are unchanged. In a thin name the interpolation reaches further out and the reconstructed value is pulled toward longer-dated volatility, and the effect grows with the distance between the historical date and today.\n\n**Adding or removing a whole expiry does not move FinalScore on any other expiry.** The percent ranks behind it are computed across tickers within one date and one expiry, so the ladder changing length leaves the other rungs alone. Within a single expiry the rank does depend on which tickers have a row there, so a change in that membership does move it.\n\n## One narrow case to know about\n\nAn interpolated row can show a volatility with no score beside it.\n\nThe historical statistics behind the score are keyed to the historical date's expiry ladder, while the decision to build the interpolated row is made from today's. When those two disagree, the row exists and its volatility is computed, and there are no statistics to score it against.\n\nThe case needs an expiry that today's calendar wants as a desired monthly, that the historical date's calendar did not, and that nobody collected on the historical date. That puts it at the far end of the ladder, around the two-year point, and only across a monthly expiration.\n\n<details>\n<summary>Anchors</summary>\n\n`backend/src/database/views-and-functions/queries/wd04_get_MeansAndSDs_types.ts:135`\n\n```sql\nSELECT DISTINCT expiry FROM \"TickerExpiry\"\n  WHERE \"tradingDate\" = forTradingDate\n    AND expiry IN (SELECT \"tradingDate\" FROM get_expiry_fridays(forTradingDate))\nUNION\nSELECT expiry from get_desired_weekly_expiries(forTradingDate)\nUNION\nSELECT expiry from get_desired_regular_expiries(forTradingDate)\n```\n\nEvery term takes `forTradingDate`, the historical date. The interpolation list in `wd03` takes `actualTradingDate`, today. The union with collected Fridays is what keeps the gap rare: an expiry collected on the historical date has a statistics row regardless of how the calendar classified it.\n\n</details>\n",
+      "updatedAt": 1786038124814
     }
   },
   "clipboardClickToPaste": false,

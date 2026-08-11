@@ -76,7 +76,7 @@ local winbar_filetype_exclude = {
 }
 
 M.get_claude_pair_enabled = function()
-  local enabled = vim.g.claude_pair_enabled
+  local enabled = _G.ClaudePair.is_enabled()
   if enabled then
     return "%#StatusLineTransition1#▕%#StatusLineTransition2#▏%#StatusLineClaudePair#󱇴 claude%*"
   else

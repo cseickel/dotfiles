@@ -1,11 +1,11 @@
 _G.connectDB = function()
   -- hand written connections
-  local path = vim.fn.getenv("HOME") .. "/.local/share/nvim/db_connections.lua"
-  local conns = dofile(path)
+  local path = vim.fn.getenv("HOME") .. "/.local/share/db_ui/connections.json"
+  local conns = vim.fn.json_decode(vim.fn.readfile(path))
   -- Create a list of choices and a table of connection strings
   -- in the same order
   local choices = {} -- string names of connections
-  for index, value in pairs(conns) do
+  for index, value in ipairs(conns) do
     table.insert(choices, index .. ": " .. value.name)
   end
   local choice = vim.fn.inputlist(choices)
@@ -13,8 +13,10 @@ _G.connectDB = function()
     return
   end
 
+  print(vim.inspect(conns[choice]))
+
   vim.b.db_name = conns[choice].name
-  local db = conns[choice].conn
+  local db = conns[choice].url
   vim.b.db = db
   vim.g.db = db
   return db

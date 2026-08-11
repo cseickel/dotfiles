@@ -125,6 +125,22 @@ local grepCWD = function()
   })
 end
 
+local cnext = function()
+  local success = pcall(vim.cmd, 'cnext')
+  if not success then
+    vim.cmd('cfirst')
+  end
+  vim.cmd('normal zz')
+end
+
+local cprev = function()
+  local success = pcall(vim.cmd, 'cprev')
+  if not success then
+    vim.cmd('clast')
+  end
+  vim.cmd('normal zz')
+end
+
 local mappings = {
   [";"] = { "<Plug>(buf-surf-back)", "Previous Buffer" },
   ["'"] = { "<Plug>(buf-surf-forward)", "Next Buffer" },
@@ -146,7 +162,7 @@ local mappings = {
     h = { "<cmd>Gitsigns prev_hunk<cr>", "Previous Git Hunk" },
     --h = { "<Plug>(GitGutterPrevHunk)", "Previous Git Hunk" },
     l = { "<cmd>lprevious<bar>normal z.<cr>", "Previous Location List" },
-    q = { "<cmd>cprevious<bar>normal z.<cr>", "Previous Quickfix" },
+    q = { cprev, "Previous Quickfix" },
   },
   ["]"] = {
     name = "Next...",
@@ -156,7 +172,7 @@ local mappings = {
     h = { "<cmd>Gitsigns next_hunk<cr>", "Next Git Hunk" },
     --h = { "<Plug>(GitGutterNextHunk)", "Next Git Hunk" },
     l = { "<cmd>lnext<bar>normal z.<cr>", "Next Location List" },
-    q = { "<cmd>cnext<bar>normal z.<cr>", "Next Quickfix" },
+    q = { cnext, "Next Quickfix" },
   },
   ["<leader>"] = {
     -- ["o"] = {

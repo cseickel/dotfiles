@@ -5,7 +5,7 @@ command C let @/=""
 " Map Control \ to Esc
 map <silent> <C-\> <Esc>  
 imap <silent> <C-\> <Esc>
-tnoremap <silent> <C-\> <c-\><c-n>
+tnoremap <silent> <C-\> <c-\><c-n><cmd>let b:term_insert = 0<cr>
 
 " Insert newline without triggering completion
 inoremap <silent> <C-enter> <C-o>o
@@ -52,7 +52,7 @@ nnoremap <leader>m m
 " Switch to previous buffer
 nnoremap <M-3> :b#<cr>
 inoremap <M-3> <Esc>:b#<cr>
-tnoremap <M-3> <c-\><c-n>:b#<cr>
+tnoremap <M-3> <c-\><c-n><cmd>let b:term_insert = 0<cr>:b#<cr>
 
 nnoremap <C-t> :tabnew<cr>
 
@@ -76,7 +76,7 @@ inoremap <silent> <C-s> <Esc>:w<cr>
 vnoremap <silent> <C-s> <Esc>:w<cr>
 noremap  <silent> <M-s> :wa<cr>
 inoremap <silent> <M-s> <Esc>:wa<cr>
-tnoremap <silent> <M-s> <C-\><C-n>:wa<cr>
+tnoremap <silent> <M-s> <C-\><C-n><cmd>let b:term_insert = 0<cr>:wa<cr>
 
 " Control+v is for paste, use Alt+v for visual block mode
 nnoremap <silent> <M-v> <C-v>
@@ -200,6 +200,16 @@ nnoremap <silent> h <C-w>h
 nnoremap <silent> j <C-w>j
 nnoremap <silent> k <C-w>k
 nnoremap <silent> l <C-w>l
+" alt window navigation
+nnoremap <silent> <M-h> <C-w>h
+nnoremap <silent> <M-j> <C-w>j
+nnoremap <silent> <M-k> <C-w>k
+nnoremap <silent> <M-l> <C-w>l
+" same from terminal
+tnoremap <silent> <M-h> <C-\><C-n><C-w>h
+tnoremap <silent> <M-j> <C-\><C-n><C-w>j
+tnoremap <silent> <M-k> <C-\><C-n><C-w>k
+tnoremap <silent> <M-l> <C-\><C-n><C-w>l
 
 " just easier to easier to type than the top row
 nnoremap <silent> H ^
@@ -303,7 +313,12 @@ endfunction
 
 function! RecycleTerminal()
     if &buftype == "terminal"
-        b#
+        let alt_buf = bufnr("#")
+        if alt_buf > 0 && nvim_buf_is_valid(alt_buf) && nvim_buf_is_loaded(alt_buf)
+            execute "buffer " . alt_buf
+        else
+            echom "No alternative buffer to switch to!"
+        endif
         return
     endif
     let win_handle = nvim_get_current_win()

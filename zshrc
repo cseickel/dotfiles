@@ -4,7 +4,7 @@
 
 # Go (interactive only - go env can be slow)
 export GOPATH=$(go env GOPATH 2>/dev/null || echo "$HOME/go")
-export PATH="$GOPATH/bin:$PATH"
+export PATH="$GOPATH/bin:$HOME/.cargo/bin:$PATH"
 
 # Path to oh-my-zsh installation
 if [ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]; then
@@ -267,3 +267,6 @@ nv() {
 }
 
 export PATH=$HOME/.rill:$PATH # Added by Rill install
+
+# Added by codebase-memory-mcp install
+export PATH="/home/chris/.local/bin:$PATH"

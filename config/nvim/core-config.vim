@@ -191,6 +191,7 @@ highlight TransparentBackground guibg=transparent
 function! InitTerminal()
   set filetype=terminal
   call EnterTerminal()
+  let b:term_insert = 1
   "startinsert
 endfunction
 
@@ -205,7 +206,14 @@ function! EnterTerminal()
   let g:last_terminal_job_id = b:terminal_job_id
   let g:last_terminal_winid = nvim_get_current_win()
   let g:last_terminal_bufid = nvim_get_current_buf()
-  "startinsert
+  if exists("b:term_insert") && b:term_insert == 1
+    startinsert
+  endif
+endfunction
+
+function! ExitTerminalMode() abort
+  let b:term_insert = 0
+  stopinsert
 endfunction
 
 function! GetUsableWinWidth()
@@ -242,6 +250,7 @@ augroup core_autocmd
   autocmd VimEnter    * call VimEnter()
   autocmd WinEnter    * setlocal cursorline
   autocmd BufWinEnter * setlocal cursorline
+  autocmd TermEnter * let b:term_insert = 1
   autocmd WinLeave    * call WinLeave()
 
 augroup END
@@ -480,6 +489,15 @@ function! CleanupClosedTab()
   endfor
 endfunction
 
+function StopInsertModeOnNonTerminal()
+  " this applies to all but terminal
+  " firs figure out what the prior window was
+  if &buftype ==# "terminal"
+    return
+  endif
+  stopinsert
+endfunction
+
 augroup core_tab
   autocmd!
   autocmd TabNew * call InitNewTab()
@@ -490,7 +508,7 @@ augroup END
 
 augroup ForgetfulMe
   autocmd!
-  autocmd WinEnter * :stopinsert
+  autocmd WinEnter * call StopInsertModeOnNonTerminal()
 augroup end
 
 augroup AutoRefreshFromDisk
