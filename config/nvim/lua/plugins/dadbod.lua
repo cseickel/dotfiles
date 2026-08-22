@@ -1,6 +1,7 @@
 -- Each source window remembers its own tabiew window.
 local WINVAR = "dadbod_csv_win"
-_G.csvviewer = 'csvlens'
+--_G.csvviewer = 'csvlens'
+_G.csvviewer = nil
 
 local function csvWinFor(srcWin)
   local ok, win = pcall(vim.api.nvim_win_get_var, srcWin, WINVAR)
@@ -134,7 +135,6 @@ _G.executeSqlCsv = function(visual)
     })
   else
     vim.cmd("edit " .. csv)
-    vim.cmd("CsvViewEnable display_mode=border")
   end
   if vim.api.nvim_win_is_valid(srcWin) then
     vim.api.nvim_set_current_win(srcWin)
