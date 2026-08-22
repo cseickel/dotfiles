@@ -1,0 +1,161 @@
+# ~/.visidatarc
+#
+# VisiData config. Everything here is a plain override — delete any line you
+# don't want and the built-in default comes back.
+#
+# Command reference for this workflow is at the bottom of the file.
+# To find anything not listed: Space opens the command palette (fuzzy search
+# over all 590 commands), Ctrl+H opens the full help sheet.
+
+from visidata import vd, BaseSheet, TableSheet
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# OPTIONS
+# ─────────────────────────────────────────────────────────────────────────
+
+# Duplicate column names — Result_108.csv has tradeDate, timestamp, de,
+# uClose, years and ddiv twice each. VisiData appends _1 to disambiguate.
+# True would also strip non-identifier characters from all names.
+vd.options.clean_names = False
+
+# Float display. This is the "varying significant digits" fix: a global
+# default, overridable per column at runtime with % (float) or z% (SI float).
+vd.options.disp_float_fmt = '{:.04f}'
+
+# Confirm before quitting a sheet with unsaved changes.
+vd.options.quitguard = True
+
+# Undo is on by default; here so you know the knob exists.
+vd.options.undo = True
+
+# Default column width before truncation.
+vd.options.default_width = 30
+
+# What to display in a cell whose value raised on parse.
+vd.options.safe_error = '#ERR'
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# BINDINGS — additions only
+# ─────────────────────────────────────────────────────────────────────────
+# Already vim-correct out of the box; don't rebind these by accident:
+#   h j k l   gg   G   gh gj gk gl   Ctrl+F Ctrl+B   /  ?  n  N   q
+
+# 0 to leftmost column. ($ is deliberately left alone — it's type-currency.)
+TableSheet.bindkey('0', 'go-leftmost')
+
+# Multi-sort. sort-asc-add / sort-desc-add ship UNBOUND and they're the ones
+# you want: [ sets the primary key, then Alt+[ appends a secondary.
+# If your terminal swallows Alt, the built-in z[ / z] are near-equivalents
+# (they keep higher-priority criteria instead of appending at lowest).
+TableSheet.bindkey('Alt+[', 'sort-asc-add')
+TableSheet.bindkey('Alt+]', 'sort-desc-add')
+
+# NOTE: no binding for go-col-name here on purpose. c (go-col-regex) already
+# searches column names by regex, and zc is go-col-number (jump to column by
+# 0-based index) which is worth keeping.
+
+# Filter to marked rows. " already does this; zf is here in case it reads
+# better as "fold to selection".
+TableSheet.bindkey('zf', 'dup-selected')
+
+# Unbound by default, both useful on query output:
+TableSheet.bindkey('zD', 'select-duplicate-rows')
+TableSheet.bindkey('zE', 'select-error')
+
+
+# ─────────────────────────────────────────────────────────────────────────
+# COMMAND REFERENCE
+# ─────────────────────────────────────────────────────────────────────────
+#
+# FILTER BY PICKING VALUES  — the checkbox-menu workflow
+#   Shift+F      freq-col          frequency table for current column, with
+#                                  counts. This is the value menu.
+#   s / t / u    (on that sheet)   select / toggle / unselect a value
+#   gEnter       open-rows         open a sheet of just the selected groups
+#   zShift+F     freq-summary      one-line summary of all + selected rows
+#
+# FILTER BY CONDITION
+#   |            select-col-regex    select rows matching regex, current column
+#   g|           select-cols-regex   ... matching in ANY visible column
+#   z|           select-expr         select by Python expression
+#   \  g\  z\    unselect-*          inverses of the above
+#   ,            select-equal-cell   select rows equal to the cell under cursor
+#   g,           select-equal-row    ... matching the whole current row
+#
+# MARK ROWS, THEN FILTER TO THEM
+#   s / u / t                        select / unselect / toggle current row
+#   gs / gu / gt                     ... all rows
+#   zs / zu / zt                     ... from top down to cursor
+#   gzs / gzu / gzt                  ... from cursor down to bottom
+#   { / }        go-prev/next-selected    jump between marked rows
+#   "            dup-selected        NEW SHEET of only marked rows  (also zf)
+#   g"           dup-rows            new sheet of all rows
+#   gd           delete-selected     delete the marked rows instead
+#
+# COLUMNS
+#   -            hide-col            hide current column
+#   gv           unhide-cols         unhide everything
+#   Shift+C      columns-sheet       metasheet: bulk hide / rename / retype /
+#                                    reorder. Fastest way to prune 57 columns.
+#   Shift+H / Shift+L      slide-left / slide-right       move one position
+#   gShift+H / gShift+L    slide-leftmost / -rightmost    move to the end
+#   zShift+H / zShift+L    slide-left-n / -right-n        move N (prompts)
+#   !            key-col             pin as key column — stays visible while
+#                                    scrolling right, and anchors g[ / g] sorts
+#   ^            rename-col
+#   _            resize-col-max      fit width to contents
+#
+# SORTING
+#   [ / ]        sort-asc / sort-desc          primary sort, replaces existing
+#   Alt+[ / Alt+]  sort-asc-add / -desc-add    ADD a secondary sort key
+#   g[ / g]      sort-keys-asc / -desc         sort by all key columns
+#
+# FINDING
+#   c            go-col-regex        jump to column whose name matches regex
+#   zc           go-col-number       jump to column by 0-based index
+#   / ?          search-col          search current column forward / back
+#   g/ g?        search-cols         search ALL visible columns  <- any cell
+#   z/ z?        search-expr         search by Python expression
+#   n / N                            next / previous match
+#   r            search-keys         next row whose key columns match
+#
+# EDITING
+#   e            edit-cell
+#   ge           setcol-input        set this column on all SELECTED rows
+#   a / ga       add-row / add-rows
+#   d / gd       delete-row / delete-selected
+#   Ctrl+S       save-sheet          save as (format from the extension)
+#   zCtrl+S      commit-sheet        write back to the source file
+#   Ctrl+Z / Ctrl+R                  undo / redo
+#
+# COMPUTED COLUMNS & AGGREGATION
+#   =            addcol-expr         new column from a Python expression, with
+#                                    column names as variables:
+#                                        uClose - uClose_1
+#                                        abs(float(de) - float(de_1))
+#   g=           setcol-expr         set an existing column by expression
+#   +            aggregate-col       attach sum / avg / max / ... to a column
+#   Shift+F      freq-col            grouped table; aggregates become columns
+#   zShift+F     freq-summary        totals across all / selected rows
+#
+# PLOTTING
+#   .            plot-column         scatterplot current column vs key column
+#   g.           plot-numerics       plot all numeric columns
+#
+# TYPES  — affects sorting, aggregation, and float formatting
+#   #  %  $  @  ~     int / float / currency / date / string
+#   z%                SI float (1.2k, 3.4M)
+#   z@                custom date format (prompts)
+#   Numeric sort is wrong until the column is typed — # or % first.
+#
+# SHEETS
+#   Shift+S      sheets-stack        list open sheets
+#   Ctrl+^                           jump to previous sheet
+#   q / gq       quit-sheet / quit-all
+#
+# FILES
+#   xlsx and parquet load natively by extension — no conversion step.
+#   Ctrl+S to a .csv writes CSV regardless of the source format, which
+#   covers the "read xlsx, save a csv version" case.

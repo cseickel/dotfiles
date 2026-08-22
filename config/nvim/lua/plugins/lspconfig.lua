@@ -281,6 +281,61 @@ return {
 			-- on_attach = navic.attach,
 		})
 
+    -- Returns the directory a TypeScript server may be started from, or nil when
+    -- this buffer belongs to a Deno project and no TypeScript server should run.
+    local function typescript_project_root(bufnr)
+      -- The project root is where the LSP can be started from.
+      -- These servers support monorepos and simple projects, so we select the root
+      -- by the presence of a package manager lock file.
+      local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }
+      -- Give the root markers equal priority by wrapping them in a table
+      root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers, { '.git' } }
+        or vim.list_extend(root_markers, { '.git' })
+
+      local deno_root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
+      local deno_lock_root = vim.fs.root(bufnr, { 'deno.lock' })
+      local project_root = vim.fs.root(bufnr, root_markers)
+      if deno_lock_root and (not project_root or #deno_lock_root > #project_root) then
+        -- deno lock is closer than package manager lock, abort
+        return nil
+      end
+      if deno_root and (not project_root or #deno_root >= #project_root) then
+        -- deno config is closer than or equal to package manager lock, abort
+        return nil
+      end
+      -- project is standard TS, not deno
+      -- We fallback to the current working directory if no project root is found
+      return project_root or vim.fn.getcwd()
+    end
+
+    local typescript_filetypes = {
+      'javascript',
+      'javascript.jsx',
+      'javascriptreact',
+      'typescript',
+      'typescript.tsx',
+      'typescriptreact',
+    }
+
+    local ts_server_by_root = {}
+
+    -- Returns 'tsgo' for TypeScript 7 projects and 'vtsls' for anything older or
+    -- pinning no local typescript, by probing the same binary tsgo's cmd will
+    -- launch, since `--lsp` exists only in TypeScript 7. `system()` folds stderr
+    -- into its return, so the match is anchored on tsc's literal `Version 5.9.2`
+    -- output and every unrecognized result falls to vtsls. The blocking call is
+    -- deliberate: both servers resolve the same buffer in one tick, so the second
+    -- is guaranteed a warm cache and each root is probed once.
+    local function typescript_server(root_dir)
+      if ts_server_by_root[root_dir] == nil then
+        local tsc = vim.fs.joinpath(root_dir, 'node_modules/.bin/tsc')
+        local output = vim.fn.executable(tsc) == 1 and vim.fn.system({ tsc, '--version' }) or ''
+        local major = vim.v.shell_error == 0 and tonumber(output:match('Version%s+(%d+)%.')) or nil
+        ts_server_by_root[root_dir] = (major or 0) >= 7 and 'tsgo' or 'vtsls'
+      end
+      return ts_server_by_root[root_dir]
+    end
+
     vim.lsp.config('tsgo', {
 			on_attach = navic.attach,
       settings = {
@@ -299,73 +354,49 @@ return {
         },
       },
       cmd = function(dispatchers, config)
-        local cmd = '/usr/local/bin/tsc'
-        if (config or {}).root_dir then
-          local local_cmd = vim.fs.joinpath(config.root_dir, 'node_modules/.bin/tsc')
-          if vim.fn.executable(local_cmd) == 1 then
-            cmd = local_cmd
-          end
-        end
-        return vim.lsp.rpc.start({ cmd, '--lsp', '--stdio' }, dispatchers)
+        local tsc = vim.fs.joinpath(config.root_dir, 'node_modules/.bin/tsc')
+        return vim.lsp.rpc.start({ tsc, '--lsp', '--stdio' }, dispatchers)
       end,
-      filetypes = {
-        'javascript',
-        'javascriptreact',
-        'typescript',
-        'typescriptreact',
-      },
+      filetypes = typescript_filetypes,
+      -- Stays the exact inverse of the vtsls root_dir below, so a buffer never gets
+      -- two TypeScript servers attached to it.
       root_dir = function(bufnr, on_dir)
-        -- The project root is where the LSP can be started from
-        -- As stated in the documentation above, this LSP supports monorepos and simple projects.
-        -- We select then from the project root, which is identified by the presence of a package
-        -- manager lock file.
-        local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock' }
-        -- Give the root markers equal priority by wrapping them in a table
-        root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers, { '.git' } }
-          or vim.list_extend(root_markers, { '.git' })
-
-        local deno_root = vim.fs.root(bufnr, { 'deno.json', 'deno.jsonc' })
-        local deno_lock_root = vim.fs.root(bufnr, { 'deno.lock' })
-        local project_root = vim.fs.root(bufnr, root_markers)
-        if deno_lock_root and (not project_root or #deno_lock_root > #project_root) then
-          -- deno lock is closer than package manager lock, abort
-          return
+        local root = typescript_project_root(bufnr)
+        if root and typescript_server(root) == 'tsgo' then
+          on_dir(root)
         end
-        if deno_root and (not project_root or #deno_root >= #project_root) then
-          -- deno config is closer than or equal to package manager lock, abort
-          return
-        end
-        -- project is standard TS, not deno
-        -- We fallback to the current working directory if no project root is found
-        on_dir(project_root or vim.fn.getcwd())
       end,
     })
 
-    -- vim.lsp.config('vtsls', {
-		-- 	capabilities = capabilities,
-		-- 	on_attach = navic.attach,
-		--   single_file_support = false,
-		-- 	-- reuse_client = function()
-		-- 	-- 	return true
-		-- 	-- end,
-    --   root_markers = { "package.json", "tsconfig.json" },
-		-- 	settings = {
-		-- 		typescript = {
-		-- 			tsserver = {
-		-- 				maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
-		-- 			},
-		-- 		},
-		-- 		vtsls = {
-		-- 			autoUseWorkspaceTsdk = true,
-		-- 			experimental = {
-		-- 				completion = {
-		-- 					enableServerSideFuzzyMatch = true,
-		-- 					entriesLimit = 100,
-		-- 				},
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
+    vim.lsp.config('vtsls', {
+      capabilities = capabilities,
+      on_attach = navic.attach,
+      filetypes = typescript_filetypes,
+      -- Stays the exact inverse of the tsgo root_dir above, so a buffer never gets
+      -- two TypeScript servers attached to it.
+      root_dir = function(bufnr, on_dir)
+        local root = typescript_project_root(bufnr)
+        if root and typescript_server(root) == 'vtsls' then
+          on_dir(root)
+        end
+      end,
+      settings = {
+        typescript = {
+          tsserver = {
+            maxTsServerMemory = 8192,
+          },
+        },
+        vtsls = {
+          autoUseWorkspaceTsdk = true,
+          experimental = {
+            completion = {
+              enableServerSideFuzzyMatch = true,
+              entriesLimit = 100,
+            },
+          },
+        },
+      },
+    })
 
     vim.lsp.enable({
       "bashls",
@@ -376,7 +407,7 @@ return {
       "lua_ls",
       "pylsp",
       "vimls",
-      -- "vtsls",
+      "vtsls",
       --"typescript-tools",
       "tsgo",
       "yamlls",

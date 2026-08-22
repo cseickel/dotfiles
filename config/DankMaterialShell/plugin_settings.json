@@ -70,5 +70,8 @@
   "dcalUpcoming": {
     "enabled": true,
     "dynamicWidth": true
+  },
+  "rvaTaskStatus": {
+    "enabled": true
   }
 }

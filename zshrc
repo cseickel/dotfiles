@@ -270,3 +270,12 @@ export PATH=$HOME/.rill:$PATH # Added by Rill install
 
 # Added by codebase-memory-mcp install
 export PATH="/home/chris/.local/bin:$PATH"
+
+export QSV_MAX_JOBS=16
+export QSV_FREEMEMORY_HEADROOM_PCT=10
+export QSV_MEMORY_CHECK=false
+export QSV_AUTOINDEX_SIZE=10485760
+export QSV_RDR_BUFFER_CAPACITY=1048576
+export QSV_WTR_BUFFER_CAPACITY=2097152
+export QSV_NO_ALLOC_TUNING=false
+

@@ -35,3 +35,5 @@
 	format = ssh
 [coderabbit]
 	machineId = cli/7f9cb5871f8c4ddb953fb7531abb7222
+[merge "keep-branch"]
+	driver = cp -f %B %A

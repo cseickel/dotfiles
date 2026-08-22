@@ -74,6 +74,23 @@ local mine = function()
             enabled = false,
           },
         },
+        commands = {
+          system_open = function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            -- macOs: open file in default application in the background.
+            -- vim.fn.jobstart({ "xdg-open", "-g", path }, { detach = true })
+            -- Linux: open file in default application
+            vim.fn.jobstart({ "xdg-open", path }, { detach = true })
+          end,
+          yank_path = function(state)
+            local node = state.tree:get_node()
+            local path = vim.fn.fnamemodify(node:get_id(), ':.')
+            vim.fn.setreg("+", path, "c")
+            vim.fn.setreg("*", path, "c")
+            vim.notify("Copied: " .. path)
+          end,
+        },
         event_handlers = {
           -- {
           --   event = events.NEO_TREE_BUFFER_ENTER,
@@ -269,6 +286,7 @@ local mine = function()
             },
             mappings = {
               ["/"] = "none",
+              ["gx"] = "system_open",
               ["f"] = "fuzzy_sorter",
               ["F"] = "filter_on_submit",
               ["h"] = function(state)
@@ -304,6 +322,7 @@ local mine = function()
                   end
                 end
               end,
+              ['Y'] = "yank_path",
               ["<space>"] = function(state)
                 local node = state.tree:get_node()
                 if require("neo-tree.utils").is_expandable(node) then

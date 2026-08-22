@@ -33,14 +33,14 @@ layout {
     focus-ring {
         off
         width 2
-        active-color "#5e717b"
+        active-color "#ac895e"
         inactive-color "#505050"
     }
 
     border {
         on
         width 2
-        active-color "#5e717b"
+        active-color "#ac895e"
         inactive-color "#505050"
     }
 
@@ -61,7 +61,7 @@ layout {
 }
 
 window-rule {
-    geometry-corner-radius 5
+    geometry-corner-radius 8
     clip-to-geometry true
     draw-border-with-background false
 } 

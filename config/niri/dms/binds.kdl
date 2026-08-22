@@ -1,7 +1,8 @@
 binds {
     Super+A hotkey-overlay-title="App Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
-    Super+Alt+Down hotkey-overlay-title="Move Workspace to Monitor Down" { move-workspace-to-monitor-down; }
-    Super+Alt+Up hotkey-overlay-title="Move Workspace to Monitor Up" { move-workspace-to-monitor-up; }
-    Mod+Shift+Page_Down hotkey-overlay-title="Move Column to Monitor Down" { move-column-to-monitor-down; }
+    Mod+Alt+Down hotkey-overlay-title="Move Column to Monitor Down" { move-column-to-monitor-down; }
+    Mod+Alt+Left { move-column-to-monitor-left; }
+    Mod+Alt+Right { move-column-to-monitor-right; }
+    Mod+Alt+Up { move-column-to-monitor-up; }
 }

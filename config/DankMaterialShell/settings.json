@@ -569,8 +569,7 @@
       },
       "hotCorners": {
         "off": true
-      },
-      "disabled": true
+      }
     },
     "DVI-I-1": {
       "hotCorners": {
@@ -588,7 +587,7 @@
   "hyprlandOutputSettings": {},
   "displayProfiles": {},
   "activeDisplayProfile": {
-    "niri": "profile_1786023094011_fmpmksa"
+    "niri": "profile_1785763615144_5u1344h"
   },
   "displayProfileAutoSelect": false,
   "displayShowDisconnected": false,
@@ -605,6 +604,10 @@
       "leftWidgets": [
         {
           "id": "launcherButton",
+          "enabled": true
+        },
+        {
+          "id": "separator",
           "enabled": true
         },
         {
@@ -764,6 +767,14 @@
         {
           "id": "colorPicker",
           "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "rvaTaskStatus",
+          "enabled": true
         }
       ],
       "centerWidgets": [
@@ -882,11 +893,31 @@
           "enabled": true
         },
         {
+          "id": "separator",
+          "enabled": true
+        },
+        {
           "id": "controlCenterButton",
           "enabled": true
         },
         {
+          "id": "separator",
+          "enabled": true
+        },
+        {
           "id": "colorPicker",
+          "enabled": true
+        },
+        {
+          "id": "dankTodo",
+          "enabled": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "rvaTaskStatus",
           "enabled": true
         }
       ],
@@ -930,10 +961,6 @@
         },
         {
           "id": "separator",
-          "enabled": true
-        },
-        {
-          "id": "dankTodo",
           "enabled": true
         },
         {

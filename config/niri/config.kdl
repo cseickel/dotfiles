@@ -613,9 +613,13 @@ binds {
     // Mod+Space       { switch-layout "next"; }
     // Mod+Shift+Space { switch-layout "prev"; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    // Print { screenshot; }
+    // Ctrl+Print { screenshot-screen; }
+    // Alt+Print { screenshot-window; }
+
+    // Screenshots open in Gradia for editing.
+    Print { spawn-sh "niri msg action screenshot && sleep 0.4 && wl-paste --type image/png | flatpak run be.alexandervanhee.gradia"; }
+    Alt+Print { spawn-sh "niri msg action screenshot-window && sleep 0.4 && wl-paste --type image/png | flatpak run be.alexandervanhee.gradia"; }
 
     // Applications such as remote-desktop clients and software KVM switches may
     // request that niri stops processing the keyboard shortcuts defined here

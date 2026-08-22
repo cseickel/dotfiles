@@ -444,7 +444,7 @@ endfunction
 "nnoremap <silent> '         :call NextBufferByName(1)<cr>
 nnoremap <silent> <M-q>     :call DeleteBuffer()<cr>
 nnoremap <silent> <C-\>     :call RecycleTerminal()<cr>
-nnoremap <silent> <leader>t :15split<bar>setlocal winfixheight<bar>call RecycleTerminal()<cr>
+nnoremap <silent> <leader>t :15split<bar>setlocal winfixheight<bar>terminal<cr>
 nnoremap <silent> <leader>T :call CloseTerminal()<cr>
 
 augroup core_mappings_augroup
