@@ -57,6 +57,7 @@ M.map = {
 
   ["gs"] = "show_stats",
   ["gi"] = "show_info",
+  ["gS"] = "show_sheets",
   ["?"] = "show_help",
 
   ["<leader>r"] = "refresh",

@@ -21,9 +21,11 @@ local M = {}
 --- Quote one argument of the pipeline string, which xan splits with shlex.
 ---@param value string
 ---@return string
-local function shell_quote(value)
+function M.quote(value)
   return "'" .. value:gsub("'", "'\\''") .. "'"
 end
+
+local shell_quote = M.quote
 
 --- Sort stages, least significant key first.
 --- `xan sort` applies one direction to all its keys and is stable, so a
@@ -74,30 +76,28 @@ end
 
 --- The `map` stage that gives each column its decimals, padding and alignment.
 --- Runs after `rename`, so a column is addressed by its header name, which is
---- unique. A value that will not cast falls through to its raw text rather than
---- aborting the run.
+--- unique. Every clause falls through: a value that will not cast lands on its
+--- raw text rather than aborting the run, and a value that is empty lands on a
+--- space, because `xan view` renders an empty cell as the text `<empty>`.
 ---@param selected csv.Column[]
 ---@param headers string[]
 ---@param formats table<integer, csv.Format>
----@return string|nil
+---@return string
 local function format_stage(selected, headers, formats)
   local clauses = {}
   for index, column in ipairs(selected) do
+    local literal = columns.string_literal(headers[index])
+    local reference = string.format("col(%s)", literal)
     local format = formats[column.index]
-    if format then
-      local literal = columns.string_literal(headers[index])
-      local reference = string.format("col(%s)", literal)
-      local written = expression.value(reference, format)
+    local written = format and expression.value(reference, format) or reference
 
-      if written ~= reference then
-        table.insert(clauses, string.format("try(%s) || %s as %s", written, reference, literal))
-      end
+    if written == reference then
+      clauses[index] = string.format('%s || " " as %s', reference, literal)
+    else
+      clauses[index] = string.format('try(%s) || %s || " " as %s', written, reference, literal)
     end
   end
 
-  if #clauses == 0 then
-    return nil
-  end
   return "map -O " .. shell_quote(table.concat(clauses, ", "))
 end
 
@@ -163,7 +163,7 @@ end
 --- commands, so those see exactly the rows the buffer is showing.
 ---@param state csv.State
 ---@return string[]
-local function narrowing_stages(state)
+function M.narrowing_stages(state)
   local stages = { "enum -c " .. shell_quote(state.rowid_name) }
   if #state.where > 0 then
     table.insert(stages, "filter " .. shell_quote(expression.where(state)))
@@ -175,7 +175,7 @@ end
 ---@param state csv.State
 ---@return string
 function M.build(state)
-  local stages = narrowing_stages(state)
+  local stages = M.narrowing_stages(state)
 
   for _, stage in ipairs(sort_stages(state.order)) do
     table.insert(stages, stage)
@@ -188,10 +188,7 @@ function M.build(state)
   table.insert(stages, "select " .. shell_quote(columns.selection(selected)))
   table.insert(stages, "rename " .. shell_quote(columns.rename_argument(headers)))
 
-  local formatting = format_stage(selected, headers, state.formats)
-  if formatting then
-    table.insert(stages, formatting)
-  end
+  table.insert(stages, format_stage(selected, headers, state.formats))
 
   -- Cutting the headers happens after `map`, which addresses each column by
   -- name and needs those names to stay unique. Two cut headers may well match.
@@ -203,8 +200,9 @@ function M.build(state)
   -- `-M` hides the meta info
   -- `-e` renders every column at full width
   -- `-A` shows all rows instead of the 100 row default
-  -- `-t slim` is a theme that showss internal borders only
-  local view = "view --color never -M -I --repeat-headers never -e -A -t slim"
+  -- `-t table` is named rather than left to default, since `XAN_VIEW_ARGS` can
+  -- change the default theme and the syntax file is written for this one
+  local view = "view --color never -M -I --repeat-headers never -e -A -t table"
   local aligned = right_aligned(selected, headers, state.formats)
   if aligned then
     view = view .. " -r " .. shell_quote(aligned)
@@ -212,80 +210,6 @@ function M.build(state)
   table.insert(stages, view)
 
   return table.concat(stages, " | ")
-end
-
---- The argv for running `state` through xan.
----@param state csv.State
----@return string[]
-function M.command(state)
-  return { "xan", "run", M.build(state), state.source }
-end
-
-local SAMPLE_ROWS = 600
--- `sample` reads whatever it is given, so the sample is drawn from the head of
--- the file rather than from all of it.
-local SAMPLE_WINDOW = 60000
-
---- The argv for the sample `csv.format` measures precision from. Renaming to
---- display names first makes every key unique, which the JSON objects require
---- and duplicated headers would break.
----@param path string
----@param rename_argument string
----@return string[]
-function M.sample_command(path, rename_argument)
-  local pipeline = table.concat({
-    string.format("slice -l %d", SAMPLE_WINDOW),
-    string.format("sample %d", SAMPLE_ROWS),
-    "rename " .. shell_quote(rename_argument),
-    "to jsonl --strings '*'",
-  }, " | ")
-  return { "xan", "run", pipeline, path }
-end
-
---- The argv that lists a file's column names, one per line.
----@param path string
----@return string[]
-function M.headers_command(path)
-  return { "xan", "headers", "-j", path }
-end
-
----@param state csv.State
----@param stage string
----@return string[]
-local function narrowed_command(state, stage)
-  local stages = narrowing_stages(state)
-  table.insert(stages, stage)
-  return { "xan", "run", table.concat(stages, " | "), state.source }
-end
-
---- The argv counting the rows the current filters leave.
----@param state csv.State
----@return string[]
-function M.count_command(state)
-  return narrowed_command(state, "count")
-end
-
---- The argv listing the distinct values of `column` among the rows the current
---- filters leave, as one JSON object per value, most frequent first.
----@param state csv.State
----@param column csv.Column
----@return string[]
-function M.frequency_command(state, column)
-  local selector = shell_quote(columns.selector(column))
-  return narrowed_command(state, "frequency -s " .. selector .. " -A | to jsonl --strings '*'")
-end
-
---- The argv summarising the rows the current filters leave, one JSON object per
---- column, or per every column when `column` is absent.
----@param state csv.State
----@param column csv.Column|nil
----@return string[]
-function M.stats_command(state, column)
-  local stage = "stats -A"
-  if column then
-    stage = stage .. " -s " .. shell_quote(columns.selector(column))
-  end
-  return narrowed_command(state, stage .. " | to jsonl --strings '*'")
 end
 
 return M

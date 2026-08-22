@@ -10,6 +10,9 @@ cells to display width rather than byte length, so a line holding a multi-byte
 character has its separators at different byte offsets than the header, and
 offsets taken from one line never describe another.
 
+A cell is bounded by the separators around it, or by the end of the line where
+the theme in use draws no outer border.
+
 It is pure Lua and can be exercised without nvim.
 ]]
 
@@ -30,44 +33,59 @@ local function trim(value)
   return (value:gsub("^%s+", ""):gsub("%s+$", ""))
 end
 
---- 0-based byte offset of every column separator on one line.
+---@class csv.CellRange
+---@field from integer 0-based byte offset of the first byte in the cell.
+---@field to integer   0-based byte offset just past the cell.
+
+--- The byte range of every cell on one line, cell 1 being the row id. The ends
+--- of the line bound the first and last cells, and a zero width range is
+--- dropped, so the count comes out the same whether or not the theme in use
+--- draws the outer borders. `view` pads every cell, so no real cell is empty.
 ---@param line string
----@return integer[]
-function M.separators(line)
-  local offsets = {}
-  local from = 1
+---@return csv.CellRange[]
+function M.cell_ranges(line)
+  local ranges = {}
+  local from = 0
+  local search = 1
   while true do
-    local found = line:find(SEPARATOR, from, true)
+    local found = line:find(SEPARATOR, search, true)
     if not found then
-      return offsets
+      break
     end
-    table.insert(offsets, found - 1)
-    from = found + #SEPARATOR
+    if found - 1 > from then
+      table.insert(ranges, { from = from, to = found - 1 })
+    end
+    from = found - 1 + #SEPARATOR
+    search = found + #SEPARATOR
   end
+
+  if #line > from then
+    table.insert(ranges, { from = from, to = #line })
+  end
+  return ranges
 end
 
 --- The byte range cell `index` occupies on `line`, as 0-based offsets suitable
---- for an extmark. Cell 1 is the row id.
+--- for an extmark.
 ---@param line string
 ---@param index integer
 ---@return integer|nil from
 ---@return integer|nil to
 function M.cell_bounds(line, index)
-  local offsets = M.separators(line)
-  if not offsets[index] or not offsets[index + 1] then
+  local range = M.cell_ranges(line)[index]
+  if not range then
     return nil, nil
   end
-  return offsets[index] + #SEPARATOR, offsets[index + 1]
+  return range.from, range.to
 end
 
 --- The trimmed text of every cell on one line, cell 1 being the row id.
 ---@param line string
 ---@return string[]
 function M.cells(line)
-  local offsets = M.separators(line)
   local cells = {}
-  for index = 1, #offsets - 1 do
-    cells[index] = trim(line:sub(offsets[index] + #SEPARATOR + 1, offsets[index + 1]))
+  for index, range in ipairs(M.cell_ranges(line)) do
+    cells[index] = trim(line:sub(range.from + 1, range.to))
   end
   return cells
 end
@@ -77,28 +95,25 @@ end
 ---@param column integer 0-based byte offset, as nvim reports the cursor.
 ---@return integer|nil
 function M.cell_at(line, column)
-  local offsets = M.separators(line)
-  if #offsets < 2 or column < offsets[1] or column >= offsets[#offsets] then
-    return nil
-  end
-
-  for index = #offsets - 1, 1, -1 do
-    if column >= offsets[index] then
+  for index, range in ipairs(M.cell_ranges(line)) do
+    if column >= range.from and column < range.to then
       return index
     end
   end
   return nil
 end
 
+--- Whether `line` is one of the horizontal rules rather than a row. Every theme
+--- draws its rules from dashes and corners, and only a header or a data row
+--- carries the vertical separator.
 ---@param line string
----@param prefix string
 ---@return boolean
-local function starts_with(line, prefix)
-  return line:sub(1, #prefix) == prefix
+local function is_rule(line)
+  return line:find("─", 1, true) ~= nil and line:find(SEPARATOR, 1, true) == nil
 end
 
 --- Read the table `xan view` drew. It pads its output with a blank line at each
---- end, and draws a top border, a header, a rule, the rows, and a bottom border.
+--- end, and draws a top rule, a header, a rule, the rows, and a bottom rule.
 ---@param output string[]
 ---@return csv.Layout|nil layout
 ---@return string|nil error
@@ -110,10 +125,10 @@ function M.parse(output)
     end
   end
 
-  if #lines < 4 or not starts_with(lines[1], "─") or not starts_with(lines[3], "─") then
+  if #lines < 4 or not is_rule(lines[1]) or not is_rule(lines[3]) then
     return nil, "xan view did not produce a table"
   end
-  -- Cut the top border
+  -- Cut the top rule
   table.remove(lines, 1)
 
   local layout = {

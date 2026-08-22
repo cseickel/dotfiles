@@ -1,11 +1,13 @@
 --[[
-The filter dialog.
+The dialogs that ask the user to choose something.
 
-One float per filter. It offers the comparisons that suit the column's detected
-kind, so a numeric column never offers `contains` and a text column never offers
-`>`, and it offers the column's own values as a checklist. The value list is
-drawn through the filters already applied, so every value it shows is one that
-would leave rows on screen.
+The filter dialog offers the comparisons that suit the column's detected kind,
+so a numeric column never offers `contains` and a text column never offers `>`,
+and it offers the column's own values as a checklist. The value list is drawn
+through the filters already applied, so every value it shows is one that would
+leave rows on screen.
+
+The sheet dialog lists the sheets of a workbook.
 ]]
 
 local buffer = require("csv.buffer")
@@ -142,6 +144,36 @@ local function ask_for_value(buf, column, choice)
     end
     buffer.render(buf)
   end)
+end
+
+--- Choose which sheet of a workbook to read.
+---@param buf csv.Buffer
+function M.sheets(buf)
+  local sheets = buf.state.sheets
+  if #sheets == 0 then
+    return report(vim.fn.fnamemodify(buf.state.source, ":t") .. " has no sheets")
+  end
+
+  local lines = {}
+  for index, name in ipairs(sheets) do
+    lines[index] = string.format(
+      "  %s %d  %s",
+      index - 1 == buf.state.sheet and "▸" or " ",
+      index,
+      name
+    )
+  end
+
+  local bufnr, winid = window.open(lines, { title = "Sheets" })
+  vim.api.nvim_win_set_cursor(winid, { buf.state.sheet + 1, 0 })
+
+  vim.keymap.set("n", "<CR>", function()
+    local chosen = vim.api.nvim_win_get_cursor(winid)[1] - 1
+    window.close(winid)
+    if chosen ~= buf.state.sheet then
+      buffer.open_sheet(buf, chosen)
+    end
+  end, { buffer = bufnr, nowait = true })
 end
 
 --- Open the dialog for `column`.

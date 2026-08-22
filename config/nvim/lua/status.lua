@@ -132,9 +132,11 @@ M.get_header = function()
 		local gutter = string.rep(" ", textoff)
 
 		local text = vim.fn.getline(header_line)
-		-- remove the first_col - 1 characters from the beginning of the text
-		if view.leftcol > 1 then
-			text = text:sub(view.leftcol + 1, -1)
+		-- Drop what the window has scrolled past. `leftcol` counts display
+		-- columns and `sub` counts bytes, so a multi-byte character would be cut
+		-- in half without virtcol2col to convert between them.
+		if view.leftcol > 0 then
+			text = text:sub(vim.fn.virtcol2col(winid, header_line, view.leftcol + 1))
 		end
 		-- add textoff to the beginning of the text
 		-- ensure the text is left aligned

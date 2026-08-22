@@ -8,6 +8,7 @@ moved is still the one under it.
 ]]
 
 local buffer = require("csv.buffer")
+local cursor = require("csv.cursor")
 local format = require("csv.format")
 local selection = require("csv.selection")
 
@@ -24,7 +25,7 @@ end
 ---@param buf csv.Buffer
 ---@param change fun(column: csv.Column)
 local function on_column(buf, change)
-  local column = buffer.column_at_cursor(buf, 0)
+  local column = cursor.column_at(buf, 0)
   if not column then
     return
   end
@@ -46,8 +47,8 @@ local function follow(buf, column)
 
   buffer.render(buf, function()
     if cell then
-      buffer.focus_cell(buf, 0, cell)
-      buffer.flash_cell(buf, cell)
+      cursor.focus_cell(buf, 0, cell)
+      cursor.flash_cell(buf, cell)
     end
   end)
 end
@@ -86,7 +87,7 @@ end
 ---@return fun(buf: csv.Buffer)
 local function mover(delta)
   return function(buf)
-    local column = buffer.column_at_cursor(buf, 0)
+    local column = cursor.column_at(buf, 0)
     if column and selection.swap_column(buf.state, column, delta) then
       follow(buf, column)
     end
@@ -98,7 +99,7 @@ end
 local function paster(before)
   return function(buf)
     local held = buf.state.clipboard[1]
-    local column = buffer.column_at_cursor(buf, 0)
+    local column = cursor.column_at(buf, 0)
     if selection.paste_columns(buf.state, column, before) then
       follow(buf, held)
     end
@@ -108,11 +109,11 @@ end
 ---@type table<string, csv.Action>
 M.actions = {
   next_column = action("Move to the next column", function(buf)
-    buffer.jump_column(buf, 0, 1)
+    cursor.jump_column(buf, 0, 1)
   end),
 
   prev_column = action("Move to the previous column", function(buf)
-    buffer.jump_column(buf, 0, -1)
+    cursor.jump_column(buf, 0, -1)
   end),
 
   hide_column = action("Hide this column", function(buf)
@@ -153,7 +154,7 @@ M.actions = {
   decrease_width = action("Narrow this column by one", width(-1)),
 
   set_format = action("Give this column a printf format", function(buf)
-    local column = buffer.column_at_cursor(buf, 0)
+    local column = cursor.column_at(buf, 0)
     if not column then
       return
     end

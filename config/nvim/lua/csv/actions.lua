@@ -11,6 +11,7 @@ here, so a key still finds every action in one table.
 
 local buffer = require("csv.buffer")
 local column_actions = require("csv.column_actions")
+local cursor = require("csv.cursor")
 local dialog = require("csv.dialog")
 local panel = require("csv.panel")
 local query = require("csv.query")
@@ -32,7 +33,7 @@ end
 ---@param buf csv.Buffer
 ---@param change fun(column: csv.Column)
 local function on_column(buf, change)
-  local column = buffer.column_at_cursor(buf, 0)
+  local column = cursor.column_at(buf, 0)
   if not column then
     return
   end
@@ -86,7 +87,7 @@ M.actions = {
   end),
 
   toggle_mark_row = action("Mark or unmark this row", function(buf)
-    local rowid = buffer.rowid_at_cursor(buf, 0)
+    local rowid = cursor.rowid_at(buf, 0)
     if not rowid then
       return
     end
@@ -123,7 +124,7 @@ M.actions = {
   end),
 
   filter = action("Filter on this column", function(buf)
-    local column = buffer.column_at_cursor(buf, 0)
+    local column = cursor.column_at(buf, 0)
     if column then
       dialog.open(buf, column)
     end
@@ -176,10 +177,14 @@ M.actions = {
   end),
 
   show_stats = action("Summarise this column", function(buf)
-    local column = buffer.column_at_cursor(buf, 0)
+    local column = cursor.column_at(buf, 0)
     if column then
       panel.stats(buf, column)
     end
+  end),
+
+  show_sheets = action("Choose which sheet to read", function(buf)
+    dialog.sheets(buf)
   end),
 
   show_help = action("List every key", function()

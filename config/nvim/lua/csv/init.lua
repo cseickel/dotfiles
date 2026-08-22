@@ -16,7 +16,7 @@ local keymaps = require("csv.keymaps")
 
 local M = {}
 
-M.patterns = { "*.csv", "*.tsv" }
+M.patterns = { "*.csv", "*.tsv", "*.xls", "*.xlsx", "*.xlsb", "*.ods", "*.parquet" }
 
 ---@param buf csv.Buffer
 local function apply_keymaps(buf)
@@ -31,17 +31,38 @@ local function apply_keymaps(buf)
   end
 end
 
+-- The groups extmarks apply. Everything the table is painted with by pattern
+-- lives in syntax/csv-table.vim.
 local function define_highlights()
   local defaults = {
     CsvMarkedRow = "DiffAdd",
     CsvMarkedColumn = "DiffText",
     CsvFlash = "Visual",
-    CsvHeader = "Title",
-    CsvBorder = "VertSplit",
   }
   for name, link in pairs(defaults) do
     vim.api.nvim_set_hl(0, name, { link = link, default = true })
   end
+end
+
+local SHEET_NAME_LENGTH = 10
+
+--- Which sheet of a workbook is on screen, and the key that changes it. Absent
+--- for a source that has no sheets.
+---@param buf csv.Buffer
+---@return string|nil
+local function sheet_summary(buf)
+  local sheets = buf.state.sheets
+  if #sheets == 0 then
+    return nil
+  end
+
+  local name = sheets[buf.state.sheet + 1] or ""
+  return string.format(
+    "sheet %d/%d %s · gS sheets",
+    buf.state.sheet + 1,
+    #sheets,
+    columns.truncate(name, SHEET_NAME_LENGTH)
+  )
 end
 
 --- What the sort reads as in a statusline.
@@ -84,7 +105,7 @@ function M.status(bufnr)
     return ""
   end
 
-  local parts = {}
+  local parts = { sheet_summary(buf) }
   local first, last = buffer.row_range(buf)
   if last < first then
     table.insert(parts, "no rows")

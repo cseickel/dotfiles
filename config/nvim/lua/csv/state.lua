@@ -43,7 +43,9 @@ local DEFAULT_LIMIT = 1000
 ---@alias csv.Filter csv.FilterNumeric|csv.FilterString|csv.FilterIn|csv.FilterMarked|csv.FilterExpr
 
 ---@class csv.State
----@field source string         Path of the CSV file.
+---@field source string         Path of the file.
+---@field sheet integer         0-based sheet being read, 0 for a source without sheets.
+---@field sheets string[]       Every sheet name, empty for a source without sheets.
 ---@field columns csv.Column[]  Every source column, in file order.
 ---@field rowid_name string     Name for the prepended row id, absent from `columns`.
 ---@field where csv.Filter[]    ANDed together.
@@ -62,6 +64,8 @@ local DEFAULT_LIMIT = 1000
 function M.new(source)
   return {
     source = source.path,
+    sheet = source.sheet,
+    sheets = source.sheets,
     columns = source.columns,
     rowid_name = source.rowid_name,
     formats = source.formats,
