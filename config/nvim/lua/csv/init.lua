@@ -36,6 +36,8 @@ local function define_highlights()
     CsvMarkedRow = "DiffAdd",
     CsvMarkedColumn = "DiffText",
     CsvFlash = "Visual",
+    CsvHeader = "Title",
+    CsvBorder = "VertSplit",
   }
   for name, link in pairs(defaults) do
     vim.api.nvim_set_hl(0, name, { link = link, default = true })

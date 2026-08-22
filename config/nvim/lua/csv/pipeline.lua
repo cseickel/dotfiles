@@ -200,11 +200,11 @@ function M.build(state)
     table.insert(stages, "rename " .. shell_quote(columns.rename_argument(shown)))
   end
 
-  -- `-e` renders every column at full width, since `view` otherwise fits its
-  -- output to a terminal width and elides middle columns. `-A` lifts its own
-  -- row limit of 100, below which it truncates the page and says so with a row
-  -- of ellipses.
-  local view = "view --color never -M -I --repeat-headers never -e -A"
+  -- `-M` hides the meta info
+  -- `-e` renders every column at full width
+  -- `-A` shows all rows instead of the 100 row default
+  -- `-t slim` is a theme that showss internal borders only
+  local view = "view --color never -M -I --repeat-headers never -e -A -t slim"
   local aligned = right_aligned(selected, headers, state.formats)
   if aligned then
     view = view .. " -r " .. shell_quote(aligned)

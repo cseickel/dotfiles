@@ -37,6 +37,23 @@ local function apply_marks(buffer)
   local painted = buffer.layout
   vim.api.nvim_buf_clear_namespace(buffer.bufnr, mark_namespace, 0, -1)
 
+  -- Add heder highlight
+  if buffer.state.header then
+    vim.api.nvim_buf_set_extmark(buffer.bufnr, mark_namespace, 0, 0, {
+      line_hl_group = "CsvHeader",
+      end_row = 1
+    })
+  end
+
+  -- Set hl for line drawing borders
+  vim.api.nvim_buf_set_extmark(buffer.bufnr, mark_namespace, 1, 0, {
+    line_hl_group = "CsvBorder",
+  })
+  vim.api.nvim_buf_set_extmark(buffer.bufnr, mark_namespace, 0, 0, {
+    conceal = "│",
+    end_row = painted.last_row
+  })
+
   for line = painted.first_row, painted.last_row do
     local rowid = painted.rowids[line]
     if rowid and buffer.state.marked[rowid] then

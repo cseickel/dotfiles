@@ -105,24 +105,21 @@ end
 function M.parse(output)
   local lines = {}
   for _, line in ipairs(output) do
-    table.insert(lines, line)
-  end
-  while #lines > 0 and trim(lines[1]) == "" do
-    table.remove(lines, 1)
-  end
-  while #lines > 0 and trim(lines[#lines]) == "" do
-    table.remove(lines)
+    if trim(line) ~= "" then
+      table.insert(lines, line)
+    end
   end
 
-  if #lines < 4 or not starts_with(lines[1], "┌") or not starts_with(lines[3], "├")
-    or not starts_with(lines[#lines], "└") then
+  if #lines < 4 or not starts_with(lines[1], "─") or not starts_with(lines[3], "─") then
     return nil, "xan view did not produce a table"
   end
+  -- Cut the top border
+  table.remove(lines, 1)
 
   local layout = {
     lines = lines,
-    header = 2,
-    first_row = 4,
+    header = 1,
+    first_row = 3,
     last_row = #lines - 1,
     rowids = {},
   }
