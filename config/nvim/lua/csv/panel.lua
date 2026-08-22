@@ -52,7 +52,7 @@ function M.help_lines()
 end
 
 function M.help()
-  window.open(M.help_lines(), { title = "csv keys" })
+  window.split(M.help_lines(), { title = "csv keys" })
 end
 
 --- How the current filters and sort read as sentences.

@@ -86,9 +86,8 @@ local PAD_FUNCTION = { left = "rpad", center = "pad", right = "lpad" }
 --- How a column's value is written, padding included.
 ---@param reference string A `col(...)` call naming the column.
 ---@param format csv.Format
----@param header string
 ---@return string
-function M.value(reference, format, header)
+function M.value(reference, format)
   local written = reference
 
   if format.spec then
@@ -99,10 +98,13 @@ function M.value(reference, format, header)
   end
 
   if format.align then
-    -- `view` sizes a column to its widest cell, so padding narrower than the
-    -- header would leave the value off centre inside the drawn column.
-    local width = math.max(format.width, columns.text_length(header))
-    written = string.format("%s(%s, %d)", PAD_FUNCTION[format.align], written, width)
+    -- Slicing counts characters where `printf` counts bytes, so this never cuts
+    -- a multi-byte character in half.
+    local width = format.width
+    written = string.format(
+      'if(len(%s) > %d, %s[0:%d] ++ "…", %s(%s, %d))',
+      written, width, written, width - 1, PAD_FUNCTION[format.align], written, width
+    )
   end
 
   return written

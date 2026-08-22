@@ -58,10 +58,13 @@ end
 --- A single unparseable value makes the column text, so a column only formats
 --- as a number when every sampled value is one.
 ---@param values string[]
+---@param header_length integer Characters in the column's name.
 ---@return csv.Format
-function M.analyse_column(values)
+function M.analyse_column(values, header_length)
   local decimals = {}
-  local width = 0
+  -- The width starts where the column already sits, which is the wider of its
+  -- values and its own name, so the first press of a width key moves it.
+  local width = header_length
   local numeric = true
 
   for _, value in ipairs(values) do
@@ -111,7 +114,7 @@ function M.analyse(sample, source_columns)
       local value = row[name]
       values[index] = type(value) == "string" and value or ""
     end
-    formats[column.index] = M.analyse_column(values)
+    formats[column.index] = M.analyse_column(values, columns.text_length(name))
   end
   return formats
 end

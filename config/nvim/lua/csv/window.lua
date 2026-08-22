@@ -51,6 +51,29 @@ function M.open(lines, opts)
   return bufnr, winid
 end
 
+--- Open `lines` in a horizontal split below, tall enough to hold them.
+---@param lines string[]
+---@param opts { title: string }
+---@return integer bufnr
+---@return integer winid
+function M.split(lines, opts)
+  local bufnr = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  vim.bo[bufnr].modifiable = false
+  vim.bo[bufnr].bufhidden = "wipe"
+  vim.api.nvim_buf_set_name(bufnr, opts.title)
+
+  vim.cmd.split()
+  local winid = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_set_buf(winid, bufnr)
+  vim.api.nvim_win_set_height(winid, math.min(#lines + 1, math.floor(vim.o.lines / 2)))
+  vim.wo[winid].wrap = false
+  vim.wo[winid].cursorline = true
+
+  M.close_on(bufnr, winid, { "q", "<Esc>" })
+  return bufnr, winid
+end
+
 --- Close `winid` when any of `keys` is pressed in `bufnr`.
 ---@param bufnr integer
 ---@param winid integer

@@ -49,6 +49,30 @@ function M.text_length(value)
   return count
 end
 
+--- The first `length` characters of a value, ending in an ellipsis when
+--- anything was dropped. Counting characters rather than bytes keeps a
+--- multi-byte character from being cut in half.
+---@param value string
+---@param length integer
+---@return string
+function M.truncate(value, length)
+  if M.text_length(value) <= length then
+    return value
+  end
+  if length <= 1 then
+    return "…"
+  end
+
+  local kept = {}
+  for character in value:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+    if #kept + 1 >= length then
+      break
+    end
+    kept[#kept + 1] = character
+  end
+  return table.concat(kept) .. "…"
+end
+
 --- Wrap a value in double quotes, doubling any it contains.
 ---@param value string
 ---@return string

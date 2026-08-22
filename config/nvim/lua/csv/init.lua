@@ -103,6 +103,7 @@ function M.status(bufnr)
 
   table.insert(parts, sort_summary(buf))
   table.insert(parts, clipboard_summary(buf))
+  table.insert(parts, "? help")
   return table.concat(parts, " · ")
 end
 

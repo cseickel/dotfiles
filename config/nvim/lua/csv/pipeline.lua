@@ -87,7 +87,7 @@ local function format_stage(selected, headers, formats)
     if format then
       local literal = columns.string_literal(headers[index])
       local reference = string.format("col(%s)", literal)
-      local written = expression.value(reference, format, headers[index])
+      local written = expression.value(reference, format)
 
       if written ~= reference then
         table.insert(clauses, string.format("try(%s) || %s as %s", written, reference, literal))
@@ -99,6 +99,28 @@ local function format_stage(selected, headers, formats)
     return nil
   end
   return "map -O " .. shell_quote(table.concat(clauses, ", "))
+end
+
+--- The header text as the user reads it, which is the machine name cut to the
+--- column's width. `view` sizes a column to its widest cell and the header is
+--- one of them, so a column cannot be narrower than its own name until the name
+--- is cut too.
+---@param selected csv.Column[]
+---@param headers string[]
+---@param formats table<integer, csv.Format>
+---@return string[]|nil nil when no header needs cutting.
+local function shown_headers(selected, headers, formats)
+  local shown = {}
+  local cut = false
+  for index, column in ipairs(selected) do
+    local format = formats[column.index]
+    shown[index] = headers[index]
+    if format and format.align and columns.text_length(headers[index]) > format.width then
+      shown[index] = columns.truncate(headers[index], format.width)
+      cut = true
+    end
+  end
+  return cut and shown or nil
 end
 
 --- Header names of the columns `view` should right-align. A numeric column
@@ -169,6 +191,13 @@ function M.build(state)
   local formatting = format_stage(selected, headers, state.formats)
   if formatting then
     table.insert(stages, formatting)
+  end
+
+  -- Cutting the headers happens after `map`, which addresses each column by
+  -- name and needs those names to stay unique. Two cut headers may well match.
+  local shown = shown_headers(selected, headers, state.formats)
+  if shown then
+    table.insert(stages, "rename " .. shell_quote(columns.rename_argument(shown)))
   end
 
   -- `-e` renders every column at full width, since `view` otherwise fits its
