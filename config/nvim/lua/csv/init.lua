@@ -16,7 +16,7 @@ local keymaps = require("csv.keymaps")
 
 local M = {}
 
-M.patterns = { "*.csv", "*.tsv", "*.xls", "*.xlsx", "*.xlsb", "*.ods", "*.parquet" }
+M.patterns = { "*.csv", "*.tsv", "*.xls", "*.xlsx", "*.xlsb", "*.ods" }
 
 ---@param buf csv.Buffer
 local function apply_keymaps(buf)

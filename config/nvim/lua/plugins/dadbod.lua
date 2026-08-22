@@ -87,10 +87,6 @@ _G.executeSqlCsv = function(visual)
   if not db then
     return
   end
-  if not db:match("^postgres") then
-    vim.notify("tabiew view only supports postgres connections", vim.log.levels.ERROR)
-    return
-  end
 
   local sql = sqlText(visual)
   if sql == "" then
@@ -98,34 +94,22 @@ _G.executeSqlCsv = function(visual)
     return
   end
 
-  local csv = vim.fn.tempname() .. ".csv"
-  local copy = "COPY (\n" .. sql .. "\n) TO STDOUT WITH (FORMAT csv, HEADER)"
-
-  local res = vim.system({ "psql", db, "-v", "ON_ERROR_STOP=1", "-c", copy }, { text = true }):wait()
-  if res.code ~= 0 then
-    vim.notify(vim.trim(res.stderr or "psql failed"), vim.log.levels.ERROR)
+  local results = require("db.query").write(db, sql)
+  if not results then
     return
   end
-
-  local fh = io.open(csv, "w")
-  if not fh then
-    vim.notify("could not write " .. csv, vim.log.levels.ERROR)
-    return
-  end
-  fh:write(res.stdout or "")
-  fh:close()
 
   local srcWin = vim.api.nvim_get_current_win()
 
   openCsvWindow(srcWin)
   local buf = vim.api.nvim_get_current_buf()
   vim.b.db = db
-  -- if not set, open the csv directly
+  -- if not set, open the results directly
   if _G.csvviewer then
-    vim.fn.jobstart({ _G.csvviewer, csv }, {
+    vim.fn.jobstart({ _G.csvviewer, results }, {
       term = true,
       on_exit = function()
-        os.remove(csv)
+        os.remove(results)
         vim.schedule(function()
           if vim.api.nvim_buf_is_valid(buf) then
             vim.api.nvim_buf_delete(buf, { force = true })
@@ -134,7 +118,7 @@ _G.executeSqlCsv = function(visual)
       end,
     })
   else
-    vim.cmd("edit " .. csv)
+    vim.cmd("edit " .. results)
   end
   if vim.api.nvim_win_is_valid(srcWin) then
     vim.api.nvim_set_current_win(srcWin)
@@ -165,6 +149,8 @@ return {
       "information_schema",
       "pg_catalog",
     }
+
+    require("db.parquet").setup()
 
     vim.cmd[[
       command! DBconnect lua connectDB()
