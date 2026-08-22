@@ -84,6 +84,19 @@ M.get_claude_pair_enabled = function()
   end
 end
 
+M.get_csv_pager = function()
+	local loaded, csv = pcall(require, "csv")
+	if not loaded then
+		return ""
+	end
+
+	local text = csv.status(vim.api.nvim_get_current_buf())
+	if isempty(text) then
+		return ""
+	end
+	return "%#StatusLineInfo# " .. text .. " %*"
+end
+
 M.get_neo_tree_context = function()
 	local context = require("neo-tree.ui.selector").get_scrolled_off_node_text()
 	if isempty(context) then
@@ -183,6 +196,7 @@ M.get_statusline = function()
 		"%#StatusLineFile#%f %*",
 		"%#StatusLineMod#%{IsBuffersModified()}%*",
 		"%=",
+		"%{%v:lua.status.get_csv_pager()%}",
 		"%{%v:lua.status.get_diag_counts()%}",
 		"%{%v:lua.status.get_git_changes()%}",
     "%{%v:lua.status.get_claude_pair_enabled()%}",
