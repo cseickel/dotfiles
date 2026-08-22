@@ -18,6 +18,9 @@ local M = {}
 ---@class csv.Format
 ---@field kind "int"|"float"|"text"
 ---@field precision integer Decimals to print. Zero unless `kind` is "float".
+---@field width integer The longest sampled value, and the width padding uses.
+---@field align "left"|"center"|"right"|nil Set only when the user chose one.
+---@field spec string|nil A printf specification, replacing every other rule.
 
 local MAX_PRECISION = 6
 local SIGNIFICANT_DIGITS = 7
@@ -58,18 +61,26 @@ end
 ---@return csv.Format
 function M.analyse_column(values)
   local decimals = {}
+  local width = 0
+  local numeric = true
+
   for _, value in ipairs(values) do
-    if value ~= "" then
+    local length = columns.text_length(value)
+    if length > width then
+      width = length
+    end
+    if value ~= "" and numeric then
       local count = M.decimals(value)
-      if not count then
-        return { kind = "text", precision = 0 }
+      if count then
+        table.insert(decimals, count)
+      else
+        numeric = false
       end
-      table.insert(decimals, count)
     end
   end
 
-  if #decimals == 0 then
-    return { kind = "text", precision = 0 }
+  if not numeric or #decimals == 0 then
+    return { kind = "text", precision = 0, width = width }
   end
 
   table.sort(decimals)
@@ -79,9 +90,9 @@ function M.analyse_column(values)
   -- file formats to whatever its widest value needs.
   local precision = percentile(decimals, 0.99)
   if precision == 0 then
-    return { kind = "int", precision = 0 }
+    return { kind = "int", precision = 0, width = width }
   end
-  return { kind = "float", precision = math.min(precision, MAX_PRECISION) }
+  return { kind = "float", precision = math.min(precision, MAX_PRECISION), width = width }
 end
 
 --- Decide how every column reads.
@@ -103,6 +114,64 @@ function M.analyse(sample, source_columns)
     formats[column.index] = M.analyse_column(values)
   end
   return formats
+end
+
+--- The format for `column`, creating a plain one if the sample never saw it.
+---@param formats table<integer, csv.Format>
+---@param column csv.Column
+---@return csv.Format
+local function entry(formats, column)
+  local format = formats[column.index]
+  if not format then
+    format = { kind = "text", precision = 0, width = 0 }
+    formats[column.index] = format
+  end
+  return format
+end
+
+--- The side a column's values sit on when the user has not chosen one.
+---@param format csv.Format
+---@return "left"|"right"
+local function natural_align(format)
+  return format.kind == "text" and "left" or "right"
+end
+
+---@param formats table<integer, csv.Format>
+---@param column csv.Column
+---@param align "left"|"center"|"right"
+function M.set_align(formats, column, align)
+  entry(formats, column).align = align
+end
+
+--- Show more or fewer decimals. Asking for decimals on a column read as text
+--- makes it a float, since that is what the request means.
+---@param formats table<integer, csv.Format>
+---@param column csv.Column
+---@param delta integer
+function M.adjust_precision(formats, column, delta)
+  local format = entry(formats, column)
+  format.precision = math.max(0, math.min(format.precision + delta, MAX_PRECISION))
+  format.kind = format.precision > 0 and "float" or "int"
+end
+
+--- Use a printf specification instead of every other formatting rule. An empty
+--- specification returns the column to the detected format.
+---@param formats table<integer, csv.Format>
+---@param column csv.Column
+---@param spec string
+function M.set_spec(formats, column, spec)
+  entry(formats, column).spec = spec ~= "" and spec or nil
+end
+
+--- Widen or narrow the padding. Padding needs a side to pad towards, so this
+--- also settles the alignment when the user has not chosen one.
+---@param formats table<integer, csv.Format>
+---@param column csv.Column
+---@param delta integer
+function M.adjust_width(formats, column, delta)
+  local format = entry(formats, column)
+  format.width = math.max(1, format.width + delta)
+  format.align = format.align or natural_align(format)
 end
 
 return M

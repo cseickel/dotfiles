@@ -7,8 +7,6 @@ called from a keymap, a command, or a test. Resolving those values from the
 cursor belongs to `csv.buffer`.
 ]]
 
-local columns = require("csv.columns")
-
 local M = {}
 
 local DEFAULT_LIMIT = 1000
@@ -35,11 +33,14 @@ local DEFAULT_LIMIT = 1000
 ---@field column csv.Column
 ---@field values string[]
 
+---@class csv.FilterMarked
+---@field type "marked"
+
 ---@class csv.FilterExpr
 ---@field type "expr"
 ---@field expression string Hand-written moonblade.
 
----@alias csv.Filter csv.FilterNumeric|csv.FilterString|csv.FilterIn|csv.FilterExpr
+---@alias csv.Filter csv.FilterNumeric|csv.FilterString|csv.FilterIn|csv.FilterMarked|csv.FilterExpr
 
 ---@class csv.State
 ---@field source string         Path of the CSV file.
@@ -48,6 +49,10 @@ local DEFAULT_LIMIT = 1000
 ---@field where csv.Filter[]    ANDed together.
 ---@field order csv.SortKey[]   Most significant key first.
 ---@field selected csv.Column[] Display order. Empty means every source column.
+---@field clipboard csv.Column[] Cut columns waiting to be pasted.
+---@field marked table<integer, boolean> Marked row ids.
+---@field marked_columns table<integer, boolean> Marked column indices.
+---@field columns_filtered_to_marks boolean
 ---@field formats table<integer, csv.Format> Keyed by column index.
 ---@field page integer          0-based.
 ---@field limit integer         Rows per page.
@@ -63,6 +68,10 @@ function M.new(source)
     where = {},
     order = {},
     selected = {},
+    clipboard = {},
+    marked = {},
+    marked_columns = {},
+    columns_filtered_to_marks = false,
     page = 0,
     limit = DEFAULT_LIMIT,
   }
@@ -77,60 +86,61 @@ function M.is_numeric(state, column)
   return format ~= nil and format.kind ~= "text"
 end
 
---- The columns on display, in display order.
----@param state csv.State
----@return csv.Column[]
-function M.selected(state)
-  if #state.selected > 0 then
-    return state.selected
-  end
-  return state.columns
-end
+-- Sorting -------------------------------------------------------------------
 
---- Materialise `selected` so a column can be removed from or moved within it.
----@param state csv.State
-local function fix_selection(state)
-  if #state.selected > 0 then
-    return
-  end
-  local copy = {}
-  for index, column in ipairs(state.columns) do
-    copy[index] = column
-  end
-  state.selected = copy
-end
-
+--- Sort by one column alone. Asking again for the direction it already has
+--- clears the sort, which is how a sort is undone.
 ---@param state csv.State
 ---@param column csv.Column
-function M.sort_by(state, column)
-  local only_key = #state.order == 1 and state.order[1]
-  if only_key and only_key.column.index == column.index then
-    only_key.direction = only_key.direction == "asc" and "desc" or "asc"
+---@param direction "asc"|"desc"
+function M.sort_by(state, column, direction)
+  local only = #state.order == 1 and state.order[1]
+  if only and only.column.index == column.index and only.direction == direction then
+    state.order = {}
   else
     state.order = {
-      { column = column, direction = "asc", numeric = M.is_numeric(state, column) },
+      { column = column, direction = direction, numeric = M.is_numeric(state, column) },
     }
   end
   state.page = 0
 end
 
---- Append a less significant sort key, or flip one already present.
+--- Add a less significant sort key, or change the direction of one already
+--- present. Asking again for the direction it already has removes that key.
 ---@param state csv.State
 ---@param column csv.Column
-function M.add_sort_key(state, column)
-  for _, key in ipairs(state.order) do
+---@param direction "asc"|"desc"
+function M.add_sort_key(state, column, direction)
+  for index, key in ipairs(state.order) do
     if key.column.index == column.index then
-      key.direction = key.direction == "asc" and "desc" or "asc"
+      if key.direction == direction then
+        table.remove(state.order, index)
+      else
+        key.direction = direction
+      end
       state.page = 0
       return
     end
   end
+
   table.insert(state.order, {
     column = column,
-    direction = "asc",
+    direction = direction,
     numeric = M.is_numeric(state, column),
   })
   state.page = 0
+end
+
+---@param state csv.State
+---@param column csv.Column
+function M.remove_sort_key(state, column)
+  for index, key in ipairs(state.order) do
+    if key.column.index == column.index then
+      table.remove(state.order, index)
+      state.page = 0
+      return
+    end
+  end
 end
 
 ---@param state csv.State
@@ -139,42 +149,7 @@ function M.clear_sort(state)
   state.page = 0
 end
 
----@param state csv.State
----@param column csv.Column
-function M.hide_column(state, column)
-  fix_selection(state)
-  for index, candidate in ipairs(state.selected) do
-    if candidate.index == column.index then
-      table.remove(state.selected, index)
-      return
-    end
-  end
-end
-
---- Exchange a column with its neighbour `delta` places away.
----@param state csv.State
----@param column csv.Column
----@param delta integer
----@return boolean moved False at the edge of the selection.
-function M.swap_column(state, column, delta)
-  fix_selection(state)
-  for index, candidate in ipairs(state.selected) do
-    if candidate.index == column.index then
-      local target = index + delta
-      if target < 1 or target > #state.selected then
-        return false
-      end
-      state.selected[index], state.selected[target] = state.selected[target], state.selected[index]
-      return true
-    end
-  end
-  return false
-end
-
----@param state csv.State
-function M.show_all_columns(state)
-  state.selected = {}
-end
+-- Filters -------------------------------------------------------------------
 
 ---@param state csv.State
 ---@param filter csv.Filter
@@ -195,6 +170,45 @@ function M.clear_filters(state)
   state.page = 0
 end
 
+-- Marks ---------------------------------------------------------------------
+
+---@param state csv.State
+---@param rowid integer
+function M.toggle_mark(state, rowid)
+  state.marked[rowid] = not state.marked[rowid] or nil
+end
+
+---@param state csv.State
+function M.clear_marks(state)
+  state.marked = {}
+end
+
+---@param state csv.State
+---@param column csv.Column
+function M.toggle_mark_column(state, column)
+  state.marked_columns[column.index] = not state.marked_columns[column.index] or nil
+end
+
+---@param state csv.State
+function M.clear_marked_columns(state)
+  state.marked_columns = {}
+end
+
+--- Turn the marked-rows filter on, or off if it is already on.
+---@param state csv.State
+function M.toggle_marked_filter(state)
+  for index, filter in ipairs(state.where) do
+    if filter.type == "marked" then
+      table.remove(state.where, index)
+      state.page = 0
+      return
+    end
+  end
+  M.add_filter(state, { type = "marked" })
+end
+
+-- Paging --------------------------------------------------------------------
+
 ---@param state csv.State
 ---@param delta integer
 function M.turn_page(state, delta)
@@ -208,10 +222,21 @@ function M.goto_page(state, page)
 end
 
 ---@param state csv.State
+---@param size integer
+function M.set_page_size(state, size)
+  state.limit = math.max(1, size)
+  state.page = 0
+end
+
+---@param state csv.State
 function M.reset(state)
   state.where = {}
   state.order = {}
   state.selected = {}
+  state.clipboard = {}
+  state.marked = {}
+  state.marked_columns = {}
+  state.columns_filtered_to_marks = false
   state.page = 0
 end
 

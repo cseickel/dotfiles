@@ -40,6 +40,15 @@ function M.from_names(names)
   return columns
 end
 
+--- How many characters a value holds, which is what xan's padding counts. The
+--- `#` operator counts bytes, and a sort arrow in a header is three of them.
+---@param value string
+---@return integer
+function M.text_length(value)
+  local _, count = value:gsub("[^\128-\191]", "")
+  return count
+end
+
 --- Wrap a value in double quotes, doubling any it contains.
 ---@param value string
 ---@return string

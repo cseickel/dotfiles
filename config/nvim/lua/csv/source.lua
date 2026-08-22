@@ -10,6 +10,7 @@ asynchronous.
 local columns = require("csv.columns")
 local format = require("csv.format")
 local pipeline = require("csv.pipeline")
+local query = require("csv.query")
 
 local M = {}
 
@@ -37,18 +38,6 @@ local function rowid_name(names)
   return candidate
 end
 
----@param argv string[]
----@param on_error fun(message: string)
----@param on_output fun(stdout: string)
-local function run(argv, on_error, on_output)
-  vim.system(argv, { text = true }, vim.schedule_wrap(function(result)
-    if result.code ~= 0 then
-      return on_error(vim.trim(result.stderr))
-    end
-    on_output(result.stdout)
-  end))
-end
-
 --- Inspect `path` and hand back everything needed to build a pipeline for it.
 ---@param path string
 ---@param on_done fun(source: csv.Source)
@@ -58,7 +47,7 @@ function M.inspect(path, on_done, on_error)
     return on_error("xan is not on PATH")
   end
 
-  run(pipeline.headers_command(path), on_error, function(stdout)
+  query.run(pipeline.headers_command(path), on_error, function(stdout)
     local names = {}
     for line in stdout:gmatch("[^\r\n]+") do
       table.insert(names, line)
@@ -69,18 +58,8 @@ function M.inspect(path, on_done, on_error)
 
     local source_columns = columns.from_names(names)
     local rename = columns.rename_argument(columns.display_names(source_columns))
-    local argv = pipeline.sample_command(path, rename)
 
-    run(argv, on_error, function(sample_output)
-      local sample = {}
-      for line in sample_output:gmatch("[^\r\n]+") do
-        local ok, row = pcall(vim.json.decode, line)
-        if not ok then
-          return on_error("could not read the sample of " .. path)
-        end
-        table.insert(sample, row)
-      end
-
+    query.run_json_lines(pipeline.sample_command(path, rename), on_error, function(sample)
       on_done({
         path = path,
         columns = source_columns,

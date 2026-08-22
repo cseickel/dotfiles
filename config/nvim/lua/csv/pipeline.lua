@@ -14,6 +14,7 @@ column sharing its name cannot shadow it.
 ]]
 
 local columns = require("csv.columns")
+local expression = require("csv.expression")
 
 local M = {}
 
@@ -22,53 +23,6 @@ local M = {}
 ---@return string
 local function shell_quote(value)
   return "'" .. value:gsub("'", "'\\''") .. "'"
-end
-
---- Render one filter as a moonblade expression.
----@param filter csv.Filter
----@return string
-function M.filter_expression(filter)
-  if filter.type == "expr" then
-    return "(" .. filter.expression .. ")"
-  end
-
-  local column = columns.expression(filter.column)
-
-  -- A numeric comparison against a cell that will not cast, an empty one most
-  -- often, aborts the whole run. `try` makes that row falsey instead, which is
-  -- what a numeric comparison means: a row whose value is not a number is not a
-  -- row satisfying the comparison.
-  if filter.type == "numeric" then
-    return string.format("try(%s %s %s)", column, filter.operator, filter.value)
-  end
-
-  if filter.type == "in" then
-    local literals = {}
-    for i, value in ipairs(filter.values) do
-      literals[i] = columns.string_literal(value)
-    end
-    return string.format("(%s in [%s])", column, table.concat(literals, ", "))
-  end
-
-  local value = columns.string_literal(filter.value)
-  if filter.operator == "eq" or filter.operator == "ne" then
-    return string.format("(%s %s %s)", column, filter.operator, value)
-  end
-  if filter.operator == "regex" then
-    return string.format("match(%s, %s)", column, value)
-  end
-  return string.format("%s(%s, %s)", filter.operator, column, value)
-end
-
---- Combine every filter into the single expression `xan filter` receives.
----@param where csv.Filter[]
----@return string
-function M.where_expression(where)
-  local parts = {}
-  for i, filter in ipairs(where) do
-    parts[i] = M.filter_expression(filter)
-  end
-  return table.concat(parts, " && ")
 end
 
 --- Sort stages, least significant key first.
@@ -118,7 +72,7 @@ local function header_names(selected, order)
   return names
 end
 
---- The `map` stage that gives every float column its decimals.
+--- The `map` stage that gives each column its decimals, padding and alignment.
 --- Runs after `rename`, so a column is addressed by its header name, which is
 --- unique. A value that will not cast falls through to its raw text rather than
 --- aborting the run.
@@ -130,13 +84,14 @@ local function format_stage(selected, headers, formats)
   local clauses = {}
   for index, column in ipairs(selected) do
     local format = formats[column.index]
-    if format and format.kind == "float" then
+    if format then
       local literal = columns.string_literal(headers[index])
       local reference = string.format("col(%s)", literal)
-      table.insert(clauses, string.format(
-        'try(printf("%%.%df", float(%s))) || %s as %s',
-        format.precision, reference, reference, literal
-      ))
+      local written = expression.value(reference, format, headers[index])
+
+      if written ~= reference then
+        table.insert(clauses, string.format("try(%s) || %s as %s", written, reference, literal))
+      end
     end
   end
 
@@ -146,8 +101,9 @@ local function format_stage(selected, headers, formats)
   return "map -O " .. shell_quote(table.concat(clauses, ", "))
 end
 
---- Header names of the columns `view` should right-align. A float column needs
---- this because `printf` leaves it a string, which `view` left-aligns.
+--- Header names of the columns `view` should right-align. A numeric column
+--- needs this because `printf` leaves it a string, which `view` left-aligns.
+--- A column the user aligned carries its own padding, so `view` must leave it be.
 ---@param selected csv.Column[]
 ---@param headers string[]
 ---@param formats table<integer, csv.Format>
@@ -156,7 +112,7 @@ local function right_aligned(selected, headers, formats)
   local names = {}
   for index, column in ipairs(selected) do
     local format = formats[column.index]
-    if format and format.kind ~= "text" then
+    if format and format.kind ~= "text" and not format.align then
       table.insert(names, columns.quote_name(headers[index]))
     end
   end
@@ -180,15 +136,24 @@ local function selected_columns(state)
   return selected
 end
 
+--- The stages that narrow the file to the rows on display, without paging,
+--- column selection or formatting. Shared with the counting and summarising
+--- commands, so those see exactly the rows the buffer is showing.
+---@param state csv.State
+---@return string[]
+local function narrowing_stages(state)
+  local stages = { "enum -c " .. shell_quote(state.rowid_name) }
+  if #state.where > 0 then
+    table.insert(stages, "filter " .. shell_quote(expression.where(state)))
+  end
+  return stages
+end
+
 --- Build the argument for `xan run`.
 ---@param state csv.State
 ---@return string
 function M.build(state)
-  local stages = { "enum -c " .. shell_quote(state.rowid_name) }
-
-  if #state.where > 0 then
-    table.insert(stages, "filter " .. shell_quote(M.where_expression(state.where)))
-  end
+  local stages = narrowing_stages(state)
 
   for _, stage in ipairs(sort_stages(state.order)) do
     table.insert(stages, stage)
@@ -206,10 +171,11 @@ function M.build(state)
     table.insert(stages, formatting)
   end
 
-  -- `-e` renders every column at full width. Without it `view` fits its output
-  -- to a terminal width and elides middle columns, which a scrollable buffer
-  -- must not do.
-  local view = "view --color never -M -I --repeat-headers never -e"
+  -- `-e` renders every column at full width, since `view` otherwise fits its
+  -- output to a terminal width and elides middle columns. `-A` lifts its own
+  -- row limit of 100, below which it truncates the page and says so with a row
+  -- of ellipses.
+  local view = "view --color never -M -I --repeat-headers never -e -A"
   local aligned = right_aligned(selected, headers, state.formats)
   if aligned then
     view = view .. " -r " .. shell_quote(aligned)
@@ -252,6 +218,45 @@ end
 ---@return string[]
 function M.headers_command(path)
   return { "xan", "headers", "-j", path }
+end
+
+---@param state csv.State
+---@param stage string
+---@return string[]
+local function narrowed_command(state, stage)
+  local stages = narrowing_stages(state)
+  table.insert(stages, stage)
+  return { "xan", "run", table.concat(stages, " | "), state.source }
+end
+
+--- The argv counting the rows the current filters leave.
+---@param state csv.State
+---@return string[]
+function M.count_command(state)
+  return narrowed_command(state, "count")
+end
+
+--- The argv listing the distinct values of `column` among the rows the current
+--- filters leave, as one JSON object per value, most frequent first.
+---@param state csv.State
+---@param column csv.Column
+---@return string[]
+function M.frequency_command(state, column)
+  local selector = shell_quote(columns.selector(column))
+  return narrowed_command(state, "frequency -s " .. selector .. " -A | to jsonl --strings '*'")
+end
+
+--- The argv summarising the rows the current filters leave, one JSON object per
+--- column, or per every column when `column` is absent.
+---@param state csv.State
+---@param column csv.Column|nil
+---@return string[]
+function M.stats_command(state, column)
+  local stage = "stats -A"
+  if column then
+    stage = stage .. " -s " .. shell_quote(columns.selector(column))
+  end
+  return narrowed_command(state, stage .. " | to jsonl --strings '*'")
 end
 
 return M

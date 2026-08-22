@@ -11,6 +11,7 @@ The buffer stays nomodifiable. Its text is xan's output, not a document.
 
 local layout = require("csv.layout")
 local pipeline = require("csv.pipeline")
+local selection = require("csv.selection")
 local source = require("csv.source")
 local state = require("csv.state")
 
@@ -25,7 +26,38 @@ local M = {}
 local buffers = {}
 
 local flash_namespace = vim.api.nvim_create_namespace("csv-flash")
+local mark_namespace = vim.api.nvim_create_namespace("csv-marks")
 local FLASH_MILLISECONDS = 250
+
+--- Paint the marks over the text just written. Replacing every line drops all
+--- extmarks, so marks have to be reapplied with each paint or they vanish on
+--- the first page turn.
+---@param buffer csv.Buffer
+local function apply_marks(buffer)
+  local painted = buffer.layout
+  vim.api.nvim_buf_clear_namespace(buffer.bufnr, mark_namespace, 0, -1)
+
+  for line = painted.first_row, painted.last_row do
+    local rowid = painted.rowids[line]
+    if rowid and buffer.state.marked[rowid] then
+      vim.api.nvim_buf_set_extmark(buffer.bufnr, mark_namespace, line - 1, 0, {
+        line_hl_group = "CsvMarkedRow",
+      })
+    end
+  end
+
+  for position, column in ipairs(selection.selected(buffer.state)) do
+    if buffer.state.marked_columns[column.index] then
+      local from, to = layout.cell_bounds(painted.lines[painted.header], position + 1)
+      if from then
+        vim.api.nvim_buf_set_extmark(buffer.bufnr, mark_namespace, painted.header - 1, from, {
+          end_col = to,
+          hl_group = "CsvMarkedColumn",
+        })
+      end
+    end
+  end
+end
 
 ---@param bufnr integer
 ---@return csv.Buffer|nil
@@ -69,6 +101,7 @@ function M.render(buffer, on_painted)
 
       buffer.layout = parsed
       replace_lines(buffer.bufnr, parsed.lines)
+      apply_marks(buffer)
       -- `status.get_winbar` pins this line while the buffer is scrolled past it.
       vim.b[buffer.bufnr].table_header = parsed.header
 
@@ -111,7 +144,7 @@ function M.flash_cell(buffer, cell)
     if from then
       vim.api.nvim_buf_set_extmark(buffer.bufnr, flash_namespace, index - 1, from, {
         end_col = to,
-        hl_group = "Visual",
+        hl_group = "CsvFlash",
       })
     end
   end
@@ -155,7 +188,24 @@ function M.column_at_cursor(buffer, window)
   if not cell or cell < 2 then
     return nil
   end
-  return state.selected(buffer.state)[cell - 1]
+  return selection.selected(buffer.state)[cell - 1]
+end
+
+--- Move the cursor one column left or right.
+---@param buffer csv.Buffer
+---@param window integer
+---@param delta integer
+function M.jump_column(buffer, window, delta)
+  if not buffer.layout then
+    return
+  end
+
+  local cursor = vim.api.nvim_win_get_cursor(window)
+  local line = buffer.layout.lines[cursor[1]]
+  if not line then
+    return
+  end
+  M.focus_cell(buffer, window, (layout.cell_at(line, cursor[2]) or 1) + delta)
 end
 
 --- Whether the painted page is the last one, which is true when it came back
