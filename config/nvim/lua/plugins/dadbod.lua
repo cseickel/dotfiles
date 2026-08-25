@@ -1,6 +1,3 @@
---_G.csvviewer = 'csvlens'
-_G.csvviewer = nil
-
 _G.connectDB = function()
   -- hand written connections
   local path = vim.fn.getenv("HOME") .. "/.local/share/db_ui/connections.json"
@@ -16,29 +13,11 @@ _G.connectDB = function()
     return
   end
 
-  print(vim.inspect(conns[choice]))
-
   vim.b.db_name = conns[choice].name
   local db = conns[choice].url
   vim.b.db = db
   vim.g.db = db
   return db
-end
-
-_G.executeSql = function(visual)
-  local db = vim.b.db
-  if not db then
-    db = connectDB()
-  end
-  if not db then
-    return
-  end
-
-  if visual == 1 then
-    vim.cmd("'<,'>DB")
-  else
-    vim.cmd("%DB")
-  end
 end
 
 -- The selected lines, empty when nothing is selected. A <cmd> mapping leaves
@@ -69,104 +48,49 @@ local function sqlText(visual)
   return vim.trim(table.concat(lines, "\n"))
 end
 
--- The line closing a pane, naming how it ended and how long it took.
-local function outcome(ending, started)
-  return string.format("\n[%s in %.3fs]\n", ending, (vim.uv.hrtime() - started) / 1e9)
-end
-
--- The rows as a table, replacing the pane that reported their progress.
-local function showTable(db, results, srcWin)
+-- Runs `sql` and shows what the client writes in the output window, with an
+-- indicator beside the query and the key that stops it bound while it runs.
+--
+-- A transcript is worth watching fill in, so the window follows the file as it
+-- is written. Rows are worth reading only once they are all there, and
+-- rendering a half written table every half second is expensive on exactly the
+-- results large enough to need the wait.
+local function execute(db, sql, srcWin)
   local pane = require("db.pane")
-  pane.open(srcWin)
-  -- if not set, open the results directly
-  if _G.csvviewer then
-    local buf = vim.api.nvim_get_current_buf()
-    vim.fn.jobstart({ _G.csvviewer, results }, {
-      term = true,
-      on_exit = function()
-        os.remove(results)
-        vim.schedule(function()
-          if vim.api.nvim_buf_is_valid(buf) then
-            vim.api.nvim_buf_delete(buf, { force = true })
-          end
-        end)
-      end,
-    })
-  else
-    vim.cmd("edit " .. results)
-    vim.b.db = db
-  end
-  pane.leave(srcWin)
-end
+  local query = require("db.query")
+  -- One query per window, so starting a second one asks the first to stop
+  -- rather than leaving a client running that nothing holds a handle to.
+  pane.stop(srcWin)
 
--- Enough of the sql to recognise which query the pane is reporting on.
-local function preview(sql)
-  local lines = vim.split(sql, "\n", { plain = true })
-  local shown = vim.list_slice(lines, 1, math.min(3, #lines))
-  if #lines > 3 then
-    table.insert(shown, "...")
-  end
-  return table.concat(shown, "\n")
-end
+  local mode = query.mode(sql)
+  local stopIndicator = pane.progress(srcWin)
+  local stopFollowing, run, started
 
--- Opens the pane on a buffer reporting `query`'s progress and runs `start`,
--- which writes into that buffer and returns the job doing so. Whatever the job
--- is for, C-c stops it and focus stays where it was.
----@param query { db: string, sql: string, win: integer }
----@param start fun(append: db.Appender, done: fun()): db.Run|nil
-local function inPane(query, start)
-  local pane = require("db.pane")
-  pane.open(query.win)
-
-  local buf = vim.api.nvim_get_current_buf()
-  vim.bo[buf].buftype = "nofile"
-  vim.bo[buf].modifiable = false
-  vim.b[buf].db = query.db
-
-  local append = pane.appender(buf)
-  append.write(preview(query.sql) .. "\n\n")
-
-  local stop = pane.progress(query.win, buf)
-  local run = start(append, function()
-    stop()
-    pane.release(query.win)
-  end)
-  if run then
-    pane.attach(query.win, run)
-  else
-    stop()
-  end
-  pane.leave(query.win)
-end
-
--- The client's transcript, read into the pane while the script is still running.
-local function openTranscript(db, sql, srcWin)
-  inPane({ db = db, sql = sql, win = srcWin }, function(append, done)
-    local started = vim.uv.hrtime()
-    return require("db.query").stream(db, sql, {
-      on_output = append.write,
-      on_exit = function(code)
-        done()
-        append.flush()
-        append.write(outcome(code == 0 and "finished" or "failed", started))
-      end,
-    })
-  end)
-end
-
--- The rows of a single query, opened as a table once they have all arrived.
-local function openResults(db, sql, srcWin)
-  inPane({ db = db, sql = sql, win = srcWin }, function(append, done)
-    local started = vim.uv.hrtime()
-    return require("db.query").write(db, sql, function(results)
-      done()
-      if not results then
-        append.write(outcome("failed", started))
-        return
+  started = query.start({
+    url = db,
+    sql = sql,
+    mode = mode,
+    on_done = function(code)
+      stopIndicator()
+      if stopFollowing then
+        stopFollowing()
+      elseif code == 0 then
+        pane.show(srcWin, started.path, db)
       end
-      showTable(db, results, srcWin)
-    end)
-  end)
+      pane.release(srcWin, run)
+    end,
+  })
+
+  if not started then
+    stopIndicator()
+    return
+  end
+
+  run = started.run
+  pane.attach(srcWin, run)
+  if mode == "script" then
+    stopFollowing = pane.follow(srcWin, started.path, db)
+  end
 end
 
 _G.executeSqlCsv = function(visual)
@@ -184,12 +108,7 @@ _G.executeSqlCsv = function(visual)
     return
   end
 
-  local srcWin = vim.api.nvim_get_current_win()
-  if require("db.query").mode(sql) == "export" then
-    openResults(db, sql, srcWin)
-  else
-    openTranscript(db, sql, srcWin)
-  end
+  execute(db, sql, vim.api.nvim_get_current_win())
 end
 
 return {
@@ -205,7 +124,6 @@ return {
     'DBUIToggle',
     'DBUIAddConnection',
     'DBUIFindBuffer',
-    'DBexecute',
     'DBconnect'
   },
   init = function()
@@ -221,25 +139,8 @@ return {
 
     vim.cmd[[
       command! DBconnect lua connectDB()
-      command! DBexecute lua executeSql(0)
-      command! -range DBexecute lua executeSql(1)
       command! DBcsv lua executeSqlCsv(0)
       command! -range DBcsv lua executeSqlCsv(1)
-
-      function! DBexecuteText()
-        if &ft == 'typescript'
-          normal vi`
-        else
-          normal vi"
-        endif
-        " This is a hack, I just want to set the marks of the visual selection
-        " I'll yank it to the blackhole register
-        normal "_y
-        " Now I can execute the command with the range
-        lua executeSql(1)
-      endfunction
-
-      nnoremap <silent> <M-x> <cmd>call DBexecuteText()<cr>
 
       function! DBcsvText()
         if &ft == 'typescript'
@@ -257,8 +158,6 @@ return {
         if exists('g:db')
           let b:db=g:db
         endif
-        " nnoremap <silent><buffer> <M-x> <cmd>lua executeSql(0)<cr>
-        " vnoremap <silent><buffer> <M-x> <cmd>lua executeSql(1)<cr>
         nnoremap <silent><buffer> <M-x> <cmd>lua executeSqlCsv(0)<cr>
         vnoremap <silent><buffer> <M-x> <cmd>lua executeSqlCsv(1)<cr>
         lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })

@@ -304,9 +304,16 @@ end
 ---@param job vim.SystemObj
 ---@return db.Run
 local function runOf(url, command, job)
+  local asked = false
   return {
     job = job,
     cancel = function()
+      -- A cancel is a request the client is still free to take its time over,
+      -- so it stays the running query until it exits and can be asked again.
+      if asked then
+        return
+      end
+      asked = true
       if not (command.sessionFile and M.cancel(url, command.sessionFile)) then
         job:kill("sigint")
       end
@@ -352,13 +359,20 @@ local function quoted(argument)
   return "'" .. argument:gsub("'", "'\\''") .. "'"
 end
 
---- `argv` as a command line whose output is one stream, read a line at a time.
---- The client's errors are on stderr and its results on stdout, and only one
---- pipe keeps an error under the statement that caused it. `exec` leaves the
---- client holding the shell's own pid, so a signal reaches the client.
+--- `argv` as a command line that writes what the client prints to `path`, so
+--- the output goes from the client to the file without passing through nvim.
+--- `exec` leaves the client holding the shell's own pid, so a signal reaches
+--- the client.
+---
+--- A transcript is read, so the client's errors belong in it in the order the
+--- client printed them, and one stream is the only way to get that. Rows are
+--- data, and their stderr stays a separate pipe so an error cannot land in the
+--- csv.
 ---@param argv string[]
+---@param path string
+---@param transcript boolean
 ---@return string[]
-local function merged(argv)
+local function writingTo(argv, path, transcript)
   local words = {}
   for _, argument in ipairs(argv) do
     table.insert(words, quoted(argument))
@@ -369,7 +383,8 @@ local function merged(argv)
   if vim.fn.executable("stdbuf") == 1 then
     line = "stdbuf -oL " .. line
   end
-  return { "sh", "-c", "exec " .. line .. " 2>&1" }
+  line = "exec " .. line .. " >" .. quoted(path)
+  return { "sh", "-c", transcript and (line .. " 2>&1") or line }
 end
 
 --- Runs `sql` against `url` as a script and waits for it, returning the
@@ -385,43 +400,46 @@ function M.run(url, sql)
   return execute(command)
 end
 
---- The temporary file holding the rows `result` carries, named for the
---- delimiter the client wrote them with. Nil for a failure, already reported.
----@param result vim.SystemCompleted
+---@class db.Started
+---@field run db.Run
+---@field path string The file the client is writing, named for what it holds.
+
+-- Query output goes under the cache directory rather than through
+-- vim.fn.tempname, because nvim's temp directory is under /tmp, and a /tmp on
+-- tmpfs is memory. A result set large enough to be worth exporting would be
+-- held in memory twice over.
+local OUTPUT = vim.fn.stdpath("cache") .. "/db"
+local written = 0
+
+--- A file to write one query's output to, unused and unique to this nvim.
 ---@param extension string
----@return string|nil path
-local function written(result, extension)
-  if result.code ~= 0 then
-    vim.notify(vim.trim(result.stderr or "query failed"), vim.log.levels.ERROR)
-    return nil
-  end
-
-  local path = vim.fn.tempname() .. "." .. extension
-  local file = io.open(path, "w")
-  if not file then
-    vim.notify("could not write " .. path, vim.log.levels.ERROR)
-    return nil
-  end
-  file:write(result.stdout or "")
-  file:close()
-  return path
+---@return string
+local function outputPath(extension)
+  vim.fn.mkdir(OUTPUT, "p")
+  written = written + 1
+  return string.format("%s/%d-%d.%s", OUTPUT, vim.fn.getpid(), written, extension)
 end
 
---- Runs `sql` against `url` and writes the rows to a temporary file, handing
---- `on_done` its path once they are all there. `on_done` runs on the main loop
---- and takes nil for a failure, already reported. Nil for a url no client is
---- known for, also already reported.
----@param url string
----@param sql string
----@param on_done fun(path: string|nil)
----@return db.Run|nil
-function M.write(url, sql, on_done)
-  local command = commandFor(url, sql, "export")
+--- Runs `request.sql` against `request.url` with the client writing what it
+--- prints straight to a file, and calls `request.on_done` with the exit code
+--- once the client has finished. The output never reaches nvim, so what the
+--- query returns cannot exhaust its memory.
+---
+--- `on_done` runs on the main loop. Nil for a url no client is known for,
+--- already reported.
+---@param request { url: string, sql: string, mode: db.Mode, on_done: fun(code: integer) }
+---@return db.Started|nil
+function M.start(request)
+  local command = commandFor(request.url, request.sql, request.mode)
   if not command then
     return nil
   end
 
-  local job = vim.system(command.argv, {
+  local script = request.mode == "script"
+  local path = outputPath(command.extension)
+  local started = vim.uv.hrtime()
+
+  local job = vim.system(writingTo(command.argv, path, script), {
     text = true,
     env = command.env,
     stdin = command.stdin,
@@ -430,54 +448,29 @@ function M.write(url, sql, on_done)
     -- these clients are signalled to cancel them.
     detach = true,
   }, function(result)
-    vim.schedule(function()
-      on_done(written(result, command.extension))
-    end)
-  end)
-
-  return runOf(url, command, job)
-end
-
---- Runs `sql` against `url` as a script, handing each piece of the transcript
---- to `handlers.on_output` as the client writes it and the exit code to
---- `handlers.on_exit`. Both run on the main loop. Nil for a url no client is
---- known for, already reported.
----@param url string
----@param sql string
----@param handlers { on_output: fun(text: string), on_exit: fun(code: integer) }
----@return db.Run|nil
-function M.stream(url, sql, handlers)
-  local command = commandFor(url, sql, "script")
-  if not command then
-    return nil
-  end
-
-  -- vim.system reads the pipe in a fast event context, where most of the api
-  -- is unavailable.
-  local function forward(_, data)
-    if data then
-      vim.schedule(function()
-        handlers.on_output(data)
-      end)
+    if script then
+      local file = io.open(path, "a")
+      if file then
+        file:write(
+          string.format(
+            "\n[%s in %.3fs]\n",
+            result.code == 0 and "finished" or "failed",
+            (vim.uv.hrtime() - started) / 1e9
+          )
+        )
+        file:close()
+      end
     end
-  end
-
-  local job = vim.system(merged(command.argv), {
-    text = true,
-    env = command.env,
-    stdin = command.stdin,
-    stdout = forward,
-    -- Detached, so the client leads its own process group. A client that
-    -- shares nvim's group can be reached by a signal aimed at the group, and
-    -- these clients are signalled to cancel them.
-    detach = true,
-  }, function(result)
     vim.schedule(function()
-      handlers.on_exit(result.code)
+      -- A script reports its own failure in the transcript, which is on screen.
+      if result.code ~= 0 and not script then
+        vim.notify(vim.trim(result.stderr or "query failed"), vim.log.levels.ERROR)
+      end
+      request.on_done(result.code)
     end)
   end)
 
-  return runOf(url, command, job)
+  return { run = runOf(request.url, command, job), path = path }
 end
 
 return M
