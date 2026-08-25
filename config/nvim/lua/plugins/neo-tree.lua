@@ -2,6 +2,12 @@ local mine = function()
   local M = {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
+    dependencies = {
+      {
+         dir = "~/repos/neo-tree.nvim/tmp/neo-tree-database.nvim/",
+         branch = nil,
+      },
+    },
     -- dependencies = {
     --   "mrbjarksen/neo-tree-diagnostics.nvim",
     --   "miversen33/netman.nvim",
@@ -23,6 +29,7 @@ local mine = function()
           "filesystem",
           "buffers",
           "git_status",
+          "neo-tree-database",
           -- "diagnostics",
           ---"netman.ui.neo-tree",
           -- "document_symbols",
