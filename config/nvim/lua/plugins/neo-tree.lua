@@ -4,7 +4,7 @@ local mine = function()
     branch = "v3.x",
     dependencies = {
       {
-         dir = "~/repos/neo-tree.nvim/tmp/neo-tree-database.nvim/",
+         dir = "~/repos/neo-tree-database.nvim/",
          branch = nil,
       },
     },

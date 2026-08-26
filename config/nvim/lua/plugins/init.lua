@@ -18,5 +18,4 @@ return {
   "famiu/bufdelete.nvim",
   --{ "nvim-tree/nvim-tree.lua", setup = true },
   "tjgao/quickbuf.nvim",
-  "chrisbra/csv.vim",
 }

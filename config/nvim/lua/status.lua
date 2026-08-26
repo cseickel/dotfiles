@@ -85,7 +85,7 @@ M.get_claude_pair_enabled = function()
 end
 
 M.get_csv_pager = function()
-	local loaded, csv = pcall(require, "csv")
+	local loaded, csv = pcall(require, "csv-table")
 	if not loaded then
 		return ""
 	end
