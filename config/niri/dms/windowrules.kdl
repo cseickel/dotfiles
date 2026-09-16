@@ -25,3 +25,9 @@ window-rule {
     default-column-display "tabbed"
     min-width 1400
 }
+
+// @id=dms-floating-windows @name=DMS Floating Windows
+window-rule {
+    match app-id="^com.danklinux.dms$"
+    open-floating true
+}

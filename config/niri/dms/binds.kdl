@@ -1,4 +1,6 @@
 binds {
+    Alt+Print hotkey-overlay-title="Screenshot: Window" { spawn "dms" "screenshot" "window"; }
+    Print hotkey-overlay-title="Screenshot: Region" { spawn "dms" "screenshot"; }
     Super+A hotkey-overlay-title="App Launcher: Toggle" { spawn "dms" "ipc" "call" "spotlight" "toggle"; }
     Super+Alt+L hotkey-overlay-title="Lock Screen" { spawn "dms" "ipc" "call" "lock" "lock"; }
     Mod+Alt+Down hotkey-overlay-title="Move Column to Monitor Down" { move-column-to-monitor-down; }

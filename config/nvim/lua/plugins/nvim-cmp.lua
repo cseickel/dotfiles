@@ -127,6 +127,23 @@ return {
 			preselect = cmp.PreselectMode.None,
 		})
 
+    local compare = cmp.config.compare
+    cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
+      sources = {
+        { name = "nvim_lsp" },
+        { name = "nvim_lsp_signature_help" },
+      },
+      sorting = {
+        comparators = {
+          compare.offset,
+          compare.exact,
+          compare.score,
+          compare.sort_text,
+          compare.kind,
+        },
+      },
+    })
+
 		--cmp.setup.cmdline("/", {
 		--    mapping = cmp.mapping.preset.cmdline(),
 		--    sources = {

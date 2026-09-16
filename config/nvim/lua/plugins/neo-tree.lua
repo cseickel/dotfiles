@@ -34,6 +34,15 @@ local mine = function()
           ---"netman.ui.neo-tree",
           -- "document_symbols",
         },
+        database = {
+          connections = function ()
+            local abspath = vim.fn.expand("~/.secrets/connections.json")
+            if vim.fn.filereadable(abspath) == 1 then
+              return vim.json.decode(table.concat(vim.fn.readfile(abspath), "\n"))
+            end
+            return {}
+          end,
+        },
         --log_level = "trace",
         log_to_file = false,
         open_files_in_last_window = true,

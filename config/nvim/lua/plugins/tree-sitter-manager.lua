@@ -1,4 +1,62 @@
-return {
+local function is_parser_installed(lang)
+    local installed = require("nvim-treesitter").get_installed()
+    return vim.tbl_contains(installed, lang)
+end
+
+local function is_parser_available(lang)
+    local available = require("nvim-treesitter").get_available()
+    return vim.tbl_contains(available, lang)
+end
+
+local function start_treesitter(buf, lang)
+    if not vim.treesitter.language.add(lang) then
+        vim.notify(
+            "Cannot load treesitter parser for language " .. lang,
+            vim.log.levels.WARN
+        )
+        return
+    end
+    vim.treesitter.start(buf)
+    vim.bo[buf].syntax = "ON"
+    if vim.treesitter.query.get(lang, "indents") then
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+end
+
+local autocmd_created = false
+local function add_autocmd()
+  if autocmd_created then
+    return
+  end
+  vim.api.nvim_create_autocmd("FileType", {
+      callback = function(ev)
+          local lang = vim.treesitter.language.get_lang(ev.match)
+          if not lang then
+              return
+          end
+          local buf = ev.buf
+          if is_parser_installed(lang) then
+              start_treesitter(buf, lang)
+          elseif is_parser_available(lang) then
+              require("nvim-treesitter").install({ lang }):await(function()
+                  start_treesitter(buf, lang)
+              end)
+          end
+      end,
+  })
+  autocmd_created = true
+end
+
+local hamsta = {
+  'nvim-treesitter/nvim-treesitter',
+  lazy = false,
+  build = ':TSUpdate',
+  config = function()
+    add_autocmd()
+  end
+}
+
+local romus = {
   "romus204/tree-sitter-manager.nvim",
   dependencies = {}, -- tree-sitter CLI must be installed system-wide
   config = function()
@@ -47,3 +105,5 @@ return {
     })
   end
 }
+
+return hamsta

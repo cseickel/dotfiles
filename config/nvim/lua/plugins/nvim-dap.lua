@@ -17,7 +17,7 @@ return {
       nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
       nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
       nnoremap <silent> <leader>B :lua require'dap'.toggle_breakpoint()<CR>
-      nnoremap <silent> <M-k> <Cmd>lua require("dapui").eval()<CR>
+      nnoremap <silent> <leader>K <Cmd>lua require("dapui").eval()<CR>
       ]])
 
       require("mason-nvim-dap").setup({

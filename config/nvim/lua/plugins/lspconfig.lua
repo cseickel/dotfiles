@@ -161,8 +161,12 @@ return {
 		null_ls.setup({
 			fallback_severity = vim.diagnostic.severity.HINT,
 			should_attach = function(bufnr)
+        local buftype = vim.api.nvim_buf_get_option(bufnr, "buftype")
+        if buftype then
+          return false
+        end
 				local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-				if ft == "dbui" or ft == "dbout" or ft:match("sql") then
+				if ft == "dbui" or ft == "dbout" or ft:match("sql") or ft == "csv-table" then
 					return false
 				end
 				return true
@@ -319,8 +323,8 @@ return {
 
     local ts_server_by_root = {}
 
-    -- Returns 'tsgo' for TypeScript 7 projects and 'vtsls' for anything older or
-    -- pinning no local typescript, by probing the same binary tsgo's cmd will
+    -- Returns 'tsc' for TypeScript 7 projects and 'vtsls' for anything older or
+    -- pinning no local typescript, by probing the same binary tsc's cmd will
     -- launch, since `--lsp` exists only in TypeScript 7. `system()` folds stderr
     -- into its return, so the match is anchored on tsc's literal `Version 5.9.2`
     -- output and every unrecognized result falls to vtsls. The blocking call is
@@ -331,12 +335,12 @@ return {
         local tsc = vim.fs.joinpath(root_dir, 'node_modules/.bin/tsc')
         local output = vim.fn.executable(tsc) == 1 and vim.fn.system({ tsc, '--version' }) or ''
         local major = vim.v.shell_error == 0 and tonumber(output:match('Version%s+(%d+)%.')) or nil
-        ts_server_by_root[root_dir] = (major or 0) >= 7 and 'tsgo' or 'vtsls'
+        ts_server_by_root[root_dir] = (major or 0) >= 7 and 'tsc' or 'vtsls'
       end
       return ts_server_by_root[root_dir]
     end
 
-    vim.lsp.config('tsgo', {
+    vim.lsp.config('tsc', {
 			on_attach = navic.attach,
       settings = {
         typescript = {
@@ -362,7 +366,7 @@ return {
       -- two TypeScript servers attached to it.
       root_dir = function(bufnr, on_dir)
         local root = typescript_project_root(bufnr)
-        if root and typescript_server(root) == 'tsgo' then
+        if root and typescript_server(root) == 'tsc' then
           on_dir(root)
         end
       end,
@@ -372,7 +376,7 @@ return {
       capabilities = capabilities,
       on_attach = navic.attach,
       filetypes = typescript_filetypes,
-      -- Stays the exact inverse of the tsgo root_dir above, so a buffer never gets
+      -- Stays the exact inverse of the tsc root_dir above, so a buffer never gets
       -- two TypeScript servers attached to it.
       root_dir = function(bufnr, on_dir)
         local root = typescript_project_root(bufnr)
@@ -409,7 +413,7 @@ return {
       "vimls",
       "vtsls",
       --"typescript-tools",
-      "tsgo",
+      "tsc",
       "yamlls",
 			--"omnisharp",
 			--"terraformls",

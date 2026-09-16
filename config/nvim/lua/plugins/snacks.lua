@@ -1,5 +1,6 @@
 return {
   "folke/snacks.nvim",
+  lazy = false,
   opts = {
     gh = {
       -- your gh configuration comes here
@@ -7,6 +8,8 @@ return {
       -- refer to the configuration section below
     },
     picker = {
+      enabled = true,
+      ui_select = true,
       sources = {
         gh_issue = {
           -- your gh_issue picker configuration comes here

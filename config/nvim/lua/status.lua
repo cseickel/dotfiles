@@ -131,17 +131,31 @@ M.get_header = function()
 		local textoff = wininfo[1].textoff
 		local gutter = string.rep(" ", textoff)
 
-		local text = vim.fn.getline(header_line)
-		-- Drop what the window has scrolled past. `leftcol` counts display
-		-- columns and `sub` counts bytes, so a multi-byte character would be cut
-		-- in half without virtcol2col to convert between them.
-		if view.leftcol > 0 then
-			text = text:sub(vim.fn.virtcol2col(winid, header_line, view.leftcol + 1))
-		end
+    local text = vim.fn.getline(header_line)
+    -- Cut to the portion of the header that's visible
+    local width = vim.api.nvim_win_get_width(winid) - textoff
+    text = vim.fn.strcharpart(text, view.leftcol, width)
+    -- Escape any % in the header text
+    text = text:gsub("%%", "%%%%")
+    -- replace all │ with bars wrapped in CsvBorder highlight group
+    text = text:gsub("│", "%%#CsvBorder#│%%#WinBarHeader#")
 		-- add textoff to the beginning of the text
 		-- ensure the text is left aligned
 		return gutter .. "%#WinBarHeader#" .. text .. "%*%<"
 	end
+end
+
+M.get_db_query = function()
+  local loaded, db = pcall(require, "db-query")
+  if not loaded then
+    return ""
+  end
+
+  local text = db.status(vim.api.nvim_get_current_buf())
+  if isempty(text) then
+    return ""
+  end
+  return "%#WinBarIndicator# " .. text .. " %*"
 end
 
 M.get_winbar = function()
@@ -175,15 +189,21 @@ M.get_winbar = function()
 			return table.concat({
 				"%{%v:lua.status.get_mode()%}",
 				"%{%v:lua.status.get_filename()%}",
+        "%(%{%v:lua.status.get_db_name()%}%)",
 				"%<",
 				"%{%v:lua.status.get_location()%}",
+        "%{%v:lua.status.get_db_query()%}",
 				"%=",
 				"%{%v:lua.status.get_diag()%}",
 				"%{%v:lua.status.get_git_dirty()%}",
 			})
 		else
 			-- Meant for quickfix, help, etc
-			return "%{%v:lua.status.get_mode()%}%( %h%) %f"
+			return table.concat({
+        "%{%v:lua.status.get_mode()%}%( %h%) %f",
+        "%(%{%v:lua.status.get_db_name()%}%)",
+        "%{%v:lua.status.get_db_query()%}",
+      })
 		end
 	end
 end
@@ -298,14 +318,19 @@ M.get_icon = function(filename, extension)
 	return cached
 end
 
+M.get_db_name = function()
+  local db_name = vim.b.db_name
+  if isempty(db_name) then
+    return ""
+  else
+    return " [" .. db_name .. "]"
+  end
+end
+
 M.get_filename = function()
 	local has_icon, icon = pcall(M.get_icon)
 	if has_icon then
-		if vim.b.db_name then
-			return icon .. "%t [" .. vim.b.db_name .. "]"
-		else
-			return icon .. " %t"
-		end
+    return icon .. " %t"
 	else
 		return " %t"
 	end

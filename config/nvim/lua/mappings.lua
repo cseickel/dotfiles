@@ -145,6 +145,8 @@ local mappings = {
   [";"] = { "<Plug>(buf-surf-back)", "Previous Buffer" },
   ["'"] = { "<Plug>(buf-surf-forward)", "Next Buffer" },
   ["<M-b>"] = { "<cmd>QuickBuf<cr>", "Quickbuf" },
+  ["<C-1>"] = { "<cmd>DBOutput log<cr>", "Show DBQuery Log" },
+  ["<C-2>"] = { "<cmd>DBOutput result<cr>", "Show DBQuery Result" },
   h = { "Focus window to the LEFT" },
   j = { "Focus window BELOW" },
   k = { "Focus window ABOVE" },
@@ -199,7 +201,8 @@ local mappings = {
       h = { "<cmd>lua require('minty.huefy').open()<cr>", "Hues" },
       s = { "<cmd>lua require('minty.shades').open()<cr>", "Shades" },
     },
-    d = {
+    d = { "<cmd>Neotree source=database current<cr>", "Database Tree" },
+    D = {
       name = "Diagnostics...",
       d = { "<cmd>lua vim.diagnostic.open_float()<cr>", "Preview Diagnostic" },
       E = { "<cmd>lua vim.diagnostic.enable()<cr>", "Enable Diagnostics" },
@@ -209,7 +212,6 @@ local mappings = {
       l = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Set Location List (Diagnostics for Document)" },
       q = { "<cmd>lua vim.diagnostic.setqflist()<cr>", "Set Quickfix List (Diagnostics for Workspace)" },
     },
-    D = { "<cmd>Neotree diagnostics reveal bottom<cr>", "Show all Diagnostics" },
     j = { showSymbolFinder, "Jump to Method, Class, etc" },
     -- J = { "f,ls<cr><esc>", "Newline at next comma" },
     J = { "<cmd>TSJToggle<cr>", "Toggle Split/Join" },
