@@ -109,6 +109,7 @@
   "matugenTemplateEquibop": false,
   "matugenTemplateFoot": false,
   "matugenTemplateWezterm": false,
+  "dockSeparatePinnedAndRunningApps": true,
   "dockPosition": 0,
   "dockIsolateDisplays": true,
   "dockLauncherEnabled": true,
@@ -157,6 +158,19 @@
         {
           "id": "colorPicker",
           "enabled": true
+        },
+        {
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
+          "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "rvaTaskStatus",
+          "enabled": true
         }
       ],
       "centerWidgets": [
@@ -171,9 +185,8 @@
       ],
       "rightWidgets": [
         {
-          "id": "systemUpdate",
-          "enabled": true,
-          "hideWhenIdle": false
+          "id": "dankSoftwareDepot",
+          "enabled": true
         },
         {
           "id": "systemTray",
@@ -309,6 +322,11 @@
           "enabled": true
         },
         {
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
+        },
+        {
           "id": "separator",
           "enabled": true
         },
@@ -329,9 +347,8 @@
       ],
       "rightWidgets": [
         {
-          "id": "systemUpdate",
-          "enabled": true,
-          "hideWhenIdle": true
+          "id": "dankSoftwareDepot",
+          "enabled": true
         },
         {
           "id": "systemTray",
@@ -448,8 +465,9 @@
           "enabled": true
         },
         {
-          "id": "dankTodo",
-          "enabled": true
+          "id": "cpuTemp",
+          "enabled": true,
+          "minimumWidth": true
         },
         {
           "id": "separator",
@@ -472,9 +490,8 @@
       ],
       "rightWidgets": [
         {
-          "id": "systemUpdate",
-          "enabled": true,
-          "hideWhenIdle": false
+          "id": "dankSoftwareDepot",
+          "enabled": true
         },
         {
           "id": "systemTray",
@@ -500,6 +517,10 @@
         },
         {
           "id": "separator",
+          "enabled": true
+        },
+        {
+          "id": "dankTodo",
           "enabled": true
         },
         {

@@ -12,17 +12,21 @@
     "dankDesktopWeather": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankDesktopWeather",
-      "commit": "2a0f6c57207545433f26b2af32b7d4e72b4c09e2"
+      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
     },
     "dankLauncherKeys": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankLauncherKeys",
-      "commit": "2a0f6c57207545433f26b2af32b7d4e72b4c09e2"
+      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
     },
     "dankNotepadModule": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankNotepadModule",
-      "commit": "2a0f6c57207545433f26b2af32b7d4e72b4c09e2"
+      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
+    },
+    "dankSoftwareDepot": {
+      "repo": "https://github.com/vinceecniv/DankSoftwareDepot",
+      "commit": "7de783ef64454f64c0ec9ab747e21644afe67d1b"
     },
     "dankTodo": {
       "repo": "https://github.com/deepu105/dms-dank-todo",
@@ -32,9 +36,13 @@
       "repo": "https://github.com/leoamaro01/dms-dcal",
       "commit": "8a140c03231a06cbf2cc3754312477c4e9aaadaa"
     },
+    "fwFanctrl": {
+      "repo": "https://github.com/clementpoiret/dms-fwfanctrl",
+      "commit": "80015e2a8e113c473989306f2aed88ea8a1fb395"
+    },
     "niriWindows": {
       "repo": "https://github.com/rochacbruno/DankNiriWindows",
-      "commit": "f2c0b0fc0325e3299257cc5d1895069a3d49247f"
+      "commit": "411d5ee9f7707029f4c12c824ec3b24ca6756a0d"
     },
     "recentFiles": {
       "repo": "https://github.com/gouwazi/dms-recent-files",

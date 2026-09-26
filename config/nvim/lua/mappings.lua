@@ -36,11 +36,11 @@ local showSymbolFinder = function()
   require("telescope.builtin").lsp_document_symbols(opts)
 end
 
-local getQuickfixOptions = function()
+local getQuickfixOptions = function(jump_type)
   local width = math.min(vim.o.columns - 2, 180)
   local height = math.min(vim.o.lines - 10, 60)
   local opt = {
-    jump_type = "never",
+    jump_type = jump_type,
     layout_strategy = "vertical",
     layout_config = {
       width = width,
@@ -60,7 +60,7 @@ local showImplementation = function()
 end
 
 local showReferences = function()
-  require("telescope.builtin").lsp_references(getQuickfixOptions())
+  require("telescope.builtin").lsp_references(getQuickfixOptions("never"))
 end
 
 local showType = function()

@@ -33,6 +33,7 @@ lua require('quickfix')
 lua require('mappings')
 lua require('status')
 lua require('autoclose')
+lua require('title')
 " Set the socket path for Cluade Code to use
 let $NVIM_SOCKET = len($NVIM_UNCEPTION_PIPE_PATH_HOST) ? $NVIM_UNCEPTION_PIPE_PATH_HOST : (len($NVIM) ? $NVIM : $NVIM_LISTEN_ADDRESS)
 exe 'cd ' . g:owd

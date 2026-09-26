@@ -5,6 +5,9 @@
 # Go (interactive only - go env can be slow)
 export GOPATH=$(go env GOPATH 2>/dev/null || echo "$HOME/go")
 export PATH="$GOPATH/bin:$HOME/.cargo/bin:$PATH"
+if [ -d "$HOME/.local/bin/" ]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Path to oh-my-zsh installation
 if [ -f /usr/share/oh-my-zsh/oh-my-zsh.sh ]; then
@@ -40,9 +43,7 @@ alias cat='bat'
 alias emod='nvim "$(find ./ -type f -printf '\''%T@ %p\n'\'' | sort -n | tail -1 | cut -d'\'' '\'' -f2-)"'
 alias enew='nvim "$(find . -type f -exec stat --format='\''%W %n'\'' {} + | sort -nr | awk '\''NR==1{print $2}'\'')"'
 
-alias cdk="aws-vault exec rva --no-session -- npm run cdk"
-alias vault="aws-vault exec rva --"
-alias vault-no-session="aws-vault exec rva --no-session --"
+alias cdk="npm run cdk"
 
 alias add="git add"
 alias checkout='git checkout'
@@ -229,8 +230,6 @@ if [[ ! -e ~/.local/bin/edit.sh ]]; then
 fi
 export EDITOR=~/.local/bin/edit.sh
 
-# opencode
-export PATH=/home/user/.opencode/bin:$PATH
 unset zle_bracketed_paste
 
 # Claude Code shell functions
@@ -265,17 +264,3 @@ nv() {
   (( $# )) && command nvim --server "$sock" --remote "$@"
   command nvim --server "$sock" --remote-ui
 }
-
-export PATH=$HOME/.rill:$PATH # Added by Rill install
-
-# Added by codebase-memory-mcp install
-export PATH="/home/chris/.local/bin:$PATH"
-
-export QSV_MAX_JOBS=16
-export QSV_FREEMEMORY_HEADROOM_PCT=10
-export QSV_MEMORY_CHECK=false
-export QSV_AUTOINDEX_SIZE=10485760
-export QSV_RDR_BUFFER_CAPACITY=1048576
-export QSV_WTR_BUFFER_CAPACITY=2097152
-export QSV_NO_ALLOC_TUNING=false
-

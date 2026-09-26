@@ -44,14 +44,14 @@ highlight GitGutterChangeDelete      guifg=#c97755
 
 highlight TSVariableBuiltin guifg=#c586c0 ctermfg=175 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
 
-hi DiagnosticWarn guifg=#d7d700 gui=Italic
+hi DiagnosticWarn guifg=#d7af5f gui=Italic
 hi DiagnosticInfo guifg=#87d7ff gui=Italic
 hi DiagnosticHint guifg=#ffffd7 gui=Italic
-hi DiagnosticError guifg=#af0000 gui=Italic,Bold
-hi DiagnosticSignWarn guifg=#d7d700
+hi DiagnosticError guifg=#ff5555 gui=Italic,Bold
+hi DiagnosticSignWarn guifg=#d7af5f
 hi DiagnosticSignInfo guifg=#87d7ff
 hi DiagnosticSignHint guifg=#ffffd7
-hi DiagnosticSignError guifg=#af0000
+hi DiagnosticSignError guifg=#ff5555
 "hi link vimUserFunc none
 
 "hi Normal guibg=#1c1c1c

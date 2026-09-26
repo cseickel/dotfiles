@@ -96,47 +96,10 @@ return {
 			lineFoldingOnly = true,
 		}
 
-		_G.find_cspell = function()
-			if vim.bo.buftype ~= "" then
-				return
-			end
-			if vim.b.cspell_config_file_path ~= nil then
-				return
-			end
-			-- use vim.loop to walk up the directory tree until we find a cspell.json file
-			local dir = vim.fn.expand("%:p:h")
-			-- make sure this is a real directory
-			local stat = vim.loop.fs_stat(dir)
-			if stat == nil then
-				return nil
-			end
-
-			while dir ~= nil and dir ~= "" and dir ~= "/" do
-				local cspell_json = dir .. "/cspell.json"
-				if vim.fn.filereadable(cspell_json) == 1 then
-					vim.b.cspell_config_file_path = cspell_json
-					return
-				end
-				dir = vim.fn.fnamemodify(dir, ":h")
-			end
-			return nil
-		end
-
-		vim.api.nvim_exec(
-			[[
-      augroup FindCspellConfig
-        autocmd!
-        autocmd BufEnter * lua find_cspell()
-      augroup END
-    ]],
-			false
-		)
-
 		local cspell_config = {
-			find_json = function()
-				return vim.b.cspell_config_file_path
-			end,
-			---@param payload AddToJSONSuccess
+      find_json = function(directory)
+        return vim.fs.find("cspell.json", { path = directory, upward = true, type = "file" })[1]
+      end,
 			on_add_to_json = function(payload)
 				-- Includes:
 				-- payload.new_word
@@ -161,11 +124,11 @@ return {
 		null_ls.setup({
 			fallback_severity = vim.diagnostic.severity.HINT,
 			should_attach = function(bufnr)
-        local buftype = vim.api.nvim_buf_get_option(bufnr, "buftype")
-        if buftype then
+        local buftype = vim.bo[bufnr].buftype or ""
+        if buftype ~= "" then
           return false
         end
-				local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+				local ft = vim.bo[bufnr].filetype or ""
 				if ft == "dbui" or ft == "dbout" or ft:match("sql") or ft == "csv-table" then
 					return false
 				end
@@ -199,7 +162,6 @@ return {
 		--  automatic_installation = true,
 		--})
 
-		local lspconfig = require("lspconfig")
 		local navic = require("nvim-navic")
 
     vim.lsp.config('jsonls', {

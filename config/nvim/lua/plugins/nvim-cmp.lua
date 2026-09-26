@@ -61,44 +61,70 @@ return {
 				Operator = "",
 			},
 		})
+    local base_format = function(entry, vim_item)
+      -- nvim-cmp draws the kind's icon in its own icon column
+      vim_item.kind = ""
+      if entry.source.name == "copilot" then
+        vim_item.kind = ""
+      end
+      -- set a name for each source
+      vim_item.menu = ({
+        copilot = "[Copilot]",
+        buffer = "[Buffer]",
+        nvim_lsp = "[LSP]",
+        vsnip = "[VSnip]",
+        nvim_lua = "[Lua]",
+        cmp_tabnine = "[TabNine]",
+        look = "[Look]",
+        path = "[Path]",
+        spell = "[Spell]",
+        calc = "[Calc]",
+        emoji = "[Emoji]",
+        npm = "[npm]",
+        dap = "[DAP]",
+      })[entry.source.name]
+      return vim_item
+    end
 
 		local cmp = require("cmp")
+
+    local function snippetJumpable(direction)
+      return vim.fn["vsnip#jumpable"](direction) == 1
+    end
+
+    local function snippetJump(direction)
+      local key = direction > 0 and "<Plug>(vsnip-jump-next)" or "<Plug>(vsnip-jump-prev)"
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), "", false)
+    end
+
 		cmp.setup({
 			enabled = function()
 				return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
 			end,
 			formatting = {
-				format = function(entry, vim_item)
-					-- fancy icons and a name of kind
-					vim_item.kind = require("lspkind").presets.default[vim_item.kind] -- .. " " .. vim_item.kind
-					if entry.source.name == "copilot" then
-						vim_item.kind = ""
-					end
-					-- set a name for each source
-					vim_item.menu = ({
-						copilot = "[Copilot]",
-						buffer = "[Buffer]",
-						nvim_lsp = "[LSP]",
-						vsnip = "[VSnip]",
-						nvim_lua = "[Lua]",
-						cmp_tabnine = "[TabNine]",
-						look = "[Look]",
-						path = "[Path]",
-						spell = "[Spell]",
-						calc = "[Calc]",
-						emoji = "[Emoji]",
-						npm = "[npm]",
-						dap = "[DAP]",
-					})[entry.source.name]
-					return vim_item
-				end,
+        format = base_format
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-b>"] = cmp.mapping.scroll_docs(-4),
 				["<C-f>"] = cmp.mapping.scroll_docs(4),
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-e>"] = cmp.mapping.close(),
-				["<Tab>"] = cmp.mapping.confirm({ select = true }),
+				["<Tab>"] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.confirm({ select = true })
+					elseif snippetJumpable(1) then
+						snippetJump(1)
+					else
+						fallback()
+					end
+				end, { "i", "s" }),
+				["<S-Tab>"] = cmp.mapping(function(fallback)
+					if snippetJumpable(-1) then
+						snippetJump(-1)
+					else
+						fallback()
+					end
+				end, { "i", "s" }),
 			}),
 			snippet = {
 				expand = function(args)
@@ -127,6 +153,35 @@ return {
 			preselect = cmp.PreselectMode.None,
 		})
 
+    local SQL_TYPE_ICONS = {
+      { "%[%]$", "󰅪" },
+      { "^timestamp", "󰃰" },
+      { "^date", "󰃭" },
+      { "^time", "󰥔" },
+      { "^interval", "󱫡" },
+      { "^bool", "󰨙" },
+      { "int", "󰎠" },
+      { "^numeric", "󰎠" },
+      { "^decimal", "󰎠" },
+      { "^double", "󰎠" },
+      { "^real", "󰎠" },
+      { "^float", "󰎠" },
+      { "^uuid", "󰻾" },
+      { "^json", "󰘦" },
+      { "char", "󰉿" },
+      { "^text", "󰉿" },
+    }
+
+    local function sqlTypeIcon(type)
+      local lower = type:lower()
+      for _, rule in ipairs(SQL_TYPE_ICONS) do
+        if lower:find(rule[1]) then
+          return rule[2]
+        end
+      end
+      return nil
+    end
+
     local compare = cmp.config.compare
     cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
       sources = {
@@ -141,6 +196,17 @@ return {
           compare.sort_text,
           compare.kind,
         },
+      },
+      formatting = {
+        format = function(entry, item)
+          item = base_format(entry, item)
+          local details = entry.completion_item.labelDetails
+          if details and details.description then
+            item.icon = sqlTypeIcon(details.description) or item.icon
+            item.menu = details.description
+          end
+          return item
+        end,
       },
     })
 
@@ -209,6 +275,40 @@ return {
 		--		},
 		--	},
 		--})
+    vim.keymap.set("n", "<Tab>", function()
+      return snippetJumpable(1) and "i<Plug>(vsnip-jump-next)" or "<Tab>"
+    end, { expr = true, remap = true, desc = "next snippet field" })
+    vim.keymap.set("n", "<S-Tab>", function()
+      return snippetJumpable(-1) and "i<Plug>(vsnip-jump-prev)" or ""
+    end, { expr = true, remap = true, desc = "previous snippet field" })
+
+    -- Shows the jump keys at the end of the cursor line while a snippet has a
+    -- field to jump to.
+    local snippetHint = vim.api.nvim_create_namespace("snippet-jump-hint")
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "ModeChanged" }, {
+      callback = function(event)
+        vim.api.nvim_buf_clear_namespace(event.buf, snippetHint, 0, -1)
+        if not vim.api.nvim_get_mode().mode:match("^[insS]") then
+          return
+        end
+        local keys = {}
+        if snippetJumpable(-1) then
+          table.insert(keys, "<S-Tab> (back)")
+        end
+        if snippetJumpable(1) then
+          table.insert(keys, "(next) <Tab>")
+        end
+        if #keys == 0 then
+          return
+        end
+        local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+        vim.api.nvim_buf_set_extmark(event.buf, snippetHint, row, 0, {
+          virt_text = { { table.concat(keys, " <-|-> "), "Comment" } },
+          virt_text_pos = "eol",
+        })
+      end,
+    })
+
 		vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
 	end,
 }

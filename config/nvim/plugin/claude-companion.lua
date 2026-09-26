@@ -764,6 +764,6 @@ vim.keymap.set("v", "<leader>c", function()
 end, { desc = "SPAG correct selection" })
 
 
-vim.notify("Claude Companion loaded. Press <leader>i to start from normal mode, or Alt+i in insert mode.", vim.log.levels.INFO)
+--vim.notify("Claude Companion loaded. Press <leader>i to start from normal mode, or Alt+i in insert mode.", vim.log.levels.INFO)
 
 return M
