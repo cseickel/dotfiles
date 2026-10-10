@@ -3,30 +3,30 @@
   "plugins": {
     "calculator": {
       "repo": "https://github.com/rochacbruno/DankCalculator",
-      "commit": "1db5865419a40a33171a475855a59e0b8bf7187f"
+      "commit": "c9fbbe921e9afeb92f4e92390e9fc05f006f0373"
     },
     "commandRunner": {
       "repo": "https://github.com/devnullvoid/dms-command-runner",
-      "commit": "5c2cab404335ceb96c60cf9e97a9682994209cd4"
+      "commit": "ea59490eede60d7dc87697b670f1eccc6ad54593"
     },
     "dankDesktopWeather": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankDesktopWeather",
-      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
+      "commit": "a8a508bc371e7c3f2c7862d8840b88cf5c63978f"
     },
     "dankLauncherKeys": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankLauncherKeys",
-      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
+      "commit": "a8a508bc371e7c3f2c7862d8840b88cf5c63978f"
     },
     "dankNotepadModule": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankNotepadModule",
-      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
+      "commit": "a8a508bc371e7c3f2c7862d8840b88cf5c63978f"
     },
     "dankSoftwareDepot": {
       "repo": "https://github.com/vinceecniv/DankSoftwareDepot",
-      "commit": "7de783ef64454f64c0ec9ab747e21644afe67d1b"
+      "commit": "ff7757e1cbec9243d693e9449ee7b470625e5ac6"
     },
     "dankTodo": {
       "repo": "https://github.com/deepu105/dms-dank-todo",
@@ -38,7 +38,7 @@
     },
     "fwFanctrl": {
       "repo": "https://github.com/clementpoiret/dms-fwfanctrl",
-      "commit": "80015e2a8e113c473989306f2aed88ea8a1fb395"
+      "commit": "28cca55562f8cd9ced3ed433caa4fe34bbd0dd15"
     },
     "niriWindows": {
       "repo": "https://github.com/rochacbruno/DankNiriWindows",

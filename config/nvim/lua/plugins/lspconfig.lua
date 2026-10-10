@@ -129,7 +129,7 @@ return {
           return false
         end
 				local ft = vim.bo[bufnr].filetype or ""
-				if ft == "dbui" or ft == "dbout" or ft:match("sql") or ft == "csv-table" then
+				if ft == "dbui" or ft == "dbout" or ft:match("sql") or ft == "csv-table" or ft == "neo-tree" then
 					return false
 				end
 				return true

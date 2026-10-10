@@ -75,7 +75,7 @@
       "enabled": true
     }
   ],
-  "networkPreference": "ethernet",
+  "networkPreference": "wifi",
   "cursorSettings": {
     "theme": "System Default",
     "size": 24,
@@ -98,9 +98,10 @@
   "notificationBodyFontSize": 12,
   "acMonitorTimeout": 1800,
   "acSuspendTimeout": 7200,
+  "acProfileName": "1",
   "batteryMonitorTimeout": 900,
   "batterySuspendTimeout": 1200,
-  "batteryProfileName": "1",
+  "batteryProfileName": "0",
   "lockBeforeSuspend": true,
   "matugenTemplateHyprland": false,
   "matugenTemplateMangowc": false,

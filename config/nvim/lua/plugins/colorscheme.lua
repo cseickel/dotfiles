@@ -35,6 +35,8 @@ local vscode = {
 				Comment = { fg = "#505050", bg = "NONE", italic = true },
 				Directory = { fg = c.vscBlue, bg = "NONE" },
 				["@punctuation.bracket"] = { fg = c.vscFront, bg = "None" },
+        LogTime = { link = "Number" },
+        LogTimeZone = { link = "Type" },
 			},
 		})
 		require("vscode").load()

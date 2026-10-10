@@ -80,152 +80,64 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1790453601,
-      "packages": [
-        {
-          "name": "awscli2.noarch",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "2.36.0-1.fc44",
-          "toVersion": "2.37.0-1.fc44"
-        },
-        {
-          "name": "firefox.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "156.0-1.fc44",
-          "toVersion": "156.0.1-1.fc44"
-        },
-        {
-          "name": "firefox-langpacks.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "156.0-1.fc44",
-          "toVersion": "156.0.1-1.fc44"
-        },
-        {
-          "name": "fwupd.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "2.1.7-1.fc44",
-          "toVersion": "2.1.8-1.fc44"
-        },
-        {
-          "name": "fwupd-plugin-modem-manager.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "2.1.7-1.fc44",
-          "toVersion": "2.1.8-1.fc44"
-        },
-        {
-          "name": "fwupd-plugin-uefi-capsule-data.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "2.1.7-1.fc44",
-          "toVersion": "2.1.8-1.fc44"
-        },
-        {
-          "name": "libheif.i686",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "1.23.4-6.fc44",
-          "toVersion": "1.23.5-3.fc44"
-        },
-        {
-          "name": "libheif.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "1.23.4-6.fc44",
-          "toVersion": "1.23.5-3.fc44"
-        },
-        {
-          "name": "libheif-ffmpeg.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "1.23.4-6.fc44",
-          "toVersion": "1.23.5-3.fc44"
-        },
-        {
-          "name": "python3-awscrt.x86_64",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "0.36.0-1.fc44",
-          "toVersion": "0.37.0-1.fc44"
-        },
-        {
-          "name": "python3-boto3.noarch",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "1.43.96-1.fc44",
-          "toVersion": "1.43.99-1.fc44"
-        },
-        {
-          "name": "python3-botocore.noarch",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "1.43.96-1.fc44",
-          "toVersion": "1.43.99-1.fc44"
-        },
-        {
-          "name": "python3-pytz.noarch",
-          "repo": "system",
-          "backend": "dnf5",
-          "fromVersion": "2026.3-1.fc44",
-          "toVersion": "2026.4-1.fc44"
-        }
-      ]
+      "ts": 1791639466,
+      "packages": []
     },
     "appimageHandlerClaimed": true,
     "launcherPromptDone": true,
-    "checkDurationSecs": 10,
+    "checkDurationSecs": 49,
     "autoUpdateMode": "auto",
     "runHistory": [
       {
-        "seconds": 4,
-        "items": 2
-      },
-      {
-        "seconds": 6,
-        "items": 2
-      },
-      {
-        "seconds": 37,
-        "items": 4
-      },
-      {
-        "seconds": 4,
-        "items": 2
-      },
-      {
-        "seconds": 19,
+        "seconds": 3,
         "items": 1
       },
       {
-        "seconds": 9,
-        "items": 5
+        "seconds": 13,
+        "items": 1
       },
       {
-        "seconds": 11,
+        "seconds": 7,
+        "items": 2
+      },
+      {
+        "seconds": 2,
+        "items": 1
+      },
+      {
+        "seconds": 115,
+        "items": 43
+      },
+      {
+        "seconds": 7,
+        "items": 2
+      },
+      {
+        "seconds": 10,
+        "items": 2
+      },
+      {
+        "seconds": 33,
+        "items": 1
+      },
+      {
+        "seconds": 30,
         "items": 1
       },
       {
         "seconds": 15,
-        "items": 1
-      },
-      {
-        "seconds": 22,
-        "items": 1
-      },
-      {
-        "seconds": 9,
-        "items": 1
+        "items": 2
       }
     ],
     "lastRunFailures": {},
     "pendingShellRunLog": {},
-    "lastUpdateUnix": 1790333663,
-    "selfUpdateNotifiedVersion": "1.2.0",
-    "pillOpensWindow": true
+    "lastUpdateUnix": 1791639463,
+    "selfUpdateNotifiedVersion": "1.5.0",
+    "pillOpensWindow": true,
+    "rebootFlag": {
+      "bootId": "dc1eaa52-d642-4ea2-9360-80b7edd25acf",
+      "recommended": true
+    }
   },
   "fwFanctrl": {
     "enabled": true
