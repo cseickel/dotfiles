@@ -102,6 +102,7 @@
   "batteryMonitorTimeout": 900,
   "batterySuspendTimeout": 1200,
   "batteryProfileName": "0",
+  "batteryNotifyLow": true,
   "lockBeforeSuspend": true,
   "matugenTemplateHyprland": false,
   "matugenTemplateMangowc": false,

@@ -3,4 +3,5 @@
 .mcp-servers
 tmp
 config/niri/**backup*.kdl
-config/DankMaterialShell/plugins
+config/DankMaterialShell/plugins/*
+!config/DankMaterialShell/plugins/niriColumnApps/
