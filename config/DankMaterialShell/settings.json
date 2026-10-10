@@ -176,12 +176,8 @@
       ],
       "centerWidgets": [
         {
-          "id": "runningApps",
-          "enabled": true,
-          "runningAppsCompactMode": true,
-          "runningAppsGroupByApp": false,
-          "runningAppsCurrentWorkspace": true,
-          "runningAppsCurrentMonitor": true
+          "id": "niriColumnApps",
+          "enabled": true
         }
       ],
       "rightWidgets": [
@@ -338,12 +334,8 @@
       ],
       "centerWidgets": [
         {
-          "id": "runningApps",
-          "enabled": true,
-          "runningAppsCompactMode": true,
-          "runningAppsGroupByApp": false,
-          "runningAppsCurrentWorkspace": true,
-          "runningAppsCurrentMonitor": true
+          "id": "niriColumnApps",
+          "enabled": true
         }
       ],
       "rightWidgets": [
@@ -481,12 +473,8 @@
       ],
       "centerWidgets": [
         {
-          "id": "runningApps",
-          "enabled": true,
-          "runningAppsCompactMode": false,
-          "runningAppsGroupByApp": false,
-          "runningAppsCurrentWorkspace": true,
-          "runningAppsCurrentMonitor": true
+          "id": "niriColumnApps",
+          "enabled": true
         }
       ],
       "rightWidgets": [

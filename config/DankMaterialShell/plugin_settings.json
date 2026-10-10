@@ -10,7 +10,8 @@
     "keepLastResults": "100"
   },
   "niriWindows": {
-    "enabled": true
+    "enabled": true,
+    "noTrigger": true
   },
   "githubInbox": {
     "enabled": true
@@ -80,12 +81,12 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1791639466,
+      "ts": 1791646072,
       "packages": []
     },
     "appimageHandlerClaimed": true,
     "launcherPromptDone": true,
-    "checkDurationSecs": 49,
+    "checkDurationSecs": 10,
     "autoUpdateMode": "auto",
     "runHistory": [
       {
@@ -140,6 +141,9 @@
     }
   },
   "fwFanctrl": {
+    "enabled": true
+  },
+  "niriColumnApps": {
     "enabled": true
   }
 }
