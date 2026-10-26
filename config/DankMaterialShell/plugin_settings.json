@@ -1,6 +1,6 @@
 {
   "dankNotepadModule": {
-    "enabled": true
+    "enabled": false
   },
   "calculator": {
     "enabled": true,
@@ -17,7 +17,7 @@
     "enabled": true
   },
   "wallpaperDiscovery": {
-    "enabled": true
+    "enabled": false
   },
   "unifiedTaskbar": {
     "enabled": false,
@@ -51,6 +51,13 @@
     "trigger": "!",
     "terminal": "ghostty",
     "history": [
+      "ghostty -e /usr/bin/nvim",
+      "ghostty -e nvim",
+      "xdg-terminal-exec nvim",
+      "xdg-terminal-exec /usr/bin/nvim",
+      "/usr/bin/nvim",
+      "nvim",
+      "xdg-open ~/.cache/nvim/db-query/1446181/scratch-local-10.csv",
       "citrix"
     ]
   },
@@ -61,7 +68,7 @@
     "enabled": true
   },
   "dankLauncherKeys": {
-    "enabled": true,
+    "enabled": false,
     "noTrigger": true
   },
   "screenCapture": {
@@ -81,69 +88,156 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1791646244,
-      "packages": []
+      "ts": 1793053695,
+      "packages": [
+        {
+          "name": "desktop-backgrounds-gnome.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "44.0.0-2.fc44",
+          "toVersion": "44.0.0-3.fc44"
+        },
+        {
+          "name": "nix.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "nix-core.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "nix-daemon.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "nix-filesystem.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "nix-legacy.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "nix-libs.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "nix-system.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.34.8-1.fc44",
+          "toVersion": "2.35.3-2.fc44"
+        },
+        {
+          "name": "wget2.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.3.0-1.fc44",
+          "toVersion": "2.3.0-2.fc44"
+        },
+        {
+          "name": "wget2-libs.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.3.0-1.fc44",
+          "toVersion": "2.3.0-2.fc44"
+        },
+        {
+          "name": "wget2-wget.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.3.0-1.fc44",
+          "toVersion": "2.3.0-2.fc44"
+        }
+      ]
     },
     "appimageHandlerClaimed": true,
     "launcherPromptDone": true,
-    "checkDurationSecs": 10,
+    "checkDurationSecs": 5,
     "autoUpdateMode": "auto",
     "runHistory": [
       {
+        "seconds": 5,
+        "items": 2
+      },
+      {
+        "seconds": 55,
+        "items": 3
+      },
+      {
         "seconds": 3,
-        "items": 1
+        "items": 5
       },
       {
-        "seconds": 13,
-        "items": 1
+        "seconds": 5,
+        "items": 5
       },
       {
-        "seconds": 7,
+        "seconds": 9,
+        "items": 3
+      },
+      {
+        "seconds": 11,
+        "items": 3
+      },
+      {
+        "seconds": 108,
         "items": 2
       },
       {
-        "seconds": 2,
+        "seconds": 16,
         "items": 1
       },
       {
-        "seconds": 115,
-        "items": 43
-      },
-      {
-        "seconds": 7,
+        "seconds": 4,
         "items": 2
       },
       {
-        "seconds": 10,
-        "items": 2
-      },
-      {
-        "seconds": 33,
-        "items": 1
-      },
-      {
-        "seconds": 30,
-        "items": 1
-      },
-      {
-        "seconds": 15,
-        "items": 2
+        "seconds": 1,
+        "items": 3
       }
     ],
     "lastRunFailures": {},
     "pendingShellRunLog": {},
-    "lastUpdateUnix": 1791639463,
-    "selfUpdateNotifiedVersion": "1.5.0",
+    "lastUpdateUnix": 1792943820,
+    "selfUpdateNotifiedVersion": "1.7.1",
     "pillOpensWindow": true,
     "rebootFlag": {
-      "bootId": "dc1eaa52-d642-4ea2-9360-80b7edd25acf",
+      "bootId": "fc3c43c7-6df6-458b-8e68-1026affd7800",
       "recommended": true
-    }
+    },
+    "eolDismissed": [
+      "runtime/org.freedesktop.Platform.GL.default/x86_64/24.08|org.freedesktop.Platform 24.08 is no longer receiving fixes and security updates. Please update to a supported runtime version.||",
+      "runtime/org.freedesktop.Platform.GL.default/x86_64/24.08extra|org.freedesktop.Platform 24.08 is no longer receiving fixes and security updates. Please update to a supported runtime version.||",
+      "runtime/org.freedesktop.Sdk/x86_64/24.08|org.freedesktop.Platform 24.08 is no longer receiving fixes and security updates. Please update to a supported runtime version.||",
+      "runtime/org.kde.Platform/x86_64/5.15-24.08|We strongly recommend moving to the latest stable version of the Platform and SDK||Speech Note"
+    ]
   },
   "fwFanctrl": {
     "enabled": true
   },
   "niriColumnApps": {
     "enabled": true
+  },
+  "dankDesktopWeather": {
+    "enabled": false
   }
 }

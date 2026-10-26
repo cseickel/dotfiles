@@ -1,3 +1,14 @@
+local function project (key, path, name)
+  return {
+    key = key,
+    desc = name or path,
+    action = function()
+      vim.fn.chdir(path)
+      vim.cmd("Neotree current")
+    end
+  }
+end
+
 return {
   "folke/snacks.nvim",
   lazy = false,
@@ -20,6 +31,19 @@ return {
           -- or leave it empty to use the default settings
         }
       }
+    },
+    dashboard = {
+      enabled = true,
+      sections = {
+        -- fixed list: one key per project
+        project("d", "~/sql", "DB"),
+        project("c", "~/claude-instructions", "claude-instructions"),
+        project("r", "~/claude-instructions/rva-3", "rva-3"),
+        project("f", "~/claude-instructions/fdw-sync", "fdw-sync"),
+        project("n", "~/notes", "notes"),
+        -- automatic list: git roots of recently opened files, numbered keys
+        { section = "projects", title = "Recent projects", padding = 1 },
+      },
     },
   },
   keys = {

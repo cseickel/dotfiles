@@ -104,14 +104,6 @@ M.get_neo_tree_context = function()
 	else
 		return context
 	end
-	--local source = vim.b.neo_tree_source
-	--if not isempty(source) then
-	--  local label = require("neo-tree").config.source_selector.tab_labels[source]
-	--  if not isempty(label) then
-	--    return label
-	--  end
-	--end
-	--return ""
 end
 
 M.get_header = function()

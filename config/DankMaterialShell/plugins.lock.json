@@ -3,7 +3,7 @@
   "plugins": {
     "calculator": {
       "repo": "https://github.com/rochacbruno/DankCalculator",
-      "commit": "c9fbbe921e9afeb92f4e92390e9fc05f006f0373"
+      "commit": "a27b80ad8c3dd42da11af83461674fb362817515"
     },
     "commandRunner": {
       "repo": "https://github.com/devnullvoid/dms-command-runner",
@@ -12,21 +12,21 @@
     "dankDesktopWeather": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankDesktopWeather",
-      "commit": "a8a508bc371e7c3f2c7862d8840b88cf5c63978f"
+      "commit": "69fcc477de31616807bfc6ee03492319cc7e2484"
     },
     "dankLauncherKeys": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankLauncherKeys",
-      "commit": "a8a508bc371e7c3f2c7862d8840b88cf5c63978f"
+      "commit": "69fcc477de31616807bfc6ee03492319cc7e2484"
     },
     "dankNotepadModule": {
       "repo": "https://github.com/AvengeMedia/dms-plugins",
       "path": "DankNotepadModule",
-      "commit": "a8a508bc371e7c3f2c7862d8840b88cf5c63978f"
+      "commit": "69fcc477de31616807bfc6ee03492319cc7e2484"
     },
     "dankSoftwareDepot": {
       "repo": "https://github.com/vinceecniv/DankSoftwareDepot",
-      "commit": "ff7757e1cbec9243d693e9449ee7b470625e5ac6"
+      "commit": "468d8e7debb26a3832d040bd3c1ced81b5526797"
     },
     "dankTodo": {
       "repo": "https://github.com/deepu105/dms-dank-todo",

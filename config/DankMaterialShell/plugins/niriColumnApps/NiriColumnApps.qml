@@ -41,9 +41,9 @@ BasePill {
     property int _toplevelsUpdateTrigger: 0
     property int _appIdSubstitutionsTrigger: 0
 
-    readonly property bool _currentWorkspace: widgetData?.runningAppsCurrentWorkspace ?? SettingsData.runningAppsCurrentWorkspace
-    readonly property bool _currentMonitor: widgetData?.runningAppsCurrentMonitor ?? SettingsData.runningAppsCurrentMonitor
-    readonly property bool compactMode: widgetData?.runningAppsCompactMode ?? SettingsData.runningAppsCompactMode
+    readonly property bool _currentWorkspace: SettingsData.getPluginSetting("niriColumnApps", "currentWorkspace", false)
+    readonly property bool _currentMonitor: SettingsData.getPluginSetting("niriColumnApps", "currentMonitor", true)
+    readonly property bool compactMode: SettingsData.getPluginSetting("niriColumnApps", "compactMode", false)
 
     readonly property var sortedToplevels: {
         _toplevelsUpdateTrigger;

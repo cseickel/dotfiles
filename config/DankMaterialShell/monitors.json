@@ -5,40 +5,31 @@
       "id": "auto_da87ea14",
       "name": "",
       "outputs": {
-        "DP-2": {
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3363,
+            "y": 1694
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "Philips Consumer Electronics Company PHL 346E2C UK02201012841": {
           "mode": "3440x1440@59.973",
           "position": {
             "x": 236,
             "y": 1080
           },
-          "scale": 1,
+          "scale": 1.09765625,
           "transform": "Normal",
           "vrr": false,
           "disabled": false,
-          "niri": {
-            "layout": {
-              "alwaysCenterSingleColumn": true
-            }
-          }
+          "niri": {}
         },
-        "DVI-I-2": {
-          "mode": "1920x1080@60.000",
-          "position": {
-            "x": 1920,
-            "y": 0
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
-        },
-        "DVI-I-1": {
+        "HP Inc. HP VH240a 6CM84702KB": {
           "mode": "1920x1080@60.000",
           "position": {
             "x": 0,
@@ -48,30 +39,19 @@
           "transform": "Normal",
           "vrr": false,
           "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
+          "niri": {}
         },
-        "eDP-1": {
-          "mode": "2256x1504@59.999",
+        "HP Inc. HP VH240a 6CM848075L": {
+          "mode": "1920x1080@60.000",
           "position": {
-            "x": 3676,
-            "y": 1832
+            "x": 1920,
+            "y": 0
           },
-          "scale": 1.5,
+          "scale": 1,
           "transform": "Normal",
           "vrr": false,
           "disabled": false,
-          "niri": {
-            "layout": null,
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
+          "niri": {}
         }
       }
     },
@@ -79,23 +59,7 @@
       "id": "profile_1785763615144_5u1344h",
       "name": "Green Ave",
       "outputs": {
-        "DP-2": {
-          "mode": "3440x1440@59.973",
-          "position": {
-            "x": 236,
-            "y": 1080
-          },
-          "scale": 1,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": {
-              "alwaysCenterSingleColumn": true
-            }
-          }
-        },
-        "DVI-I-2": {
+        "HP Inc. HP VH240a 6CM848075L": {
           "mode": "1920x1080@60.000",
           "position": {
             "x": 1920,
@@ -105,14 +69,33 @@
           "transform": "Normal",
           "vrr": false,
           "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
+          "niri": {}
         },
-        "DVI-I-1": {
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3613,
+            "y": 1761
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "Philips Consumer Electronics Company PHL 346E2C UK02201012841": {
+          "mode": "3440x1440@59.973",
+          "position": {
+            "x": 173,
+            "y": 1080
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "HP Inc. HP VH240a 6CM84702KB": {
           "mode": "1920x1080@60.000",
           "position": {
             "x": 0,
@@ -122,30 +105,7 @@
           "transform": "Normal",
           "vrr": false,
           "disabled": false,
-          "niri": {
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
-        },
-        "eDP-1": {
-          "mode": "2256x1504@59.999",
-          "position": {
-            "x": 3676,
-            "y": 1832
-          },
-          "scale": 1.5,
-          "transform": "Normal",
-          "vrr": false,
-          "disabled": false,
-          "niri": {
-            "layout": null,
-            "hotCorners": {
-              "off": true
-            },
-            "disabled": false
-          }
+          "niri": {}
         }
       }
     },
@@ -331,6 +291,141 @@
             "y": 1080
           },
           "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
+    },
+    {
+      "id": "auto_ab4960ee",
+      "name": "",
+      "outputs": {
+        "DVI-I-1": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            }
+          }
+        },
+        "eDP-1": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3483,
+            "y": 1694
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "layout": null,
+            "hotCorners": {
+              "off": true
+            }
+          }
+        },
+        "DVI-I-2": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "auto_5af6115",
+      "name": "",
+      "outputs": {
+        "eDP-1": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3483,
+            "y": 1694
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "layout": null,
+            "hotCorners": {
+              "off": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "auto_4fd4c961",
+      "name": "",
+      "outputs": {
+        "DVI-I-1": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "hotCorners": {
+              "off": true
+            }
+          }
+        },
+        "eDP-1": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3483,
+            "y": 1694
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {
+            "layout": null,
+            "hotCorners": {
+              "off": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "profile_1792868838571_5ns5rte",
+      "name": "Laptop Only",
+      "outputs": {
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3613,
+            "y": 1761
+          },
+          "scale": 1.4,
           "transform": "Normal",
           "vrr": false,
           "disabled": false,
