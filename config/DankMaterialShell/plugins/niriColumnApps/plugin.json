@@ -2,7 +2,7 @@
   "id": "niriColumnApps",
   "name": "Niri Column Apps",
   "description": "Running Apps with one item per Niri column, showing the focused window or the top one",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Chris Seickel",
   "icon": "view_column",
   "type": "widget",

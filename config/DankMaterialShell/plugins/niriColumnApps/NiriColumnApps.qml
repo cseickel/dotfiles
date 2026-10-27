@@ -1,15 +1,17 @@
 // A copy of DMS's RunningApps bar widget that shows one item per Niri column
 // instead of one per window. The stock widget lives at
-// /usr/share/quickshell/dms/Modules/DankBar/Widgets/RunningApps.qml.
+// /usr/share/quickshell/dms/Modules/DBar/Widgets/RunningApps.qml.
 //
 // The root is a BasePill, like the stock widget, so the bar hosts it the same
-// way: WidgetHost binds the bar properties onto whatever item the plugin loads.
+// way: SurfaceWidgetHost binds the bar properties onto whatever item the
+// plugin loads.
 
 import QtQuick
 import Quickshell
 import qs.Common
 import qs.Modules.Plugins
 import qs.Services
+import "PluginOptions.js" as PluginOptions
 
 BasePill {
     id: root
@@ -18,7 +20,6 @@ BasePill {
     enableCursor: false
     section: "left"
 
-    property var widgetData: null
     property var hoveredItem: null
     // The bar item whose windows the open tooltip lists. It stays set while the
     // pointer moves off the item and onto the tooltip.
@@ -41,9 +42,10 @@ BasePill {
     property int _toplevelsUpdateTrigger: 0
     property int _appIdSubstitutionsTrigger: 0
 
-    readonly property bool _currentWorkspace: SettingsData.getPluginSetting("nirColumnApps", "currentWorkspace", false)
-    readonly property bool _currentMonitor: SettingsData.getPluginSetting("niriColumnApps", "currentMonitor", true)
-    readonly property bool compactMode: SettingsData.getPluginSetting("niriColumnApps", "compactMode", false)
+    // This bar's entry for the widget, which holds its options.
+    property var widgetData: null
+    readonly property var options: PluginOptions.values(widgetData)
+    readonly property bool compactMode: options.compactMode
 
     readonly property var sortedToplevels: {
         _toplevelsUpdateTrigger;
@@ -51,9 +53,9 @@ BasePill {
         if (!toplevels || toplevels.length === 0)
             return [];
 
-        if (_currentWorkspace)
+        if (options.currentWorkspace)
             toplevels = CompositorService.filterCurrentWorkspace(toplevels, parentScreen?.name) || [];
-        if (_currentMonitor)
+        if (options.currentMonitor)
             toplevels = CompositorService.filterCurrentDisplay(toplevels, parentScreen?.name) || [];
         return toplevels;
     }

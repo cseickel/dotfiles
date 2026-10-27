@@ -226,7 +226,9 @@
       "centerWidgets": [
         {
           "id": "niriColumnApps",
-          "enabled": true
+          "enabled": true,
+          "currentWorkspace": true,
+          "compactMode": true
         }
       ],
       "rightWidgets": [
@@ -317,7 +319,7 @@
     },
     {
       "id": "bar1782709986956",
-      "name": "Bar 2",
+      "name": "Laptop Bar",
       "enabled": true,
       "position": 1,
       "screenPreferences": [
@@ -390,7 +392,9 @@
       "centerWidgets": [
         {
           "id": "niriColumnApps",
-          "enabled": true
+          "enabled": true,
+          "compactMode": true,
+          "currentWorkspace": true
         }
       ],
       "rightWidgets": [
@@ -484,7 +488,7 @@
     },
     {
       "id": "bar1785862572946",
-      "name": "Bar 3",
+      "name": "Widescreen Bar",
       "enabled": true,
       "position": 1,
       "screenPreferences": [
@@ -533,7 +537,9 @@
       "centerWidgets": [
         {
           "id": "niriColumnApps",
-          "enabled": true
+          "enabled": true,
+          "currentWorkspace": true,
+          "compactMode": false
         }
       ],
       "rightWidgets": [
@@ -776,6 +782,6 @@
     "niri"
   ],
   "displayShowDisconnected": false,
-  "displayProfileAutoSelect": false,
+  "displayProfileAutoSelect": true,
   "fontScale": 1.05
 }

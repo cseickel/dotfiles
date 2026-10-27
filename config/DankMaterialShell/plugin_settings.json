@@ -88,7 +88,7 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1793102924,
+      "ts": 1793110088,
       "packages": [
         {
           "name": "desktop-backgrounds-gnome.noarch",
