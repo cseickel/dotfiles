@@ -41,7 +41,7 @@ BasePill {
     property int _toplevelsUpdateTrigger: 0
     property int _appIdSubstitutionsTrigger: 0
 
-    readonly property bool _currentWorkspace: SettingsData.getPluginSetting("niriColumnApps", "currentWorkspace", false)
+    readonly property bool _currentWorkspace: SettingsData.getPluginSetting("nirColumnApps", "currentWorkspace", false)
     readonly property bool _currentMonitor: SettingsData.getPluginSetting("niriColumnApps", "currentMonitor", true)
     readonly property bool compactMode: SettingsData.getPluginSetting("niriColumnApps", "compactMode", false)
 

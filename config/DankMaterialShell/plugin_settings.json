@@ -88,7 +88,7 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1793053695,
+      "ts": 1793102924,
       "packages": [
         {
           "name": "desktop-backgrounds-gnome.noarch",
@@ -235,7 +235,10 @@
     "enabled": true
   },
   "niriColumnApps": {
-    "enabled": true
+    "enabled": true,
+    "compactMode": true,
+    "currentWorkspace": true,
+    "currentMonitor": true
   },
   "dankDesktopWeather": {
     "enabled": false
