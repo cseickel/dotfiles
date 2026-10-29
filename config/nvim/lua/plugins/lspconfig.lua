@@ -366,6 +366,7 @@ return {
 
     vim.lsp.enable({
       "bashls",
+      --"copilot-language-server",
       --"denols",
       "gopls",
       "graphql",

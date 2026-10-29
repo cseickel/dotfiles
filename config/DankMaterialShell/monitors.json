@@ -432,6 +432,78 @@
           "niri": {}
         }
       }
+    },
+    {
+      "id": "auto_8283c930",
+      "name": "",
+      "outputs": {
+        "HP Inc. HP VH240a 6CM848075L": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 1920,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "HP Inc. HP VH240a 6CM84702KB": {
+          "mode": "1920x1080@60.000",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 3613,
+            "y": 1761
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
+    },
+    {
+      "id": "auto_f66344d2",
+      "name": "",
+      "outputs": {
+        "Philips Consumer Electronics Company PHL 346E2C UK02201012841": {
+          "mode": "3440x1440@59.973",
+          "position": {
+            "x": 1612,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 0,
+            "y": 1761
+          },
+          "scale": 1.3984375,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
     }
   ]
 }

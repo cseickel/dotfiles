@@ -36,7 +36,8 @@ return {
       enabled = true,
       sections = {
         -- fixed list: one key per project
-        project("d", "~/sql", "DB"),
+        project("d", "~/dotfiles/", "dotfiles"),
+        project("D", "~/sql", "DB"),
         project("c", "~/claude-instructions", "claude-instructions"),
         project("r", "~/claude-instructions/rva-3", "rva-3"),
         project("f", "~/claude-instructions/fdw-sync", "fdw-sync"),

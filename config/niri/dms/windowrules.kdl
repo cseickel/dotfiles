@@ -26,12 +26,6 @@ window-rule {
     min-width 1400
 }
 
-// @id=dms-floating-windows @name=DMS Floating Windows
-window-rule {
-    match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
-    open-floating true
-}
-
 // @id=dms-window-opaque @name=DMS Window Opaque
 window-rule {
     match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"

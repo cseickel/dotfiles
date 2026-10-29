@@ -16,20 +16,20 @@ return {
 		"rcarriga/cmp-dap",
 		"onsails/lspkind-nvim",
 		"David-Kunz/cmp-npm",
-		-- {
-		--   "zbirenbaum/copilot-cmp",
-		--   dependencies = {
-		--     "zbirenbaum/copilot.lua",
-		--   },
-		-- }
+		{
+		  "zbirenbaum/copilot-cmp",
+		  dependencies = {
+		    "zbirenbaum/copilot.lua",
+		  },
+		}
     --"MattiasMTS/cmp-dbee",
 	},
 	config = function()
-		-- require("copilot").setup({
-		--   suggestion = { enabled = false },
-		--   panel = { enabled = false },
-		-- })
-		-- require("copilot_cmp").setup()
+		require("copilot").setup({
+		  suggestion = { enabled = false },
+		  panel = { enabled = false },
+		})
+		require("copilot_cmp").setup()
 
 		require("cmp-npm").setup()
 
@@ -132,7 +132,7 @@ return {
 				end,
 			},
 			sources = {
-				--{ name = "copilot"},
+				{ name = "copilot"},
 				--{ name = "nvim_lua" },
 				--{ name = "git" },
         --{ name = "supermaven" },

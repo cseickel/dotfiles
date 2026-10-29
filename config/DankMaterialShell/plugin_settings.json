@@ -88,96 +88,323 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1793110088,
+      "ts": 1793284832,
       "packages": [
         {
-          "name": "desktop-backgrounds-gnome.noarch",
+          "name": "LibRaw.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "44.0.0-2.fc44",
-          "toVersion": "44.0.0-3.fc44"
+          "fromVersion": "0.22.2-1.fc44",
+          "toVersion": "0.22.3-1.fc44"
         },
         {
-          "name": "nix.x86_64",
+          "name": "PackageKit.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "1.4.0-1.fc44",
+          "toVersion": "1.4.0-2.fc44"
         },
         {
-          "name": "nix-core.x86_64",
+          "name": "PackageKit-command-not-found.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "1.4.0-1.fc44",
+          "toVersion": "1.4.0-2.fc44"
         },
         {
-          "name": "nix-daemon.noarch",
+          "name": "PackageKit-glib.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "1.4.0-1.fc44",
+          "toVersion": "1.4.0-2.fc44"
         },
         {
-          "name": "nix-filesystem.noarch",
+          "name": "PackageKit-gstreamer-plugin.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "1.4.0-1.fc44",
+          "toVersion": "1.4.0-2.fc44"
         },
         {
-          "name": "nix-legacy.noarch",
+          "name": "PackageKit-gtk3-module.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "1.4.0-1.fc44",
+          "toVersion": "1.4.0-2.fc44"
         },
         {
-          "name": "nix-libs.x86_64",
+          "name": "awscli2.noarch",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "2.37.0-1.fc44",
+          "toVersion": "2.38.0-1.fc44"
         },
         {
-          "name": "nix-system.noarch",
+          "name": "cargo.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.34.8-1.fc44",
-          "toVersion": "2.35.3-2.fc44"
+          "fromVersion": "1.99.0-1.fc44",
+          "toVersion": "1.99.1-2.fc44"
         },
         {
-          "name": "wget2.x86_64",
+          "name": "clevis.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.3.0-1.fc44",
-          "toVersion": "2.3.0-2.fc44"
+          "fromVersion": "23-1.fc44",
+          "toVersion": "24-1.fc44"
         },
         {
-          "name": "wget2-libs.x86_64",
+          "name": "clevis-luks.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.3.0-1.fc44",
-          "toVersion": "2.3.0-2.fc44"
+          "fromVersion": "23-1.fc44",
+          "toVersion": "24-1.fc44"
         },
         {
-          "name": "wget2-wget.x86_64",
+          "name": "containerd.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.3.0-1.fc44",
-          "toVersion": "2.3.0-2.fc44"
+          "fromVersion": "2.3.5-1.fc44",
+          "toVersion": "2.4.2-1.fc44"
+        },
+        {
+          "name": "dankcalendar-git.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.0.1+git259.821fcb16-2.fc44",
+          "toVersion": "2.0.1+git267.7f0d7d37-2.fc44"
+        },
+        {
+          "name": "firefox.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "158.0.1-2.fc44",
+          "toVersion": "159.0-1.fc44"
+        },
+        {
+          "name": "firefox-langpacks.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "158.0.1-2.fc44",
+          "toVersion": "159.0-1.fc44"
+        },
+        {
+          "name": "gdb.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "17.2-4.fc44",
+          "toVersion": "18.1-1.fc44"
+        },
+        {
+          "name": "gdb-headless.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "17.2-4.fc44",
+          "toVersion": "18.1-1.fc44"
+        },
+        {
+          "name": "ghostty.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.3.1-4.fc44",
+          "toVersion": "1.4.0-3.fc44"
+        },
+        {
+          "name": "git-delta.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "0.19.1-7.fc44",
+          "toVersion": "0.20.1-1.fc44"
+        },
+        {
+          "name": "libblkid.i686",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "libblkid.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "libbrotli.i686",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.2.0-3.fc44",
+          "toVersion": "1.2.1-1.fc44"
+        },
+        {
+          "name": "libbrotli.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.2.0-3.fc44",
+          "toVersion": "1.2.1-1.fc44"
+        },
+        {
+          "name": "libfdisk.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "liblastlog2.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "libmount.i686",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "libmount.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "librabbitmq.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "0.18.0-1.fc44",
+          "toVersion": "0.18.1-1.fc44"
+        },
+        {
+          "name": "libsmartcols.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "libuuid.i686",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "libuuid.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "perl-DBI.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.655-1.fc44",
+          "toVersion": "1.656-1.fc44"
+        },
+        {
+          "name": "python3-awscrt.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "0.37.0-1.fc44",
+          "toVersion": "0.38.0-1.fc44"
+        },
+        {
+          "name": "python3-brotli.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.2.0-3.fc44",
+          "toVersion": "1.2.1-1.fc44"
+        },
+        {
+          "name": "python3-libmount.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "python3-pillow.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "12.3.0-1.fc44",
+          "toVersion": "12.3.0-4.fc44"
+        },
+        {
+          "name": "python3-pycares.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "5.0.1-2.fc44",
+          "toVersion": "5.2.1-1.fc44"
+        },
+        {
+          "name": "python3-unbound.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.26.1-1.fc44",
+          "toVersion": "1.26.2-1.fc44"
+        },
+        {
+          "name": "rust.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.99.0-1.fc44",
+          "toVersion": "1.99.1-2.fc44"
+        },
+        {
+          "name": "rust-std-static.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.99.0-1.fc44",
+          "toVersion": "1.99.1-2.fc44"
+        },
+        {
+          "name": "unbound-anchor.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.26.1-1.fc44",
+          "toVersion": "1.26.2-1.fc44"
+        },
+        {
+          "name": "unbound-libs.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.26.1-1.fc44",
+          "toVersion": "1.26.2-1.fc44"
+        },
+        {
+          "name": "util-linux.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "util-linux-core.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.41.5-1.fc44",
+          "toVersion": "2.41.6-1.fc44"
+        },
+        {
+          "name": "xxhash-libs.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "0.8.4-1.fc44",
+          "toVersion": "0.8.4-2.fc44"
         }
       ]
     },
     "appimageHandlerClaimed": true,
     "launcherPromptDone": true,
-    "checkDurationSecs": 5,
+    "checkDurationSecs": 7,
     "autoUpdateMode": "auto",
     "runHistory": [
-      {
-        "seconds": 5,
-        "items": 2
-      },
       {
         "seconds": 55,
         "items": 3
@@ -213,15 +440,19 @@
       {
         "seconds": 1,
         "items": 3
+      },
+      {
+        "seconds": 97,
+        "items": 35
       }
     ],
     "lastRunFailures": {},
     "pendingShellRunLog": {},
-    "lastUpdateUnix": 1792943820,
-    "selfUpdateNotifiedVersion": "1.7.1",
+    "lastUpdateUnix": 1793187811,
+    "selfUpdateNotifiedVersion": "1.7.3",
     "pillOpensWindow": true,
     "rebootFlag": {
-      "bootId": "fc3c43c7-6df6-458b-8e68-1026affd7800",
+      "bootId": "630ed4ef-a844-4f2e-862a-3bcd40ff8b44",
       "recommended": true
     },
     "eolDismissed": [
@@ -229,7 +460,8 @@
       "runtime/org.freedesktop.Platform.GL.default/x86_64/24.08extra|org.freedesktop.Platform 24.08 is no longer receiving fixes and security updates. Please update to a supported runtime version.||",
       "runtime/org.freedesktop.Sdk/x86_64/24.08|org.freedesktop.Platform 24.08 is no longer receiving fixes and security updates. Please update to a supported runtime version.||",
       "runtime/org.kde.Platform/x86_64/5.15-24.08|We strongly recommend moving to the latest stable version of the Platform and SDK||Speech Note"
-    ]
+    ],
+    "justUpdated": {}
   },
   "fwFanctrl": {
     "enabled": true

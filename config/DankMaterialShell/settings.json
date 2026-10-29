@@ -10,81 +10,106 @@
     {
       "id": "user",
       "enabled": true,
-      "w": 5,
-      "h": 1
+      "w": 4,
+      "h": 1,
+      "col": 0,
+      "row": 0,
+      "background": false
     },
     {
       "id": "settings",
       "enabled": true,
       "w": 1,
       "h": 1,
-      "small": true
+      "small": true,
+      "col": 5,
+      "row": 0
     },
     {
       "id": "lock",
       "enabled": true,
       "w": 1,
       "h": 1,
-      "small": true
+      "small": true,
+      "col": 6,
+      "row": 0
     },
     {
       "id": "power",
       "enabled": true,
       "w": 1,
       "h": 1,
-      "small": true
+      "small": true,
+      "col": 7,
+      "row": 0
     },
     {
       "id": "wifi",
       "enabled": true,
-      "w": 4,
-      "h": 1
+      "w": 3,
+      "h": 1,
+      "col": 2.5,
+      "row": 2
     },
     {
       "id": "bluetooth",
       "enabled": true,
-      "w": 4,
-      "h": 1
+      "w": 2.5,
+      "h": 1,
+      "col": 5.5,
+      "row": 2
     },
     {
       "id": "audioInput",
       "enabled": true,
-      "w": 4,
-      "h": 1
-    },
-    {
-      "id": "nightMode",
-      "enabled": true,
-      "w": 4,
-      "h": 1
+      "w": 2.5,
+      "h": 1,
+      "col": 0,
+      "row": 2
     },
     {
       "id": "volumeSlider",
       "enabled": true,
       "w": 4,
-      "h": 1
+      "h": 1,
+      "col": 0,
+      "row": 3
     },
     {
       "id": "brightnessSlider",
       "enabled": true,
       "w": 4,
-      "h": 1
+      "h": 1,
+      "col": 4,
+      "row": 3
     },
     {
       "id": "edit",
       "enabled": true,
       "w": 1,
       "h": 1,
-      "small": true
+      "small": true,
+      "col": 4,
+      "row": 0
     },
     {
-      "id": "runningApps",
+      "id": "diskUsage",
       "enabled": true,
       "w": 4,
       "h": 1,
-      "small": true,
+      "instanceId": "mvridmxnn7y73sofiq2lpju7j2vg0t",
+      "mountPath": "/",
+      "showMountPath": false,
       "col": 0,
-      "row": 5
+      "row": 1
+    },
+    {
+      "id": "builtin_cups",
+      "enabled": true,
+      "w": 4,
+      "h": 1,
+      "col": 4,
+      "row": 1
     }
   ],
   "appIdSubstitutions": [],
@@ -119,7 +144,7 @@
       "enabled": true
     }
   ],
-  "networkPreference": "auto",
+  "networkPreference": "wifi",
   "cursorSettings": {
     "theme": "System Default",
     "size": 24,

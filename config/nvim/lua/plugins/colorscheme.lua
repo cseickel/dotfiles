@@ -31,8 +31,8 @@ local vscode = {
 			group_overrides = {
 				-- this supports the same val table as vim.api.nvim_set_hl
 				-- use colors from this colorscheme by requiring vscode.colors!
-				["@comment"] = { fg = "#505050", bg = "NONE", italic = true },
-				Comment = { fg = "#505050", bg = "NONE", italic = true },
+				Comment = { fg = "#8a8a8a", bg = "NONE", italic = true },
+				["@comment"] = { link = "Comment" },
 				Directory = { fg = c.vscBlue, bg = "NONE" },
 				["@punctuation.bracket"] = { fg = c.vscFront, bg = "None" },
         LogTime = { link = "Number" },
