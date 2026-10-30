@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Opens the rva-3 whats-running TUI that setup-task-monitoring.sh installed.
+exec node /home/chris/.local/rva-3-task-monitoring/tui.js "$@"
