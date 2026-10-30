@@ -88,7 +88,7 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1793284832,
+      "ts": 1793315109,
       "packages": [
         {
           "name": "LibRaw.x86_64",
@@ -449,7 +449,7 @@
     "lastRunFailures": {},
     "pendingShellRunLog": {},
     "lastUpdateUnix": 1793187811,
-    "selfUpdateNotifiedVersion": "1.7.3",
+    "selfUpdateNotifiedVersion": "1.7.4",
     "pillOpensWindow": true,
     "rebootFlag": {
       "bootId": "630ed4ef-a844-4f2e-862a-3bcd40ff8b44",

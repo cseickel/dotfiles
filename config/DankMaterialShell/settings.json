@@ -142,6 +142,14 @@
     {
       "id": "settings",
       "enabled": true
+    },
+    {
+      "id": "wellbeing",
+      "enabled": true
+    },
+    {
+      "id": "notifications",
+      "enabled": true
     }
   ],
   "networkPreference": "wifi",
@@ -296,6 +304,10 @@
         },
         {
           "id": "notificationButton",
+          "enabled": true
+        },
+        {
+          "id": "network_speed_monitor",
           "enabled": true
         }
       ],
@@ -808,5 +820,16 @@
   ],
   "displayShowDisconnected": false,
   "displayProfileAutoSelect": true,
-  "fontScale": 1.05
+  "fontScale": 1.05,
+  "dashOptions": {
+    "weather": {
+      "city": true
+    },
+    "clock": {
+      "date": true
+    },
+    "disk": {
+      "io": true
+    }
+  }
 }
