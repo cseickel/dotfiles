@@ -218,17 +218,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Editor (interactive only)
-if [[ ! -e ~/.local/bin/edit.sh ]]; then
-  mkdir -p ~/.local/bin
-  echo '#!/bin/bash
-  if [[ -z "${TMUX}" ]]; then
-    kitty nvim "$@"
-  else
-    tmux popup -w "160" -h "80%" -E nvim "$@"
-  fi' > ~/.local/bin/edit.sh
-  chmod +x ~/.local/bin/edit.sh
+if [[ -f ~/.local/bin/edit.sh ]]; then
+  export EDITOR=~/.local/bin/edit.sh
 fi
-export EDITOR=~/.local/bin/edit.sh
 
 unset zle_bracketed_paste
 
