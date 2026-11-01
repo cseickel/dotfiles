@@ -1,5 +1,5 @@
 # Declares the packages and links that make up the home at layout.home.
-{ config, lib, pkgs, layout, nixpkgs, homeManager, ... }:
+{ config, lib, pkgs, layout, nixpkgs, homeManager, nixIndex, ... }:
 let
   link = config.lib.file.mkOutOfStoreSymlink;
   dotfiles = "${layout.hostHome}/dotfiles";
@@ -32,7 +32,7 @@ in
     map (name: lib.getAttrFromPath (lib.splitString "." name) pkgs) packageNames
     ++ [
       (pkgs.callPackage ./work-shell.nix { inherit layout; })
-      (pkgs.callPackage ./pkg.nix { inherit homeManager nixpkgs dotfiles; })
+      (pkgs.callPackage ./pkg.nix { inherit homeManager nixIndex nixpkgs dotfiles; })
       xdgOpen
     ];
 

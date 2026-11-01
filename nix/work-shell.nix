@@ -107,6 +107,7 @@ writeShellApplication {
       --symlink ${certs} /etc/ssl/certs/ca-certificates.crt
       --dir /bin
       --symlink ${bash}/bin/sh /bin/sh
+      --symlink ${bash}/bin/bash /bin/bash
       --dir /usr/bin
       --symlink ${coreutils}/bin/env /usr/bin/env
       --dir /lib64

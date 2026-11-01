@@ -14,6 +14,7 @@ devenv
 diffutils
 direnv
 docker-client
+doppler
 duckdb
 fd
 file
@@ -54,6 +55,7 @@ starship
 stylua
 tree-sitter
 unzip
+util-linux
 vim-language-server
 visidata
 vscode-langservers-extracted

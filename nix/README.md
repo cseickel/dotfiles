@@ -46,7 +46,13 @@ The command does two things:
 1. It builds the home-manager activation package. That package is the built home plus an `activate` script that links it into place.
 2. It runs that `activate` script inside the work shell. Activation writes to `$HOME`, and `$HOME` is `/home/user` only inside the work shell.
 
-Then, inside the work shell, log in to GitHub once. The GitHub credential helper in `/home/chris/dotfiles/gitconfig` calls `gh`, and `gh` keeps its login in `/home/user/.config/gh`, which starts empty:
+The command exits back to the host shell when activation finishes. Then enter the work shell. The prompt shows `⬡ work` while you're inside:
+
+```sh
+/home/user/.nix-profile/bin/work-shell
+```
+
+Inside it, log in to GitHub once. The GitHub credential helper in `/home/chris/dotfiles/gitconfig` calls `gh`, and `gh` keeps its login in `/home/user/.config/gh`, which starts empty:
 
 ```sh
 gh auth login
@@ -84,7 +90,7 @@ pkg <search terms>
 
 `pkg` runs these steps:
 
-1. It searches the nixpkgs version locked in `/home/chris/dotfiles/flake.lock`, which is the same package set a switch installs.
+1. It searches the nixpkgs version locked in `/home/chris/dotfiles/flake.lock`, which is the same package set a switch installs. A term matches a package's name, its description, or a command it installs, so `pkg uuidgen` finds `util-linux.bin`.
 2. It lists the matches in fzf. Tab selects a package, and Enter confirms.
 3. It adds the selected names to `/home/chris/dotfiles/nix/packages.txt`.
 4. It runs `home-manager switch`. If the switch fails, it restores `/home/chris/dotfiles/nix/packages.txt` to what it was.
@@ -140,7 +146,6 @@ None of the likely fixes below have been tested.
 | Gap | Cause | Likely fix |
 |---|---|---|
 | Claude Code's global config differs inside | `/home/chris/.claude` is shared, but `/home/user/.claude.json` is a separate file from `/home/chris/.claude.json`. It isn't linked, because Claude Code rewrites it and might replace a link with a plain file. | Check whether Claude Code keeps a symlinked `.claude.json` intact. If it does, add `.claude.json` to `hostPaths`. |
-| The command server's `nvim` command fails inside | Its definition runs `${HOME}/AppImages/nvim-extracted/AppRun` (`/home/chris/claude-instructions/mcp-servers/src/command/definitions.ts:272`), and `/home/user/AppImages` doesn't exist | In that definition, run `nvim` from PATH and make the AppImage bind a `--ro-bind-try`. The host's `nvim` on PATH is the AppImage, so the host keeps working. |
 | nvim DAP adapters may fail | `mason-nvim-dap` (`/home/chris/dotfiles/config/nvim/lua/plugins/nvim-dap.lua:24`) downloads them when nvim-dap loads. They should run through nix-ld, and none has been installed inside yet. | Check the first time nvim-dap loads. Add any library one needs to `nixLdLibraries`. |
 | coderabbit and leaf are missing | They were installed by hand on the host | Run their own installers inside the work shell. They land in `/home/user/.local/bin` and run through nix-ld. |
 | Hand installs go unreported | `drift` isn't built. Anything installed by hand lands in `/home/user` and survives. | Build `drift` |
@@ -176,91 +181,23 @@ nix-collect-garbage
 
 ## How it works
 
-### The sandbox
+```
+host
+ ├─ /home/chris ── hostPaths (dotfiles, repos, .ssh, ...) ──┐
+ │                                                          │ bound in at the same paths
+ └─ work-shell (bubblewrap)                                 │
+     ├─ home: /home/user, built by home-manager  ◄──────────┘ and linked from the home
+     ├─ tools: only what packages.txt declares, with the host's /usr hidden
+     └─ host services: Docker, Wayland, D-Bus, the systemd user manager
+```
 
-`work-shell` (`/home/chris/dotfiles/nix/work-shell.nix`) starts zsh inside bubblewrap with this view of the filesystem:
+Every host path that's visible inside sits at the same path on both sides. Paths cross the boundary whenever Docker mounts a directory or `xdg-open` hands a file to a desktop app, and the host resolves them in its own filesystem.
 
-| Path inside | Comes from | Why |
-|---|---|---|
-| `/home/user` | host `/home/user`, read-write | the home |
-| each `layout.hostPaths` entry, e.g. `/home/chris/repos` | the same host path, read-write | so paths match inside and outside |
-| `/nix` | host, read-only | packages, and the daemon socket for builds |
-| `/tmp`, `/var/tmp` | host, read-write | shared scratch, the same paths outside |
-| `/run/user/<uid>` | host, read-write | Wayland, D-Bus, the systemd user manager |
-| `/run/docker.sock` | host | the host's Docker daemon |
-| `/dev` | host | |
-| `/proc` | a new procfs, which still shows the host's processes | |
-| `/sys` | host, read-only | |
-| `/bin/sh`, `/usr/bin/env` | symlinks into the Nix store | the only two paths scripts assume, as on NixOS |
-| `/lib64/ld-linux-x86-64.so.2` | nix-ld from nixpkgs | the loader prebuilt binaries ask for, as on NixOS |
-| `/etc` | a few files, listed below | |
+Host programs can't run inside. Prebuilt binaries that installers and nvim plugins download still run, through nix-ld, the same loader NixOS uses.
 
-The rest of the host is hidden, including `/usr`, the host's `/lib64` and the rest of `/home/chris`.
+The sandbox keeps undeclared tools out. It doesn't stop a process inside from acting on the host, because the Docker socket and the systemd user manager are both reachable.
 
-`/etc` holds only these files:
-
-- From the host, read-only: `/etc/passwd`, `/etc/group`, `/etc/hosts`, `/etc/machine-id`, `/etc/resolv.conf` (resolved to its real file), and `/etc/nix`, which holds the daemon's `nix.conf`.
-- `/etc/nsswitch.conf` is generated, with `files` and `dns` only. Fedora's names NSS modules such as `systemd`, `myhostname` and `resolve`, which load from the hidden `/usr/lib64`.
-- `/etc/ssl/certs/ca-certificates.crt` links to the nixpkgs CA bundle.
-
-Hiding `/usr` has these consequences:
-
-- A shebang like `#!/bin/bash` or `#!/usr/bin/python3` fails. Use `#!/usr/bin/env bash`.
-- A prebuilt binary, such as one an installer or an nvim plugin downloads, asks for `/lib64/ld-linux-x86-64.so.2`. That path is nix-ld, which loads the binary with the nixpkgs glibc and the libraries in `nixLdLibraries` (`/home/chris/dotfiles/nix/work-shell.nix`). A binary that needs a library missing from that list fails until the library is added.
-- The host's `nix` client lives under `/usr`, so the work shell puts the nixpkgs `nix` on PATH, which builds through the host's daemon.
-- Host programs can't run inside. `xdg-open` is a shim that asks the host's systemd user manager to run the host's `gio open` with `systemd-run --user --same-dir`, so a relative path resolves from the current directory. `gio` honors `Terminal=true` in desktop files under niri, where xdg-utils doesn't.
-
-The environment starts empty. The work shell sets these variables:
-
-| Variable | Value |
-|---|---|
-| `HOME` | `/home/user` |
-| `USER`, `LOGNAME` | your username |
-| `SHELL` | the nixpkgs zsh |
-| `PATH` | `/home/user/.nix-profile/bin`, then the nixpkgs nix client |
-| `TERMINFO_DIRS` | `/home/user/.nix-profile/share/terminfo` |
-| `LOCALE_ARCHIVE` | an `en_US.UTF-8` locale archive from nixpkgs |
-| `TZ`, `TZDIR` | the host's time zone, and the nixpkgs zone database |
-| `SSL_CERT_FILE`, `NIX_SSL_CERT_FILE` | the nixpkgs CA bundle |
-| `NIX_LD`, `NIX_LD_LIBRARY_PATH` | the nixpkgs glibc loader and the `nixLdLibraries`, which nix-ld reads |
-| `WORK_SHELL` | `1`, so `/home/chris/dotfiles/zshrc` can tell it's running inside |
-
-These pass through from the host when the host has them set:
-
-- Terminal: `TERM`, `COLORTERM`, `TERM_PROGRAM`, `TERM_PROGRAM_VERSION`, `LANG`
-- Display: `WAYLAND_DISPLAY`, `DISPLAY`, `XDG_SESSION_TYPE`, `XDG_CURRENT_DESKTOP`
-- Session: `XDG_RUNTIME_DIR`, `DBUS_SESSION_BUS_ADDRESS`, `SSH_AUTH_SOCK`
-
-Docker bind mounts work for any path inside that exists at the same path on the host: `/home/user`, the `hostPaths` and `/tmp`. The host's daemon resolves the path in the host's filesystem.
-
-The sandbox keeps undeclared tools out. It doesn't keep a process inside from acting on the host. `/run/user/<uid>` gives access to the systemd user manager and the session bus, and `/run/docker.sock` is equivalent to root.
-
-### The home
-
-home-manager (`/home/chris/dotfiles/nix/home.nix`) builds `/home/user` from three parts:
-
-- **Links to the host.** Each `layout.hostPaths` entry becomes a link, such as `/home/user/repos` → `/home/chris/repos`. The same list drives the binds in the sandbox, so every link resolves both inside and on the host.
-- **Links to the dotfiles.** These are out-of-store links into `/home/chris/dotfiles`:
-
-  | Link | Target |
-  |---|---|
-  | `/home/user/.zshrc` | `/home/chris/dotfiles/zshrc` |
-  | `/home/user/.zshenv` | `/home/chris/dotfiles/zshenv` |
-  | `/home/user/.gitconfig` | `/home/chris/dotfiles/gitconfig` |
-  | `/home/user/.visidatarc` | `/home/chris/dotfiles/visidatarc` |
-  | `/home/user/.config/nvim` | `/home/chris/dotfiles/config/nvim` |
-  | `/home/user/.config/starship.toml` | `/home/chris/dotfiles/config/starship.toml` |
-
-  The zshrc finds oh-my-zsh at `/home/user/.oh-my-zsh`, which links to the nixpkgs copy.
-- **`/home/user/.local/bin/edit.sh`**, the `$EDITOR` the zshrc sets. It runs `nvim` in the current terminal. The zshrc writes its own host version, which opens kitty, only when the file is missing.
-- **Packages.** Everything in `/home/chris/dotfiles/nix/packages.txt`, plus `work-shell`, `pkg` and the `xdg-open` shim, which are built in `/home/chris/dotfiles/nix`.
-
-home-manager writes `home.sessionVariables` to `/home/user/.nix-profile/etc/profile.d/hm-session-vars.sh`, and expects the shell's own config to source that script. `/home/chris/dotfiles/zshrc` is shared with the host and doesn't source it, so the work shell sources it before starting zsh.
-
-The session variables are:
-
-- `PATH` gains `/home/chris/dotfiles/bin` and `/home/chris/claude-instructions/scripts`, from `home.sessionPath`.
-- `LIBSQLITE`, the nixpkgs `libsqlite3.so`, for nvim's sqlite.lua. Without it, sqlite.lua looks under the hidden `/usr/lib64`.
+The details are in `/home/chris/dotfiles/nix/work-shell.nix` and `/home/chris/dotfiles/nix/home.nix`.
 
 ## Change the setup
 

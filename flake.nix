@@ -7,9 +7,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, nix-index-database, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -40,6 +44,7 @@
         extraSpecialArgs = {
           inherit layout nixpkgs;
           homeManager = home-manager.packages.${system}.home-manager;
+          nixIndex = nix-index-database.packages.${system}.nix-index-with-db;
         };
       };
 

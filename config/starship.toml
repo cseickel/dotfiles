@@ -13,6 +13,11 @@ disabled = false
 style = "bold bright-blue"
 format = '[󰡨]($style) '
 
+# The Nix work shell sets WORK_SHELL=1, and the host never does.
+[env_var.WORK_SHELL]
+style = "bold green"
+format = '[⬡ work]($style) '
+
 [memory_usage]
 disabled = true
 
