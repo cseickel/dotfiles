@@ -21,8 +21,9 @@
         username = "chris";
         home = "/home/user";
         hostHome = "/home/chris";
-        # Paths under hostHome that the home links to, and that the work shell
-        # binds in at the same path so the links resolve on both sides.
+        # Directories under hostHome that the home links to. The work shell
+        # creates any that are missing and binds them in at the same path, so
+        # the links resolve on both sides.
         hostPaths = [
           "dotfiles"
           "repos"
@@ -31,6 +32,7 @@
           "Downloads"
           "Pictures"
           ".ssh"
+          ".doppler"
           ".claude"
           ".local/share/claude"
           ".local/rva-3-task-monitoring"

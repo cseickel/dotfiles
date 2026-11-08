@@ -178,7 +178,7 @@
   "acProfileName": "1",
   "batteryMonitorTimeout": 900,
   "batterySuspendTimeout": 1200,
-  "batteryProfileName": "0",
+  "batteryProfileName": "1",
   "batteryNotifyLow": true,
   "lockBeforeSuspend": true,
   "matugenTemplateHyprland": false,
@@ -339,8 +339,8 @@
       "showOnWindowsOpen": false,
       "openOnOverview": true,
       "visible": true,
-      "popupGapsAuto": true,
-      "popupGapsManual": 4,
+      "popupGapsAuto": false,
+      "popupGapsManual": 0,
       "maximizeDetection": true,
       "scrollEnabled": true,
       "scrollXBehavior": "focusWindow",
@@ -532,6 +532,10 @@
         {
           "name": "DP-2",
           "model": "PHL 346E2C"
+        },
+        {
+          "name": "DP-2",
+          "model": "49C1G"
         }
       ],
       "showOnLastDisplay": false,
@@ -742,7 +746,7 @@
   },
   "barInsetPaddingSyncAll": true,
   "configVersion": 42,
-  "radiusStrength": 19,
+  "radiusStrength": 20,
   "dockConfigs": [
     {
       "id": "dock",
@@ -754,11 +758,12 @@
       "showOnLastDisplay": true,
       "position": 0,
       "mode": "compact",
+      "middleClickAction": "close",
       "taskbarAlign": "center",
       "widgetExpansion": "popout",
       "iconSize": 40,
-      "spacing": 4,
-      "itemSpacing": 4,
+      "spacing": 6,
+      "itemSpacing": 6,
       "margin": 0,
       "bottomGap": 0,
       "transparency": 1,
@@ -831,5 +836,21 @@
     "disk": {
       "io": true
     }
-  }
+  },
+  "displaySnapToEdge": true,
+  "interfaceStyle": "expressive",
+  "density": "compact",
+  "sectionDividerOpacity": 0,
+  "popupTransparency": 1,
+  "blurForegroundLayers": true,
+  "foregroundLayerTransparency": 0.5,
+  "blurLayerOutlineOpacity": 0.16,
+  "blurBorderEnabled": true,
+  "blurBorderColor": "outline",
+  "blurBorderOpacity": 0.35,
+  "blurEnabled": false,
+  "blurBorderSeeded": true,
+  "radiusMode": "scale",
+  "batteryAutoPowerSaver": true,
+  "lowerDisplayRefreshRateOnBattery": false
 }

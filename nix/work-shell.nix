@@ -147,7 +147,8 @@ writeShellApplication {
       cwd=$PWD
     fi
     for path in ${lib.escapeShellArgs hostPaths}; do
-      bind_if_exists --bind "$path"
+      mkdir -p "$path"
+      args+=(--bind "$path" "$path")
       if [[ $PWD == "$path" || $PWD == "$path"/* ]]; then
         cwd=$PWD
       fi

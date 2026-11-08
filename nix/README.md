@@ -145,7 +145,7 @@ None of the likely fixes below have been tested.
 
 | Gap | Cause | Likely fix |
 |---|---|---|
-| Claude Code's global config differs inside | `/home/chris/.claude` is shared, but `/home/user/.claude.json` is a separate file from `/home/chris/.claude.json`. It isn't linked, because Claude Code rewrites it and might replace a link with a plain file. | Check whether Claude Code keeps a symlinked `.claude.json` intact. If it does, add `.claude.json` to `hostPaths`. |
+| Claude Code's global config differs inside | `/home/chris/.claude` is shared, but `/home/user/.claude.json` is a separate file from `/home/chris/.claude.json`. It isn't linked, because Claude Code rewrites it and might replace a link with a plain file. | Check whether Claude Code keeps a symlinked `.claude.json` intact. If it does, link it in `/home/chris/dotfiles/nix/home.nix` and bind it in `/home/chris/dotfiles/nix/work-shell.nix`, because `hostPaths` holds only directories. |
 | nvim DAP adapters may fail | `mason-nvim-dap` (`/home/chris/dotfiles/config/nvim/lua/plugins/nvim-dap.lua:24`) downloads them when nvim-dap loads. They should run through nix-ld, and none has been installed inside yet. | Check the first time nvim-dap loads. Add any library one needs to `nixLdLibraries`. |
 | coderabbit and leaf are missing | They were installed by hand on the host | Run their own installers inside the work shell. They land in `/home/user/.local/bin` and run through nix-ld. |
 | Hand installs go unreported | `drift` isn't built. Anything installed by hand lands in `/home/user` and survives. | Build `drift` |
@@ -213,7 +213,7 @@ The details are in `/home/chris/dotfiles/nix/work-shell.nix` and `/home/chris/do
 |---|---|
 | a package | `/home/chris/dotfiles/nix/packages.txt` |
 | a dotfile link | the link set in `/home/chris/dotfiles/nix/home.nix` |
-| a host path visible inside | `layout.hostPaths` in `/home/chris/dotfiles/flake.nix` |
+| a host directory visible inside | `layout.hostPaths` in `/home/chris/dotfiles/flake.nix` |
 | a session variable | `home.sessionVariables` in `/home/chris/dotfiles/nix/home.nix` |
 | a directory on PATH | `home.sessionPath` in `/home/chris/dotfiles/nix/home.nix` |
 | a library for prebuilt binaries | `nixLdLibraries` in `/home/chris/dotfiles/nix/work-shell.nix` |

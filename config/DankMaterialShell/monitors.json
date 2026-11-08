@@ -504,6 +504,108 @@
           "niri": {}
         }
       }
+    },
+    {
+      "id": "auto_34b231bc",
+      "name": "",
+      "outputs": {
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 1056,
+            "y": 1080
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "Guangxi Century Innovation Display Electronics Co., Ltd 49C1G 0000000000000": {
+          "mode": "3840x1080@59.999",
+          "position": {
+            "x": 0,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
+    },
+    {
+      "id": "auto_8d5753c6",
+      "name": "",
+      "outputs": {
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 1463,
+            "y": 1080
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "Guangxi Century Innovation Display Electronics Co., Ltd 49C1G 0000000000000": {
+          "mode": "3840x1080@59.999",
+          "position": {
+            "x": 79,
+            "y": 0
+          },
+          "scale": 1,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "ASEM S.p.A. ASM-160QCC 0x01010102": {
+          "mode": "2560x1600@59.997",
+          "position": {
+            "x": 0,
+            "y": 1080
+          },
+          "scale": 1.75,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
+    },
+    {
+      "id": "auto_6ea630d4",
+      "name": "",
+      "outputs": {
+        "BOE 0x0BCA Unknown": {
+          "mode": "2256x1504@59.999",
+          "position": {
+            "x": 1463,
+            "y": 1080
+          },
+          "scale": 1.5,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        },
+        "ASEM S.p.A. ASM-160QCC 0x01010102": {
+          "mode": "2560x1600@59.997",
+          "position": {
+            "x": 0,
+            "y": 1080
+          },
+          "scale": 1.75,
+          "transform": "Normal",
+          "vrr": false,
+          "disabled": false,
+          "niri": {}
+        }
+      }
     }
   ]
 }
