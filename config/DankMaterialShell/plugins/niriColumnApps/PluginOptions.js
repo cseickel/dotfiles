@@ -5,7 +5,7 @@
 
 var pluginId = "niriColumnApps";
 var titleRulesKey = "titleRules";
-var blankTitleRule = { "pattern": "", "ignoreCase": false, "icon": "", "background": "" };
+var blankTitleRule = { "pattern": "", "ignoreCase": false, "icon": "", "color": "" };
 
 var options = [
     {
@@ -57,7 +57,10 @@ function compileTitleRules(rules) {
         .filter(rule => rule.regex);
 }
 
-// Returns the first compiled rule that matches `title`, or null.
-function matchTitleRule(compiledRules, title) {
-    return compiledRules.find(rule => rule.regex.test(title)) || null;
+// Returns the icon and color for `title`. Each one comes from the first matching
+// rule that sets it, and is undefined when no matching rule does.
+function titleStyle(compiledRules, title) {
+    const matchingRules = compiledRules.filter(rule => rule.regex.test(title));
+    const firstSet = field => matchingRules.find(rule => rule[field])?.[field];
+    return { "icon": firstSet("icon"), "color": firstSet("color") };
 }

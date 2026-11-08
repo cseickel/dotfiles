@@ -48,8 +48,8 @@ BasePill {
     readonly property bool compactMode: options.compactMode
     readonly property var titleRules: PluginOptions.compileTitleRules(PluginService.loadPluginData(PluginOptions.pluginId, PluginOptions.titleRulesKey, []))
 
-    function titleRuleFor(window) {
-        return PluginOptions.matchTitleRule(titleRules, window.title || "");
+    function titleStyleFor(window) {
+        return PluginOptions.titleStyle(titleRules, window.title || "");
     }
 
     readonly property var sortedToplevels: {

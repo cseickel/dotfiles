@@ -261,7 +261,8 @@
           "id": "niriColumnApps",
           "enabled": true,
           "currentWorkspace": true,
-          "compactMode": true
+          "compactMode": true,
+          "currentMonitor": false
         }
       ],
       "rightWidgets": [

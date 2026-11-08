@@ -31,7 +31,7 @@ Item {
     }
     readonly property string appName: effectiveAppId ? Paths.getAppName(effectiveAppId, desktopEntry) : "Unknown"
     readonly property string windowTitle: shownWindow.title || "(Unnamed)"
-    readonly property var titleRule: pill.titleRuleFor(shownWindow)
+    readonly property var titleStyle: pill.titleStyleFor(shownWindow)
     readonly property var tooltipRows: {
         pill._desktopEntriesUpdateTrigger;
         pill._appIdSubstitutionsTrigger;
@@ -43,11 +43,11 @@ Item {
     width: pill.isVerticalOrientation ? pill.barThickness : visualWidth
     height: pill.isVerticalOrientation ? pill.iconCellSize : pill.barThickness
 
-    // Returns the icon from the window's title rule, else its app icon.
+    // Returns the icon from the window's title rules, else its app icon.
     function windowIcon(window) {
-        const ruleIcon = pill.titleRuleFor(window)?.icon;
-        if (ruleIcon)
-            return Paths.resolveIconUrl(ruleIcon);
+        const customIcon = pill.titleStyleFor(window).icon;
+        if (customIcon)
+            return Paths.resolveIconUrl(customIcon);
         const moddedAppId = Paths.moddedAppId(window.appId || "");
         return moddedAppId ? Paths.getAppIcon(moddedAppId, DesktopEntries.heuristicLookup(moddedAppId)) : "";
     }
@@ -79,13 +79,12 @@ Item {
         radius: Theme.cornerRadius
         color: {
             const hovered = mouseArea.containsMouse;
-            const ruleBackground = appItem.titleRule?.background;
-            if (ruleBackground)
-                return Theme.withAlpha(ruleBackground, appItem.focusedWindow ? (hovered ? 1 : 0.8) : (hovered ? 0.5 : 0.3));
             if (appItem.focusedWindow)
                 return hovered ? Theme.primarySelected : Theme.withAlpha(Theme.primary, 0.45);
             return hovered ? BlurService.hoverColor(Theme.widgetBaseHoverColor) : Theme.withAlpha(BlurService.hoverColor(Theme.widgetBaseHoverColor), 0);
         }
+        border.width: appItem.titleStyle.color ? 2 : 0
+        border.color: appItem.titleStyle.color || "transparent"
 
         IconImage {
             id: iconImg
@@ -103,7 +102,7 @@ Item {
             mipmap: true
             asynchronous: true
             visible: status === Image.Ready
-            layer.enabled: !appItem.titleRule?.icon && (appItem.appId === "org.quickshell" || appItem.appId === "com.danklinux.dms")
+            layer.enabled: !appItem.titleStyle.icon && (appItem.appId === "org.quickshell" || appItem.appId === "com.danklinux.dms")
             layer.smooth: true
             layer.mipmap: true
             layer.effect: MultiEffect {

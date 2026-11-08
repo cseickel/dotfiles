@@ -126,11 +126,10 @@ set laststatus=3
 set modeline
 set modelines=10
 
-set title
-set titleold="Terminal"
-"set titlestring=%{fnamemodify(getcwd(-1, 0),\ ':t')}
-set titlestring=%{toupper(fnamemodify(getcwd(-1,0),\ ':t'))}\ ...\ %t
-"set titlestring=%F
+" set title
+" set titleold="Terminal"
+" set titlestring=%{toupper(fnamemodify(getcwd(-1,0),\ ':t'))}\ ...\ %t
+
 " clipboard settings
 set clipboard=unnamedplus
 " Avoid showing message extra message when using completion

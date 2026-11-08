@@ -25,11 +25,11 @@ StyledRect {
         edited(updatedRules);
     }
 
-    function pickBackground(index) {
+    function pickColor(index) {
         const picker = PopoutService.colorPickerModal;
-        picker.selectedColor = rules[index].background || Theme.primary;
-        picker.pickerTitle = "Background color";
-        picker.onColorSelectedCallback = selectedColor => updateRule(index, "background", selectedColor.toString());
+        picker.selectedColor = rules[index].color || Theme.primary;
+        picker.pickerTitle = "Border color";
+        picker.onColorSelectedCallback = selectedColor => updateRule(index, "color", selectedColor.toString());
         picker.show();
     }
 
@@ -63,7 +63,7 @@ StyledRect {
 
         StyledText {
             width: parent.width
-            text: "The first rule whose regex matches a window's title sets that window's icon and background. The icon is a theme icon name or an image path."
+            text: "Every rule whose regex matches a window's title applies, and the first one to set a field wins that field. The icon is a theme icon name or an image path, and the color draws a border around the item."
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.surfaceVariantText
             wrapMode: Text.WordWrap
@@ -109,16 +109,16 @@ StyledRect {
                 }
 
                 DColorButton {
-                    swatchColor: ruleRow.rule.background || "transparent"
-                    tooltipText: "Background color"
-                    onClicked: root.pickBackground(ruleRow.index)
+                    swatchColor: ruleRow.rule.color || "transparent"
+                    tooltipText: "Border color"
+                    onClicked: root.pickColor(ruleRow.index)
                 }
 
                 DActionButton {
                     iconName: "format_color_reset"
-                    tooltipText: "Remove background"
-                    enabled: !!ruleRow.rule.background
-                    onClicked: root.updateRule(ruleRow.index, "background", "")
+                    tooltipText: "Remove border"
+                    enabled: !!ruleRow.rule.color
+                    onClicked: root.updateRule(ruleRow.index, "color", "")
                 }
 
                 DActionButton {

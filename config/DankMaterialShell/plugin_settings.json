@@ -476,61 +476,73 @@
         "pattern": "GitHub",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/github.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^RVA-3",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/rva-3.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^CLAUDE-INSTRUCTIONS",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/claude-instructions.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^DB-QUERY\\.NVIM",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/db-query.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^CSV-TABLE\\.NVIM",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/csv-table.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^NEO-TREE\\.NVIM",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/neo-tree.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^NEOTREE-DATABASE\\.NVIM",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/neotree-database.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^DOTFILES\\b",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/dotfiles.svg",
-        "background": ""
+        "color": ""
       },
       {
         "pattern": "^SQL\\b",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/sql.svg",
-        "background": ""
+        "color": ""
       },
       {
-        "pattern": "ccode",
+        "pattern": "❯ ccode",
         "ignoreCase": false,
-        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/claude-instructions.svg",
-        "background": ""
+        "icon": "",
+        "color": "#e64a19"
+      },
+      {
+        "pattern": "^FDW-SYNC",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/fdw-sync.svg",
+        "color": ""
+      },
+      {
+        "pattern": "❯ nvim",
+        "ignoreCase": false,
+        "icon": "",
+        "color": "#57a143"
       }
     ]
   },
