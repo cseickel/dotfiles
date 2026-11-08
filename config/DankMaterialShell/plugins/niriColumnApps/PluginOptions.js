@@ -1,9 +1,11 @@
 .pragma library
 
-// The widget's options and their defaults, shared by the widget and its
-// settings page.
+// The widget's per-bar options and its window title rules, shared by the
+// widget and its settings page.
 
 var pluginId = "niriColumnApps";
+var titleRulesKey = "titleRules";
+var blankTitleRule = { "pattern": "", "ignoreCase": false, "icon": "", "background": "" };
 
 var options = [
     {
@@ -35,4 +37,27 @@ function values(stored) {
         result[option.key] = stored && stored[option.key] !== undefined ? stored[option.key] : option.defaultValue;
     }
     return result;
+}
+
+// Returns `pattern` as a RegExp, or null when it is invalid.
+function compilePattern(pattern, ignoreCase) {
+    try {
+        return new RegExp(pattern, ignoreCase ? "i" : "");
+    } catch (error) {
+        return null;
+    }
+}
+
+// Returns a copy of each rule with its `regex` added, leaving out rules whose
+// pattern is empty or invalid. An empty regex would match every title.
+function compileTitleRules(rules) {
+    return rules
+        .filter(rule => rule.pattern)
+        .map(rule => Object.assign({}, rule, { "regex": compilePattern(rule.pattern, rule.ignoreCase) }))
+        .filter(rule => rule.regex);
+}
+
+// Returns the first compiled rule that matches `title`, or null.
+function matchTitleRule(compiledRules, title) {
+    return compiledRules.find(rule => rule.regex.test(title)) || null;
 }

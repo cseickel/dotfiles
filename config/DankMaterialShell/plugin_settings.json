@@ -470,7 +470,69 @@
     "enabled": true,
     "compactMode": true,
     "currentWorkspace": true,
-    "currentMonitor": true
+    "currentMonitor": true,
+    "titleRules": [
+      {
+        "pattern": "GitHub",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/github.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^RVA-3",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/rva-3.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^CLAUDE-INSTRUCTIONS",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/claude-instructions.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^DB-QUERY\\.NVIM",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/db-query.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^CSV-TABLE\\.NVIM",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/csv-table.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^NEO-TREE\\.NVIM",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/neo-tree.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^NEOTREE-DATABASE\\.NVIM",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/neotree-database.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^DOTFILES\\b",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/dotfiles.svg",
+        "background": ""
+      },
+      {
+        "pattern": "^SQL\\b",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/sql.svg",
+        "background": ""
+      },
+      {
+        "pattern": "ccode",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/claude-instructions.svg",
+        "background": ""
+      }
+    ]
   },
   "dankDesktopWeather": {
     "enabled": false

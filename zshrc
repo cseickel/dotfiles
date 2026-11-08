@@ -256,3 +256,22 @@ nv() {
   (( $# )) && command nvim --server "$sock" --remote "$@"
   command nvim --server "$sock" --remote-ui
 }
+
+DISABLE_AUTO_TITLE=true
+
+autoload -Uz add-zsh-hook
+_set_title() {
+  local root=$(git rev-parse --show-toplevel 2>/dev/null)
+  local place=${root:t:u}
+  [[ -n $root ]] || place=${(%):-%~}
+  local title="$place${1:+ ❯ $1}"
+  print -rn -- $'\e]2;'"${title//[[:cntrl:]]}"$'\a'
+}
+_title_precmd() { _set_title }
+_title_preexec() {
+  setopt localoptions extendedglob
+  local -a words=(${(z)2})
+  _set_title ${${words[(r)^(*=*|sudo)]}:t}
+}
+add-zsh-hook precmd _title_precmd
+add-zsh-hook preexec _title_preexec

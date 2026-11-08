@@ -46,6 +46,11 @@ BasePill {
     property var widgetData: null
     readonly property var options: PluginOptions.values(widgetData)
     readonly property bool compactMode: options.compactMode
+    readonly property var titleRules: PluginOptions.compileTitleRules(PluginService.loadPluginData(PluginOptions.pluginId, PluginOptions.titleRulesKey, []))
+
+    function titleRuleFor(window) {
+        return PluginOptions.matchTitleRule(titleRules, window.title || "");
+    }
 
     readonly property var sortedToplevels: {
         _toplevelsUpdateTrigger;

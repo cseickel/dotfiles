@@ -1,5 +1,5 @@
-// The plugin's settings page, with one card of options for each copy of the
-// widget on each bar.
+// The plugin's settings page, with the title rules that every bar shares and
+// one card of options for each copy of the widget on each bar.
 
 import QtQuick
 import qs.Common
@@ -37,6 +37,12 @@ PluginSettings {
                 })));
         });
         return copies;
+    }
+
+    TitleRulesCard {
+        width: parent.width
+        rules: root.loadValue(PluginOptions.titleRulesKey, [])
+        onEdited: updatedRules => root.saveValue(PluginOptions.titleRulesKey, updatedRules)
     }
 
     StyledText {

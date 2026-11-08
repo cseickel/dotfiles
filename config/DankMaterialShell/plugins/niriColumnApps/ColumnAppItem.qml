@@ -31,6 +31,7 @@ Item {
     }
     readonly property string appName: effectiveAppId ? Paths.getAppName(effectiveAppId, desktopEntry) : "Unknown"
     readonly property string windowTitle: shownWindow.title || "(Unnamed)"
+    readonly property var titleRule: pill.titleRuleFor(shownWindow)
     readonly property var tooltipRows: {
         pill._desktopEntriesUpdateTrigger;
         pill._appIdSubstitutionsTrigger;
@@ -42,13 +43,22 @@ Item {
     width: pill.isVerticalOrientation ? pill.barThickness : visualWidth
     height: pill.isVerticalOrientation ? pill.iconCellSize : pill.barThickness
 
+    // Returns the icon from the window's title rule, else its app icon.
+    function windowIcon(window) {
+        const ruleIcon = pill.titleRuleFor(window)?.icon;
+        if (ruleIcon)
+            return Paths.resolveIconUrl(ruleIcon);
+        const moddedAppId = Paths.moddedAppId(window.appId || "");
+        return moddedAppId ? Paths.getAppIcon(moddedAppId, DesktopEntries.heuristicLookup(moddedAppId)) : "";
+    }
+
     function tooltipRow(window) {
         const moddedAppId = Paths.moddedAppId(window.appId || "");
         const entry = moddedAppId ? DesktopEntries.heuristicLookup(moddedAppId) : null;
         const name = moddedAppId ? Paths.getAppName(moddedAppId, entry) : "Unknown";
         return {
             "window": window,
-            "icon": moddedAppId ? Paths.getAppIcon(moddedAppId, entry) : "",
+            "icon": windowIcon(window),
             "text": name + " • " + (window.title || "(Unnamed)"),
             "shown": windowCount > 1 && window === shownWindow
         };
@@ -68,9 +78,13 @@ Item {
         anchors.centerIn: parent
         radius: Theme.cornerRadius
         color: {
+            const hovered = mouseArea.containsMouse;
+            const ruleBackground = appItem.titleRule?.background;
+            if (ruleBackground)
+                return Theme.withAlpha(ruleBackground, appItem.focusedWindow ? (hovered ? 1 : 0.8) : (hovered ? 0.5 : 0.3));
             if (appItem.focusedWindow)
-                return mouseArea.containsMouse ? Theme.primarySelected : Theme.withAlpha(Theme.primary, 0.45);
-            return mouseArea.containsMouse ? BlurService.hoverColor(Theme.widgetBaseHoverColor) : Theme.withAlpha(BlurService.hoverColor(Theme.widgetBaseHoverColor), 0);
+                return hovered ? Theme.primarySelected : Theme.withAlpha(Theme.primary, 0.45);
+            return hovered ? BlurService.hoverColor(Theme.widgetBaseHoverColor) : Theme.withAlpha(BlurService.hoverColor(Theme.widgetBaseHoverColor), 0);
         }
 
         IconImage {
@@ -80,12 +94,16 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: pill.iconSize
             height: pill.iconSize
-            source: appItem.effectiveAppId ? Paths.getAppIcon(appItem.effectiveAppId, appItem.desktopEntry) : ""
+            source: {
+                pill._desktopEntriesUpdateTrigger;
+                pill._appIdSubstitutionsTrigger;
+                return appItem.windowIcon(appItem.shownWindow);
+            }
             smooth: true
             mipmap: true
             asynchronous: true
             visible: status === Image.Ready
-            layer.enabled: appItem.appId === "org.quickshell" || appItem.appId === "com.danklinux.dms"
+            layer.enabled: !appItem.titleRule?.icon && (appItem.appId === "org.quickshell" || appItem.appId === "com.danklinux.dms")
             layer.smooth: true
             layer.mipmap: true
             layer.effect: MultiEffect {

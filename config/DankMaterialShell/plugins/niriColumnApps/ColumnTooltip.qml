@@ -1,5 +1,5 @@
-// DMS's DankTooltip with one clickable row per window, each with the app icon,
-// because the stock tooltip shows a single line of text.
+// DMS's DankTooltip with one clickable row per window, each with the window's
+// icon, because the stock tooltip shows a single line of text.
 // Source: /usr/share/quickshell/dms/Widgets/DankTooltip.qml
 
 import QtQuick
