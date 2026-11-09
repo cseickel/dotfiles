@@ -264,7 +264,7 @@
           "enabled": true,
           "currentWorkspace": true,
           "compactMode": true,
-          "currentMonitor": false
+          "currentMonitor": true
         }
       ],
       "rightWidgets": [

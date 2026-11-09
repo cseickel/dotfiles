@@ -1,13 +1,13 @@
-local function update_title_root()
-  local cwd = vim.fn.getcwd(-1, 0)
-  local root = vim.fs.root(cwd, ".git") or cwd
-  vim.g.title_root = vim.fn.fnamemodify(root, ":t"):upper()
+vim.o.title = true
+
+local function set_title()
+  local cwd = vim.fn.getcwd()
+  local root = vim.fs.root(cwd, ".git")
+  local place = root and vim.fn.toupper(vim.fs.basename(root))
+    or vim.fn.fnamemodify(cwd, ":~")
+  -- titlestring treats % as a format code, so a literal % has to be doubled.
+  vim.o.titlestring = place:gsub("%%", "%%%%") .. " ❯ nvim"
 end
 
-update_title_root()
-
-vim.api.nvim_create_autocmd("DirChanged", { callback = update_title_root })
-
-vim.o.titlestring = "%{g:title_root}"
-  .. "%{empty(get(g:,'gitsigns_head','')) ? '' : ' [' . g:gitsigns_head . ']'}"
-  .. " ... %t"
+set_title()
+vim.api.nvim_create_autocmd("DirChanged", { callback = set_title })

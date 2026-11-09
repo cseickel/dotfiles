@@ -88,315 +88,472 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1793315109,
+      "ts": 1794225834,
       "packages": [
         {
-          "name": "LibRaw.x86_64",
+          "name": "SDL3.i686",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "0.22.2-1.fc44",
-          "toVersion": "0.22.3-1.fc44"
+          "fromVersion": "3.4.18-1.fc44",
+          "toVersion": "3.4.20-1.fc44"
         },
         {
-          "name": "PackageKit.x86_64",
+          "name": "SDL3.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.4.0-1.fc44",
-          "toVersion": "1.4.0-2.fc44"
+          "fromVersion": "3.4.18-1.fc44",
+          "toVersion": "3.4.20-1.fc44"
         },
         {
-          "name": "PackageKit-command-not-found.x86_64",
+          "name": "bluez.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.4.0-1.fc44",
-          "toVersion": "1.4.0-2.fc44"
+          "fromVersion": "5.87+1.git8750129efca8-1.fc44",
+          "toVersion": "5.88-1.fc44"
         },
         {
-          "name": "PackageKit-glib.x86_64",
+          "name": "bluez-cups.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.4.0-1.fc44",
-          "toVersion": "1.4.0-2.fc44"
+          "fromVersion": "5.87+1.git8750129efca8-1.fc44",
+          "toVersion": "5.88-1.fc44"
         },
         {
-          "name": "PackageKit-gstreamer-plugin.x86_64",
+          "name": "bluez-libs.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.4.0-1.fc44",
-          "toVersion": "1.4.0-2.fc44"
+          "fromVersion": "5.87+1.git8750129efca8-1.fc44",
+          "toVersion": "5.88-1.fc44"
         },
         {
-          "name": "PackageKit-gtk3-module.x86_64",
+          "name": "bluez-obexd.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.4.0-1.fc44",
-          "toVersion": "1.4.0-2.fc44"
+          "fromVersion": "5.87+1.git8750129efca8-1.fc44",
+          "toVersion": "5.88-1.fc44"
         },
         {
-          "name": "awscli2.noarch",
+          "name": "dms.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.37.0-1.fc44",
-          "toVersion": "2.38.0-1.fc44"
+          "fromVersion": "2.1.1-1.fc44",
+          "toVersion": "2.1.2-1.fc44"
         },
         {
-          "name": "cargo.x86_64",
+          "name": "dms-cli.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.99.0-1.fc44",
-          "toVersion": "1.99.1-2.fc44"
+          "fromVersion": "2.1.1-1.fc44",
+          "toVersion": "2.1.2-1.fc44"
         },
         {
-          "name": "clevis.x86_64",
+          "name": "dnf5.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "23-1.fc44",
-          "toVersion": "24-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "clevis-luks.x86_64",
+          "name": "dnf5-plugins.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "23-1.fc44",
-          "toVersion": "24-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "containerd.x86_64",
+          "name": "dnf5daemon-server.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.3.5-1.fc44",
-          "toVersion": "2.4.2-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "dankcalendar-git.x86_64",
+          "name": "dnf5daemon-server-polkit.noarch",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.0.1+git259.821fcb16-2.fc44",
-          "toVersion": "2.0.1+git267.7f0d7d37-2.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
+        },
+        {
+          "name": "file.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "5.46-10.fc44",
+          "toVersion": "5.48-2.fc44"
+        },
+        {
+          "name": "file-libs.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "5.46-10.fc44",
+          "toVersion": "5.48-2.fc44"
         },
         {
           "name": "firefox.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "158.0.1-2.fc44",
-          "toVersion": "159.0-1.fc44"
+          "fromVersion": "159.0-1.fc44",
+          "toVersion": "159.0.1-1.fc44"
         },
         {
           "name": "firefox-langpacks.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "158.0.1-2.fc44",
-          "toVersion": "159.0-1.fc44"
+          "fromVersion": "159.0-1.fc44",
+          "toVersion": "159.0.1-1.fc44"
         },
         {
-          "name": "gdb.x86_64",
+          "name": "fwupd-efi.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "17.2-4.fc44",
-          "toVersion": "18.1-1.fc44"
+          "fromVersion": "1.9-3.fc44",
+          "toVersion": "1.9-4.fc44"
         },
         {
-          "name": "gdb-headless.x86_64",
+          "name": "gnome-remote-desktop.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "17.2-4.fc44",
-          "toVersion": "18.1-1.fc44"
+          "fromVersion": "50.2-1.fc44",
+          "toVersion": "50.2-2.fc44"
         },
         {
-          "name": "ghostty.x86_64",
+          "name": "gst-editing-services.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.3.1-4.fc44",
-          "toVersion": "1.4.0-3.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "git-delta.x86_64",
+          "name": "gstreamer1.i686",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "0.19.1-7.fc44",
-          "toVersion": "0.20.1-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libblkid.i686",
+          "name": "gstreamer1.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libblkid.x86_64",
+          "name": "gstreamer1-plugin-libav.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libbrotli.i686",
+          "name": "gstreamer1-plugin-openh264.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.2.0-3.fc44",
-          "toVersion": "1.2.1-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libbrotli.x86_64",
+          "name": "gstreamer1-plugins-bad-free.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.2.0-3.fc44",
-          "toVersion": "1.2.1-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libfdisk.x86_64",
+          "name": "gstreamer1-plugins-bad-free-libs.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "liblastlog2.x86_64",
+          "name": "gstreamer1-plugins-base.i686",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libmount.i686",
+          "name": "gstreamer1-plugins-base.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libmount.x86_64",
+          "name": "gstreamer1-plugins-good.i686",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "librabbitmq.x86_64",
+          "name": "gstreamer1-plugins-good.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "0.18.0-1.fc44",
-          "toVersion": "0.18.1-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libsmartcols.x86_64",
+          "name": "gstreamer1-plugins-good-gtk.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libuuid.i686",
+          "name": "gstreamer1-plugins-good-qt.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "libuuid.x86_64",
+          "name": "gstreamer1-plugins-good-qt6.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "perl-DBI.x86_64",
+          "name": "gstreamer1-plugins-ugly-free.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.655-1.fc44",
-          "toVersion": "1.656-1.fc44"
+          "fromVersion": "1.28.8-1.fc44",
+          "toVersion": "1.28.9-1.fc44"
         },
         {
-          "name": "python3-awscrt.x86_64",
+          "name": "jupyterlab.noarch",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "0.37.0-1.fc44",
-          "toVersion": "0.38.0-1.fc44"
+          "fromVersion": "4.5.3-1.fc44",
+          "toVersion": "4.6.3-1.fc44"
         },
         {
-          "name": "python3-brotli.x86_64",
+          "name": "libdnf5.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.2.0-3.fc44",
-          "toVersion": "1.2.1-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "python3-libmount.x86_64",
+          "name": "libdnf5-cli.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "python3-pillow.x86_64",
+          "name": "libdnf5-plugin-appstream.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "12.3.0-1.fc44",
-          "toVersion": "12.3.0-4.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "python3-pycares.x86_64",
+          "name": "libdnf5-plugin-expired-pgp-keys.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "5.0.1-2.fc44",
-          "toVersion": "5.2.1-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "python3-unbound.x86_64",
+          "name": "libdnf5-plugin-systemd-inhibit.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.26.1-1.fc44",
-          "toVersion": "1.26.2-1.fc44"
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
         },
         {
-          "name": "rust.x86_64",
+          "name": "libsss_certmap.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.99.0-1.fc44",
-          "toVersion": "1.99.1-2.fc44"
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
         },
         {
-          "name": "rust-std-static.x86_64",
+          "name": "libsss_idmap.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.99.0-1.fc44",
-          "toVersion": "1.99.1-2.fc44"
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
         },
         {
-          "name": "unbound-anchor.x86_64",
+          "name": "libsss_nss_idmap.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.26.1-1.fc44",
-          "toVersion": "1.26.2-1.fc44"
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
         },
         {
-          "name": "unbound-libs.x86_64",
+          "name": "libsss_sudo.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "1.26.1-1.fc44",
-          "toVersion": "1.26.2-1.fc44"
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
         },
         {
-          "name": "util-linux.x86_64",
+          "name": "openvpn.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "2.7.8-1.fc44",
+          "toVersion": "2.7.9-1.fc44"
         },
         {
-          "name": "util-linux-core.x86_64",
+          "name": "pcre2.i686",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "2.41.5-1.fc44",
-          "toVersion": "2.41.6-1.fc44"
+          "fromVersion": "10.47-1.fc44.1",
+          "toVersion": "10.49-1.fc44"
         },
         {
-          "name": "xxhash-libs.x86_64",
+          "name": "pcre2.x86_64",
           "repo": "system",
           "backend": "dnf5",
-          "fromVersion": "0.8.4-1.fc44",
-          "toVersion": "0.8.4-2.fc44"
+          "fromVersion": "10.47-1.fc44.1",
+          "toVersion": "10.49-1.fc44"
+        },
+        {
+          "name": "pcre2-syntax.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "10.47-1.fc44.1",
+          "toVersion": "10.49-1.fc44"
+        },
+        {
+          "name": "pcre2-utf16.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "10.47-1.fc44.1",
+          "toVersion": "10.49-1.fc44"
+        },
+        {
+          "name": "pcre2-utf32.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "10.47-1.fc44.1",
+          "toVersion": "10.49-1.fc44"
+        },
+        {
+          "name": "python3-boto3.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.43.122-1.fc44",
+          "toVersion": "1.43.124-1.fc44"
+        },
+        {
+          "name": "python3-botocore.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "1.43.122-1.fc44",
+          "toVersion": "1.43.124-1.fc44"
+        },
+        {
+          "name": "python3-file-magic.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "5.46-10.fc44",
+          "toVersion": "5.48-2.fc44"
+        },
+        {
+          "name": "python3-jupyterlab-server.noarch",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.28.0-2.fc44",
+          "toVersion": "2.28.1-2.fc44"
+        },
+        {
+          "name": "python3-libdnf5.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "5.4.6.0-1.fc44",
+          "toVersion": "5.4.7.0-1.fc44"
+        },
+        {
+          "name": "qt6ct-kde.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "0.11-16.fc44",
+          "toVersion": "0.11-17.fc44"
+        },
+        {
+          "name": "quickshell.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "0.3.2-1.fc44",
+          "toVersion": "0.3.2-2.fc44"
+        },
+        {
+          "name": "rsync.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "3.5.1-1.fc44",
+          "toVersion": "3.5.2-2.fc44"
+        },
+        {
+          "name": "sssd-client.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
+        },
+        {
+          "name": "sssd-common.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
+        },
+        {
+          "name": "sssd-kcm.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
+        },
+        {
+          "name": "sssd-krb5-common.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
+        },
+        {
+          "name": "sssd-nfs-idmap.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
+        },
+        {
+          "name": "sssd-proxy.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "2.13.1-2.fc44",
+          "toVersion": "2.13.2-1.fc44"
+        },
+        {
+          "name": "xen-libs.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "4.21.2-4.fc44",
+          "toVersion": "4.21.2-5.fc44"
+        },
+        {
+          "name": "xen-licenses.x86_64",
+          "repo": "system",
+          "backend": "dnf5",
+          "fromVersion": "4.21.2-4.fc44",
+          "toVersion": "4.21.2-5.fc44"
+        },
+        {
+          "name": "org.fedoraproject.Platform.CL.default",
+          "repo": "flatpak",
+          "backend": "flatpak"
+        },
+        {
+          "name": "org.fedoraproject.Platform.GL.default",
+          "repo": "flatpak",
+          "backend": "flatpak"
         }
       ]
     },
@@ -473,24 +630,6 @@
     "currentMonitor": true,
     "windowRules": [
       {
-        "pattern": "^nvim$",
-        "ignoreCase": false,
-        "icon": "/home/chris/AppImages/.icons/neovim",
-        "color": ""
-      },
-      {
-        "pattern": "❯ ccode",
-        "ignoreCase": false,
-        "icon": "",
-        "color": "#d97757"
-      },
-      {
-        "pattern": "❯ nvim",
-        "ignoreCase": false,
-        "icon": "/home/chris/AppImages/.icons/neovim",
-        "color": "#57a143"
-      },
-      {
         "pattern": "^chrome-github.com",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/github.svg",
@@ -534,10 +673,11 @@
         "color": ""
       },
       {
-        "pattern": "^DOTFILES\\b",
+        "pattern": "^DOTFILES ",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/dotfiles.svg",
-        "color": ""
+        "color": "",
+        "field": "title"
       },
       {
         "pattern": "^~/sql ",
@@ -556,6 +696,31 @@
         "pattern": "^~ ❯ ",
         "ignoreCase": false,
         "icon": "/usr/share/icons/breeze-dark/places/24/user-home.svg",
+        "color": ""
+      },
+      {
+        "pattern": "^nvim$",
+        "ignoreCase": false,
+        "icon": "/home/chris/AppImages/.icons/neovim",
+        "color": ""
+      },
+      {
+        "pattern": "❯ nvim",
+        "ignoreCase": false,
+        "icon": "/home/chris/AppImages/.icons/neovim",
+        "color": "#57a143"
+      },
+      {
+        "pattern": "❯ ccode",
+        "ignoreCase": false,
+        "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/claude-instructions.svg",
+        "color": "#d97757"
+      },
+      {
+        "field": "title",
+        "pattern": "❯ rva-whats-running",
+        "ignoreCase": false,
+        "icon": "",
         "color": ""
       }
     ]
