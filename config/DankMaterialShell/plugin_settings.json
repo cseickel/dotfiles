@@ -88,7 +88,7 @@
   "dankSoftwareDepot": {
     "enabled": true,
     "updatesSnapshot": {
-      "ts": 1794225834,
+      "ts": 1794226784,
       "packages": [
         {
           "name": "SDL3.i686",
