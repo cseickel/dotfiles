@@ -19,7 +19,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+N hotkey-overlay-title="Open Neovim" { spawn "ghostty" "-e" "/home/chris/AppImages/neovim.appimage"; }
+    Mod+N hotkey-overlay-title="Open Neovim" { spawn "ghostty" "-e" "nvim"; }
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
 

@@ -473,7 +473,7 @@
     "currentMonitor": true,
     "titleRules": [
       {
-        "pattern": "GitHub",
+        "pattern": "rva-capital",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/github.svg",
         "color": ""
@@ -521,7 +521,7 @@
         "color": ""
       },
       {
-        "pattern": "^SQL\\b",
+        "pattern": "^~/sql ",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/sql.svg",
         "color": ""
@@ -530,7 +530,7 @@
         "pattern": "❯ ccode",
         "ignoreCase": false,
         "icon": "",
-        "color": "#e64a19"
+        "color": "#d97757"
       },
       {
         "pattern": "^FDW-SYNC",
@@ -541,8 +541,14 @@
       {
         "pattern": "❯ nvim",
         "ignoreCase": false,
-        "icon": "",
+        "icon": "/home/chris/AppImages/.icons/neovim",
         "color": "#57a143"
+      },
+      {
+        "pattern": "^nvim$",
+        "ignoreCase": false,
+        "icon": "/home/chris/AppImages/.icons/neovim",
+        "color": ""
       }
     ]
   },
