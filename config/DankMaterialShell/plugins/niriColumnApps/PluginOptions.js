@@ -1,11 +1,12 @@
 .pragma library
 
-// The widget's per-bar options and its window title rules, shared by the
-// widget and its settings page.
+// The widget's per-bar options and its window rules, shared by the widget and
+// its settings page.
 
 var pluginId = "niriColumnApps";
-var titleRulesKey = "titleRules";
-var blankTitleRule = { "pattern": "", "ignoreCase": false, "icon": "", "color": "" };
+var windowRulesKey = "windowRules";
+// A rule's `field` is the name of the window property its regex tests.
+var blankWindowRule = { "field": "title", "pattern": "", "ignoreCase": false, "icon": "", "color": "" };
 
 var options = [
     {
@@ -48,19 +49,24 @@ function compilePattern(pattern, ignoreCase) {
     }
 }
 
-// Returns a copy of each rule with its `regex` added, leaving out rules whose
-// pattern is empty or invalid. An empty regex would match every title.
-function compileTitleRules(rules) {
+function withDefaults(rule) {
+    return Object.assign({}, blankWindowRule, rule);
+}
+
+// Returns a copy of each rule with its unset fields defaulted and its `regex`
+// added, leaving out rules whose pattern is empty or invalid. An empty regex
+// would match every window.
+function compileWindowRules(rules) {
     return rules
         .filter(rule => rule.pattern)
-        .map(rule => Object.assign({}, rule, { "regex": compilePattern(rule.pattern, rule.ignoreCase) }))
+        .map(rule => Object.assign(withDefaults(rule), { "regex": compilePattern(rule.pattern, rule.ignoreCase) }))
         .filter(rule => rule.regex);
 }
 
-// Returns the icon and color for `title`. Each one comes from the first matching
-// rule that sets it, and is undefined when no matching rule does.
-function titleStyle(compiledRules, title) {
-    const matchingRules = compiledRules.filter(rule => rule.regex.test(title));
-    const firstSet = field => matchingRules.find(rule => rule[field])?.[field];
+// Returns the icon and color for `window`. Each one comes from the first
+// matching rule that sets it, and is undefined when no matching rule does.
+function windowStyle(compiledRules, window) {
+    const matchingRules = compiledRules.filter(rule => rule.regex.test(window[rule.field] || ""));
+    const firstSet = key => matchingRules.find(rule => rule[key])?.[key];
     return { "icon": firstSet("icon"), "color": firstSet("color") };
 }

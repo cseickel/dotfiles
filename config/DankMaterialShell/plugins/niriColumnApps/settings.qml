@@ -1,4 +1,4 @@
-// The plugin's settings page, with the title rules that every bar shares and
+// The plugin's settings page, with the window rules that every bar shares and
 // one card of options for each copy of the widget on each bar.
 
 import QtQuick
@@ -39,10 +39,11 @@ PluginSettings {
         return copies;
     }
 
-    TitleRulesCard {
+    WindowRulesCard {
         width: parent.width
-        rules: root.loadValue(PluginOptions.titleRulesKey, [])
-        onEdited: updatedRules => root.saveValue(PluginOptions.titleRulesKey, updatedRules)
+        flickable: root.findFlickable(root)
+        rules: root.loadValue(PluginOptions.windowRulesKey, [])
+        onEdited: updatedRules => root.saveValue(PluginOptions.windowRulesKey, updatedRules)
     }
 
     StyledText {

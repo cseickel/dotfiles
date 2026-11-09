@@ -46,10 +46,10 @@ BasePill {
     property var widgetData: null
     readonly property var options: PluginOptions.values(widgetData)
     readonly property bool compactMode: options.compactMode
-    readonly property var titleRules: PluginOptions.compileTitleRules(PluginService.loadPluginData(PluginOptions.pluginId, PluginOptions.titleRulesKey, []))
+    readonly property var windowRules: PluginOptions.compileWindowRules(PluginService.loadPluginData(PluginOptions.pluginId, PluginOptions.windowRulesKey, []))
 
-    function titleStyleFor(window) {
-        return PluginOptions.titleStyle(titleRules, window.title || "");
+    function windowStyleFor(window) {
+        return PluginOptions.windowStyle(windowRules, window);
     }
 
     readonly property var sortedToplevels: {

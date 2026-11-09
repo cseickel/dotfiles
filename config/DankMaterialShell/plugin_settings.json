@@ -471,12 +471,31 @@
     "compactMode": true,
     "currentWorkspace": true,
     "currentMonitor": true,
-    "titleRules": [
+    "windowRules": [
       {
-        "pattern": "rva-capital",
+        "pattern": "^nvim$",
+        "ignoreCase": false,
+        "icon": "/home/chris/AppImages/.icons/neovim",
+        "color": ""
+      },
+      {
+        "pattern": "❯ ccode",
+        "ignoreCase": false,
+        "icon": "",
+        "color": "#d97757"
+      },
+      {
+        "pattern": "❯ nvim",
+        "ignoreCase": false,
+        "icon": "/home/chris/AppImages/.icons/neovim",
+        "color": "#57a143"
+      },
+      {
+        "pattern": "^chrome-github.com",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/github.svg",
-        "color": ""
+        "color": "",
+        "field": "appId"
       },
       {
         "pattern": "^RVA-3",
@@ -527,27 +546,16 @@
         "color": ""
       },
       {
-        "pattern": "❯ ccode",
-        "ignoreCase": false,
-        "icon": "",
-        "color": "#d97757"
-      },
-      {
         "pattern": "^FDW-SYNC",
         "ignoreCase": false,
         "icon": "~/dotfiles/config/DankMaterialShell/plugins/niriColumnApps/icons/fdw-sync.svg",
         "color": ""
       },
       {
-        "pattern": "❯ nvim",
+        "field": "title",
+        "pattern": "^~ ❯ ",
         "ignoreCase": false,
-        "icon": "/home/chris/AppImages/.icons/neovim",
-        "color": "#57a143"
-      },
-      {
-        "pattern": "^nvim$",
-        "ignoreCase": false,
-        "icon": "/home/chris/AppImages/.icons/neovim",
+        "icon": "/usr/share/icons/breeze-dark/places/24/user-home.svg",
         "color": ""
       }
     ]

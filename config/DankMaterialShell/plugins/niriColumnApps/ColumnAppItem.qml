@@ -31,7 +31,7 @@ Item {
     }
     readonly property string appName: effectiveAppId ? Paths.getAppName(effectiveAppId, desktopEntry) : "Unknown"
     readonly property string windowTitle: shownWindow.title || "(Unnamed)"
-    readonly property var titleStyle: pill.titleStyleFor(shownWindow)
+    readonly property var windowStyle: pill.windowStyleFor(shownWindow)
     readonly property var tooltipRows: {
         pill._desktopEntriesUpdateTrigger;
         pill._appIdSubstitutionsTrigger;
@@ -43,9 +43,9 @@ Item {
     width: pill.isVerticalOrientation ? pill.barThickness : visualWidth
     height: pill.isVerticalOrientation ? pill.iconCellSize : pill.barThickness
 
-    // Returns the icon from the window's title rules, else its app icon.
+    // Returns the icon from the window rules, else the window's app icon.
     function windowIcon(window) {
-        const customIcon = pill.titleStyleFor(window).icon;
+        const customIcon = pill.windowStyleFor(window).icon;
         if (customIcon)
             return Paths.resolveIconUrl(customIcon);
         const moddedAppId = Paths.moddedAppId(window.appId || "");
@@ -83,8 +83,8 @@ Item {
                 return hovered ? Theme.primarySelected : Theme.withAlpha(Theme.primary, 0.45);
             return hovered ? BlurService.hoverColor(Theme.widgetBaseHoverColor) : Theme.withAlpha(BlurService.hoverColor(Theme.widgetBaseHoverColor), 0);
         }
-        border.width: appItem.titleStyle.color ? 2 : 0
-        border.color: appItem.titleStyle.color || "transparent"
+        border.width: appItem.windowStyle.color ? 2 : 0
+        border.color: appItem.windowStyle.color || "transparent"
 
         IconImage {
             id: iconImg
@@ -102,7 +102,7 @@ Item {
             mipmap: true
             asynchronous: true
             visible: status === Image.Ready
-            layer.enabled: !appItem.titleStyle.icon && (appItem.appId === "org.quickshell" || appItem.appId === "com.danklinux.dms")
+            layer.enabled: !appItem.windowStyle.icon && (appItem.appId === "org.quickshell" || appItem.appId === "com.danklinux.dms")
             layer.smooth: true
             layer.mipmap: true
             layer.effect: MultiEffect {
